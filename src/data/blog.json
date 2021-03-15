@@ -1,0 +1,32 @@
+{
+  "posts": [
+    {
+      "_id": "01",
+      "title": "Digital marketing made easy",
+      "description": "A practical guide to understand what is digital marketing. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eius libero odio, iste in quaerat dolores rerum eligendi, voluptatem debitis aut? Quas recusandae unde quam adipisci quod! Ex, doloremque ullam!",
+      "author": "Petty Carry",
+      "image": "../images/blog/blog1.jpg"
+    },
+    {
+      "_id": "02",
+      "title": "A practical guide to understand",
+      "description": "A practical guide to understand what is digital marketing. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eius libero odio, iste in quaerat dolores rerum eligendi, voluptatem debitis aut? Quas recusandae unde quam adipisci quod! Ex, doloremque ullam!",
+      "author": "Petty Carry",
+      "image": "../images/blog/blog2.jpg"
+    },
+    {
+      "_id": "03",
+      "title": "Digital marketing made easy",
+      "description": "A practical guide to understand what is digital marketing. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eius libero odio, iste in quaerat dolores rerum eligendi, voluptatem debitis aut? Quas recusandae unde quam adipisci quod! Ex, doloremque ullam!",
+      "author": "Petty Carry",
+      "image": "../images/blog/blog3.jpg"
+    },
+    {
+      "_id": "04",
+      "title": "Digital marketing made easy",
+      "description": "A practical guide to understand what is digital marketing. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere eius libero odio, iste in quaerat dolores rerum eligendi, voluptatem debitis aut? Quas recusandae unde quam adipisci quod! Ex, doloremque ullam!",
+      "author": "Petty Carry",
+      "image": "../images/blog/blog4.jpg"
+    }
+  ]
+}

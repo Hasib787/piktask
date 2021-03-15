@@ -1,0 +1,71 @@
+import { Button, Container, Typography } from "@material-ui/core";
+import React, { FC } from "react";
+import { keywords } from "../../../data/demoData";
+import SectionHeading from "../Heading";
+import Search from "../Search";
+import useStyles from "./Hero.styles";
+
+type Props = {
+  background: string;
+  size: string;
+  popularKeywords?: boolean;
+  title: string;
+  subtitle: string;
+};
+
+const HeroSection: FC<Props> = ({
+  background,
+  size,
+  popularKeywords,
+  title,
+  subtitle,
+}): JSX.Element => {
+  const classes = useStyles();
+
+  return (
+    <div
+      className={classes.heroWrapper}
+      style={{
+        backgroundImage: `url(${background})`,
+        minHeight: size === "large" ? "60rem" : "35.5rem",
+      }}
+    >
+      <Container>
+        <div className={classes.contentWrapper}>
+          <SectionHeading
+            title={title}
+            subtitle={subtitle}
+            color="white"
+            center
+            size={size}
+          />
+
+          <Search />
+
+          {popularKeywords && (
+            <div className={classes.popularSearch}>
+              <Typography variant="h5" className={classes.searchTitle}>
+                Popular Search
+              </Typography>
+
+              <div className={classes.buttonGroups}>
+                {keywords.length > 0 &&
+                  keywords.map((keyword, index) => (
+                    <Button
+                      key={index}
+                      className={classes.popularSearchKeyword}
+                      variant="outlined"
+                    >
+                      {keyword}
+                    </Button>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Container>
+    </div>
+  );
+};
+
+export default HeroSection;

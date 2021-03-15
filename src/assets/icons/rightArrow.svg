@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10.441" height="20.002" viewBox="0 0 10.441 20.002">
+  <g id="down-arrow_1_" data-name="down-arrow (1)" transform="translate(-117.272 20.001) rotate(-90)">
+    <path id="Path_3" data-name="Path 3" d="M19.274,117.4l-9.258,9.259L.758,117.4a.435.435,0,0,0-.615.615l9.566,9.566a.435.435,0,0,0,.615,0l9.566-9.566a.435.435,0,1,0-.6-.625l-.011.011Z" transform="translate(-0.021 0)" fill="#1b3f4e"/>
+    <path id="Path_4" data-name="Path 4" d="M10,127.714a.435.435,0,0,1-.308-.127L.122,118.021a.435.435,0,0,1,.615-.615L10,126.664l9.258-9.259a.435.435,0,1,1,.626.6l-.011.011L10.3,127.586A.435.435,0,0,1,10,127.714Z" transform="translate(0 -0.001)" fill="#1b3f4e"/>
+  </g>
+</svg>
