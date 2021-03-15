@@ -7,40 +7,45 @@ import {
   MenuList,
   Paper,
   Popper,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import firebase from 'firebase';
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import firebase from "firebase";
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
-import useStyles from './Popper.styles';
+import useStyles from "./Popper.styles";
 
 const CustomPopper = ({
   open,
   handleToggle,
   anchorRef,
   handleClose,
-  handleListKeyDown
+  handleListKeyDown,
 }) => {
   const classes = useStyles();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const history = useHistory();
 
   const userSignout = () => {
-    if(user && user.token) {
-      firebase.auth().signOut().then(() => {
-        toast.success("You successfully signed out");
-        history.push("/");
-      }).catch(error => {
-        console.log("Signout error", error.message);
-      });
+    if (user && user.token) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          toast.success("You successfully signed out");
+          history.push("/");
+        })
+        .catch((error) => {
+          console.log("Signout error", error.message);
+        });
     }
   };
-  
+
   return (
     <Popper
       open={open}
@@ -77,9 +82,7 @@ const CustomPopper = ({
                         Design Studio
                       </Typography>
                       <Typography variant="body1" className={classes.userEmail}>
-                        {user && user.token && (
-                          user.email
-                        )}
+                        {user && user.token && user.email}
                       </Typography>
                     </div>
                   </Grid>
@@ -117,6 +120,8 @@ const CustomPopper = ({
                 <MenuItem
                   className={classes.userMenuItem}
                   onClick={handleClose}
+                  component={Link}
+                  to="/admin/settings"
                 >
                   <span>My Profile</span>
                   <ArrowForwardIosIcon />

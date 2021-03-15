@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
   selected: {
     backgroundColor: "#114960 !important",
+    color: `${theme.palette.common.white} !important`,
     "& a": {
       color: `${theme.palette.common.white} !important`,
     },
@@ -105,6 +106,36 @@ const useStyles = makeStyles((theme) => ({
   },
   submenuWrapper: {
     backgroundColor: "#114960",
+  },
+
+  tabMenu: {
+    padding: "0 3.5rem",
+    color: "#114960",
+    opacity: 1,
+    borderRadius: 0,
+    maxWidth: "100%",
+    minHeight: "5.5rem",
+    transition: `background-color 0.5s linear`,
+
+    "&:hover": {
+      backgroundColor: "#114960",
+      color: theme.palette.common.white,
+    },
+  },
+  wrapper: {
+    alignItems: "flex-start",
+  },
+  indicator: {
+    backgroundColor: "transparent",
+    width: 0,
+    height: 0,
+  },
+  arrowIcon: {
+    position: "absolute",
+    right: "2.5rem",
+    "&:first-child": {
+      marginBottom: `0 !important`,
+    },
   },
 }));
 
