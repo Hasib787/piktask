@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: "2rem",
     marginBottom: "4.5rem",
+
+    "@media (max-width: 990px)": {
+      flexDirection: "column",
+      alignItems: "flex-start",
+
+      "& h2": {
+        marginBottom: "1.5rem",
+      },
+    },
   },
   actionBtn: {
     ...theme.typography.button,
@@ -30,12 +39,22 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "transparent",
     fontWeight: 500,
     fontSize: "1.6rem",
+
+    "@media (max-width: 990px)": {
+      marginBottom: "1.5rem",
+      padding: ".4rem 2rem",
+      fontSize: "1.4rem",
+    },
   },
   deleteBtn: {
     backgroundColor: "#FB5252",
     "&:hover": {
       borderColor: "#FB5252",
       color: "#FB5252",
+    },
+
+    "@media (max-width: 990px)": {
+      marginLeft: 0,
     },
   },
   addFileBtn: {
@@ -91,6 +110,10 @@ const useStyles = makeStyles((theme) => ({
   editItemContainer: {
     width: "60rem",
     padding: "3rem 4.5rem",
+
+    "@media (max-width: 600px)": {
+      width: "100%",
+    },
   },
 
   editItemHeader: {
