@@ -30,13 +30,24 @@ const SectionHeading: FC<Props> = ({
         flexDirection: center ? "column" : "row",
         padding:
           size === "large"
-            ? "4.5rem 0"
+            ? "3rem 0"
             : size === "medium"
             ? ".5rem 0"
-            : "4.5rem 0",
+            : "3rem 0",
       }}
     >
-      <div>
+      <div
+        style={
+          center
+            ? {
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+              }
+            : undefined
+        }
+      >
         <Typography
           className={classes.headingH1}
           variant="h1"

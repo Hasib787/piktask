@@ -137,6 +137,22 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: `0 !important`,
     },
   },
+
+  // Submenu
+  submenuContainer: {
+    backgroundColor: "rgb(17 73 96 / 9%)",
+
+    "& a": {
+      paddingLeft: "3.5rem",
+    },
+  },
+
+  gutters: {
+    paddingLeft: "3.6rem",
+  },
+  selectedMenu: {
+    backgroundColor: "red",
+  },
 }));
 
 export default useStyles;

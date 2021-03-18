@@ -4,7 +4,7 @@ import {
   Link,
   List,
   ListItem,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import React from "react";
 import Copyright from "./CopyRight";
@@ -15,7 +15,9 @@ const Footer = ({ addminFooter }) => {
 
   return (
     <footer
-      style={addminFooter ? { marginTop: "4rem" } : undefined} className={classes.footerRoot}>
+      style={addminFooter ? { marginTop: "4rem" } : undefined}
+      className={classes.footerRoot}
+    >
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
           <Column>

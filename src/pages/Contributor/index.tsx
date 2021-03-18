@@ -52,7 +52,7 @@ const Contributor = () => {
 
       <Container>
         <Grid container spacing={3} className={classes.contributorSection}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <div className={classes.contributorText}>
               <Typography variant="h2">
                 Your work.
@@ -66,7 +66,7 @@ const Contributor = () => {
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <div className={classes.galleryWrapper}>
               <img className={classes.image1} src={image1} alt="Gallery" />
               <img className={classes.image2} src={image2} alt="Gallery" />
@@ -80,7 +80,7 @@ const Contributor = () => {
       <div className={classes.processStepWrapper}>
         <Container>
           <Grid container spacing={3} className={classes.processGridContainer}>
-            <Grid item xs={3} className={classes.processItem}>
+            <Grid item xs={6} sm={4} md={3} className={classes.processItem}>
               <div className={classes.processStepNumber}>1</div>
               <div className={classes.processTexts}>
                 <span
@@ -99,7 +99,7 @@ const Contributor = () => {
                 </Button>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.processItem}>
+            <Grid item xs={6} sm={4} md={3} className={classes.processItem}>
               <div className={classes.processStepNumber}>2</div>
               <div className={classes.processTexts}>
                 <span
@@ -112,7 +112,7 @@ const Contributor = () => {
                 </span>
               </div>
             </Grid>
-            <Grid item xs={3} className={classes.processItem}>
+            <Grid item xs={6} sm={4} md={3} className={classes.processItem}>
               <div className={classes.processStepNumber}>3</div>
               <div className={classes.processTexts}>
                 <span
@@ -131,7 +131,7 @@ const Contributor = () => {
 
       <Container>
         <Grid container spacing={3} className={classes.contributorSection}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <div className={classes.contributorText}>
               <Typography variant="h2">
                 Focus on
@@ -145,7 +145,7 @@ const Contributor = () => {
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <div className={classes.galleryWrapper2}>
               <img className={classes.image5} src={image5} alt="Gallery" />
               <img className={classes.image6} src={image6} alt="Gallery" />

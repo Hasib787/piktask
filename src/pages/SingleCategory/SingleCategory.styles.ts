@@ -4,6 +4,9 @@ const useStyles = makeStyles((theme) => ({
   containerWrapper: {
     marginTop: "4.5rem",
   },
+  itemDetailsContainer: {
+    alignItems: "center",
+  },
   productColumn: {
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100%",
@@ -25,20 +28,25 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
     justifyContent: "flex-end",
+    flexWrap: "wrap",
     borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",
     padding: "1.5rem 3rem",
   },
   button: {
     ...theme.typography.button,
-    fontSize: "1.8rem",
-    width: "14.5rem",
-    height: "4.5rem",
+    fontSize: "1.5rem",
+    padding: ".6rem 3.5rem",
     backgroundColor: "#F1F1F2",
+    fontWeight: 500,
     color: "#14323F",
     marginLeft: "1.5rem",
     "&:hover": {
       backgroundColor: "#F0F7EF",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "1rem",
     },
   },
   buttonIcon: {
@@ -48,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     paddingRight: "2rem",
+    fontSize: "3rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.8rem",
       lineHeight: 1.3,
@@ -129,38 +138,30 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.7rem",
     fontWeight: 400,
   },
-  followBtn: {
+  authorBtn: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.primary.main,
     marginRight: "2rem",
-    width: "17rem",
-    height: "5.4rem",
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
+    padding: "1rem 5.5rem",
+
     [theme.breakpoints.down("sm")]: {
-      width: "auto",
-      height: "auto",
       paddingRight: "3rem",
       paddingLeft: "3rem",
     },
   },
+  followBtn: {
+    backgroundColor: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+    },
+  },
   downloadBtn: {
-    ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    width: "21.8rem",
-    height: "5.4rem",
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
     },
     "& img": {
       marginRight: "1.5rem",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "auto",
-      height: "auto",
-      paddingRight: "3rem",
-      paddingLeft: "3rem",
+      width: "1.2rem",
     },
   },
 }));

@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none",
     backgroundColor: theme.palette.common.white,
   },
-  fullWidth: {
+  fullwidth: {
     width: "100%",
     height: "8rem",
     // backgroundColor: "#1B3F4E",

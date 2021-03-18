@@ -44,7 +44,11 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
       />
 
       <Container className={classes.containerWrapper}>
-        <Grid container spacing={4}>
+        <Grid
+          container
+          spacing={4}
+          classes={{ container: classes.itemDetailsContainer }}
+        >
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
               <img
@@ -151,8 +155,12 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
                     </Typography>
                   </div>
                 </div>
-                <Button className={classes.followBtn}>Follow</Button>
-                <Button className={classes.downloadBtn}>
+                <Button className={`${classes.authorBtn} ${classes.followBtn}`}>
+                  Follow
+                </Button>
+                <Button
+                  className={`${classes.authorBtn} ${classes.downloadBtn}`}
+                >
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
                 </Button>

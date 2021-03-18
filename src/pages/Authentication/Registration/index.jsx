@@ -3,39 +3,36 @@ import {
   Checkbox,
   FormControlLabel,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
-import React, {
-  useEffect,
-  useState
-} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import facebookLogo from "../../../assets/facebookLogo.png";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
 import googleLogo from "../../../assets/googleLogo.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
-import { auth } from '../../../database';
+import { auth } from "../../../database";
 import useStyles from "../Auth.styles";
 
-export const Registration = ({history}): JSX.Element => {
+export const Registration = ({ history }): JSX.Element => {
   const classes = useStyles();
   const [value, setValue] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
   };
 
   useEffect(() => {
-    if(user && user.token) history.push("/");
+    if (user && user.token) history.push("/");
 
     document.body.style.backgroundColor = "#143340";
 
@@ -49,20 +46,20 @@ export const Registration = ({history}): JSX.Element => {
 
     setIsLoading(true);
 
-    if(!username || !email || !password) {
+    if (!username || !email || !password) {
       toast.error("All fields are required");
       return;
     }
-    if(email) {
+    if (email) {
       const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-      if(!validateEmail.test(String(email).toLowerCase()) ) {
+      if (!validateEmail.test(String(email).toLowerCase())) {
         toast.error("Your email is not validate");
         return;
       }
     }
 
-    if(password.length < 5) {
+    if (password.length < 5) {
       toast.error("Password should be at least 6 or more characters");
       return;
     }
@@ -73,13 +70,15 @@ export const Registration = ({history}): JSX.Element => {
     });
 
     // Show success message to the user
-    toast.success(`An email has been sent to ${email}. Please check and verify your email`);
+    toast.success(
+      `An email has been sent to ${email}. Please check and verify your email`
+    );
 
     // Save username, email, and password, to localstorage
     window.localStorage.setItem("userName", username);
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("password", password);
-    
+
     // Remove the existing value
     // setUsername("");
     // setEmail("");
@@ -144,7 +143,7 @@ export const Registration = ({history}): JSX.Element => {
                       className={classes.formControl}
                       name="username"
                       value={username}
-                      onChange={e => setUsername(e.target.value)}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <TextField
                       fullWidth
@@ -152,7 +151,7 @@ export const Registration = ({history}): JSX.Element => {
                       label="Email"
                       className={classes.formControl}
                       value={email}
-                      onChange={e => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <div className={classes.passwordField}>
                       <TextField
@@ -162,7 +161,7 @@ export const Registration = ({history}): JSX.Element => {
                         type={value ? "text" : "password"}
                         className={classes.formControl}
                         value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <img
                         src={lockIcon}
@@ -199,6 +198,7 @@ export const Registration = ({history}): JSX.Element => {
                     component={Link}
                     to="/login"
                     className={classes.formLink}
+                    disableRipple
                   >
                     Already registered? Log in
                   </Button>

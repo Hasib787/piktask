@@ -6,6 +6,8 @@ import facebook from "../../assets/icons/facebook-round.svg";
 import instagram from "../../assets/icons/instagram-round.svg";
 import twitter from "../../assets/icons/twitter-round.svg";
 import AuthorItems from "../../components/ui/AuthorItems";
+import CallToAction from "../../components/ui/CallToAction";
+import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SocialShare from "../../components/ui/SocialShare";
 import { SocialMedia } from "../../types";
@@ -73,6 +75,14 @@ const AuthorProfile = () => {
         </Container>
       </div>
       <AuthorItems />
+
+      <CallToAction
+        title="Join Designhill designer team"
+        subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+        buttonText="Join Us"
+      />
+
+      <Footer />
     </>
   );
 };

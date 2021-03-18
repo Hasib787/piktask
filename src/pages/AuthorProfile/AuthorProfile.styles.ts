@@ -21,10 +21,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   profileWrapper: {
-    display: "flex",
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
+
+    "@media (max-width: 595px)": {
+      flexDirection: "column",
+    },
   },
   authorImg: {
     marginRight: "3rem",
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
       padding: "1rem",
       backgroundColor: "#707070",
     },
-    "@media (max-width: 576px)": {
+    "@media (max-width: 595px)": {
       width: "12rem",
       height: "12rem",
       marginBottom: "2rem",
@@ -46,8 +49,13 @@ const useStyles = makeStyles((theme) => ({
   },
   authorInfo: {
     color: theme.palette.common.white,
-    "@media (max-width: 576px)": {
+
+    "@media (max-width: 595px)": {
       textAlign: "center",
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
   },
   authorName: {

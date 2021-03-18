@@ -34,7 +34,7 @@ const AdminHeader = () => {
   return (
     <>
       <AppBar position="fixed" className={classes.appbarHeader}>
-        <div className={classes.fullWidth}>
+        <div className={classes.fullwidth}>
           <Container classes={{ root: classes.root }}>
             <Grid
               container

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3.5rem",
 
     "& img": {
-      width: "20rem",
+      width: "15rem",
       marginBottom: "-.8rem",
     },
     "& p": {
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   formWrapperInner: {
-    width: "52rem",
+    width: "53rem",
     margin: "0 auto 3rem",
     "@media (max-width: 768px)": {
       width: "100%",
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formTitle: {
     marginBottom: "0.4rem",
-    fontSize: "2.6rem",
+    fontSize: "2.4rem",
   },
   formSubtitle: {
     fontSize: "1.6rem",
@@ -90,11 +90,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "2rem",
+    marginBottom: "1.5rem",
   },
   googleBtn: {
     backgroundColor: "#1B3F4E",
-    padding: "1.5rem 2rem",
+    padding: "1.2rem 2rem",
     width: "49%",
     borderRadius: 0,
     "&:hover": {
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   },
   facebookBtn: {
     backgroundColor: "#425993",
-    padding: "1.5rem 2rem",
+    padding: "1.2rem 2rem",
     width: "49%",
     borderRadius: 0,
     "&:hover": {
@@ -127,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontSize: "1.6rem",
     fontStyle: "italic",
-    marginBottom: "2rem",
+    marginBottom: "1.5rem",
     "&:before": {
       content: '""',
       position: "absolute",
@@ -159,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   formControl: {
-    marginBottom: "2.5rem",
+    marginBottom: "1.5rem",
     "& input": {
       borderColor: "#CBCBCB",
     },
@@ -173,7 +173,7 @@ const useStyles = makeStyles((theme) => ({
   helpText: {
     padding: "0 3rem",
     textAlign: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
     fontSize: "1.4rem",
     fontWeight: 500,
     "@media (max-width: 768px)": {
@@ -183,6 +183,7 @@ const useStyles = makeStyles((theme) => ({
   },
   checkboxLabel: {
     marginBottom: "2rem",
+    marginRight: 0,
     "& span": {
       color: theme.palette.primary.main,
       fontSize: "1.4rem",
@@ -213,8 +214,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     display: "block",
     textAlign: "center",
-    fontSize: "1.6rem",
+    fontSize: "1.5rem",
     fontWeight: 500,
+
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
 
     "@media (max-width: 768px)": {
       marginTop: "18px",

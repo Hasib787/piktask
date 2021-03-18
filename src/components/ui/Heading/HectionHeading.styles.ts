@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   headingH1: {
     color: theme.palette.common.white,
-    fontSize: "4rem",
+    fontSize: "3rem",
     marginBottom: "1rem",
     textTransform: "uppercase",
 

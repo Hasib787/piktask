@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     width: "70rem",
     margin: "auto",
     textAlign: "center",
+
+    "@media (max-width: 768px)": {
+      width: "100%",
+    },
   },
   heroHeading: {
     color: theme.palette.common.white,
@@ -62,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
     "& span": {
       display: "block",
       fontWeight: 300,
+    },
+
+    "@media (max-width: 768px)": {
+      fontSize: "3rem",
     },
   },
   heroJoinNowBtn: {
@@ -84,10 +92,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+
+    "@media (max-width: 1100px)": {
+      padding: "0 1rem",
+    },
   },
   processGridContainer: {
     justifyContent: "space-between",
     padding: "0 14rem",
+    "@media (max-width: 1170px)": {
+      paddingRight: "0",
+      paddingLeft: "6rem",
+    },
   },
   contributorText: {
     width: "38rem",
@@ -109,6 +125,22 @@ const useStyles = makeStyles((theme) => ({
     },
     "& p": {
       fontSize: "1.6rem",
+    },
+
+    "@media (max-width: 960px)": {
+      width: "75%",
+
+      "& h2": {
+        fontSize: "3rem",
+      },
+    },
+
+    "@media (max-width: 576px)": {
+      width: "100%",
+
+      "& h2": {
+        fontSize: "2.5rem",
+      },
     },
   },
   galleryWrapper: {
@@ -144,6 +176,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#CED5DB",
     fontWeight: 500,
     marginRight: "2rem",
+
+    "@media (max-width: 1346px)": {
+      fontSize: "10rem",
+    },
   },
   processItem: {
     display: "flex",
@@ -153,15 +189,34 @@ const useStyles = makeStyles((theme) => ({
       content: '""',
       position: "absolute",
       backgroundImage: `url(${rightArrowIcon})`,
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
       width: "7.4rem",
       height: "4.9rem",
       left: "100%",
+
+      "@media (max-width: 1346px)": {
+        width: "6.4rem",
+        height: "2.9rem",
+        left: "70%",
+      },
     },
     "&:nth-of-type(3):before": {
       backgroundImage: `url("")`,
       width: 0,
       height: 0,
       left: "inherit",
+    },
+    "@media (max-width: 650px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+
+      "&:before": {
+        backgroundImage: `url("")`,
+        width: 0,
+        height: 0,
+      },
     },
   },
   processTexts: {
