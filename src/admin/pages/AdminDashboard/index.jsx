@@ -17,8 +17,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
-import Chart from "chart.js";
-import React, { createRef, useEffect, useState } from "react";
+import React, { useState } from "react";
 import authorImg from "../../../assets/author.png";
 import authorBadge from "../../../assets/badge.png";
 import image3 from "../../../assets/bangladesh.png";
@@ -33,9 +32,11 @@ import map from "../../../assets/map.png";
 import Footer from "../../../components/ui/Footer";
 import portfolioData from "../../../data/portfolio.json";
 import useStyles from "../../admin.styles";
+// import DoughnutChart from "../../components/Charts/DoughnutChart";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
+import DoughnutChart from "./DoughnutChart";
 
 const ProfileProgress = withStyles((theme) => ({
   root: {
@@ -70,59 +71,6 @@ const AdminDashboard = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { portfolios } = portfolioData;
-  const monthlyChartRef = createRef();
-
-  useEffect(() => {
-    const myChart = monthlyChartRef.current;
-
-    new Chart(myChart, {
-      type: "doughnut",
-      data: {
-        datasets: [
-          {
-            data: [430, 150],
-            backgroundColor: ["#62BC74", "#DAEEDF"],
-            label: ["Earnings", "Blank"],
-            borderWidth: 0,
-            weight: 100,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        legend: {
-          position: "top",
-        },
-        animation: {
-          animateScale: true,
-          animateRotate: true,
-        },
-        cutoutPercentage: 65,
-        rotation: 31.4,
-      },
-
-      scales: {
-        xAxes: [
-          {
-            ticks: { display: false },
-            gridLines: {
-              display: false,
-              drawBorder: false,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            ticks: { display: false },
-            gridLines: {
-              display: false,
-              drawBorder: false,
-            },
-          },
-        ],
-      },
-    });
-  }, [monthlyChartRef]);
 
   function selectTab(index) {
     return {
@@ -504,8 +452,9 @@ const AdminDashboard = () => {
                     <Typography variant="h4">$3201: 00</Typography>
                   </div>
 
-                  <div className={"classes.earningGraph"}>
-                    <canvas ref={monthlyChartRef} id="monthlyEarning"></canvas>
+                  <div className={classes.earningGraph}>
+                    <DoughnutChart />
+                    <div className={classes.earningAmount}>$344.5.00</div>
                     {/* <div className={classes.graphFront}>
                       <Typography
                         variant="subtitle1"

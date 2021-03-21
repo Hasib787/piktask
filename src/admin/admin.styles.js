@@ -289,23 +289,18 @@ const useStyles = makeStyles((theme) => ({
   },
 
   earningGraph: {
-    margin: "3rem auto",
-    width: "350px",
-    height: "350px",
-    borderRadius: "100%",
-    border: "6rem solid #62BC74",
     position: "relative",
+    marginTop: "2rem",
+    marginBottom: "3rem",
   },
-  graphFront: {
-    width: "350px",
-    height: "350px",
-    borderRadius: "100%",
+  earningAmount: {
     position: "absolute",
-    border: "6rem solid #DAEEDF",
-    top: "-60px",
-    left: "-60px",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    fontSize: "2.5rem",
+    color: "#62BC74",
   },
-  graphBack: {},
   currentEarning: {
     color: "#62BC74",
     fontSize: "3rem",

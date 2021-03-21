@@ -8,6 +8,11 @@ const useStyles = makeStyles((theme) => ({
     width: "28rem",
     paddingTop: "1rem",
   },
+  container: {
+    "& svg": {
+      color: "red",
+    },
+  },
   iconButtonHide: {
     position: "absolute",
     right: "-1rem",
@@ -89,11 +94,16 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  selected: {
+  selectedItem: {
     backgroundColor: "#114960 !important",
-    color: `${theme.palette.common.white} !important`,
-    "& a": {
+    "& span": {
+      color: `${theme.palette.common.white}`,
+    },
+    "& svg": {
       color: `${theme.palette.common.white} !important`,
+    },
+    "& a": {
+      color: `${theme.palette.common.white}`,
     },
   },
   submenu: {
@@ -146,12 +156,14 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "3.5rem",
     },
   },
+  dropdownMenu: {
+    "& svg": {
+      color: "#91999D",
+    },
+  },
 
   gutters: {
     paddingLeft: "3.6rem",
-  },
-  selectedMenu: {
-    backgroundColor: "red",
   },
 }));
 

@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React, { FC } from "react";
-import useStyles from "./HectionHeading.styles";
+import useStyles from "./Heading.styles";
 
 type Props = {
   title: string;

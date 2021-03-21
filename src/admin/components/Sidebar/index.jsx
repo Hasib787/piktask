@@ -9,35 +9,36 @@ const Sidebar = () => {
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(0);
 
   useEffect(() => {
     if (window.location.pathname === "/admin/dashboard" && value !== 0) {
       setValue(0);
-      return;
     } else if (window.location.pathname === "/admin/upload" && value !== 1) {
+      setOpen(true);
       setValue(1);
-      return;
+      setSelectedItem(1);
     } else if (window.location.pathname === "/admin/pending" && value !== 2) {
-      setValue(2);
-      return;
+      setValue(1);
+      setSelectedItem(2);
     } else if (window.location.pathname === "/admin/revision" && value !== 3) {
-      setValue(3);
-      return;
+      setOpen(true);
+      setValue(1);
+      setSelectedItem(3);
     } else if (window.location.pathname === "/admin/reject" && value !== 4) {
-      setValue(4);
-      return;
+      setOpen(true);
+      setValue(1);
+      setSelectedItem(4);
     } else if (window.location.pathname === "/admin/publish" && value !== 5) {
-      setValue(5);
-      return;
+      setOpen(true);
+      setValue(1);
+      setSelectedItem(5);
     } else if (window.location.pathname === "/admin/earnings" && value !== 6) {
       setValue(6);
-      return;
     } else if (window.location.pathname === "/admin/plan" && value !== 7) {
       setValue(7);
-      return;
     } else if (window.location.pathname === "/admin/guidline" && value !== 8) {
       setValue(8);
-      return;
     }
   }, [value]);
 
@@ -51,30 +52,28 @@ const Sidebar = () => {
 
   return (
     <aside className={classes.sidebarWrapper}>
-      <List
-        component="nav"
-        aria-labelledby="nested-sidebar-nav"
-        className={classes.root}
-      >
+      <List component="nav" aria-labelledby="nested-sidebar-nav">
         <ListItem
           classes={{
             gutters: classes.gutters,
-            selected: classes.selected,
+            selected: classes.selectedItem,
           }}
           component={Link}
           to="/admin/dashboard"
-          selected
+          selected={value === 0}
         >
           <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem
           classes={{
             gutters: classes.gutters,
-            selected: classes.selected,
+            selected: classes.selectedItem,
           }}
+          className={classes.dropdownMenu}
           onClick={handleClick}
           component={Link}
           to="/admin/upload"
+          selected={value === 1}
         >
           <ListItemText primary="Upload File" />
           {open ? <ExpandLess /> : <ExpandMore />}
@@ -86,17 +85,19 @@ const Sidebar = () => {
             disablePadding
             className={classes.submenuContainer}
           >
-            <ListItem
+            {/* <ListItem
               component={Link}
               to="/admin/submit"
               className={classes.nested}
+              selected={value === 0}
             >
               <ListItemText primary="Submit File(50)" />
-            </ListItem>
+            </ListItem> */}
             <ListItem
               component={Link}
               to="/admin/revision"
               className={classes.nested}
+              selected={value === 1 && selectedItem === 3}
             >
               <ListItemText primary="Under Revision(30)" />
             </ListItem>
@@ -104,6 +105,7 @@ const Sidebar = () => {
               component={Link}
               to="/admin/reject"
               className={classes.nested}
+              selected={value === 1 && selectedItem === 4}
             >
               <ListItemText primary="Reject File(6)" />
             </ListItem>
@@ -111,6 +113,7 @@ const Sidebar = () => {
               component={Link}
               to="/admin/publish"
               className={classes.nested}
+              selected={value === 1 && selectedItem === 5}
             >
               <ListItemText primary="Publish(24)" />
             </ListItem>
@@ -120,33 +123,36 @@ const Sidebar = () => {
         <ListItem
           classes={{
             gutters: classes.gutters,
-            selected: classes.selectedMenu,
+            selected: classes.selectedItem,
           }}
           onClick={handleClick}
           component={Link}
           to="/admin/earnings"
+          selected={value === 6}
         >
           <ListItemText primary="Earning Management" />
         </ListItem>
         <ListItem
           classes={{
             gutters: classes.gutters,
-            selected: classes.selectedMenu,
+            selected: classes.selectedItem,
           }}
           onClick={handleClick}
           component={Link}
           to="/admin/plan"
+          selected={value === 7}
         >
           <ListItemText primary="Contributor Price Plan" />
         </ListItem>
         <ListItem
           classes={{
             gutters: classes.gutters,
-            selected: classes.selectedMenu,
+            selected: classes.selectedItem,
           }}
           onClick={handleClick}
           component={Link}
           to="/admin/guidline"
+          selected={value === 8}
         >
           <ListItemText primary="Guidline" />
         </ListItem>
