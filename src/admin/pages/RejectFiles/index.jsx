@@ -71,7 +71,7 @@ const RejectFiles = () => {
         open={openModal}
         onClose={() => setOpenModal(false)}
         className={classes.modalContainer}
-        classes={{ paper: classes.paper }}
+        classes={{ paper: classes.paper, root: classes.drawerRoot }}
       >
         <div className={classes.modalHeader}>
           <div className={classes.headingContent}>

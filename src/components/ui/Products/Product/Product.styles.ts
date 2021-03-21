@@ -2,6 +2,21 @@ import { Card, makeStyles } from "@material-ui/core";
 import styled from "styled-components";
 
 export const useStyles = makeStyles((theme) => ({
+  container: {
+    "&:hover": {
+      "& $itemContainer": {
+        "&:before": {
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          position: "absolute",
+          content: '""',
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        },
+      },
+    },
+  },
   image: {
     width: "100%",
   },
@@ -81,6 +96,74 @@ export const useStyles = makeStyles((theme) => ({
       background: theme.palette.primary.light,
     },
   },
+  favouriteIcon: {
+    backgroundColor: "#ffffff",
+    borderRadius: "50%",
+    width: "3.8rem",
+    height: "3.8rem",
+    position: "absolute",
+    right: "1rem",
+    top: "1rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    visibility: "hidden",
+    opacity: 0,
+    transition: "all 0.3s linear",
+    zIndex: 1,
+    boxShadow:
+      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+
+    "&:hover": {
+      backgroundColor: "#469439",
+      color: "#ffffff",
+      borderColor: "#469439",
+    },
+
+    "&.disabled": {
+      backgroundColor: "#469439",
+      color: "#fff",
+      borderColor: "#469439",
+      opacity: "0.5 !important",
+    },
+  },
+  premiumIcon: {
+    position: "absolute",
+    top: "1rem",
+    left: "1rem",
+    width: "4rem",
+    height: "4rem",
+    backgroundColor: "rgb(68 68 68 / 60%)",
+    borderRadius: "50%",
+    zIndex: 1,
+    "&:hover": {
+      backgroundColor: "rgb(68 68 68 / 60%)",
+    },
+    "& img": {
+      width: "2.2rem",
+    },
+  },
+  itemContainer: {
+    position: "relative",
+    transition:
+      "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+  },
+  downloadItem: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    fontSize: "2rem",
+    fontWeight: 500,
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.secondary.main,
+    lineHeight: 1,
+    padding: "1.2rem 2rem",
+    "&:hover": {
+      backgroundColor: "rgb(21 100 8 / 94%)",
+    },
+  },
 }));
 
 export const CardWrapper = styled(Card)`
@@ -91,38 +174,6 @@ export const CardWrapper = styled(Card)`
   &:hover .favourite {
     visibility: visible;
     opacity: 1;
-  }
-`;
-
-export const LikeIcon = styled.div`
-  background-color: #ffffff;
-  border-radius: 50%;
-  border: 1px solid;
-  border-color: #707070;
-  width: 3.8rem;
-  height: 3.8rem;
-  position: absolute;
-  right: 1.5rem;
-  top: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.3s linear;
-
-  &:hover {
-    background-color: #469439;
-    color: #ffffff;
-    border-color: #469439;
-  }
-
-  &.disabled {
-    background-color: #469439;
-    color: #fff;
-    border-color: #469439;
-    opacity: 0.5 !important;
   }
 `;
 

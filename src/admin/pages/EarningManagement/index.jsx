@@ -69,12 +69,8 @@ const EarningManagement = () => {
   const [onClickEvent, setOnClickEvent] = useState(true);
   const months = moment.months();
   const refChart = useRef();
-  console.log("Outside Effect", refChart);
 
   useEffect(() => {
-    console.log("inside Effect", refChart);
-
-    // const canvasID = document.getElementById("earningChart");
     const canvasID = refChart.current;
 
     new Chart(canvasID, {
@@ -88,6 +84,11 @@ const EarningManagement = () => {
           "May",
           "June",
           "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
         ],
         datasets: [
           {
@@ -95,7 +96,7 @@ const EarningManagement = () => {
             backgroundColor: "#2195F2",
             borderColor: "#2195F2",
             fill: false,
-            data: [10, 30, 39, 20, 25, 34, -10],
+            data: [10, 30, 39, 20, 25, 34, -10, 28, 69, 97, 321],
           },
           {
             label: "Download",
@@ -121,9 +122,21 @@ const EarningManagement = () => {
         ],
       },
       options: {
-        responsive: true,
-        // maintainAspectRatio: false,
+        indexAxis: "y",
+        showLine: true,
+        spanGaps: true,
+        legend: {
+          labels: {
+            fontColor: "#788F9B",
+            fontSize: 15,
+            boxWidth: 10,
+            boxHeight: 5,
+          },
+        },
         scales: {
+          y: {
+            stacked: true,
+          },
           xAxes: [
             {
               display: true,
@@ -415,13 +428,12 @@ const EarningManagement = () => {
               <Tab
                 label="Earning Line"
                 {...selectData(0)}
-                onClick={() => setOnClickEvent(true)}
+                onClick={() => setOnClickEvent(!onClickEvent)}
                 className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
               />
               <Tab
                 label="Earning Table"
                 {...selectData(1)}
-                onClick={() => setOnClickEvent(false)}
                 className={`${classes.earningBtn} ${classes.earningGrayBtn}`}
               />
             </Tabs>
