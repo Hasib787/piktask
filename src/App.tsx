@@ -24,8 +24,8 @@ import {
 } from "./pages";
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import AuthorProfile from "./pages/AuthorProfile";
+import BecomeContributor from "./pages/BecomeContributor";
 import Category from "./pages/Category";
-import Contributor from "./pages/Contributor";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
 import TagTemplate from "./pages/TagTemplate";
@@ -68,6 +68,7 @@ const App = () => {
         <Route exact path="/admin/settings" component={AccountSettings} />
 
         <Route exact path="/categories" component={Home} />
+        <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />
         <Route exact path="/vector" component={Category} />
         <Route exact path="/psd" component={Category} />
@@ -79,7 +80,6 @@ const App = () => {
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/new-password" component={ForgetPassword} />
-        <Route exact path="/become-contributer" component={Contributor} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />

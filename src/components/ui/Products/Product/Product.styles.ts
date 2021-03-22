@@ -4,21 +4,20 @@ import styled from "styled-components";
 export const useStyles = makeStyles((theme) => ({
   container: {
     "&:hover": {
-      "& $itemContainer": {
-        "&:before": {
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
-          position: "absolute",
-          content: '""',
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-        },
+      "& $singlePageLink": {
+        opacity: 1,
+        visibility: "visible",
+      },
+      "& $downloadItem": {
+        top: "50%",
+        opacity: 1,
+        visibility: "visible",
       },
     },
   },
   image: {
     width: "100%",
+    height: "100%",
   },
   titleLink: {
     textDecoration: "none",
@@ -146,20 +145,34 @@ export const useStyles = makeStyles((theme) => ({
   },
   itemContainer: {
     position: "relative",
-    transition:
-      "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+    height: 405,
+  },
+  singlePageLink: {
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    transition: "all 250ms ease-in-out",
+    opacity: 0,
+    visibility: "hidden",
   },
   downloadItem: {
     position: "absolute",
-    top: "50%",
+    top: "60%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    fontSize: "2rem",
+    fontSize: "1.6rem",
+    letterSpacing: ".05rem",
     fontWeight: 500,
     color: theme.palette.common.white,
     backgroundColor: theme.palette.secondary.main,
     lineHeight: 1,
     padding: "1.2rem 2rem",
+    transition: "all 250ms ease-in-out",
+    opacity: 0,
+    visibility: "hidden",
     "&:hover": {
       backgroundColor: "rgb(21 100 8 / 94%)",
     },

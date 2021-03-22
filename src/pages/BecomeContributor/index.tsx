@@ -15,7 +15,7 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import useStyles from "./Contributor.styles";
 
-const Contributor = () => {
+const BecomeContributor = () => {
   const classes = useStyles();
 
   return (
@@ -167,4 +167,4 @@ const Contributor = () => {
   );
 };
 
-export default Contributor;
+export default BecomeContributor;

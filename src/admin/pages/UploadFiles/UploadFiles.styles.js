@@ -99,13 +99,18 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     alignItems: "flex-start",
+    marginBottom: "0.6rem",
   },
   checkBox: {
-    paddingTop: 0,
+    // paddingTop: 0,
+    marginTop: "-.9rem",
     "& svg": {
       width: "2.5rem",
       height: "2.5rem",
     },
+  },
+  labelItem: {
+    fontSize: "1.4rem",
   },
 }));
 

@@ -10,7 +10,7 @@ import React from "react";
 import Copyright from "./CopyRight";
 import { Column, useStyles } from "./Footer.styles";
 
-const Footer = ({ addminFooter }) => {
+const Footer = ({ addminFooter = false }) => {
   const classes = useStyles();
 
   return (

@@ -52,10 +52,20 @@ const Product = ({ product }) => {
       </IconButton>
 
       <div className={classes.itemContainer}>
+        <Link
+          className={classes.singlePageLink}
+          to={`/${product.category.toLowerCase()}/${product._id}`}
+        />
         <Button disableRipple classes={{ root: classes.downloadItem }}>
           Download
         </Button>
-        <img className={classes.image} src={product.image} alt={product.name} />
+        <Link to={`/${product.category.toLowerCase()}/${product._id}`}>
+          <img
+            className={classes.image}
+            src={product.image}
+            alt={product.name}
+          />
+        </Link>
       </div>
 
       <div>

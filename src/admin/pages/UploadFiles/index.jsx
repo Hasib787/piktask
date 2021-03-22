@@ -106,11 +106,15 @@ const UploadFiles = () => {
                   className={classes.imageTypeGrid}
                 >
                   <div className={classes.checkboxCol}>
-                    <Heading tag="h2">Vectors</Heading>
+                    {/* <Heading tag="h4"></Heading> */}
+                    <Typography variant="h2">Vectors</Typography>
 
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.vectorFileExtension}
@@ -125,7 +129,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.vectorColor}
@@ -140,7 +147,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.vectorPreviewSize}
@@ -155,7 +165,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.vectorFileTitle}
@@ -183,7 +196,10 @@ const UploadFiles = () => {
 
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.psdFileExtension}
@@ -198,7 +214,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.psdColor}
@@ -213,7 +232,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.psdPreviewSize}
@@ -228,7 +250,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.psdFileTitle}
@@ -256,7 +281,10 @@ const UploadFiles = () => {
 
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.pngFileExtension}
@@ -271,7 +299,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.pngColor}
@@ -286,7 +317,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.pngPreviewSize}
@@ -301,7 +335,10 @@ const UploadFiles = () => {
                     </FormGroup>
                     <FormGroup>
                       <FormControlLabel
-                        classes={{ root: classes.root }}
+                        classes={{
+                          root: classes.root,
+                          label: classes.labelItem,
+                        }}
                         control={
                           <Checkbox
                             checked={state.pngFileTitle}
