@@ -54,12 +54,13 @@ const useStyles = makeStyles((theme) => ({
   moreButton: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    padding: ".9rem 4.5rem",
+    padding: "0.8rem 3.5rem",
     textDecoration: "none",
     border: "2px solid",
     borderColor: theme.palette.secondary.main,
     transition: "all 0.3s linear",
     display: "inline-block",
+    fontWeight: 500,
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
       borderColor: theme.palette.secondary.main,

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     position: "relative",
+    marginBottom: "3rem",
     "&::before": {
       background: "rgb(20 51 64 / 94%)",
       content: '""',
@@ -60,15 +61,13 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     background: "#1B3F4E",
     border: `1px solid ${theme.typography.secondary.green}`,
-    fontSize: "1.6rem",
-    padding: ".8rem 3.5rem",
+    padding: ".6rem 3.5rem",
     fontWeight: 300,
     [theme.breakpoints.down("sm")]: {
       marginRight: "2rem",
       marginBottom: "2rem",
       width: "auto",
       height: "3.5rem",
-      fontSize: "1.5rem",
     },
   },
 }));

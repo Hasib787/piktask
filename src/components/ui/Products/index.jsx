@@ -1,10 +1,17 @@
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
-import data from "../../../data/products.json";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
 
+// API Keys
+const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
+const SECRET_KEY = "naAe3yvyOe4y6lHowvKdYFTi0LG0tbReGmRdZ4NIeZU";
+
 const useStyles = makeStyles((theme) => ({
+  container: {
+    marginBottom: "4rem",
+  },
   productItem: {
     "@media (max-width: 576px)": {
       maxWidth: "100%",
@@ -13,23 +20,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Products = () => {
-  const { products } = data;
+const Products = ({ count = 8, query = "popular" }) => {
+  const [photos, setPhotos] = useState([]);
   const classes = useStyles();
 
+  const getPhotos = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
+      );
+      setPhotos(data.results);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getPhotos();
+  }, []);
+
   return (
-    <Grid container spacing={2}>
-      {products.length > 0 &&
-        products.map((product) => (
+    <Grid classes={{ container: classes.container }} container spacing={2}>
+      {photos?.length > 0 &&
+        photos?.map((photo) => (
           <Grid
-            key={product._id}
+            key={photo.id}
             item
             xs={6}
             sm={4}
             md={3}
             className={classes.productItem}
           >
-            <Product key={product._id} product={product} />
+            <Product key={photo.id} photo={photo} />
           </Grid>
         ))}
     </Grid>

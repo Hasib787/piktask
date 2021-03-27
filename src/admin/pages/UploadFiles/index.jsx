@@ -38,7 +38,6 @@ const UploadFiles = () => {
   };
 
   const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
     const files = acceptedFiles.map((file) => (
       <li key={file.path}>
         {file.path}
@@ -107,7 +106,9 @@ const UploadFiles = () => {
                 >
                   <div className={classes.checkboxCol}>
                     {/* <Heading tag="h4"></Heading> */}
-                    <Typography variant="h2">Vectors</Typography>
+                    <Typography c variant="h2">
+                      Vectors
+                    </Typography>
 
                     <FormGroup>
                       <FormControlLabel

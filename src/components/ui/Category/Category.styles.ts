@@ -6,9 +6,13 @@ export const Item = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
+  width: 395px;
 
   img {
     cursor: all-scroll;
+    width: 100%;
+    height: 303px;
+    object-fit: cover;
   }
 `;
 

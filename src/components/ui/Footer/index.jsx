@@ -27,32 +27,32 @@ const Footer = ({ addminFooter = false }) => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Graphics &amp; Design
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Digital Marketing
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Writing &amp; Translation
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Video &amp; Animation
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Music &amp; Audio
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Programming &amp; Tech
                 </Link>
               </ListItem>
@@ -65,22 +65,22 @@ const Footer = ({ addminFooter = false }) => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   New resources
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   The most popular content
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Search trends
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Blog
                 </Link>
               </ListItem>
@@ -93,27 +93,27 @@ const Footer = ({ addminFooter = false }) => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Plans &amp; pricing
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Affiliate
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   About us
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Jobs
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Sell your content
                 </Link>
               </ListItem>
@@ -126,22 +126,22 @@ const Footer = ({ addminFooter = false }) => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Terms &amp; conditions
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   License Agreement
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Copyright information
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Cookies policy
                 </Link>
               </ListItem>
@@ -154,12 +154,12 @@ const Footer = ({ addminFooter = false }) => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Support
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} href="#">
+                <Link className={classes.navLink} to="#">
                   Contact
                 </Link>
               </ListItem>

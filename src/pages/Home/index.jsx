@@ -1,12 +1,12 @@
 import { Button, Container } from "@material-ui/core";
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Blog from "../../components/ui/Blog";
 import CallToAction from "../../components/ui/CallToAction";
 import {
   CategoryCarousel,
-  ProductCarousel
+  ProductCarousel,
 } from "../../components/ui/Carousel";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
@@ -25,16 +25,19 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <HeroSection 
-        background={heroBanner} 
-        size="large" 
+      <HeroSection
+        background={heroBanner}
+        size="large"
         popularKeywords
         title="Graphic Resource for Free Download"
-        subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect" />
+        subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
+      />
 
       <Container>
         <SectionHeading title="Popular Album Collection" large>
-          <Button className={classes.headingButton} component={Link} to="#">See More</Button>
+          <Button className={classes.headingButton} component={Link} to="#">
+            See More
+          </Button>
         </SectionHeading>
       </Container>
 
@@ -47,9 +50,11 @@ export const Home = () => {
           subtitle="Top website templates with the highest sales volume."
           large
         >
-          <Button className={classes.headingButton} component={Link} to="#">See More</Button>
+          <Button className={classes.headingButton} component={Link} to="#">
+            See More
+          </Button>
         </SectionHeading>
-        <Products />
+        <Products query="Fashion" count={8} />
       </Container>
 
       <Container>
@@ -58,9 +63,11 @@ export const Home = () => {
           subtitle="Top website templates with the highest sales volume."
           large
         >
-          <Button className={classes.headingButton} component={Link} to="#">See More</Button>
+          <Button className={classes.headingButton} component={Link} to="#">
+            See More
+          </Button>
         </SectionHeading>
-        <Products />
+        <Products query="london" count={8} />
       </Container>
 
       <Container>
@@ -69,24 +76,33 @@ export const Home = () => {
           subtitle="Top website templates with the highest sales volume."
           large
         >
-          <Button className={classes.headingButton} component={Link} to="#">See More</Button>
+          <Button className={classes.headingButton} component={Link} to="#">
+            See More
+          </Button>
         </SectionHeading>
-        <Products />
+        <Products query="Photography" count={8} />
       </Container>
 
-      <CallToAction title="Daily 10 image/photos Download" subtitle="Top website templates with the highest sales volume." buttonLink="#" buttonText="Get Started" />
-      
+      <CallToAction
+        title="Daily 10 image/photos Download"
+        subtitle="Top website templates with the highest sales volume."
+        buttonLink="#"
+        buttonText="Get Started"
+      />
+
       <Container>
         <SectionHeading
-          title="To Selling Author"
+          title="Top Selling Author"
           subtitle="Top website templates with the highest sales volume."
           large
         >
-          <Button className={classes.headingButton} component={Link} to="#">See More</Button>
+          <Button className={classes.headingButton} component={Link} to="#">
+            See More
+          </Button>
         </SectionHeading>
       </Container>
       {/* Carousel with Products */}
-      <ProductCarousel products={products} />
+      <ProductCarousel />
 
       {/* BLOG SECTION */}
       <Blog />

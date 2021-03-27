@@ -19,6 +19,11 @@ export const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
+  itemFooter: {
+    height: "15.8rem",
+    display: "flex",
+    flexDirection: "column",
+  },
   titleLink: {
     textDecoration: "none",
     "&:hover h2": {
@@ -29,6 +34,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "1.4rem",
     color: "#1B3F4E",
     marginBottom: ".5rem",
+    textTransform: "capitalize",
   },
   itemStatus: {
     fontSize: 12,
@@ -53,6 +59,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 0,
+    marginTop: "auto",
 
     "@media (max-width: 768px)": {
       alignItems: "baseline",

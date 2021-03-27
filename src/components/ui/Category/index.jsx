@@ -1,14 +1,15 @@
-import React from 'react';
-import { CategoryButton, Item } from './Category.styles';
+import React from "react";
+import { CategoryButton, Item } from "./Category.styles";
 
-const Category = ({ category }) => {
-    return (
-        <Item>            
-            <img src={category.image} alt={category.name} />            
+const Category = ({ photo }) => {
+  console.log(photo);
+  return (
+    <Item>
+      <img src={photo.urls.regular} alt="" />
 
-            <CategoryButton>{category.name}</CategoryButton>
-        </Item>
-    )
-}
+      <CategoryButton>Category</CategoryButton>
+    </Item>
+  );
+};
 
-export default Category
+export default Category;

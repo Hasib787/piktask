@@ -30,6 +30,7 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
   const classes = useStyles();
   const { products } = productsData;
   const { id } = useParams<Params>();
+  console.log(id);
 
   const product = products.find((product) => product._id === id);
 

@@ -18,16 +18,17 @@ const Post: FC<Props> = ({ title, description, image, id }) => {
   return (
     <Grid item xs={8} sm={6} md={3} className={classes.root}>
       <div className={classes.postWrapper}>
-        <img src={image} alt={title} />
+        <div className={classes.imageWrapper}>
+          <Link to={`/blog/${id}`} className={classes.singlePost} />
+          <img src={image} alt={title} />
+        </div>
         <div className={classes.contentWrapper}>
           <Link to={`/blog/${id}`} className={classes.titleLink}>
             <Typography className={classes.title} variant="h2">
               {title}
             </Typography>
           </Link>
-          <Typography className={classes.description} variant="body1">
-            {getWords(10, description)}
-          </Typography>
+          <Typography variant="body1">{getWords(10, description)}</Typography>
         </div>
       </div>
     </Grid>

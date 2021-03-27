@@ -33,7 +33,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "'Roboto', sans-serif",
-    fontSize: 16,
+    fontSize: 14,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     h1: {
@@ -53,7 +53,7 @@ const theme = createMuiTheme({
       color: dark,
     },
     body1: {
-      fontSize: "1.6rem",
+      fontSize: "1.5rem",
       color: dark,
       fontWeight: 400,
     },

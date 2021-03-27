@@ -10,7 +10,6 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
-import crownIcon from "../../../../assets/icons/crownGreenIcon.svg";
 import {
   ButtonWrapper,
   CardFooter,
@@ -18,7 +17,7 @@ import {
   useStyles,
 } from "./Product.styles";
 
-const Product = ({ product }) => {
+const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
 
@@ -32,7 +31,7 @@ const Product = ({ product }) => {
 
   return (
     <CardWrapper className={classes.container}>
-      {product.isPremium ? (
+      {/* {photo.isPremium ? (
         <IconButton
           disableRipple
           classes={{ root: classes.premiumIcon }}
@@ -40,7 +39,7 @@ const Product = ({ product }) => {
         >
           <img src={crownIcon} alt="Premium" />
         </IconButton>
-      ) : null}
+      ) : null} */}
 
       <IconButton
         ref={likeRef}
@@ -52,30 +51,24 @@ const Product = ({ product }) => {
       </IconButton>
 
       <div className={classes.itemContainer}>
-        <Link
-          className={classes.singlePageLink}
-          to={`/${product.category.toLowerCase()}/${product._id}`}
-        />
-        <Button disableRipple classes={{ root: classes.downloadItem }}>
+        <Link className={classes.singlePageLink} to={`/photo/${photo?.id}`} />
+        <Button
+          href={`${photo?.links.download}?force=true`}
+          disableRipple
+          classes={{ root: classes.downloadItem }}
+        >
           Download
         </Button>
-        <Link to={`/${product.category.toLowerCase()}/${product._id}`}>
-          <img
-            className={classes.image}
-            src={product.image}
-            alt={product.name}
-          />
+        <Link to={`/photo/${photo?.id}`}>
+          <img className={classes.image} src={photo?.urls.regular} alt="" />
         </Link>
       </div>
 
-      <div>
+      <div className={classes.itemFooter}>
         <CardContent>
-          <Link
-            className={classes.titleLink}
-            to={`/${product.category.toLowerCase()}/${product._id}`}
-          >
+          <Link className={classes.titleLink} to={`/photo/${photo?.id}`}>
             <Typography variant="h2" className={classes.title}>
-              {product.name}
+              {photo?.alt_description}
             </Typography>
           </Link>
           <Typography variant="body1" className={classes.itemStatus}>
@@ -85,20 +78,22 @@ const Product = ({ product }) => {
               src={downloadIcon}
               alt="Total Download"
             />{" "}
-            {product.total_downloads}
-            <FavoriteBorderIcon className={classes.heartIcon} /> {product.likes}
+            {/* {photo?.total_downloads} */}
+            66
+            <FavoriteBorderIcon className={classes.heartIcon} /> {photo?.likes}
           </Typography>
         </CardContent>
 
         <CardContent className={classes.cardFooter}>
           <CardFooter>
             <CardMedia
+              component="img"
               className={classes.authorImage}
-              image={product.author.profile_image}
-              title={product.author.name}
+              image={photo?.user.profile_image.medium}
+              title={photo?.user.name}
             />
             <Typography paragraph className={classes.profileName}>
-              {product.author.profile_name}
+              {photo?.user.name}
             </Typography>
           </CardFooter>
 
