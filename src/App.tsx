@@ -29,16 +29,19 @@ import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
 import TagTemplate from "./pages/TagTemplate";
+import jwt_decode from "jwt-decode";
+import PrivateRoute from "./pages/Authentication/PrivateRoute/index";
 
 const App = () => {
   const dispatch = useDispatch();
+  // const [token, setToken] = useState("")
 
   useEffect(() => {
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-
+        
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {
@@ -48,9 +51,28 @@ const App = () => {
         });
       }
     });
+    
+    // Check username/password auth state
+
+    const setUserToken = window.localStorage.getItem("token") || "";
+    if (setUserToken) {
+      const decode = jwt_decode(setUserToken.split(" ")[1]);
+      console.log(decode);
+      if(decode.email){
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decode,
+            token: setUserToken,
+  
+          }
+        })
+      }
+    }
 
     return () => unsubscribe();
   }, [dispatch]);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,8 +80,9 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Admin */}
-        <Route exact path="/admin/dashboard" component={AdminDashboard} />
-        <Route exact path="/admin/upload" component={UploadFiles} />
+        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard}/>
+        {/* <Route exact path="/admin/dashboard" component={AdminDashboard} /> */}
+        <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
         <Route exact path="/admin/reject" component={RejectFiles} />

@@ -5,37 +5,47 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import facebookLogo from "../../../assets/facebookLogo.png";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
-import googleLogo from "../../../assets/googleLogo.png";
+// import googleLogo from "../../../assets/googleLogo.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
-import { auth, googleAuthProvider } from "../../../database";
+// import { auth, googleAuthProvider } from "../../../database";
 import useStyles from "../Auth.styles";
+import jwt_decode from "jwt-decode";
+import GoogleLogin from 'react-google-login';
 
 export const Login = ({ history }) => {
   const classes = useStyles();
   const [value, setValue] = useState(false);
-  const [email, setEmail] = useState("");
+
+  const [username, setUsername] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const clientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+  const userHistory = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } }
+
   useEffect(() => {
-    if (user && user.token) history.push("/admin/dashboard");
+    if (user && user.token) history.replace(from);
 
     document.body.style.backgroundColor = "#143340";
 
     return () => {
       document.body.style.backgroundColor = "";
     };
-  }, [user, history]);
+  });
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
@@ -45,45 +55,84 @@ export const Login = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const result = await auth.signInWithEmailAndPassword(email, password);
-      const { user } = result;
-      const idTokenResult = user?.getIdTokenResult();
-
-      if ((await idTokenResult)?.token) {
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user?.email,
-            token: (await idTokenResult)?.token,
-          },
-        });
-      }
-    } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
-    }
-  };
-
-  const signInWithGoogle = async () => {
-    await auth
-      .signInWithPopup(googleAuthProvider)
-      .then(async (result) => {
-        const { user } = result;
-        const idTokenResult = await user?.getIdTokenResult();
-
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user?.email,
-            token: idTokenResult?.token,
-          },
-        });
+    axios.post("http://174.138.30.55/api/auth/login", {
+      username,
+      password,
+    })
+      .then((response) => {
+        console.log(response.data.token);
+        if (response.data.status) {
+          const token = response.data.token;
+          window.localStorage.setItem("token", token);
+          const decode = jwt_decode(token.split(" ")[1]);
+          if (decode.email) {
+            dispatch({
+              type: "SET_USER",
+              payload: {
+                ...decode,
+                token
+              }
+            })
+          }
+          toast.success("Login Successfully", response)
+          userHistory.replace(from);
+        }
       })
       .catch((error) => {
-        toast.error(error.message);
-      });
+        toast.error("Invalid Email Address or Password", error.message)
+      })
   };
+
+  // const signInWithGoogle = async () => {
+  //   await auth
+  //     .signInWithPopup(googleAuthProvider)
+  //     .then(async (result) => {
+  //       const { user } = result;
+  //       const idTokenResult = await user?.getIdTokenResult();
+
+  //       dispatch({
+  //         type: "LOGGED_IN_USER",
+  //         payload: {
+  //           email: user?.email,
+  //           token: idTokenResult?.token,
+  //         },
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // };
+
+  const handleLogin = async googleData => {
+    const res = await fetch("http://174.138.30.55/api/auth/google_login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    if (data.status) {
+      const token = data.token;
+      window.localStorage.setItem("token", token);
+      const decode = jwt_decode(token.split(" ")[1]);
+      if (decode.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decode,
+            token
+          }
+        })
+      }
+      toast.success("Login Successfully")
+      userHistory.replace(from);
+    }
+    console.log(data);
+    // store returned user somehow
+  }
 
   return (
     <>
@@ -116,12 +165,21 @@ export const Login = ({ history }) => {
 
               <div>
                 <div className={classes.socialsButtons}>
-                  <Button
+                  <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Google"
+                    className={classes.googleBtn}
+                    onSuccess={handleLogin}
+                    onFailure={handleLogin}
+                    cookiePolicy={'single_host_origin'}
+                  >
+                  </GoogleLogin>
+                  {/* <Button
                     className={classes.googleBtn}
                     onClick={signInWithGoogle}
                   >
                     <img src={googleLogo} alt="Signup with Google" />
-                  </Button>
+                  </Button> */}
                   <Button className={classes.facebookBtn}>
                     <img src={facebookLogo} alt="Signup with facebook" />
                   </Button>
@@ -142,8 +200,8 @@ export const Login = ({ history }) => {
                       variant="outlined"
                       label="User name / Email"
                       className={classes.formControl}
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <div className={classes.passwordField}>
                       <TextField
@@ -174,6 +232,7 @@ export const Login = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
+                      disabled={loading & !username || !password}
                     >
                       Signin
                     </Button>

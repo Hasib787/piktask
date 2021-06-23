@@ -1,14 +1,27 @@
 import { Button, TextField, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
 import useStyles from "../Auth.styles";
+import lockIcon from "../../../assets/password.png";
 
 export const ForgetPassword = (): JSX.Element => {
   const classes = useStyles();
   // const [value, setValue] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [value, setValue] = useState(false);
+  const [confValue, setConfValue] = useState(false);
+  const [passwordReset, setPasswordReset] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     document.body.style.backgroundColor = "#143340";
@@ -17,6 +30,72 @@ export const ForgetPassword = (): JSX.Element => {
       document.body.style.backgroundColor = "";
     };
   }, []);
+
+  const handleShowHidePassword = () => {
+    setValue((value) => !value);
+  };
+  const handleConfShowHidePassword = () => {
+    setConfValue((value) => !value);
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setPasswordReset(true);
+
+    if (email && !passwordReset) {
+      axios.post("http://174.138.30.55/api/auth/forgot-password", {
+        email: email
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            console.log("data collect", response);
+          }
+        })
+        .catch((error) => {
+          setPasswordReset(false);
+          toast.error("User Already Exists", error.message)
+        })
+    }
+
+    if (!email) {
+      toast.error("All fields are required");
+      return;
+    }
+
+    if (email) {
+      const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!validateEmail.test(String(email).toLowerCase())) {
+        toast.error("Your email is not validate");
+        return;
+      }
+    }
+    setIsLoading(false);
+  };
+
+  const handleResetFormSubmit = () => {
+    if (passwordReset && token && password && confirmPassword) {
+      axios.post("http://174.138.30.55/api/auth/reset-password", {
+        token: token,
+        password: password,
+        confirmPassword: confirmPassword
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            history.push("/login");
+            console.log("data collect", response);
+
+          }
+        })
+        .catch((error) => {
+          toast.error(error.message)
+        })
+    }
+  }
 
   return (
     <>
@@ -72,20 +151,84 @@ export const ForgetPassword = (): JSX.Element => {
                 </Typography>
 
                 <div>
-                  <form autoComplete="off" className={classes.form}>
-                    <TextField
+                  <form autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
+                    {!passwordReset && <TextField
                       fullWidth
                       variant="outlined"
-                      label="User name / Email"
+                      label="Email"
                       className={classes.formControl}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      className={classes.formButton}
-                    >
-                      Reset Password
-                    </Button>
+                    }
+                    {passwordReset &&
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Token"
+                        className={classes.formControl}
+                        value={token}
+                        onChange={(e) => setToken(e.target.value)}
+                      />
+                    }
+                    {passwordReset &&
+                      <div className={classes.passwordField}>
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Password"
+                          type={value ? "text" : "password"}
+                          className={classes.formControl}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <img
+                          src={lockIcon}
+                          alt="Show or hide password"
+                          onClick={handleShowHidePassword}
+                        />
+                      </div>
+                    }
+                    {passwordReset &&
+                      <div className={classes.passwordField}>
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Confirm Password"
+                          type={confValue ? "text" : "password"}
+                          className={classes.formControl}
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <img
+                          src={lockIcon}
+                          alt="Show or hide password"
+                          onClick={handleConfShowHidePassword}
+                        />
+                      </div>
+                    }
+                    {!passwordReset &&
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        className={classes.formButton}
+                        disabled={isLoading || !email}
+                        type="submit"
+                      >
+                        Reset Password
+                      </Button>
+                    }
+                    {passwordReset &&
+                      <Button onClick={() => handleResetFormSubmit()}
+                        variant="contained"
+                        fullWidth
+                        className={classes.formButton}
+                        disabled={isLoading || !token || !password || !confirmPassword}
+                        type="submit"
+                      >
+                        Set Password
+                      </Button>
+                    }
                   </form>
                   <div className={classes.formButtonGroups}>
                     <Button

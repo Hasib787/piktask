@@ -38,11 +38,13 @@ const CustomPopper = ({
         .signOut()
         .then(() => {
           toast.success("You successfully signed out");
-          history.push("/");
+          // history.push("/");
+          window.location.reload(history.push("/"));
         })
         .catch((error) => {
           console.log("Signout error", error.message);
         });
+      localStorage.clear();
     }
   };
 

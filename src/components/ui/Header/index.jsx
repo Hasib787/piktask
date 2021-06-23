@@ -11,11 +11,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
-import React, {
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../assets/icons/crown.svg";
@@ -42,7 +38,7 @@ const customStyles = makeStyles({
   },
 });
 
-const Header = (): JSX.Element => {
+const Header = () => {
   const classes = useStyles();
   const iconClass = customStyles();
 
@@ -50,6 +46,7 @@ const Header = (): JSX.Element => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const user = useSelector(state => state.user);
+  // const username = useSelector(state => state.user);
   const anchorRef = useRef(null);
 
   const { mobileView } = menuSate;
@@ -119,7 +116,6 @@ const Header = (): JSX.Element => {
             >
               En
             </Button>
-
             {user && user?.token ? (
               <div
                 className={classes.userAvatarArea}

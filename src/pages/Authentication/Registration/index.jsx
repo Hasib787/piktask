@@ -1,34 +1,45 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel, TextField, Typography, } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import facebookLogo from "../../../assets/facebookLogo.png";
+// import facebookLogo from "../../../assets/facebookLogo.png";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
-import googleLogo from "../../../assets/googleLogo.png";
+// import googleLogo from "../../../assets/googleLogo.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
 import { auth } from "../../../database";
 import useStyles from "../Auth.styles";
+import RegistrationTokenModal from "./RegistrationTokenModal/index";
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+import jwt_decode from "jwt-decode";
 
-export const Registration = ({ history }): JSX.Element => {
+export const Registration = ({ history }) => {
   const classes = useStyles();
   const [value, setValue] = useState(false);
+  const [confValue, setConfValue] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const googleClientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+  // const facebookClientId = "168140328625744";
+  const userHistory = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } }
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
+  };
+  const handleConfShowHidePassword = () => {
+    setConfValue((value) => !value);
   };
 
   useEffect(() => {
@@ -46,7 +57,24 @@ export const Registration = ({ history }): JSX.Element => {
 
     setIsLoading(true);
 
-    if (!username || !email || !password) {
+    // const signUpAPI = "http://174.138.30.55/api/auth/signup";
+    axios.post("http://174.138.30.55/api/auth/signup", {
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          openModal()
+          console.log("data collect", response);
+        }
+      })
+      .catch((error) => {
+        toast.error("User Already Exists", error.message)
+      })
+
+    if (!username || !email || !password || !confirmPassword) {
       toast.error("All fields are required");
       return;
     }
@@ -64,6 +92,11 @@ export const Registration = ({ history }): JSX.Element => {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setIsOpen(false);
+      toast.error("Your Password is not match");
+    }
+
     await auth.sendSignInLinkToEmail(email, {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
@@ -74,17 +107,96 @@ export const Registration = ({ history }): JSX.Element => {
       `An email has been sent to ${email}. Please check and verify your email`
     );
 
-    // Save username, email, and password, to localstorage
+    // Save username, email, password and confPassword, to localStorage
     window.localStorage.setItem("userName", username);
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("password", password);
+    window.localStorage.setItem("confirmPassword", confirmPassword);
+
 
     // Remove the existing value
     // setUsername("");
     // setEmail("");
     // setPassword("");
+    // setConfirmPassword("");
     setIsLoading(false);
   };
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
+
+
+  const handleGoogleLogin = async googleData => {
+    const res = await fetch("http://174.138.30.55/api/auth/google_login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    if (data.status) {
+      const token = data.token;
+      window.localStorage.setItem("token", token);
+      const decode = jwt_decode(token.split(" ")[1]);
+      if (decode.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decode,
+            token
+          }
+        })
+      }
+      toast.success("Login Successfully")
+      userHistory.replace(from);
+    }
+    console.log(data);
+    // store returned user somehow
+  }
+
+  const handleFacebookResponse = (response) => {
+    console.log(response);
+  }
+
+  const handleFacebookLogin = async facebookData => {
+    const res = await fetch("http://174.138.30.55/api/auth/facebook_login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: facebookData.tokenId
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    if (data.status) {
+      const token = data.token;
+      window.localStorage.setItem("token", token);
+      const decode = jwt_decode(token.split(" ")[1]);
+      if (decode.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decode,
+            token
+          }
+        })
+      }
+      toast.success("Login Successfully")
+      userHistory.replace(from);
+    }
+    console.log(data);
+  }
+
 
   return (
     <>
@@ -118,12 +230,29 @@ export const Registration = ({ history }): JSX.Element => {
 
               <div>
                 <div className={classes.socialsButtons}>
-                  <Button className={classes.googleBtn}>
+                  <GoogleLogin
+                    clientId={googleClientId}
+                    buttonText="Google"
+                    className={classes.googleBtn}
+                    onSuccess={handleGoogleLogin}
+                    onFailure={handleGoogleLogin}
+                    cookiePolicy={'single_host_origin'}
+                  />
+                  {/* <Button className={classes.googleBtn}>
                     <img src={googleLogo} alt="Signup with Google" />
-                  </Button>
-                  <Button className={classes.facebookBtn}>
+                    <GoogleLoginUser></GoogleLoginUser>
+                  </Button> */}
+                  <FacebookLogin 
+                    appId="168140328625744"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    className={classes.facebookBtn}
+                    onClick={handleFacebookLogin}
+                    callback={handleFacebookResponse}
+                  />
+                  {/* <Button className={classes.facebookBtn}>
                     <img src={facebookLogo} alt="Signup with facebook" />
-                  </Button>
+                  </Button> */}
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>
@@ -169,6 +298,22 @@ export const Registration = ({ history }): JSX.Element => {
                         onClick={handleShowHidePassword}
                       />
                     </div>
+                    <div className={classes.passwordField}>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Confirm Password"
+                        type={confValue ? "text" : "password"}
+                        className={classes.formControl}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                      <img
+                        src={lockIcon}
+                        alt="Show or hide password"
+                        onClick={handleConfShowHidePassword}
+                      />
+                    </div>
 
                     <Typography variant="body1" className={classes.helpText}>
                       Your password must be at least 6 characters long and must
@@ -188,10 +333,11 @@ export const Registration = ({ history }): JSX.Element => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
-                      disabled={isLoading}
+                      disabled={isLoading & !username || !email || !password || !confirmPassword}
                     >
                       Signup
                     </Button>
+                    <RegistrationTokenModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
                   </form>
 
                   <Button
