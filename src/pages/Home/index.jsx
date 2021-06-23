@@ -4,10 +4,7 @@ import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Blog from "../../components/ui/Blog";
 import CallToAction from "../../components/ui/CallToAction";
-import {
-  CategoryCarousel,
-  ProductCarousel,
-} from "../../components/ui/Carousel";
+import { CategoryCarousel, ProductCarousel } from "../../components/ui/Carousel";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";

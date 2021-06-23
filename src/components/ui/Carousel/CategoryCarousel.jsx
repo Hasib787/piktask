@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 import { Container } from "./Carousel.styles";
 
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
+// const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
 export const CategoryCarousel = ({ categories }) => {
   const [photos, setPhotos] = useState([]);
@@ -24,14 +24,17 @@ export const CategoryCarousel = ({ categories }) => {
     try {
       axios
         .get(
-          `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          "http://174.138.30.55/api/categories"
         )
         .then(({ data }) => {
-          setPhotos(data.results);
+          setPhotos(data.categries);
+          console.log(data.categries[0]);
         });
 
       // setPhotos(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error.message);
     }
   }, []);
