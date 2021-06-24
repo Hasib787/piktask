@@ -25,11 +25,11 @@ export const CategoryCarousel = ({ categories }) => {
       axios
         .get(
           // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
-          "http://174.138.30.55/api/categories"
+          "http://174.138.30.55/api/categories?query=Meeting room&per_page=12"
         )
         .then(({ data }) => {
-          setPhotos(data.categries);
-          console.log(data.categries[0]);
+          setPhotos(data.categories);
+          console.log(data.categories[0]);
         });
 
       // setPhotos(data);
@@ -64,7 +64,7 @@ export const CategoryCarousel = ({ categories }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 3,
+          slidesToScroll: 2,
           infinite: true,
         },
       },

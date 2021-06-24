@@ -1,5 +1,6 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import React, { FC } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -14,28 +15,45 @@ import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
 import productsData from "../../data/products.json";
-import { ProductType } from "../../types";
 import useStyles from "./SingleCategory.styles";
 
-type Props = {
-  products: ProductType[];
-};
 
-type Params = {
-  category: string;
-  id: string;
-};
-
-const SingleCategory: FC<Props> = (): JSX.Element => {
+const SingleCategory = () => {
   const classes = useStyles();
   const { products } = productsData;
-  const { id } = useParams<Params>();
+  const { id } = useParams();
   console.log(id);
 
   const product = products.find((product) => product._id === id);
+  console.log(product);
+  console.log(products);
+
+  const [imageDetails, setImageDetails] = useState([]);
+
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          `http://174.138.30.55/api/images/details/${id}`
+        )
+        .then(({ data }) => {
+          setImageDetails(data.categories);
+          console.log(data.categories[0]);
+        });
+
+      // setPhotos(data);
+    } 
+    catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+
+  
 
   return (
     <>
+      {/* <h1>{imageDetails.length}</h1> */}
       <Header />
       <HeroSection
         background={bannerImg}
@@ -52,10 +70,15 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
         >
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
-              <img
+              {/* <img
                 className={classes.image}
                 src={product?.image}
                 alt={product?.name}
+              /> */}
+              <img 
+                className={classes.image} 
+                src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"} 
+                alt="" 
               />
               <div className={classes.buttons}>
                 <Button className={classes.button}>Save</Button>

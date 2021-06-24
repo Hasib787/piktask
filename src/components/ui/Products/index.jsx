@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 import Product from "./Product";
 
 // API Keys
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
-const SECRET_KEY = "naAe3yvyOe4y6lHowvKdYFTi0LG0tbReGmRdZ4NIeZU";
+// const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
+// const SECRET_KEY = "naAe3yvyOe4y6lHowvKdYFTi0LG0tbReGmRdZ4NIeZU";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,9 +27,11 @@ const Products = ({ count = 8, query = "popular" }) => {
   const getPhotos = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
+        // `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
+        `http://174.138.30.55/api/categories?query=${query}&per_page=${count}`
       );
-      setPhotos(data.results);
+      setPhotos(data.categories);
+      // console.log(data.categories[0]);
     } catch (error) {
       console.log(error.message);
     }
