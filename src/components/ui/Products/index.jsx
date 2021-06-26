@@ -31,7 +31,7 @@ const Products = ({ count = 8, query = "popular" }) => {
         `http://174.138.30.55/api/categories?query=${query}&per_page=${count}`
       );
       setPhotos(data.categories);
-      // console.log(data.categories[0]);
+      console.log(data.categories[0]);
     } catch (error) {
       console.log(error.message);
     }

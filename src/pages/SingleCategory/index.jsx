@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 import downArrow from "../../assets/icons/downArrow.svg";
-import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
+// import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
@@ -14,46 +14,34 @@ import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
-import productsData from "../../data/products.json";
 import useStyles from "./SingleCategory.styles";
 
 
 const SingleCategory = () => {
   const classes = useStyles();
-  const { products } = productsData;
   const { id } = useParams();
-  console.log(id);
-
-  const product = products.find((product) => product._id === id);
-  console.log(product);
-  console.log(products);
-
-  const [imageDetails, setImageDetails] = useState([]);
+  const [singleProduct, setSingleProduct] = useState({});
 
   useEffect(() => {
     try {
       axios
         .get(
-          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
-          `http://174.138.30.55/api/images/details/${id}`
+          `http://174.138.30.55/api/categories`
         )
         .then(({ data }) => {
-          setImageDetails(data.categories);
-          console.log(data.categories[0]);
+          if(data?.status) {
+            const single = data?.categories.find(item => item.id === Number(id));
+            setSingleProduct(single)
+          }
         });
-
-      // setPhotos(data);
     } 
     catch (error) {
       console.log(error.message);
     }
-  }, []);
-
-  
+  }, [id]);
 
   return (
     <>
-      {/* <h1>{imageDetails.length}</h1> */}
       <Header />
       <HeroSection
         background={bannerImg}
@@ -112,7 +100,7 @@ const SingleCategory = () => {
 
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <Typography className={classes.title} variant="h2">
-              {product?.name}
+              {singleProduct?.name}
             </Typography>
             <Typography>2 months ago</Typography>
             <Typography className={classes.description} variant="body1">
@@ -129,7 +117,7 @@ const SingleCategory = () => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Image ID: </strong>5879860
+                    <strong>Image ID: </strong>{singleProduct?.id}
                   </Typography>
                   <Typography>
                     <strong>Image Size </strong>2500*2500
@@ -159,7 +147,7 @@ const SingleCategory = () => {
                 </div>
               </Grid>
             </Grid>
-            <Grid container>
+            {/* <Grid container>
               <Grid item className={classes.authorArea}>
                 <div className={classes.authorProfile}>
                   <img
@@ -189,7 +177,7 @@ const SingleCategory = () => {
                   Download
                 </Button>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
 

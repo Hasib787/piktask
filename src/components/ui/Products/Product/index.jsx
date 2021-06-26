@@ -61,7 +61,11 @@ const Product = ({ photo }) => {
         </Button>
         <Link to={`/photo/${photo?.id}`}>
           {/* <img className={classes.image} src={photo?.urls.regular} alt="" /> */}
-          <img className={classes.image} src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"} alt="" />
+          <img
+            className={classes.image}
+            src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"}
+            alt=""
+          />
         </Link>
       </div>
 
