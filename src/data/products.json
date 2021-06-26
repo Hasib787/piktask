@@ -1,0 +1,183 @@
+{
+  "products": [
+    {
+      "_id": "1",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product1.jpg",
+      "total_downloads": 5,
+      "likes": 584,
+      "uploadDate": 1573552614000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Vector",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      },
+      "isPremium": true,
+      "reject": {
+        "status": true,
+        "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim."
+      }
+    },
+    {
+      "_id": "2",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product2.jpg",
+      "total_downloads": 50,
+      "likes": 324,
+      "uploadDate": 1560333414000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Photos",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      },
+      "reject": {
+        "status": true,
+        "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim."
+      }
+    },
+    {
+      "_id": "3",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product3.jpg",
+      "total_downloads": 34,
+      "likes": 512,
+      "uploadDate": 1581501414000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Design",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      },
+      "isPremium": true,
+      "reject": {
+        "status": true,
+        "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim."
+      }
+    },
+    {
+      "_id": "4",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product4.jpg",
+      "total_downloads": 25,
+      "likes": 184,
+      "uploadDate": 1591955814000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Photos",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      }
+    },
+    {
+      "_id": "5",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product5.jpg",
+      "total_downloads": 643,
+      "likes": 384,
+      "uploadDate": 1597841814000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Vector",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      },
+      "isPremium": true
+    },
+    {
+      "_id": "6",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product6.jpg",
+      "total_downloads": 352,
+      "likes": 584,
+      "uploadDate": 1609073814000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Vector",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      }
+    },
+    {
+      "_id": "7",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product7.jpg",
+      "total_downloads": 235,
+      "likes": 584,
+      "uploadDate": 1609851414000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Photos",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      },
+      "reject": {
+        "status": true,
+        "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim."
+      }
+    },
+    {
+      "_id": "8",
+      "name": "Free Premium Z-Fold Brochure Mockup PSD File",
+      "description": "This image is a legal copy and available for commercial use resource. Upgrade to Premium plan and get license authorization. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.",
+      "image": "../images/products/product8.jpg",
+      "total_downloads": 234,
+      "likes": 84,
+      "uploadDate": 1612443414000,
+      "author": {
+        "name": "Aurora Balkhi",
+        "profile_name": "Design Studio",
+        "profile_image": "../images/products/author.png",
+        "social_medias": ["instagram", "facebook", "twitter"]
+      },
+      "category": "Icons",
+      "status": {
+        "free": "Free",
+        "premium": "Premium"
+      }
+    }
+  ]
+}

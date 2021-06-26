@@ -1,0 +1,52 @@
+{
+  "categories": [
+    {
+      "_id": "01",
+      "name": "Vectors",
+      "author": "Petty Carry",
+      "image": "../images/categories/category1.jpg"
+    },
+    {
+      "_id": "02",
+      "name": "Photos",
+      "author": "Aurora Carry",
+      "image": "../images/categories/category2.jpg"
+    },
+    {
+      "_id": "03",
+      "name": "Background",
+      "author": "Petty Carry",
+      "image": "../images/categories/category3.jpg"
+    },
+    {
+      "_id": "04",
+      "name": "Icons",
+      "author": "Aurora Json",
+      "image": "../images/categories/category4.jpg"
+    },
+    {
+      "_id": "05",
+      "name": "Abstract",
+      "author": "Petty Carry",
+      "image": "../images/categories/category1.jpg"
+    },
+    {
+      "_id": "06",
+      "name": "Fashion",
+      "author": "Ketty Patty",
+      "image": "../images/categories/category2.jpg"
+    },
+    {
+      "_id": "07",
+      "name": "Fitness",
+      "author": "Munir Mahmud",
+      "image": "../images/categories/category3.jpg"
+    },
+    {
+      "_id": "09",
+      "name": "Beauty",
+      "author": "Petty Carry",
+      "image": "../images/categories/category4.jpg"
+    }
+  ]
+}
