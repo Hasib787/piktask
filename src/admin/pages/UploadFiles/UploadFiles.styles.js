@@ -71,17 +71,83 @@ const useStyles = makeStyles((theme) => ({
       height: "1px",
     },
   },
-  tag: {
+  //tag
+  tagsInput: {
+    display: "flex",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    minHeight: "48px",
     width: "100%",
     maxWidth: "100%",
-    "& input": {
-      height: "10px",
-      borderRadius: 0,
-    },
-    "& p": {
-      fontSize: "1.5rem",
+    padding: "0 8px",
+    border:" 1px solid rgb(214, 216, 218)",
+    borderRadius: "4px",
+    "&:focus-within": {
+      border: "1.9px solid black",
     },
   },
+  input: {
+    flex: "1",
+    border: "none",
+    height: "46px",
+    fontSize: "14px",
+    padding: "4px 0 0 0",
+   " &:focus": {
+      outline: "transparent",
+    }
+  },
+
+  tags: {
+    display: "flex",
+    flexWrap: "wrap",
+    padding: "0",
+    margin: "8px 0 0 0",
+  },
+  tag: {
+    width: "auto",
+    height: "32px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#fff",
+    padding: "0 8px",
+    fontSize: "14px",
+    listStyle: "none",
+    borderRadius: "4px",
+    margin: "0 8px 8px 0",
+    background: "#dd4b39",
+  },
+  tagTitle: {
+     marginTop: "3px", 
+  },
+  tagCloseIcon: {
+		display: "block",
+		width: "16px",
+		height: "16px",
+		lineHeight: "16px",
+		textAlign: "center",
+		fontSize: "14px",
+		marginLeft: "8px",
+		color: "black",
+		borderRadius: "50%",
+		background: "#fff",
+		cursor: "pointer",
+	},
+  helperText:{
+      fontSize: "14px",
+      color: "gray",
+  },
+  // tag: {
+  //   width: "100%",
+  //   maxWidth: "100%",
+  //   "& input": {
+  //     height: "10px",
+  //     borderRadius: 0,
+  //   },
+  //   "& p": {
+  //     fontSize: "1.5rem",
+  //   },
+  // },
   description: {
     width: "100%",
     maxWidth: "100%",

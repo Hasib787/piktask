@@ -84,29 +84,20 @@ const UploadFiles = () => {
 
   //for tag element
   const [tags, setTags] = useState([]);
-  const [text, setText] = useState("");
 
-  const pushTextToTags = (inputText) => {
-    if (inputText.length === 0 || inputText.key === 'enter' ) {
-      return setText("");
+  const addTags = (event) => {
+    if (event.target.value !== "") {
+      setTags([...tags, event.target.value]);
+      event.target.value = "";
     }
-      if (inputText[inputText.length - 1] === ",") {
-        setTags([...tags, text]);
-        setText("");
-      } else {
-        setText(inputText);
-    }
-   
-    // if(setTags.length === 10){
-      
+    // if (tags.length > 8) {
+    //   if (event.key === "Enter") {
+         
+    //   }
     // }
-    
   };
-
-  const handleCloseTag = (index) => {
-    let newTags = tags;
-    newTags.splice(index, 1);
-    setTags([...tags]);
+  const removeTags = (indexToRemove) => {
+    setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
 
   const handleSubmit = (e) => {
@@ -187,36 +178,30 @@ const UploadFiles = () => {
                 />
 
                 <h4 className={classes.titleText}>Tag</h4>
-                <div className={classes.textArea}>
-                  <div className={classes.tagContainer}>
-                    {Array.isArray(tags) &&
-                      tags.length !== 0 &&
-                      tags.map((tag, index) => (
-                        <div key={index} className={classes.singleTag}>
-                          {tag}
-                          <button
-                            className={classes.closeBtn}
-                            onClick={() => handleCloseTag(index)}
-                          >
-                            <div className={classes.closeIcon}>
-                              <FontAwesomeIcon icon={faTimesCircle} />
-                            </div>
-                          </button>
-                          
-                        </div>
-                      ))}
-                  </div>
-
-                  <TextField
-                    className={classes.tag}
-                    onChange={(event) => pushTextToTags(event.target.value)}
-                    placeholder="Add a tag"
-                    variant="outlined"
-                    fullWidth
-                    helperText="* Press Enter or comma to add tag (Maximum 10 tags)"
-                    value={text}
+                <div className={classes.tagsInput}>
+                  <ul className={classes.tags}>
+                    {tags.map((tag, index) => (
+                      <li key={index} className={classes.tag}>
+                        <span className={classes.tagTitle}>{tag}</span>
+                        <span
+                          className={classes.tagCloseIcon}
+                          onClick={() => removeTags(index)}
+                        >
+                          x
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <input
+                    className={classes.input}
+                    type="text"
+                    onKeyUp={(event) =>
+                      event.key === "Enter" ? addTags(event) : null
+                    }
+                    placeholder="Add Tag"
                   />
                 </div>
+                <p className={classes.helperText}> * Press Enter to add tag (Maximum 10 tags)</p>
 
                 <div className={classes.category}>
                   <h4 className={classes.titleText}>Category</h4>
