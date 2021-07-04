@@ -5,18 +5,22 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
-  TextareaAutosize, 
+  TextareaAutosize,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudUploadAlt,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
+import { array } from "prop-types";
 
 const category = [
   { label: "Animals" },
@@ -78,7 +82,35 @@ const UploadFiles = () => {
     setValue(event.target.value);
   };
 
+  //for tag element
+  const [tags, setTags] = useState([]);
+  const [text, setText] = useState("");
+
+  const pushTextToTags = (inputText) => {
+    if (inputText.length === 0 || inputText.key === 'enter' ) {
+      return setText("");
+    }
+      if (inputText[inputText.length - 1] === ",") {
+        setTags([...tags, text]);
+        setText("");
+      } else {
+        setText(inputText);
+    }
+   
+    // if(setTags.length === 10){
+      
+    // }
+    
+  };
+
+  const handleCloseTag = (index) => {
+    let newTags = tags;
+    newTags.splice(index, 1);
+    setTags([...tags]);
+  };
+
   const handleSubmit = (e) => {
+    e.preventDefault();
     setState({ ...state, [e.target.name]: e.target.checked });
   };
 
@@ -130,9 +162,7 @@ const UploadFiles = () => {
                 </Heading>
               )}
               <Typography className={classes.subtitle} variant="body1">
-                <h3>
-                  The photo must be greater than or equal to: 1600x900 - 2MB{" "}
-                </h3>
+                The photo must be greater than or equal to: 1600x900 - 2MB{" "}
               </Typography>
             </div>
             {onDrop.map}
@@ -155,15 +185,39 @@ const UploadFiles = () => {
                   fullWidth
                   id="fullWidth"
                 />
+
                 <h4 className={classes.titleText}>Tag</h4>
-                <TextField
-                  className={classes.tag}
-                  placeholder="Add a tag"
-                  variant="outlined"
-                  fullWidth
-                  helperText="* Press Enter or comma to add tag (Maximum 10 tags)"
-                  id="fullWidth"
-                />
+                <div className={classes.textArea}>
+                  <div className={classes.tagContainer}>
+                    {Array.isArray(tags) &&
+                      tags.length !== 0 &&
+                      tags.map((tag, index) => (
+                        <div key={index} className={classes.singleTag}>
+                          {tag}
+                          <button
+                            className={classes.closeBtn}
+                            onClick={() => handleCloseTag(index)}
+                          >
+                            <div className={classes.closeIcon}>
+                              <FontAwesomeIcon icon={faTimesCircle} />
+                            </div>
+                          </button>
+                          
+                        </div>
+                      ))}
+                  </div>
+
+                  <TextField
+                    className={classes.tag}
+                    onChange={(event) => pushTextToTags(event.target.value)}
+                    placeholder="Add a tag"
+                    variant="outlined"
+                    fullWidth
+                    helperText="* Press Enter or comma to add tag (Maximum 10 tags)"
+                    value={text}
+                  />
+                </div>
+
                 <div className={classes.category}>
                   <h4 className={classes.titleText}>Category</h4>
                   <Autocomplete
@@ -261,14 +315,10 @@ const UploadFiles = () => {
                   placeholder="Description"
                 />
                 <div className={classes.singleBorder}></div>
-                <button 
-                  variant="contained"
-                  className={classes.uploadBtn}
-                 
-                >
-                  <FontAwesomeIcon 
-                  icon={faCloudUploadAlt} 
-                  className={classes.uploadIcon}
+                <button variant="contained" className={classes.uploadBtn}>
+                  <FontAwesomeIcon
+                    icon={faCloudUploadAlt}
+                    className={classes.uploadIcon}
                   />
                   Upload
                 </button>

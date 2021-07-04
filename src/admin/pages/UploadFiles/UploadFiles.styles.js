@@ -86,13 +86,41 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "100%",
     fontSize: "1.5rem",
-    padding: "1rem", 
+    padding: "1rem",
     borderRadius: "5px",
+  },
+
+  textArea: {
+    display: "flex",
+  },
+  tagContainer: {
+    display: "flex",
+    color: "white",
   },
 
   singleBorder: {
     margin: "2.5rem 0 2rem 0",
     borderBottom: "0.7px solid lightgray",
+  },
+  singleTag: {
+    display: "flex",
+    height: "28px",
+    margin: "3px",
+    padding: "5px",
+    borderRadius: "3px",
+    backgroundColor: "#dd4b39",
+  },
+  closeBtn:{
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+  },
+  closeIcon: {
+    marginTop: "4px",
+    color: "white",
+    fontSize: "11px",
+    borderRadius:"50%",
+    marginLeft: ".5rem",
   },
   uploadBtn: {
     padding: "13px 29px",

@@ -60,7 +60,6 @@ const App = () => {
 
      if(token !== null){
      const decodedToken = jwt_decode(token.split(" ")[1]);
-      console.log(decodedToken);
       if(decodedToken.email){
         dispatch({
           type: "SET_USER",
