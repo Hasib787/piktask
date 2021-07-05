@@ -132,6 +132,10 @@ const UploadFiles = () => {
         <Sidebar />
 
         <main className={classes.content}>
+        <form
+                autoComplete="off"
+                onSubmit={handleSubmit}
+              >
           <div className={classes.uploadContainer}>
             <Heading className={classes.headingTop} tag="h2">
               Upload Your Content
@@ -170,11 +174,7 @@ const UploadFiles = () => {
             </Heading>
 
             <div className={classes.uploadForm}>
-              <form
-                autoComplete="off"
-                className={classes.form}
-                onSubmit={handleSubmit}
-              >
+             
                 <h4 className={classes.titleText}>Title</h4>
                 <TextField
                   InputLabelProps={{ shrink: true }}
@@ -237,13 +237,13 @@ const UploadFiles = () => {
                     options={ItemForSale}
                     getOptionLabel={(option) => option.label}
                     onChange={() => setItemSale(!itemSale)}
+                    defaultValue={ItemForSale.find(v => v.label[0])} 
                     style={{ width: "100%" }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         className={classes.inputField}
                         variant="outlined"
-                        placeholder="Item Free"
                       />
                     )}
                   />
@@ -305,13 +305,13 @@ const UploadFiles = () => {
                   options={typeOfImage}
                   getOptionLabel={(option) => option.label}
                   onChange={() => setImageType(!imageType)}
+                  defaultValue={typeOfImage.find(v => v.label[0])} 
                   style={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       className={classes.inputField}
                       variant="outlined"
-                      placeholder="Image (JPG, PNG, GIF)"
                     />
                   )}
                 />
@@ -380,9 +380,9 @@ const UploadFiles = () => {
                   />
                   Upload
                 </button>
-              </form>
             </div>
           </div>
+          </form>
         </main>
       </div>
 

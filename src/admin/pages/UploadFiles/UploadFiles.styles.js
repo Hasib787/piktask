@@ -179,6 +179,9 @@ const useStyles = makeStyles((theme) => ({
       border: "2px dashed",
       outline: "none",
     },
+    "&:hover": {
+      backgroundColor:"lightGray",
+    },
   },
   uploadIconImage:{
     display: "flex",
