@@ -11,16 +11,13 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCloudUploadAlt,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
-import { array } from "prop-types";
+import { toast } from "react-toastify";
 
 const category = [
   { label: "Animals" },
@@ -82,22 +79,32 @@ const UploadFiles = () => {
     setValue(event.target.value);
   };
 
+  //item for sale
+  const [itemSale, setItemSale] = useState(false);
+
+  //Type of Image
+  const [imageType, setImageType] = useState(false);
+
   //for tag element
   const [tags, setTags] = useState([]);
 
   const addTags = (event) => {
-    if (event.target.value !== "") {
+    if (event.target.value !== "" && tags.length < 8) {
       setTags([...tags, event.target.value]);
       event.target.value = "";
     }
-    // if (tags.length > 8) {
-    //   if (event.key === "Enter") {
-         
-    //   }
-    // }
+    if (tags.length > 7) {
+      toast.error("Tag is full / No more tag");
+    }
   };
   const removeTags = (indexToRemove) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+  };
+
+  const handlePrice = (e) => {
+    if (e.target.value < 0) {
+      e.target.value = 0;
+    }
   };
 
   const handleSubmit = (e) => {
@@ -170,6 +177,7 @@ const UploadFiles = () => {
               >
                 <h4 className={classes.titleText}>Title</h4>
                 <TextField
+                  InputLabelProps={{ shrink: true }}
                   className={classes.inputField}
                   placeholder="Title"
                   variant="outlined"
@@ -201,7 +209,9 @@ const UploadFiles = () => {
                     placeholder="Add Tag"
                   />
                 </div>
-                <p className={classes.helperText}> * Press Enter to add tag (Maximum 10 tags)</p>
+                <p className={classes.helperText}>
+                  * Press Enter to add tag (Maximum 8 tags)
+                </p>
 
                 <div className={classes.category}>
                   <h4 className={classes.titleText}>Category</h4>
@@ -226,6 +236,7 @@ const UploadFiles = () => {
                     id="combo-box-demo"
                     options={ItemForSale}
                     getOptionLabel={(option) => option.label}
+                    onChange={() => setItemSale(!itemSale)}
                     style={{ width: "100%" }}
                     renderInput={(params) => (
                       <TextField
@@ -237,30 +248,63 @@ const UploadFiles = () => {
                     )}
                   />
                 </div>
-                <h4 className={classes.titleText}>
-                  How they can use this photo
-                </h4>
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={usePhoto}
-                  getOptionLabel={(option) => option.label}
-                  style={{ width: "100%" }}
-                  renderInput={(params) => (
+                {itemSale && (
+                  <div>
+                    <h4 className={classes.titleText}>($)Price</h4>
                     <TextField
-                      {...params}
                       className={classes.inputField}
                       variant="outlined"
-                      placeholder="Free for commercial use"
+                      placeholder="Price"
+                      type="number"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onChange={handlePrice}
+                      helperText="* You will receive 95% for each sale"
                     />
-                  )}
-                />
+                    <div className={classes.priceFormats}>
+                      <h3>Price Formats:</h3>
+                      <ul className={classes.listStyle}>
+                        <li>Small photo price:$0</li>
+                        <li>Medium photo price:$0</li>
+                        <li>Large photo price:$0</li>
+                        <li>
+                          Vector price:$0 <span>(If included)</span>
+                        </li>
+                      </ul>
+                      <small>Price minimum:$5 | Price maximum:$100</small>
+                    </div>
+                  </div>
+                )}
+                {!itemSale && (
+                  <div>
+                    <h4 className={classes.titleText}>
+                      How they can use this photo
+                    </h4>
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={usePhoto}
+                      getOptionLabel={(option) => option.label}
+                      style={{ width: "100%" }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          className={classes.inputField}
+                          variant="outlined"
+                          placeholder="Free for commercial use"
+                        />
+                      )}
+                    />
+                  </div>
+                )}
                 <h4 className={classes.titleText}>Type of Image?</h4>
                 <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={typeOfImage}
                   getOptionLabel={(option) => option.label}
+                  onChange={() => setImageType(!imageType)}
                   style={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField
@@ -271,26 +315,55 @@ const UploadFiles = () => {
                     />
                   )}
                 />
-                <h4 className={classes.titleText}>Attribution required</h4>
-                <FormControl component="fieldset">
-                  <RadioGroup
-                    aria-label="Attribution required"
-                    name="Attribution required"
-                    value={value}
-                    onChange={handleChange}
+                {imageType && (
+                  <div
+                    className={classes.imageFileUploadBox}
+                    {...getRootProps()}
+                    style={
+                      isDragActive ? { borderColor: "#117A00" } : undefined
+                    }
                   >
-                    <FormControlLabel
-                      value="Yes"
-                      control={<Radio />}
-                      label="Yes"
-                    />
-                    <FormControlLabel
-                      value="No"
-                      control={<Radio />}
-                      label="No"
-                    />
-                  </RadioGroup>
-                </FormControl>
+                    <div
+                      className={classes.uploadIconImage}
+                      style={
+                        isDragActive
+                          ? { backgroundColor: "#117A00" }
+                          : undefined
+                      }
+                    >
+                      <input {...getInputProps()} />
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+                      <p className={classes.selectFileText}>
+                        Select a file (AI,EPS,PSD,SVG)
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {!itemSale && (
+                  <div>
+                    <h4 className={classes.titleText}>Attribution required</h4>
+                    <FormControl component="fieldset">
+                      <RadioGroup
+                        aria-label="Attribution required"
+                        name="Attribution required"
+                        value={value}
+                        onChange={handleChange}
+                      >
+                        <FormControlLabel
+                          value="Yes"
+                          control={<Radio />}
+                          label="Yes"
+                        />
+                        <FormControlLabel
+                          value="No"
+                          control={<Radio />}
+                          label="No"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </div>
+                )}
 
                 <h4 className={classes.titleText}>Description (Optional)</h4>
                 <TextareaAutosize

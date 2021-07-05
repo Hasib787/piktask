@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       height: "1px",
     },
+    "& p":{
+      fontSize: "14px",
+    },
   },
   //tag
   tagsInput: {
@@ -80,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "100%",
     padding: "0 8px",
-    border:" 1px solid rgb(214, 216, 218)",
+    border: " 1px solid rgb(214, 216, 218)",
     borderRadius: "4px",
     "&:focus-within": {
       border: "1.9px solid black",
@@ -92,11 +95,10 @@ const useStyles = makeStyles((theme) => ({
     height: "46px",
     fontSize: "14px",
     padding: "4px 0 0 0",
-   " &:focus": {
+    " &:focus": {
       outline: "transparent",
-    }
+    },
   },
-
   tags: {
     display: "flex",
     flexWrap: "wrap",
@@ -118,36 +120,75 @@ const useStyles = makeStyles((theme) => ({
     background: "#dd4b39",
   },
   tagTitle: {
-     marginTop: "3px", 
+    marginTop: "3px",
   },
   tagCloseIcon: {
-		display: "block",
-		width: "16px",
-		height: "16px",
-		lineHeight: "16px",
-		textAlign: "center",
-		fontSize: "14px",
-		marginLeft: "8px",
-		color: "black",
-		borderRadius: "50%",
-		background: "#fff",
-		cursor: "pointer",
-	},
-  helperText:{
-      fontSize: "14px",
-      color: "gray",
+    display: "block",
+    width: "16px",
+    height: "16px",
+    lineHeight: "16px",
+    textAlign: "center",
+    fontSize: "14px",
+    marginLeft: "8px",
+    color: "black",
+    borderRadius: "50%",
+    background: "#fff",
+    cursor: "pointer",
   },
-  // tag: {
-  //   width: "100%",
-  //   maxWidth: "100%",
-  //   "& input": {
-  //     height: "10px",
-  //     borderRadius: 0,
-  //   },
-  //   "& p": {
-  //     fontSize: "1.5rem",
-  //   },
-  // },
+  helperText: {
+    marginLeft: "14px",
+    fontSize: "15px",
+    color: "rgba(0, 0, 0, 0.54)",
+  },
+  priceFormats: {
+    width: "100%",
+    color: "white",
+    backgroundColor:"#00a65a",
+    borderColor: "#00a65a",
+    padding: "15px",
+    marginTop: "10px",
+    marginBottom: "20px",
+    border:" 1px solid transparent",
+    borderRadius: "4px",
+    "& h3": {
+      marginBottom: "10px",
+    },
+  },
+  listStyle:{
+    listStyle: "none",
+    lineHeight: "22px",
+    fontSize: "15px",
+    fontWeight: "bold",
+    marginBottom: "5px",
+    "&& span": {
+      fontWeight:"normal",
+    },
+  },
+  imageFileUploadBox: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "5rem",
+    border: "2px dashed",
+    borderColor: "#aeb5b9c2",
+    marginBottom: "2.5rem",
+    marginTop: "1.5rem",
+
+    "&:focus": {
+      border: "2px dashed",
+      outline: "none",
+    },
+  },
+  uploadIconImage:{
+    display: "flex",
+    marginRight: "5px",
+  },
+  selectFileText :{
+    marginLeft: "8px",
+    fontSize: "16px",
+    color: "#333",
+  },
   description: {
     width: "100%",
     maxWidth: "100%",
@@ -155,38 +196,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem",
     borderRadius: "5px",
   },
-
   textArea: {
     display: "flex",
   },
-  tagContainer: {
-    display: "flex",
-    color: "white",
-  },
-
   singleBorder: {
     margin: "2.5rem 0 2rem 0",
     borderBottom: "0.7px solid lightgray",
-  },
-  singleTag: {
-    display: "flex",
-    height: "28px",
-    margin: "3px",
-    padding: "5px",
-    borderRadius: "3px",
-    backgroundColor: "#dd4b39",
-  },
-  closeBtn:{
-    border: "none",
-    background: "transparent",
-    cursor: "pointer",
-  },
-  closeIcon: {
-    marginTop: "4px",
-    color: "white",
-    fontSize: "11px",
-    borderRadius:"50%",
-    marginLeft: ".5rem",
   },
   uploadBtn: {
     padding: "13px 29px",
