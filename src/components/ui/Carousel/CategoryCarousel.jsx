@@ -25,7 +25,8 @@ export const CategoryCarousel = ({ categories }) => {
       axios
         .get(
           // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
-          "http://174.138.30.55/api/categories?query=Meeting room&per_page=12"
+          // "http://174.138.30.55/api/categories?query=Meeting room&per_page=12"
+          "http://174.138.30.55/api/categories"
         )
         .then(({ data }) => {
           setPhotos(data.categories);
@@ -44,6 +45,7 @@ export const CategoryCarousel = ({ categories }) => {
   const settings = {
     dots: false,
     infinite: true,
+    autoplay: true,
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,

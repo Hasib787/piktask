@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 import downArrow from "../../assets/icons/downArrow.svg";
-// import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
+import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
@@ -15,30 +15,51 @@ import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
+import moment from 'moment';
+import { useSelector } from "react-redux";
 
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [singleProduct, setSingleProduct] = useState({});
+  const [imageDetails, setImageDetails] = useState({});
+  const [follower, setFollower] = useState();
+
+  const user = useSelector((state) => state.user);
+  console.log(user.token);
+  const followerId = user.id;
+  console.log(followerId);
 
   useEffect(() => {
+    window.scrollTo(0, 500);
     try {
       axios
         .get(
-          `http://174.138.30.55/api/categories`
+          `http://174.138.30.55/api/images/1`
         )
         .then(({ data }) => {
-          if(data?.status) {
-            const single = data?.categories.find(item => item.id === Number(id));
-            setSingleProduct(single)
+          if(data?.success) {
+          // const singleImage = data?.detail.find(item => item.id === Number(id));
+          setImageDetails(data.detail);
           }
         });
-    } 
+    }
     catch (error) {
       console.log(error.message);
     }
   }, [id]);
+
+  const handleFollower = () => {
+    // const followerAPI = "http://174.138.30.55/api/sellers/followers/4";
+    const followerAPI = `http://174.138.30.55/api/sellers/followers/${id}`;
+    axios.post(followerAPI, {},{
+      headers: {"Authorization" : user.token}
+    })
+    .then((response) => {
+      console.log(response);
+      setFollower(response);
+    })
+  }
 
   return (
     <>
@@ -58,15 +79,10 @@ const SingleCategory = () => {
         >
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
-              {/* <img
+              <img
                 className={classes.image}
-                src={product?.image}
-                alt={product?.name}
-              /> */}
-              <img 
-                className={classes.image} 
-                src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"} 
-                alt="" 
+                src={imageDetails?.thumbnail}
+                alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
                 <Button className={classes.button}>Save</Button>
@@ -100,13 +116,11 @@ const SingleCategory = () => {
 
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <Typography className={classes.title} variant="h2">
-              {singleProduct?.name}
+              {imageDetails?.title}
             </Typography>
-            <Typography>2 months ago</Typography>
+            <Typography>{imageDetails?.creation_ago}</Typography>
             <Typography className={classes.description} variant="body1">
-              This image is a legal copy and available for commercial use
-              resource. <span>Upgrade to Premium</span> plan and get license
-              authorization.
+              {imageDetails?.description}
             </Typography>
             <Typography className={classes.subHeading} variant="subtitle1">
               <span>Designhill License</span>
@@ -117,10 +131,10 @@ const SingleCategory = () => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Image ID: </strong>{singleProduct?.id}
+                    <strong>Image ID: </strong>{imageDetails?.id}
                   </Typography>
                   <Typography>
-                    <strong>Image Size </strong>2500*2500
+                    <strong>Image Size </strong>{imageDetails?.height}*{imageDetails?.width}
                   </Typography>
                 </div>
                 <div className={classes.singleItem}>
@@ -134,10 +148,10 @@ const SingleCategory = () => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Created: </strong>Jan 21, 2021
+                    <strong>Created: </strong>{moment(imageDetails?.createdAt).format("LL")}
                   </Typography>
                   <Typography>
-                    <strong>Category: </strong>Vector
+                    <strong>Category: </strong>{imageDetails?.category?.name}
                   </Typography>
                 </div>
                 <div>
@@ -147,37 +161,38 @@ const SingleCategory = () => {
                 </div>
               </Grid>
             </Grid>
-            {/* <Grid container>
+            <Grid container>
               <Grid item className={classes.authorArea}>
                 <div className={classes.authorProfile}>
                   <img
                     className={classes.authorImg}
-                    src={product?.author?.profile_image}
-                    alt={product?.author?.name}
+                    src={imageDetails?.user?.avatar}
+                    alt={imageDetails?.user?.username}
                   />
                   <div>
                     <Typography className={classes.profileName} variant="h3">
-                      {product?.author?.profile_name}
+                      {imageDetails?.user?.username}
                     </Typography>
                     <Typography
                       className={classes.resourceInfo}
                       variant="body2"
                     >
-                      20 Resources
+                      {imageDetails?.user?.total_resources}
                     </Typography>
                   </div>
                 </div>
-                <Button className={`${classes.authorBtn} ${classes.followBtn}`}>
+                <Button 
+                  className={`${classes.authorBtn} ${classes.followBtn}`}
+                  onClick={() => handleFollower()}
+                >
                   Follow
                 </Button>
-                <Button
-                  className={`${classes.authorBtn} ${classes.downloadBtn}`}
-                >
+                <Button className={`${classes.authorBtn} ${classes.downloadBtn}`}>
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
                 </Button>
               </Grid>
-            </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
 

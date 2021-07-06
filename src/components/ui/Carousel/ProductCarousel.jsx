@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import Product from "../Products/Product";
 import { Container } from "./Carousel.styles";
 
-// const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
@@ -15,7 +14,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
       );
       // setPhotos(data.results);
       setPhotos(data.categories);
-      console.log(data.categories[0]);
+      // console.log(data.categories[0]);
     } catch (error) {
       console.log(error.message);
     }
@@ -23,7 +22,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
 
   useEffect(() => {
     getPhotos();
-  }, []);
+  });
 
   const settings = {
     dots: false,
