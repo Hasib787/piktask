@@ -154,6 +154,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
   },
+  unFollowBtn: {
+    // backgroundColor: theme.palette.primary.main,
+    backgroundColor: "red",
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      // backgroundColor: theme.palette.secondary.main,
+    },
+  },
   downloadBtn: {
     backgroundColor: theme.palette.secondary.main,
     "&:hover": {

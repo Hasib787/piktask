@@ -23,13 +23,26 @@ const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [imageDetails, setImageDetails] = useState({});
-  const [follower, setFollower] = useState();
+  const [follower, setFollower] = useState(false);
 
   const user = useSelector((state) => state.user);
   console.log(user.token);
-  const followerId = user.id;
-  console.log(followerId);
 
+  const isLogged = (user.token === null || user.token === "undefined" || user.token === "");
+
+  if (!isLogged) {
+    axios.get(`http://174.138.30.55/api/sellers/follow_status/5`, {
+      headers: {"Authorization" : user.token}
+    })
+    .then((response) => {
+      console.log(response);
+      if(response.data.status){
+        setFollower(true);
+      }
+    })
+    console.log("Login");
+  }
+ 
   useEffect(() => {
     window.scrollTo(0, 500);
     try {
@@ -49,16 +62,24 @@ const SingleCategory = () => {
     }
   }, [id]);
 
+
+
   const handleFollower = () => {
-    // const followerAPI = "http://174.138.30.55/api/sellers/followers/4";
+      // const followerAPI = "http://174.138.30.55/api/sellers/followers/4";
     const followerAPI = `http://174.138.30.55/api/sellers/followers/${id}`;
     axios.post(followerAPI, {},{
-      headers: {"Authorization" : user.token}
+      headers: {"Authorization" : user.token},
+      body: JSON.stringify({
+        followId : id
+      })
     })
-    .then((response) => {
+    .then(response => {
       console.log(response);
-      setFollower(response);
+      if(response.data.status === 200){
+        setFollower(true);
+      } 
     })
+    
   }
 
   return (
@@ -181,12 +202,25 @@ const SingleCategory = () => {
                     </Typography>
                   </div>
                 </div>
-                <Button 
-                  className={`${classes.authorBtn} ${classes.followBtn}`}
-                  onClick={() => handleFollower()}
-                >
-                  Follow
-                </Button>
+                {
+                  !follower ? (
+                    <Button 
+                      className={`${classes.authorBtn} ${classes.followBtn}`}
+                      onClick={() => handleFollower()}
+                    >
+                      Follow
+                    </Button>
+                    ) 
+                    : (
+                    <Button 
+                      className={`${classes.authorBtn} ${classes.unFollowBtn}`}
+                      onClick={() => handleFollower()}
+                    >
+                      Following
+                    </Button>
+                  )
+                }
+                
                 <Button className={`${classes.authorBtn} ${classes.downloadBtn}`}>
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
