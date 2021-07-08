@@ -23,6 +23,7 @@ import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const category = [
   { label: "Animals" },
@@ -86,6 +87,8 @@ const UploadFiles = () => {
   const [attribution, setAttribution] = useState("yes");
   const [titleError, setTitleError] = useState(false);
 
+  const user = useSelector((state) => state.user);
+
   //item for sale
   const [itemSale, setItemSale] = useState(false);
 
@@ -96,6 +99,7 @@ const UploadFiles = () => {
   const [tags, setTags] = useState([]);
 
   const addTags = (event) => {
+    event.preventDefault();
     if (event.target.value !== "" && tags.length < 8) {
       setTags([...tags, event.target.value]);
       event.target.value = "";
@@ -116,22 +120,34 @@ const UploadFiles = () => {
     setPrice(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     setTitleError(false);
     setState({ ...state, [e.target.name]: e.target.checked });
 
     const formData = new FormData();
-    formData.append("file", imageSelected);
+    formData.append("file", image[0]);
+
     axios
       .post("http://174.138.30.55/api/images/upload", {
-        formData,
+        image,  
+        title,
+        tags,
+        item_for_sale: itemForSale,
+        price,
+        attribution,
+      },
+      {
+        headers: {"Authorization" : user.token},
       })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
           toast.success("Photo added successful");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
 
     if (title === "") {
@@ -146,17 +162,25 @@ const UploadFiles = () => {
     console.log("I'm clicked");
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const files = acceptedFiles.map((file) => (
-      <li key={file.path}>
-        {file.path}
-        {/* <img src={file.path} alt="Dropped file"/> */}
-      </li>
-    ));
+  const maxSize = 2097152;
 
-    return files;
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const {
+    isDragActive,
+    getRootProps,
+    getInputProps,
+    acceptedFiles,
+  } = useDropzone({
+    onDrop,
+    accept: ".png, .jpg, .jpeg",
+    minSize: 0,
+    maxSize,
+  });
+
+  
 
   return (
     <>
@@ -171,24 +195,37 @@ const UploadFiles = () => {
               <div className={classes.basicInfo}>
                 <ul>
                   <li>
-                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faExclamationTriangle} />
+                    <FontAwesomeIcon
+                      className={classes.basicInfoIcon}
+                      icon={faExclamationTriangle}
+                    />
                     Please read the terms and conditions to avoid sanctions
                   </li>
                   <li>
-                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    <FontAwesomeIcon
+                      className={classes.basicInfoIcon}
+                      icon={faInfoCircle}
+                    />
                     You can upload 2 photos per day
                   </li>
                   <li>
-                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    <FontAwesomeIcon
+                      className={classes.basicInfoIcon}
+                      icon={faInfoCircle}
+                    />
                     It is not allowed images of violence or pornographic content
                     of any kind
                   </li>
                   <li>
-                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    <FontAwesomeIcon
+                      className={classes.basicInfoIcon}
+                      icon={faInfoCircle}
+                    />
                     Photos must be of Authoring
                   </li>
                 </ul>
               </div>
+
               <Heading className={classes.headingTop} tag="h2">
                 Upload Your Content
               </Heading>
@@ -206,7 +243,7 @@ const UploadFiles = () => {
                 >
                   <input
                     {...getInputProps()}
-                    // onDrop={handleDrop}
+                    
                   />
                   <FontAwesomeIcon icon={faCloudUploadAlt} />
                 </div>
@@ -218,10 +255,22 @@ const UploadFiles = () => {
                     Drag and drop or click to upload an photo
                   </Heading>
                 )}
+                {isDragActive &&  "Drop it like it's hot!"}
+                
+             
                 <Typography className={classes.subtitle} variant="body1">
                   The photo must be greater than or equal to: 1600x900 - 2MB{" "}
                 </Typography>
               </div>
+
+              <ul className="list-group mt-2">
+                {acceptedFiles.length > 0 &&
+                  acceptedFiles.map((acceptedFile) => (
+                    <li className="list-group-item list-group-item-success">
+                      {acceptedFile.name}
+                    </li>
+                  ))}
+              </ul>
 
               <Heading tag="h2">
                 What type of content are you going to upload?
