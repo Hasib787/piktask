@@ -43,7 +43,7 @@ const SingleCategory = () => {
           // const singleImage = data?.detail.find(item => item.id === Number(id));
           setImageDetails(data.detail);
           console.log("isLogged",isLogged);
-          console.log("use-token",user.token);
+          console.log("user-token",user.token);
 
           if (isLogged) {
             axios.get(`http://174.138.30.55/api/sellers/follow_status/${data.detail.user_id}`, {
@@ -67,7 +67,7 @@ const SingleCategory = () => {
       console.log(error.message);
     }
 
-  }, [id]);
+  }, [id, user.token]);
 
   
 
