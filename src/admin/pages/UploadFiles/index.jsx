@@ -138,7 +138,7 @@ const UploadFiles = () => {
         attribution,
       },
       {
-        headers: {"Authorization" : user.token},
+        headers: {"Authorization" : 'Bearer ' + user.token},
       })
       .then((res) => {
         console.log(res);
