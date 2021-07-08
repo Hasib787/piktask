@@ -44,7 +44,6 @@ const SingleCategory = () => {
           setImageDetails(data.detail);
           console.log("isLogged",isLogged);
           console.log("user-token",user.token);
-
           if (isLogged) {
             axios.get(`http://174.138.30.55/api/sellers/follow_status/${data.detail.user_id}`, {
               headers: {"Authorization" : user.token}
@@ -58,6 +57,7 @@ const SingleCategory = () => {
               }
             })
             console.log("Login");
+            console.log("userLogin-token",user.token);
           }
           }
           
