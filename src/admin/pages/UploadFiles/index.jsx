@@ -11,13 +11,18 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCloudUploadAlt,
+  faExclamationTriangle,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const category = [
   { label: "Animals" },
@@ -72,12 +77,14 @@ const UploadFiles = () => {
     pngPreviewSize: false,
     pngFileTitle: false,
   });
-
-  const [value, setValue] = useState("yes");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  const [imageSelected, setImageSelected] = useState("");
+  const [title, setTitle] = useState("");
+  const [itemForSale, setItemForSale] = useState("");
+  const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [additionalImage, setAdditionalImage] = useState("");
+  const [attribution, setAttribution] = useState("yes");
+  const [titleError, setTitleError] = useState(false);
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -97,6 +104,7 @@ const UploadFiles = () => {
       toast.error("Tag is full / No more tag");
     }
   };
+
   const removeTags = (indexToRemove) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
@@ -105,11 +113,37 @@ const UploadFiles = () => {
     if (e.target.value < 0) {
       e.target.value = 0;
     }
+    setPrice(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setTitleError(false);
     setState({ ...state, [e.target.name]: e.target.checked });
+
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    axios
+      .post("http://174.138.30.55/api/images/upload", {
+        formData,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toast.success("Photo added successful");
+        }
+      });
+
+    if (title === "") {
+      setTitleError(true);
+      toast.error("The Title field is required.");
+    }
+
+    if (tags.length < 0) {
+      toast.error("The tag field is required");
+    }
+
+    console.log("I'm clicked");
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -132,49 +166,68 @@ const UploadFiles = () => {
         <Sidebar />
 
         <main className={classes.content}>
-        <form
-                autoComplete="off"
-                onSubmit={handleSubmit}
-              >
-          <div className={classes.uploadContainer}>
-            <Heading className={classes.headingTop} tag="h2">
-              Upload Your Content
-            </Heading>
+          <form autoComplete="off">
+            <div className={classes.uploadContainer}>
+              <div className={classes.basicInfo}>
+                <ul>
+                  <li>
+                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faExclamationTriangle} />
+                    Please read the terms and conditions to avoid sanctions
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    You can upload 2 photos per day
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    It is not allowed images of violence or pornographic content
+                    of any kind
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={classes.basicInfoIcon} icon={faInfoCircle} />
+                    Photos must be of Authoring
+                  </li>
+                </ul>
+              </div>
+              <Heading className={classes.headingTop} tag="h2">
+                Upload Your Content
+              </Heading>
 
-            <div
-              className={classes.fileUploadContainer}
-              {...getRootProps()}
-              style={isDragActive ? { borderColor: "#117A00" } : undefined}
-            >
               <div
-                className={classes.uploadIconWrapper}
-                style={
-                  isDragActive ? { backgroundColor: "#117A00" } : undefined
-                }
+                className={classes.fileUploadContainer}
+                {...getRootProps()}
+                style={isDragActive ? { borderColor: "#117A00" } : undefined}
               >
-                <input {...getInputProps()} />
-                <FontAwesomeIcon icon={faCloudUploadAlt} />
+                <div
+                  className={classes.uploadIconWrapper}
+                  style={
+                    isDragActive ? { backgroundColor: "#117A00" } : undefined
+                  }
+                >
+                  <input
+                    {...getInputProps()}
+                    // onDrop={handleDrop}
+                  />
+                  <FontAwesomeIcon icon={faCloudUploadAlt} />
+                </div>
+
+                {isDragActive ? (
+                  <Heading tag="h2">Drop the files here...</Heading>
+                ) : (
+                  <Heading tag="h2">
+                    Drag and drop or click to upload an photo
+                  </Heading>
+                )}
+                <Typography className={classes.subtitle} variant="body1">
+                  The photo must be greater than or equal to: 1600x900 - 2MB{" "}
+                </Typography>
               </div>
 
-              {isDragActive ? (
-                <Heading tag="h2">Drop the files here...</Heading>
-              ) : (
-                <Heading tag="h2">
-                  Drag and drop or click to upload an photo
-                </Heading>
-              )}
-              <Typography className={classes.subtitle} variant="body1">
-                The photo must be greater than or equal to: 1600x900 - 2MB{" "}
-              </Typography>
-            </div>
-            {onDrop.map}
+              <Heading tag="h2">
+                What type of content are you going to upload?
+              </Heading>
 
-            <Heading tag="h2">
-              What type of content are you going to upload?
-            </Heading>
-
-            <div className={classes.uploadForm}>
-             
+              <div className={classes.uploadForm}>
                 <h4 className={classes.titleText}>Title</h4>
                 <TextField
                   InputLabelProps={{ shrink: true }}
@@ -182,7 +235,10 @@ const UploadFiles = () => {
                   placeholder="Title"
                   variant="outlined"
                   fullWidth
-                  id="fullWidth"
+                  required
+                  error={titleError}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <h4 className={classes.titleText}>Tag</h4>
@@ -237,13 +293,15 @@ const UploadFiles = () => {
                     options={ItemForSale}
                     getOptionLabel={(option) => option.label}
                     onChange={() => setItemSale(!itemSale)}
-                    defaultValue={ItemForSale.find(v => v.label[0])} 
+                    defaultValue={ItemForSale.find((v) => v.label[0])}
                     style={{ width: "100%" }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         className={classes.inputField}
                         variant="outlined"
+                        value={itemForSale}
+                        onChange={(e) => setItemForSale(e.target.value)}
                       />
                     )}
                   />
@@ -259,6 +317,7 @@ const UploadFiles = () => {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      value={price}
                       onChange={handlePrice}
                       helperText="* You will receive 95% for each sale"
                     />
@@ -305,7 +364,7 @@ const UploadFiles = () => {
                   options={typeOfImage}
                   getOptionLabel={(option) => option.label}
                   onChange={() => setImageType(!imageType)}
-                  defaultValue={typeOfImage.find(v => v.label[0])} 
+                  defaultValue={typeOfImage.find((v) => v.label[0])}
                   style={{ width: "100%" }}
                   renderInput={(params) => (
                     <TextField
@@ -347,8 +406,8 @@ const UploadFiles = () => {
                       <RadioGroup
                         aria-label="Attribution required"
                         name="Attribution required"
-                        value={value}
-                        onChange={handleChange}
+                        value={attribution}
+                        onChange={(e) => setAttribution(e.target.value)}
                       >
                         <FormControlLabel
                           value="Yes"
@@ -373,15 +432,19 @@ const UploadFiles = () => {
                   placeholder="Description"
                 />
                 <div className={classes.singleBorder}></div>
-                <button variant="contained" className={classes.uploadBtn}>
+                <button
+                  variant="contained"
+                  className={classes.uploadBtn}
+                  onClick={handleSubmit}
+                >
                   <FontAwesomeIcon
                     icon={faCloudUploadAlt}
                     className={classes.uploadIcon}
                   />
                   Upload
                 </button>
+              </div>
             </div>
-          </div>
           </form>
         </main>
       </div>

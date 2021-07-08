@@ -17,12 +17,28 @@ const useStyles = makeStyles((theme) => ({
   uploadContainer: {
     marginBottom: "3rem",
   },
+  basicInfo: {
+    minWidth: "100%",
+    borderColor: "#e08e0b",
+    backgroundColor: "#f39c12",
+    color: "white",
+    padding: "2rem",
+    marginBottom: "2rem",
+    borderRadius: "5px",
+    "& ul": {
+      listStyle: "none",
+      lineHeight: "32px",
+    },
+  },
+  basicInfoIcon: {
+    marginRight: "8px",
+  },
   fileUploadContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: "40rem",
+    minHeight: "30rem",
     border: "2px dashed",
     borderColor: "#114960",
     marginBottom: "2.5rem",
@@ -70,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       height: "1px",
     },
-    "& p":{
+    "& p": {
       fontSize: "14px",
     },
   },
@@ -117,7 +133,7 @@ const useStyles = makeStyles((theme) => ({
     listStyle: "none",
     borderRadius: "4px",
     margin: "0 8px 8px 0",
-    background: "#dd4b39",
+    background: "#00a65a",
   },
   tagTitle: {
     marginTop: "3px",
@@ -143,25 +159,25 @@ const useStyles = makeStyles((theme) => ({
   priceFormats: {
     width: "100%",
     color: "white",
-    backgroundColor:"#00a65a",
+    backgroundColor: "#00a65a",
     borderColor: "#00a65a",
     padding: "15px",
     marginTop: "10px",
     marginBottom: "20px",
-    border:" 1px solid transparent",
+    border: " 1px solid transparent",
     borderRadius: "4px",
     "& h3": {
       marginBottom: "10px",
     },
   },
-  listStyle:{
+  listStyle: {
     listStyle: "none",
     lineHeight: "22px",
     fontSize: "15px",
     fontWeight: "bold",
     marginBottom: "5px",
     "&& span": {
-      fontWeight:"normal",
+      fontWeight: "normal",
     },
   },
   imageFileUploadBox: {
@@ -180,14 +196,14 @@ const useStyles = makeStyles((theme) => ({
       outline: "none",
     },
     "&:hover": {
-      backgroundColor:"lightGray",
+      backgroundColor: "lightGray",
     },
   },
-  uploadIconImage:{
+  uploadIconImage: {
     display: "flex",
     marginRight: "5px",
   },
-  selectFileText :{
+  selectFileText: {
     marginLeft: "8px",
     fontSize: "16px",
     color: "#333",
