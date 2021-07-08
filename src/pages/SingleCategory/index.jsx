@@ -29,19 +29,6 @@ const SingleCategory = () => {
   console.log(user.token);
 
   const isLogged = (user.token === null || user.token === "undefined" || user.token === "");
-
-  if (!isLogged) {
-    axios.get(`http://174.138.30.55/api/sellers/follow_status/5`, {
-      headers: {"Authorization" : user.token}
-    })
-    .then((response) => {
-      console.log(response);
-      if(response.data.status){
-        setFollower(true);
-      }
-    })
-    console.log("Login");
-  }
  
   useEffect(() => {
     window.scrollTo(0, 500);
@@ -51,33 +38,52 @@ const SingleCategory = () => {
           `http://174.138.30.55/api/images/1`
         )
         .then(({ data }) => {
+          console.log(data.detail);
           if(data?.success) {
           // const singleImage = data?.detail.find(item => item.id === Number(id));
           setImageDetails(data.detail);
+          console.log("isLogged",isLogged);
+          console.log("use-token",user.token);
+
+          if (isLogged) {
+            axios.get(`http://174.138.30.55/api/sellers/follow_status/${data.detail.user_id}`, {
+              headers: {"Authorization" : user.token}
+            })
+            .then((response) => {
+              console.log(response);
+              if(response.data.status){
+                setFollower(true);
+              } else{
+                setFollower(false);
+              }
+            })
+            console.log("Login");
           }
+          }
+          
         });
     }
     catch (error) {
       console.log(error.message);
     }
+
   }, [id]);
 
-
+  
 
   const handleFollower = () => {
       // const followerAPI = "http://174.138.30.55/api/sellers/followers/4";
-    const followerAPI = `http://174.138.30.55/api/sellers/followers/${id}`;
+    const followerAPI = `http://174.138.30.55/api/sellers/followers/${imageDetails.user_id}`;
     axios.post(followerAPI, {},{
-      headers: {"Authorization" : user.token},
-      body: JSON.stringify({
-        followId : id
-      })
+      headers: {"Authorization" : user.token}
     })
-    .then(response => {
+    .then((response) => {
       console.log(response);
-      if(response.data.status === 200){
+      if(response.data.status){
         setFollower(true);
-      } 
+      } else{
+        setFollower(false);
+      }
     })
     
   }
@@ -206,7 +212,7 @@ const SingleCategory = () => {
                   !follower ? (
                     <Button 
                       className={`${classes.authorBtn} ${classes.followBtn}`}
-                      onClick={() => handleFollower()}
+                      onClick={handleFollower}
                     >
                       Follow
                     </Button>
@@ -214,7 +220,7 @@ const SingleCategory = () => {
                     : (
                     <Button 
                       className={`${classes.authorBtn} ${classes.unFollowBtn}`}
-                      onClick={() => handleFollower()}
+                      onClick={handleFollower}
                     >
                       Following
                     </Button>
