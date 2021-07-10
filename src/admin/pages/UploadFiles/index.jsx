@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+
 const category = [
   { label: "Animals" },
   { label: "Architecture" },

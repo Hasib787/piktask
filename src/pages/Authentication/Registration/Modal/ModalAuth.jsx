@@ -31,7 +31,7 @@ const ModalAuth = ({ modalIsOpen, closeModal }) => {
   const { from } = location.state || { from: { pathname: '/login' } };
 
   const handleSubmit = (e) => {
-    axios.post("http://174.138.30.55/api/auth/verify/account", {
+    axios.post("https://piktask.com/api/auth/verify/account", {
       token: authToken,
     }).then((res) => {
       if (res.status === 200) {
