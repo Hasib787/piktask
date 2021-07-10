@@ -85,6 +85,7 @@ const UploadFiles = () => {
   const [image, setImage] = useState("");
   const [additionalImage, setAdditionalImage] = useState("");
   const [attribution, setAttribution] = useState("yes");
+  const [usages, setUsages] = useState("");
   const [titleError, setTitleError] = useState(false);
 
   const user = useSelector((state) => state.user);
@@ -109,6 +110,7 @@ const UploadFiles = () => {
     }
   };
 
+
   const removeTags = (indexToRemove) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
@@ -129,19 +131,19 @@ const UploadFiles = () => {
     formData.append("file", image[0]);
 
     axios
-      .post("http://174.138.30.55/api/images/upload", {
+      .post("https://piktask.com/api/images/upload", {
         image,  
         title,
         tags,
         item_for_sale: itemForSale,
         price,
+        usages,
         attribution,
       },
       {
         headers: {"Authorization" : user.token},
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           toast.success("Photo added successful");
         }
@@ -160,11 +162,13 @@ const UploadFiles = () => {
     }
 
     console.log("I'm clicked");
+    console.log("token",user.token)
   };
 
   const maxSize = 2097152;
 
   const onDrop = useCallback((acceptedFiles) => {
+
     console.log(acceptedFiles);
   }, []);
 
@@ -175,10 +179,11 @@ const UploadFiles = () => {
     acceptedFiles,
   } = useDropzone({
     onDrop,
-    accept: ".png, .jpg, .jpeg",
+    accept: ".png, .gif, .jpg, .jpeg",
     minSize: 0,
     maxSize,
   });
+
 
   
 
@@ -190,7 +195,10 @@ const UploadFiles = () => {
         <Sidebar />
 
         <main className={classes.content}>
-          <form autoComplete="off">
+          <form 
+          autoComplete="off"
+          onSubmit={handleSubmit}
+          >
             <div className={classes.uploadContainer}>
               <div className={classes.basicInfo}>
                 <ul>
@@ -243,7 +251,7 @@ const UploadFiles = () => {
                 >
                   <input
                     {...getInputProps()}
-                    
+                   
                   />
                   <FontAwesomeIcon icon={faCloudUploadAlt} />
                 </div>
@@ -266,7 +274,7 @@ const UploadFiles = () => {
               <ul className="list-group mt-2">
                 {acceptedFiles.length > 0 &&
                   acceptedFiles.map((acceptedFile) => (
-                    <li className="list-group-item list-group-item-success">
+                    <li key={[0]} className="list-group-item list-group-item-success">
                       {acceptedFile.name}
                     </li>
                   ))}
@@ -400,9 +408,11 @@ const UploadFiles = () => {
                           {...params}
                           className={classes.inputField}
                           variant="outlined"
+                          value={usages}
+                          onChange={(e)=> setUsages(e.target.value)}
                           placeholder="Free for commercial use"
                         />
-                      )}
+                      )}  
                     />
                   </div>
                 )}
@@ -484,7 +494,10 @@ const UploadFiles = () => {
                 <button
                   variant="contained"
                   className={classes.uploadBtn}
-                  onClick={handleSubmit}
+                  type="submit"
+                  onKeyPress={e => {
+                    if (e.key === 'Enter') e.preventDefault();
+                  }}
                 >
                   <FontAwesomeIcon
                     icon={faCloudUploadAlt}
