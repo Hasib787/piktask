@@ -23,8 +23,8 @@ const Products = ({ count = 8, query = "popular" }) => {
   const getPhotos = async () => {
     try {
       const { data } = await axios.get(
-        // `http://174.138.30.55/api/categories?query=${query}&per_page=${count}`
-        `http://174.138.30.55/api/categories?query=${query}&per_page=${count}`
+        // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
+        `https://piktask.com/api/categories?query=${query}&per_page=${count}`
       );
       setPhotos(data.categories);
       // console.log(data.categories[0]);

@@ -54,7 +54,7 @@ export const Registration = ({ history }) => {
 
     setIsLoading(true);
 
-    axios.post("http://174.138.30.55/api/auth/signup", {
+    axios.post("https://piktask.com/api/auth/signup", {
       username: username,
       email: email,
       password: password,
@@ -129,7 +129,7 @@ export const Registration = ({ history }) => {
 
 
   const handleGoogleLogin = async googleData => {
-    const res = await fetch("http://174.138.30.55/api/auth/google_login", {
+    const res = await fetch("https://piktask.com/api/auth/google_login", {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId
@@ -164,7 +164,7 @@ export const Registration = ({ history }) => {
   }
 
   const handleFacebookLogin = async facebookData => {
-    const res = await fetch("http://174.138.30.55/api/auth/facebook_login", {
+    const res = await fetch("https://piktask.com/api/auth/facebook_login", {
       method: "POST",
       body: JSON.stringify({
         token: facebookData.tokenId

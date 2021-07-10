@@ -10,7 +10,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const getPhotos = async () => {
     try {
       const { data } = await axios.get(
-        `http://174.138.30.55/api/categories?query=${query}&per_page=${count}`
+        `https://piktask.com/api/categories?query=${query}&per_page=${count}`
       );
       // setPhotos(data.results);
       setPhotos(data.categories);

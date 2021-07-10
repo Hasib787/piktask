@@ -36,7 +36,7 @@ const SingleCategory = () => {
     try {
       axios
         .get(
-          `http://174.138.30.55/api/images/1`
+          `https://piktask.com/api/images/1`
         )
         .then(({ data }) => {
           console.log(data.detail);
@@ -45,7 +45,7 @@ const SingleCategory = () => {
           setImageDetails(data.detail);
           console.log("user-token",user.token);
           if (user.token) {
-            axios.get(`http://174.138.30.55/api/sellers/follow_status/${data.detail.user_id}`, {
+            axios.get(`https://piktask.com/api/sellers/follow_status/${data.detail.user_id}`, {
               headers: {"Authorization" : user.token}
             })
             .then((response) => {
@@ -76,8 +76,8 @@ const SingleCategory = () => {
     if (!user.token) {
       history.push("/login")
     } else{
-        // const followerAPI = "http://174.138.30.55/api/sellers/followers/4";
-      const followerAPI = `http://174.138.30.55/api/sellers/followers/${imageDetails.user_id}`;
+        // const followerAPI = "https://piktask.com/api/sellers/followers/4";
+      const followerAPI = `https://piktask.com/api/sellers/followers/${imageDetails.user_id}`;
       axios.post(followerAPI, {},{
         headers: {"Authorization" : user.token}
       })
