@@ -45,7 +45,7 @@ export const ForgetPassword = (): JSX.Element => {
     setPasswordReset(true);
 
     if (email && !passwordReset) {
-      axios.post("http://174.138.30.55/api/auth/forgot-password", {
+      axios.post("https://piktask.com/api/auth/forgot-password", {
         email: email
       })
         .then((response) => {
@@ -78,7 +78,7 @@ export const ForgetPassword = (): JSX.Element => {
 
   const handleResetFormSubmit = () => {
     if (passwordReset && token && password && confirmPassword) {
-      axios.post("http://174.138.30.55/api/auth/reset-password", {
+      axios.post("https://piktask.com/api/auth/reset-password", {
         token: token,
         password: password,
         confirmPassword: confirmPassword

@@ -4,22 +4,19 @@ import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Blog from "../../components/ui/Blog";
 import CallToAction from "../../components/ui/CallToAction";
-import {
-  CategoryCarousel,
-  ProductCarousel,
-} from "../../components/ui/Carousel";
+import { CategoryCarousel, ProductCarousel } from "../../components/ui/Carousel";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import categoryData from "../../data/category.json";
-import productData from "../../data/products.json";
+// import productData from "../../data/products.json";
 import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const { products } = productData;
+  // const { products } = productData;
   const { categories } = categoryData;
 
   return (

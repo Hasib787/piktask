@@ -55,7 +55,7 @@ export const Login = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    axios.post("http://174.138.30.55/api/auth/login", {
+    axios.post("https://piktask.com/api/auth/login", {
       username,
       password,
     })
@@ -104,7 +104,7 @@ export const Login = ({ history }) => {
   // };
 
   const handleLogin = async googleData => {
-    const res = await fetch("http://174.138.30.55/api/auth/google_login", {
+    const res = await fetch("https://piktask.com/api/auth/google_login", {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId

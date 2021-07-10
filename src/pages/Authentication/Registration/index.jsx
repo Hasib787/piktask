@@ -4,10 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-// import facebookLogo from "../../../assets/facebookLogo.png";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
-// import googleLogo from "../../../assets/googleLogo.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
 import { auth } from "../../../database";
@@ -30,7 +28,6 @@ export const Registration = ({ history }) => {
   const dispatch = useDispatch();
 
   const googleClientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
-  // const facebookClientId = "168140328625744";
   const userHistory = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } }
@@ -57,8 +54,7 @@ export const Registration = ({ history }) => {
 
     setIsLoading(true);
 
-    // const signUpAPI = "http://174.138.30.55/api/auth/signup";
-    axios.post("http://174.138.30.55/api/auth/signup", {
+    axios.post("https://piktask.com/api/auth/signup", {
       username: username,
       email: email,
       password: password,
@@ -134,7 +130,7 @@ export const Registration = ({ history }) => {
 
 
   const handleGoogleLogin = async googleData => {
-    const res = await fetch("http://174.138.30.55/api/auth/google_login", {
+    const res = await fetch("https://piktask.com/api/auth/google_login", {
       method: "POST",
       body: JSON.stringify({ 
         token: googleData.tokenId
@@ -169,7 +165,7 @@ export const Registration = ({ history }) => {
   }
 
   const handleFacebookLogin = async facebookData => {
-    const res = await fetch("http://174.138.30.55/api/auth/facebook_login", {
+    const res = await fetch("https://piktask.com/api/auth/facebook_login", {
       method: "POST",
       body: JSON.stringify({
         token: facebookData.tokenId
@@ -239,10 +235,6 @@ export const Registration = ({ history }) => {
                     onFailure={handleGoogleLogin}
                     cookiePolicy={'single_host_origin'}
                   />
-                  {/* <Button className={classes.googleBtn}>
-                    <img src={googleLogo} alt="Signup with Google" />
-                    <GoogleLoginUser></GoogleLoginUser>
-                  </Button> */}
                   <FacebookLogin 
                     appId="168140328625744"
                     autoLoad={false}
@@ -251,9 +243,6 @@ export const Registration = ({ history }) => {
                     onClick={handleFacebookLogin}
                     callback={handleFacebookResponse}
                   />
-                  {/* <Button className={classes.facebookBtn}>
-                    <img src={facebookLogo} alt="Signup with facebook" />
-                  </Button> */}
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>

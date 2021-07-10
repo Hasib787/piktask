@@ -6,12 +6,12 @@ export const Item = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  width: 395px;
+  width: 100%;
 
   img {
     cursor: all-scroll;
     width: 100%;
-    height: 303px;
+    height: 240px;
     object-fit: cover;
   }
 `;

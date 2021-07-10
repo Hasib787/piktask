@@ -4,16 +4,17 @@ import "slick-carousel/slick/slick.css";
 import Product from "../Products/Product";
 import { Container } from "./Carousel.styles";
 
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
   const getPhotos = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
+        `https://piktask.com/api/categories?query=${query}&per_page=${count}`
       );
-      setPhotos(data.results);
+      // setPhotos(data.results);
+      setPhotos(data.categories);
+      // console.log(data.categories[0]);
     } catch (error) {
       console.log(error.message);
     }
@@ -21,7 +22,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
 
   useEffect(() => {
     getPhotos();
-  }, []);
+  });
 
   const settings = {
     dots: false,
@@ -73,8 +74,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
   return (
     <>
       <Container {...settings}>
-        {photos.length > 0 &&
-          photos.map((photo) => <Product key={photo.id} photo={photo} />)}
+        {photos.map((photo) => <Product key={photo.id} photo={photo} />)}
       </Container>
     </>
   );
