@@ -129,13 +129,14 @@ export const Registration = ({ history }) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    
   }
 
 
   const handleGoogleLogin = async googleData => {
     const res = await fetch("http://174.138.30.55/api/auth/google_login", {
       method: "POST",
-      body: JSON.stringify({
+      body: JSON.stringify({ 
         token: googleData.tokenId
       }),
       headers: {
