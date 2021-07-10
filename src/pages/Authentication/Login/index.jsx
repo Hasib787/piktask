@@ -35,15 +35,6 @@ export const Login = ({ history }) => {
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '/' } };
 
-  // const handleResponse = () =>{
-  //       if (user && user.token) {
-  //         history.replace(from);
-  //     }else{
-  //       history.push('/');
-  //     }
-  // }
-
-
   useEffect(() => {
     if (user && user.token) history.replace(from);
 
@@ -57,7 +48,6 @@ export const Login = ({ history }) => {
   const handleShowHidePassword = () => {
     setValue((value) => !value);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

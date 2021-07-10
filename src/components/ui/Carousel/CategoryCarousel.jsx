@@ -4,34 +4,27 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 import { Container } from "./Carousel.styles";
 
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
 export const CategoryCarousel = ({ categories }) => {
   const [photos, setPhotos] = useState([]);
 
-  // const getPhotos = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
-  //     );
-  //     setPhotos(data.results);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   useEffect(() => {
     try {
       axios
         .get(
-          `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          // "https://piktask.com/api/categories?query=Meeting room&per_page=12"
+          "https://piktask.com/api/categories"
         )
         .then(({ data }) => {
-          setPhotos(data.results);
+          setPhotos(data.categories);
+          console.log(data.categories[0]);
         });
 
       // setPhotos(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error.message);
     }
   }, []);
@@ -41,6 +34,7 @@ export const CategoryCarousel = ({ categories }) => {
   const settings = {
     dots: false,
     infinite: true,
+    autoplay: true,
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -61,7 +55,7 @@ export const CategoryCarousel = ({ categories }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 3,
+          slidesToScroll: 2,
           infinite: true,
         },
       },

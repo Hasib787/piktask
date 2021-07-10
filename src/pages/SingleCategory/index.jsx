@@ -1,6 +1,7 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import React, { FC } from "react";
-import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 import downArrow from "../../assets/icons/downArrow.svg";
@@ -13,26 +14,82 @@ import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
-import productsData from "../../data/products.json";
-import { ProductType } from "../../types";
 import useStyles from "./SingleCategory.styles";
+import moment from 'moment';
+import { useSelector } from "react-redux";
 
-type Props = {
-  products: ProductType[];
-};
 
-type Params = {
-  category: string;
-  id: string;
-};
-
-const SingleCategory: FC<Props> = (): JSX.Element => {
+const SingleCategory = () => {
   const classes = useStyles();
-  const { products } = productsData;
-  const { id } = useParams<Params>();
-  console.log(id);
+  const { id } = useParams();
+  const [imageDetails, setImageDetails] = useState({});
+  const [follower, setFollower] = useState(false);
 
-  const product = products.find((product) => product._id === id);
+  const user = useSelector((state) => state.user);
+  console.log(user.token);
+
+  const history = useHistory();
+
+ 
+  useEffect(() => {
+    window.scrollTo(0, 500);
+    try {
+      axios
+        .get(
+          `https://piktask.com/api/images/1`
+        )
+        .then(({ data }) => {
+          console.log(data.detail);
+          if(data?.success) {
+          // const singleImage = data?.detail.find(item => item.id === Number(id));
+          setImageDetails(data.detail);
+          console.log("user-token",user.token);
+          if (user.token) {
+            axios.get(`https://piktask.com/api/sellers/follow_status/${data.detail.user_id}`, {
+              headers: {"Authorization" : user.token}
+            })
+            .then((response) => {
+              console.log(response);
+              if(response.data.status){
+                setFollower(true);
+              } 
+              else{
+                setFollower(false);
+              }
+            })
+            console.log("Login");
+            console.log("userLogin-token",user.token);
+          }
+          }
+          
+        });
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+
+  }, [id, user.token]);
+
+  
+
+  const handleFollower = () => {
+    if (!user.token) {
+      history.push("/login")
+    } else{
+        // const followerAPI = "https://piktask.com/api/sellers/followers/4";
+      const followerAPI = `https://piktask.com/api/sellers/followers/${imageDetails.user_id}`;
+      axios.post(followerAPI, {},{
+        headers: {"Authorization" : user.token}
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setFollower(!follower);
+        }
+      })
+    }
+    
+  }
 
   return (
     <>
@@ -54,8 +111,8 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
             <div className={classes.imageWrapper}>
               <img
                 className={classes.image}
-                src={product?.image}
-                alt={product?.name}
+                src={imageDetails?.thumbnail}
+                alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
                 <Button className={classes.button}>Save</Button>
@@ -89,13 +146,11 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
 
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <Typography className={classes.title} variant="h2">
-              {product?.name}
+              {imageDetails?.title}
             </Typography>
-            <Typography>2 months ago</Typography>
+            <Typography>{imageDetails?.creation_ago}</Typography>
             <Typography className={classes.description} variant="body1">
-              This image is a legal copy and available for commercial use
-              resource. <span>Upgrade to Premium</span> plan and get license
-              authorization.
+              {imageDetails?.description}
             </Typography>
             <Typography className={classes.subHeading} variant="subtitle1">
               <span>Designhill License</span>
@@ -106,10 +161,10 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Image ID: </strong>5879860
+                    <strong>Image ID: </strong>{imageDetails?.id}
                   </Typography>
                   <Typography>
-                    <strong>Image Size </strong>2500*2500
+                    <strong>Image Size </strong>{imageDetails?.height}*{imageDetails?.width}
                   </Typography>
                 </div>
                 <div className={classes.singleItem}>
@@ -123,10 +178,10 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Created: </strong>Jan 21, 2021
+                    <strong>Created: </strong>{moment(imageDetails?.createdAt).format("LL")}
                   </Typography>
                   <Typography>
-                    <strong>Category: </strong>Vector
+                    <strong>Category: </strong>{imageDetails?.category?.name}
                   </Typography>
                 </div>
                 <div>
@@ -141,27 +196,39 @@ const SingleCategory: FC<Props> = (): JSX.Element => {
                 <div className={classes.authorProfile}>
                   <img
                     className={classes.authorImg}
-                    src={product?.author?.profile_image}
-                    alt={product?.author?.name}
+                    src={imageDetails?.user?.avatar}
+                    alt={imageDetails?.user?.username}
                   />
                   <div>
                     <Typography className={classes.profileName} variant="h3">
-                      {product?.author?.profile_name}
+                      {imageDetails?.user?.username}
                     </Typography>
                     <Typography
                       className={classes.resourceInfo}
                       variant="body2"
                     >
-                      20 Resources
+                      {imageDetails?.user?.total_resources}
                     </Typography>
                   </div>
                 </div>
-                <Button className={`${classes.authorBtn} ${classes.followBtn}`}>
-                  Follow
-                </Button>
-                <Button
-                  className={`${classes.authorBtn} ${classes.downloadBtn}`}
-                >
+                {
+                  !follower ? 
+                    <Button 
+                      className={`${classes.authorBtn} ${classes.followBtn}`}
+                      onClick={handleFollower}
+                    >
+                      Follow
+                    </Button>
+                    : 
+                    <Button 
+                      className={`${classes.authorBtn} ${classes.unFollowBtn}`}
+                      onClick={handleFollower}
+                    >
+                      UnFollow
+                    </Button>
+                }
+                
+                <Button className={`${classes.authorBtn} ${classes.downloadBtn}`}>
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
                 </Button>

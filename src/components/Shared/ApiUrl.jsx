@@ -1,0 +1,1 @@
+export let apiUrl = "https://piktask.com/api";

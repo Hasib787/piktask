@@ -231,8 +231,8 @@ export const Registration = ({ history }) => {
                 <div className={classes.socialsButtons}>
                   <GoogleLogin
                     clientId={clientId}
-                    className={classes.googleBtn}
                     buttonText="Google"
+                    className={classes.googleBtn}
                     onSuccess={handleGoogleLogin}
                     onFailure={handleGoogleLogin}
                     cookiePolicy={'single_host_origin'}
@@ -320,7 +320,6 @@ export const Registration = ({ history }) => {
                       labelPlacement="end"
                       control={<Checkbox color="primary" />}
                       className={classes.checkboxLabel}
-
                     />
                     <Button
                       variant="contained"
