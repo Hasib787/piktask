@@ -25,7 +25,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-
 const category = [
   { label: "Animals" },
   { label: "Architecture" },
@@ -88,6 +87,7 @@ const UploadFiles = () => {
   const [attribution, setAttribution] = useState("yes");
   const [usages, setUsages] = useState("");
   const [titleError, setTitleError] = useState(false);
+  const [itemForSaleError, setItemForSaleError] = useState(false);
 
   const user = useSelector((state) => state.user);
 
@@ -102,15 +102,14 @@ const UploadFiles = () => {
 
   const addTags = (event) => {
     event.preventDefault();
-    if (event.target.value !== "" && tags.length < 8) {
+    if (event.target.value !== " " && tags.length < 10 && event.target.value !== "  " && event.target.value !== ",") {
       setTags([...tags, event.target.value]);
       event.target.value = "";
     }
-    if (tags.length > 7) {
+    if (tags.length > 9) {
       toast.error("Tag is full / No more tag");
     }
   };
-
 
   const removeTags = (indexToRemove) => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
@@ -123,27 +122,55 @@ const UploadFiles = () => {
     setPrice(e.target.value);
   };
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setTitleError(false);
+    setItemForSaleError(false);
     setState({ ...state, [e.target.name]: e.target.checked });
 
     const formData = new FormData();
     formData.append("file", image[0]);
 
+    if (title === "") {
+      setTitleError(true);
+      toast.error("The Title field is required.");
+    }
+    if (!title.match(/^[a-zA-Z]+$/)) {
+      setTitleError(true);
+      toast.error("Title should be a character");
+    }
+    if (title.length < 3 || title.length > 200) {
+      setTitleError(true);
+      toast.error("Title must be between 3 to 200 characters");
+    }
+
+    if (tags.length < 0) {
+      toast.error("The tag field is required");
+    }
+    if (!itemSale) {
+     
+    }
+    if (itemForSaleError === "") {
+      setItemForSaleError(true);
+      toast.error("Item for sale status must be 'free' or 'sale'");
+    }
+
     axios
-      .post("https://piktask.com/api/images/upload", {
-        image,  
-        title,
-        tags,
-        item_for_sale: itemForSale,
-        price,
-        usages,
-        attribution,
-      },
-      {
-        headers: {"Authorization" : 'Bearer ' + user.token},
-      })
+      .post(
+        "https://piktask.com/api/images/upload",
+        {
+          image,
+          title,
+          tags,
+          item_for_sale: itemForSale,
+          price,
+          usages,
+          attribution,
+        },
+        {
+          headers: { Authorization: user.token },
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           toast.success("Photo added successful");
@@ -152,41 +179,24 @@ const UploadFiles = () => {
       .catch((error) => {
         toast.error(error.message);
       });
-
-    if (title === "") {
-      setTitleError(true);
-      toast.error("The Title field is required.");
-    }
-
-    if (tags.length < 0) {
-      toast.error("The tag field is required");
-    }
+      console.log(user.token)
 
     console.log("I'm clicked");
-    console.log("token",user.token)
   };
 
   const maxSize = 2097152;
 
   const onDrop = useCallback((acceptedFiles) => {
-
     console.log(acceptedFiles);
   }, []);
 
-  const {
-    isDragActive,
-    getRootProps,
-    getInputProps,
-    acceptedFiles,
-  } = useDropzone({
-    onDrop,
-    accept: ".png, .gif, .jpg, .jpeg",
-    minSize: 0,
-    maxSize,
-  });
-
-
-  
+  const { isDragActive, getRootProps, getInputProps, acceptedFiles } =
+    useDropzone({
+      onDrop,
+      accept: ".png, .gif, .jpg, .jpeg",
+      minSize: 0,
+      maxSize,
+    });
 
   return (
     <>
@@ -196,10 +206,7 @@ const UploadFiles = () => {
         <Sidebar />
 
         <main className={classes.content}>
-          <form 
-          autoComplete="off"
-          onSubmit={handleSubmit}
-          >
+          <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.uploadContainer}>
               <div className={classes.basicInfo}>
                 <ul>
@@ -250,10 +257,7 @@ const UploadFiles = () => {
                     isDragActive ? { backgroundColor: "#117A00" } : undefined
                   }
                 >
-                  <input
-                    {...getInputProps()}
-                   
-                  />
+                  <input {...getInputProps()} />
                   <FontAwesomeIcon icon={faCloudUploadAlt} />
                 </div>
 
@@ -264,9 +268,8 @@ const UploadFiles = () => {
                     Drag and drop or click to upload an photo
                   </Heading>
                 )}
-                {isDragActive &&  "Drop it like it's hot!"}
-                
-             
+                {isDragActive && "Drop it like it's hot!"}
+
                 <Typography className={classes.subtitle} variant="body1">
                   The photo must be greater than or equal to: 1600x900 - 2MB{" "}
                 </Typography>
@@ -275,7 +278,10 @@ const UploadFiles = () => {
               <ul className="list-group mt-2">
                 {acceptedFiles.length > 0 &&
                   acceptedFiles.map((acceptedFile) => (
-                    <li key={[0]} className="list-group-item list-group-item-success">
+                    <li
+                      key={[0]}
+                      className="list-group-item list-group-item-success"
+                    >
                       {acceptedFile.name}
                     </li>
                   ))}
@@ -318,7 +324,7 @@ const UploadFiles = () => {
                     className={classes.input}
                     type="text"
                     onKeyUp={(event) =>
-                      event.key === "Enter" ? addTags(event) : null
+                      event.code === 'Space' || event.key === ',' ? addTags(event) : null
                     }
                     placeholder="Add Tag"
                   />
@@ -358,6 +364,8 @@ const UploadFiles = () => {
                         {...params}
                         className={classes.inputField}
                         variant="outlined"
+                        required
+                        error={itemForSaleError}
                         value={itemForSale}
                         onChange={(e) => setItemForSale(e.target.value)}
                       />
@@ -410,10 +418,10 @@ const UploadFiles = () => {
                           className={classes.inputField}
                           variant="outlined"
                           value={usages}
-                          onChange={(e)=> setUsages(e.target.value)}
+                          onChange={(e) => setUsages(e.target.value)}
                           placeholder="Free for commercial use"
                         />
-                      )}  
+                      )}
                     />
                   </div>
                 )}
@@ -496,9 +504,6 @@ const UploadFiles = () => {
                   variant="contained"
                   className={classes.uploadBtn}
                   type="submit"
-                  onKeyPress={e => {
-                    if (e.key === 'Enter') e.preventDefault();
-                  }}
                 >
                   <FontAwesomeIcon
                     icon={faCloudUploadAlt}
