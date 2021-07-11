@@ -8,7 +8,6 @@ import { Container } from "./Carousel.styles";
 export const CategoryCarousel = ({ categories }) => {
   const [photos, setPhotos] = useState([]);
 
-
   useEffect(() => {
     try {
       axios
@@ -46,24 +45,25 @@ export const CategoryCarousel = ({ categories }) => {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 4,
+          slidesToScroll: 1,
           infinite: true,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 3,
+          slidesToScroll: 1,
           infinite: true,
+          centerPadding: "0px",
         },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           initialSlide: 2,
           centerPadding: "0px",
         },
