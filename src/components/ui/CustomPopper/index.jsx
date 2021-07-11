@@ -38,8 +38,7 @@ const CustomPopper = ({
         .signOut()
         .then(() => {
           toast.success("You successfully signed out");
-          // history.push("/");
-          window.location.reload(history.push("/"));
+          window.location.reload(history.replace("/"));
         })
         .catch((error) => {
           console.log("Signout error", error.message);
@@ -81,7 +80,7 @@ const CustomPopper = ({
                         variant="h3"
                         className={classes.dropdownUserName}
                       >
-                        Design Studio
+                        {user && user.token && user.username}
                       </Typography>
                       <Typography variant="body1" className={classes.userEmail}>
                         {user && user.token && user.email}
@@ -130,9 +129,11 @@ const CustomPopper = ({
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
-                  onClick={handleClose}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/admin/upload"
                 >
-                  <span>Go Upload</span>
+                  <span >Go Upload</span>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
