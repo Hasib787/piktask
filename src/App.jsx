@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { HashRouter as Route, Router, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import AccountSettings from "./admin/pages/AccountSettings";
@@ -76,38 +76,36 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer />
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          {/* Admin */}
-          <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
-          <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
-          <Route exact path="/admin/pending" component={PendingFiles} />
-          <Route exact path="/admin/revision" component={Revision} />
-          <Route exact path="/admin/reject" component={RejectFiles} />
-          <Route exact path="/admin/publish" component={Publish} />
-          <Route exact path="/admin/earnings" component={EarningManagement} />
-          <Route exact path="/admin/settings" component={AccountSettings} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        {/* Admin */}
+        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
+        <Route exact path="/admin/pending" component={PendingFiles} />
+        <Route exact path="/admin/revision" component={Revision} />
+        <Route exact path="/admin/reject" component={RejectFiles} />
+        <Route exact path="/admin/publish" component={Publish} />
+        <Route exact path="/admin/earnings" component={EarningManagement} />
+        <Route exact path="/admin/settings" component={AccountSettings} />
 
-          <Route exact path="/categories" component={Home} />
-          <Route exact path="/start-selling" component={BecomeContributor} />
-          <Route exact path="/email/verify" component={CompleteRegistration} />
-          <Route exact path="/vector" component={Category} />
-          <Route exact path="/psd" component={Category} />
-          <Route exact path="/background" component={Category} />
-          <Route exact path="/template" component={Category} />
-          <Route exact path="/png-images" component={Category} />
-          <Route exact path="/pricing" component={Pricing} />
-          <Route exact path="/help" component={Help} />
-          <Route exact path="/registration" component={Registration} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/new-password" component={ForgetPassword} />
-          <Route exact path="/blog/:id" component={SingleBlogPost} />
-          <Route exact path="/tag/:id" component={TagTemplate} />
-          <Route exact path="/author/:id" component={AuthorProfile} />
-          <Route exact path="/:category/:id" component={SingleCategory} />
-        </Switch>
-      </Router>
+        <Route exact path="/categories" component={Home} />
+        <Route exact path="/start-selling" component={BecomeContributor} />
+        <Route exact path="/email/verify" component={CompleteRegistration} />
+        <Route exact path="/vector" component={Category} />
+        <Route exact path="/psd" component={Category} />
+        <Route exact path="/background" component={Category} />
+        <Route exact path="/template" component={Category} />
+        <Route exact path="/png-images" component={Category} />
+        <Route exact path="/pricing" component={Pricing} />
+        <Route exact path="/help" component={Help} />
+        <Route exact path="/registration" component={Registration} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/new-password" component={ForgetPassword} />
+        <Route exact path="/blog/:id" component={SingleBlogPost} />
+        <Route exact path="/tag/:id" component={TagTemplate} />
+        <Route exact path="/author/:id" component={AuthorProfile} />
+        <Route exact path="/:category/:id" component={SingleCategory} />
+      </Switch>
     </ThemeProvider>
     
   );
