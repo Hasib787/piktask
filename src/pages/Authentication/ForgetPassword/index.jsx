@@ -9,7 +9,7 @@ import brandLogo from "../../../assets/piktaskLogo.png";
 import useStyles from "../Auth.styles";
 import lockIcon from "../../../assets/password.png";
 
-export const ForgetPassword = (): JSX.Element => {
+export const ForgetPassword = () => {
   const classes = useStyles();
   // const [value, setValue] = useState(false);
   const [email, setEmail] = useState("");

@@ -134,24 +134,14 @@ export const Registration = ({ history }) => {
   }
 
   const closeModal = () => {
-<<<<<<< HEAD
-    setIsOpen(false);
-    
-=======
     setModalIsOpen(false);
->>>>>>> 4b3369b5179ff0f18a1a3040a96f6851d3e2d58e
   }
 
   const handleGoogleLogin = async googleData => {
     const res = await fetch("https://piktask.com/api/auth/google_login", {
       method: "POST",
-<<<<<<< HEAD
-      body: JSON.stringify({ 
-        token: googleData.tokenId
-=======
       body: JSON.stringify({
         token: googleData.tokenId,
->>>>>>> 4b3369b5179ff0f18a1a3040a96f6851d3e2d58e
       }),
       headers: {
         "Content-Type": "application/json"
