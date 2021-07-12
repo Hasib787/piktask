@@ -14,12 +14,12 @@ import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import categoryData from "../../data/category.json";
-import productData from "../../data/products.json";
+// import productData from "../../data/products.json";
 import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const { products } = productData;
+  // const { products } = productData;
   const { categories } = categoryData;
 
   return (

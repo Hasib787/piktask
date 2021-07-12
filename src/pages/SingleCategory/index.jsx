@@ -76,7 +76,6 @@ const SingleCategory = () => {
     if (!user.token) {
       history.push("/login")
     } else{
-        // const followerAPI = "https://piktask.com/api/sellers/followers/4";
       const followerAPI = `https://piktask.com/api/sellers/followers/${imageDetails.user_id}`;
       axios.post(followerAPI, {},{
         headers: {"Authorization" : user.token}

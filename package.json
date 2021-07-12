@@ -1,6 +1,10 @@
 {
   "name": "piktask",
+<<<<<<< HEAD
   "homepage": "https://piktask.bdtask.com/",
+=======
+  "homepage": "https://piktask.bdtask.com",
+>>>>>>> fff1fe4c69ab293e650751781efbc6d342fdb9c5
   "version": "0.1.0",
   "private": true,
   "dependencies": {

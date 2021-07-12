@@ -33,7 +33,7 @@ export const Registration = ({ history }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -59,8 +59,39 @@ export const Registration = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
+
+    if (!username || !email || !password || !confirmPassword) {
+      setModalIsOpen(false);
+      toast.error("All fields are required");
+      return;
+    }
+
+    if (username.length < 3) {
+      setModalIsOpen(false);
+      toast.error("Username should be at least 3 or more characters");
+      return;
+    }
+
+    if (email) {
+      const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!validateEmail.test(String(email).toLowerCase())) {
+        setModalIsOpen(false);
+        toast.error("Your email is not validate");
+        return;
+      }
+    }
+
+    if (password.length < 5) {
+      setModalIsOpen(false);
+      toast.error("Password should be at least 6 or more characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setModalIsOpen(false);
+      toast.error("Password not match");
+    }
 
     axios.post("https://piktask.com/api/auth/signup", {
       username: username,
@@ -71,35 +102,9 @@ export const Registration = ({ history }) => {
       if (res.status === 200) {
         openModal()
       }
-
     }).catch((error) => {
-      toast.error("User already exists", error.message);
+      toast.error(error.message);
     })
-
-    if (!username || !email || !password || !confirmPassword) {
-      setIsOpen(false);
-      toast.error("All fields are required");
-      return;
-    }
-    if (email) {
-      const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!validateEmail.test(String(email).toLowerCase())) {
-        setIsOpen(false);
-        toast.error("Your email is not validate");
-        return;
-      }
-    }
-
-    if (password.length < 5) {
-      setIsOpen(false);
-      toast.error("Password should be at least 6 or more characters");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setIsOpen(false);
-      toast.error("Password not match");
-    }
 
     await auth.sendSignInLinkToEmail(email, {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
@@ -111,7 +116,7 @@ export const Registration = ({ history }) => {
       `An email has been sent to ${email}. Please check and verify your email`
     );
 
-    // Save username, email, and password, to localstorage
+    // Save username, email, and password, to localStorage
     window.localStorage.setItem("userName", username);
     window.localStorage.setItem("email", email);
     window.localStorage.setItem("password", password);
@@ -125,11 +130,11 @@ export const Registration = ({ history }) => {
   };
 
   const openModal = () => {
-    setIsOpen(true);
+    setModalIsOpen(true);
   }
 
   const closeModal = () => {
-    setIsOpen(false);
+    setModalIsOpen(false);
   }
 
   const handleGoogleLogin = async googleData => {
@@ -326,7 +331,7 @@ export const Registration = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
-                      disabled={isLoading || !username || !email || !password || !confirmPassword}
+                      disabled={!username || !email || !password || !confirmPassword}
                     >
                       Signup
                     </Button>
