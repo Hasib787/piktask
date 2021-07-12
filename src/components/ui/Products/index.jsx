@@ -20,21 +20,21 @@ const Products = ({ count = 8, query = "popular" }) => {
   const [photos, setPhotos] = useState([]);
   const classes = useStyles();
 
-  const getPhotos = async () => {
+  useEffect(() => {
     try {
-      const { data } = await axios.get(
+      axios.get(
         // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-        `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-      );
-      setPhotos(data.categories);
-      // console.log(data.categories[0]);
+        `https://piktask.com/api/categories`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setPhotos(data.categories);
+          // console.log(data.categories[0]);
+        }
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  useEffect(() => {
-    getPhotos();
   }, []);
 
   return (

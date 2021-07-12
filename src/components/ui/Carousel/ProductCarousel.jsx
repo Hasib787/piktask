@@ -7,22 +7,21 @@ import { Container } from "./Carousel.styles";
 
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
-  const getPhotos = async () => {
+  useEffect(() => {
     try {
-      const { data } = await axios.get(
-        `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-      );
-      // setPhotos(data.results);
-      setPhotos(data.categories);
-      // console.log(data.categories[0]);
+      axios.get(
+        // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
+        `https://piktask.com/api/categories`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setPhotos(data.categories);
+        }
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  useEffect(() => {
-    getPhotos();
-  });
+  }, []);
 
   const settings = {
     dots: false,

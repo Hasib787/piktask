@@ -79,7 +79,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Admin */}
-        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard}/>
         <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
