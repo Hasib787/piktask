@@ -38,7 +38,7 @@ const CustomPopper = ({
         .signOut()
         .then(() => {
           toast.success("You successfully signed out");
-          window.location.reload(history.replace("/"));
+          window.location.reload(history.replace('/'));
         })
         .catch((error) => {
           console.log("Signout error", error.message);
