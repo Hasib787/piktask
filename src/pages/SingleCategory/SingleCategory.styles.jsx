@@ -32,6 +32,25 @@ const useStyles = makeStyles((theme) => ({
     borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",
     padding: "1.5rem 3rem",
+    
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "center",
+      // flexWrap: "wrap",
+      flexDirection:"column",
+      fontSize: "small",
+    },
+    
+  },
+  buttonGroup: {
+    display: "flex",
+    // flexWrap: "wrap",
+    
+    [theme.breakpoints.down("xs")]: {
+      // justifyContent: "center",
+      // flexWrap: "wrap",
+      // fontSize: "small",
+    },
+    
   },
   button: {
     ...theme.typography.button,
@@ -47,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down("xs")]: {
       marginBottom: "1rem",
+      fontSize: "small",
     },
   },
   buttonIcon: {

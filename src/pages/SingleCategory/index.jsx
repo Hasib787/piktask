@@ -115,31 +115,36 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                <Button className={classes.button}>Save</Button>
-                <Button className={classes.button}>
-                  <img
-                    className={classes.buttonIcon}
-                    src={downArrow}
-                    alt="Down arrow"
-                  />
-                  Try
-                </Button>
-                <Button className={classes.button}>
-                  <img
-                    className={classes.buttonIcon}
-                    src={shareIcon}
-                    alt="Share"
-                  />
-                  Share
-                </Button>
-                <Button className={classes.button}>
-                  <img
-                    className={classes.buttonIcon}
-                    src={copyIcon}
-                    alt="Copy Link"
-                  />
-                  Copy Link
-                </Button>
+                <div className={classes.buttonGroup}>
+                  <Button className={classes.button}>Save</Button>
+                  <Button className={classes.button}>
+                    <img
+                      className={classes.buttonIcon}
+                      src={downArrow}
+                      alt="Down arrow"
+                    />
+                    Try
+                  </Button>
+                </div>
+                <div className={classes.buttonGroup}>
+                  <Button className={classes.button}>
+                    <img
+                      className={classes.buttonIcon}
+                      src={shareIcon}
+                      alt="Share"
+                    />
+                    Share
+                  </Button>
+                  <Button className={classes.button}>
+                    <img
+                      className={classes.buttonIcon}
+                      src={copyIcon}
+                      alt="Copy Link"
+                    />
+                    Copy Link
+                  </Button>
+                </div>
+                
               </div>
             </div>
           </Grid>
