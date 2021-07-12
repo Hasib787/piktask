@@ -17,19 +17,11 @@ import productsData from "../../data/products.json";
 import { ProductType } from "../../types";
 import useStyles from "./SingleCategory.styles";
 
-type Props = {
-  products: ProductType[];
-};
 
-type Params = {
-  category: string;
-  id: string;
-};
-
-const SingleCategory: FC<Props> = (): JSX.Element => {
+const SingleCategory= () => {
   const classes = useStyles();
   const { products } = productsData;
-  const { id } = useParams<Params>();
+  const { id } = useParams();
   console.log(id);
 
   const product = products.find((product) => product._id === id);
