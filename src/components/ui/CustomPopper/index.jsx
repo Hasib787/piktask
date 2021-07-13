@@ -32,7 +32,7 @@ const CustomPopper = ({
   const history = useHistory();
 
   const userSignout = () => {
-    if (user && user.token) {
+    if (user && user?.token) {
       firebase
         .auth()
         .signOut()
@@ -74,16 +74,26 @@ const CustomPopper = ({
               >
                 <Grid container className={classes.gridUserInfo}>
                   <Grid item xs={6} className={classes.userInDropdown}>
-                    <AccountCircleIcon className={classes.dropdownUserAvatar} />
+                    {
+                      user && user?.avatar ? (
+                        <img
+                          className={classes.dropdownUserAvatar}
+                          src={user.avatar}
+                          alt="UserPhoto"
+                        />
+                      ) : (
+                        <AccountCircleIcon className={classes.dropdownUserAvatar} />
+                      )
+                    }
                     <div>
                       <Typography
                         variant="h3"
                         className={classes.dropdownUserName}
                       >
-                        {user && user.token && user.username}
+                        {user && user?.token && user?.username}
                       </Typography>
                       <Typography variant="body1" className={classes.userEmail}>
-                        {user && user.token && user.email}
+                        {user && user?.token && user?.email}
                       </Typography>
                     </div>
                   </Grid>

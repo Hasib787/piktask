@@ -11,11 +11,11 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
     try {
       axios.get(
         // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-        `https://piktask.com/api/categories`
+        `https://piktask.com/api/images/recent`
       )
       .then(({ data }) => {
-        if (data?.status) {
-          setPhotos(data.categories);
+        if (data?.success) {
+          setPhotos(data.images);
         }
       })
     } catch (error) {

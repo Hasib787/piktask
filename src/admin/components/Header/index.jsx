@@ -46,7 +46,7 @@ const AdminHeader = () => {
               alignItems="center"
             >
               <Grid item xs={2}>
-                <Link to="/admin/dashboard" className={classes.adminLogoLink}>
+                <Link to="/" className={classes.adminLogoLink}>
                   <img className={classes.adminLogo} src={logo} alt="Piktask" />
                 </Link>
               </Grid>
@@ -81,7 +81,7 @@ const AdminHeader = () => {
                         <img
                           className={classes.adminPhoto}
                           src={user.avatar}
-                          alt="Design Studio"
+                          alt="UserPhoto"
                         />
                       ) : (
                         <img

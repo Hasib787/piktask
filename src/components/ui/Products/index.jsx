@@ -24,12 +24,11 @@ const Products = ({ count = 8, query = "popular" }) => {
     try {
       axios.get(
         // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-        `https://piktask.com/api/categories`
+        `https://piktask.com/api/images/recent`
       )
       .then(({ data }) => {
-        if (data?.status) {
-          setPhotos(data.categories);
-          // console.log(data.categories[0]);
+        if (data?.success) {
+          setPhotos(data.images);
         }
       })
     } catch (error) {

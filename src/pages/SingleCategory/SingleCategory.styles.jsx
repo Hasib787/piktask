@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     flexWrap: "wrap",
     borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",

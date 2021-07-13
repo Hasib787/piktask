@@ -37,7 +37,7 @@ const SingleCategory = () => {
     try {
       axios
         .get(
-          `https://piktask.com/api/images/1`
+          `https://piktask.com/api/images/${id}`
         )
         .then(({ data }) => {
           console.log(data.detail);
@@ -58,8 +58,6 @@ const SingleCategory = () => {
                 setFollower(false);
               }
             })
-            console.log("Login");
-            console.log("userLogin-token",user.token);
           }
           }
           
@@ -68,16 +66,12 @@ const SingleCategory = () => {
     catch (error) {
       console.log(error.message);
     }
-
   }, [id, user.token]);
-
-  
 
   const handleFollower = () => {
     if (!user.token) {
       history.push("/login")
     } else{
-        // const followerAPI = "https://piktask.com/api/sellers/followers/4";
       const followerAPI = `https://piktask.com/api/sellers/followers/${imageDetails.user_id}`;
       axios.post(followerAPI, {},{
         headers: {"Authorization" : user.token}
@@ -89,7 +83,6 @@ const SingleCategory = () => {
         }
       })
     }
-    
   }
 
   return (
@@ -101,7 +94,6 @@ const SingleCategory = () => {
         title="Graphic Resource for Free Download"
         subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
       />
-
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -145,11 +137,9 @@ const SingleCategory = () => {
                     Copy Link
                   </Button>
                 </div>
-                
               </div>
             </div>
           </Grid>
-
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <Typography className={classes.title} variant="h2">
               {imageDetails?.title}
