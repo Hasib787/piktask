@@ -123,7 +123,17 @@ const Header = () => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                <AccountCircleIcon className={classes.avatar} />
+                {
+                  user && user?.avatar ? (
+                    <img
+                      className={classes.avatar}
+                      src={user.avatar}
+                      alt="UserPhoto"
+                    />
+                  ) : (
+                    <AccountCircleIcon className={classes.avatar} />
+                  )
+                }
                 <ArrowDropDownIcon className={classes.arrowDown} />
               </div>
             ) : (

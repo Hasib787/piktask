@@ -37,6 +37,7 @@ const App = () => {
   // const [token, setToken] = useState("")
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
