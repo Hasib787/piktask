@@ -60,11 +60,10 @@ const Product = ({ photo }) => {
           Download
         </Button>
         <Link to={`/photo/${photo?.id}`}>
-          {/* <img className={classes.image} src={photo?.urls.regular} alt="" /> */}
-          <img
-            className={classes.image}
-            src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"}
-            alt=""
+          <img 
+            className={classes.image} 
+            src={photo?.thumbnail} 
+            alt="" 
           />
         </Link>
       </div>
@@ -98,7 +97,7 @@ const Product = ({ photo }) => {
               title={photo?.user.name}
             /> */}
             <Typography paragraph className={classes.profileName}>
-              {photo.name}
+              {photo?.category}
             </Typography>
           </CardFooter>
 

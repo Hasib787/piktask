@@ -27,30 +27,24 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     flexWrap: "wrap",
     borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",
     padding: "1.5rem 3rem",
     
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down(480)]: {
       justifyContent: "center",
-      // flexWrap: "wrap",
-      flexDirection:"column",
-      fontSize: "small",
+      flexDirection: "column",
+
     },
-    
   },
   buttonGroup: {
     display: "flex",
-    // flexWrap: "wrap",
-    
-    [theme.breakpoints.down("xs")]: {
-      // justifyContent: "center",
-      // flexWrap: "wrap",
-      // fontSize: "small",
+
+    [theme.breakpoints.down(480)]: {
+      flexDirection: "column",
     },
-    
   },
   button: {
     ...theme.typography.button,
@@ -64,9 +58,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#F0F7EF",
     },
 
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down(480)]: {
+      padding: ".6rem 1.2rem",
+      fontSize: "1.4rem",
       marginBottom: "1rem",
-      fontSize: "small",
+      marginLeft: "1rem",
     },
   },
   buttonIcon: {
@@ -143,8 +139,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authorImg: {
-    width: "7rem",
-    height: "7rem",
+    width: "6.5rem",
+    height: "6.5rem",
     borderRadius: "3rem",
     marginRight: "1.4rem",
     objectFit: "cover",

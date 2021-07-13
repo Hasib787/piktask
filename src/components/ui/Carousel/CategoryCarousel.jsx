@@ -5,7 +5,7 @@ import Category from "../Category";
 import { Container } from "./Carousel.styles";
 
 
-export const CategoryCarousel = ({ categories }) => {
+export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
@@ -14,21 +14,16 @@ export const CategoryCarousel = ({ categories }) => {
         .get(
           // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
           // "https://piktask.com/api/categories?query=Meeting room&per_page=12"
-          "https://piktask.com/api/categories"
+          "https://piktask.com/api/categories/popular"
         )
         .then(({ data }) => {
           setPhotos(data.categories);
-          console.log(data.categories[0]);
         });
-
-      // setPhotos(data);
     } 
     catch (error) {
       console.log(error.message);
     }
   }, []);
-
-  // console.log(photos);
 
   const settings = {
     dots: false,
@@ -65,6 +60,7 @@ export const CategoryCarousel = ({ categories }) => {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
+          infinite: true,
           centerPadding: "0px",
         },
       },
@@ -73,6 +69,7 @@ export const CategoryCarousel = ({ categories }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          infinite: true,
           centerPadding: "0px",
         },
       },

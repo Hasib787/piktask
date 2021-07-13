@@ -7,11 +7,14 @@ import crownIcon from "../../../assets/icons/crown.svg";
 import logo from "../../../assets/logo-front.png";
 import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
+import { useSelector } from 'react-redux';
 
 const AdminHeader = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  console.log(user.token);
 
   const handleToggle = () => {
     setOpen((prevState) => !prevState);
@@ -43,7 +46,7 @@ const AdminHeader = () => {
               alignItems="center"
             >
               <Grid item xs={2}>
-                <Link to="/admin/dashboard" className={classes.adminLogoLink}>
+                <Link to="/" className={classes.adminLogoLink}>
                   <img className={classes.adminLogo} src={logo} alt="Piktask" />
                 </Link>
               </Grid>
@@ -73,13 +76,25 @@ const AdminHeader = () => {
                     aria-haspopup="true"
                     ref={anchorRef}
                   >
-                    <img
-                      className={classes.adminPhoto}
-                      src={userPhoto}
-                      alt="Design Studio"
-                    />
+                    {
+                      user && user?.avatar ? (
+                        <img
+                          className={classes.adminPhoto}
+                          src={user.avatar}
+                          alt="UserPhoto"
+                        />
+                      ) : (
+                        <img
+                          className={classes.adminPhoto}
+                          src={userPhoto}
+                          alt="UserPhoto"
+                        />
+                      )
+                    }
                     <Typography className={classes.userName} variant="h4">
-                      Design Studio
+                      {
+                        user ? user.username : "Design Studio"
+                      }
                     </Typography>
                     <ArrowDropDownIcon className={classes.arrowDown} />
                   </div>

@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import authorImg from "../../../assets/author.png";
 import authorBadge from "../../../assets/badge.png";
 import image3 from "../../../assets/bangladesh.png";
@@ -71,6 +72,7 @@ const AdminDashboard = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const { portfolios } = portfolioData;
+  const user = useSelector((state) => state.user);
 
   function selectTab(index) {
     return {
@@ -191,11 +193,21 @@ const AdminDashboard = () => {
                     />
 
                     <div className={classes.authorArea}>
-                      <img
-                        className={classes.authorImg}
-                        src={authorImg}
-                        alt="Design Studio"
-                      />
+                      {
+                        user && user?.avatar ? (
+                          <img
+                            className={classes.authorImg}
+                            src={user.avatar}
+                            alt="UserPhoto"
+                          />
+                        ) : (
+                          <img
+                            className={classes.authorImg}
+                            src={authorImg}
+                            alt="Design Studio"
+                          />
+                        )
+                      }
                       <Typography variant="h4">Hi, Alamin Sourov</Typography>
                       <Typography>50% Profile strength</Typography>
                     </div>

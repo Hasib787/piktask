@@ -17,6 +17,7 @@ import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
 import moment from 'moment';
 import { useSelector } from "react-redux";
+import authorPhoto from "../../assets/author.png";
 
 
 const SingleCategory = () => {
@@ -36,7 +37,7 @@ const SingleCategory = () => {
     try {
       axios
         .get(
-          `https://piktask.com/api/images/1`
+          `https://piktask.com/api/images/${id}`
         )
         .then(({ data }) => {
           console.log(data.detail);
@@ -57,8 +58,6 @@ const SingleCategory = () => {
                 setFollower(false);
               }
             })
-            console.log("Login");
-            console.log("userLogin-token",user.token);
           }
           }
           
@@ -67,10 +66,7 @@ const SingleCategory = () => {
     catch (error) {
       console.log(error.message);
     }
-
   }, [id, user.token]);
-
-  
 
   const handleFollower = () => {
     if (!user.token) {
@@ -87,7 +83,6 @@ const SingleCategory = () => {
         }
       })
     }
-    
   }
 
   return (
@@ -99,7 +94,6 @@ const SingleCategory = () => {
         title="Graphic Resource for Free Download"
         subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
       />
-
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -114,7 +108,7 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                <div className={classes.buttonGroup}>
+                <div className={`${classes.buttonGroup} ${classes.buttonGroup1}`}>
                   <Button className={classes.button}>Save</Button>
                   <Button className={classes.button}>
                     <img
@@ -143,11 +137,9 @@ const SingleCategory = () => {
                     Copy Link
                   </Button>
                 </div>
-                
               </div>
             </div>
           </Grid>
-
           <Grid item md={6} xs={6} className={classes.productColumn}>
             <Typography className={classes.title} variant="h2">
               {imageDetails?.title}
@@ -198,11 +190,22 @@ const SingleCategory = () => {
             <Grid container>
               <Grid item className={classes.authorArea}>
                 <div className={classes.authorProfile}>
-                  <img
-                    className={classes.authorImg}
-                    src={imageDetails?.user?.avatar}
-                    alt={imageDetails?.user?.username}
-                  />
+                  {
+                    imageDetails?.user?.avatar ? (
+                      <img
+                        className={classes.authorImg}
+                        src={imageDetails?.user?.avatar}
+                        alt={imageDetails?.user?.username}
+                      />
+                    ) : (
+                      <img
+                        className={classes.authorImg}
+                        src={authorPhoto}
+                        alt="AuthorPhoto"
+                      />
+                    )
+                  }
+                  
                   <div>
                     <Typography className={classes.profileName} variant="h3">
                       {imageDetails?.user?.username}
