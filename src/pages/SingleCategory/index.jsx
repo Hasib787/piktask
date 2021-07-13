@@ -17,6 +17,7 @@ import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
 import moment from 'moment';
 import { useSelector } from "react-redux";
+import authorPhoto from "../../assets/author.png";
 
 
 const SingleCategory = () => {
@@ -115,7 +116,7 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                <div className={classes.buttonGroup}>
+                <div className={`${classes.buttonGroup} ${classes.buttonGroup1}`}>
                   <Button className={classes.button}>Save</Button>
                   <Button className={classes.button}>
                     <img
@@ -199,11 +200,22 @@ const SingleCategory = () => {
             <Grid container>
               <Grid item className={classes.authorArea}>
                 <div className={classes.authorProfile}>
-                  <img
-                    className={classes.authorImg}
-                    src={imageDetails?.user?.avatar}
-                    alt={imageDetails?.user?.username}
-                  />
+                  {
+                    imageDetails?.user?.avatar ? (
+                      <img
+                        className={classes.authorImg}
+                        src={imageDetails?.user?.avatar}
+                        alt={imageDetails?.user?.username}
+                      />
+                    ) : (
+                      <img
+                        className={classes.authorImg}
+                        src={authorPhoto}
+                        alt="AuthorPhoto"
+                      />
+                    )
+                  }
+                  
                   <div>
                     <Typography className={classes.profileName} variant="h3">
                       {imageDetails?.user?.username}

@@ -46,7 +46,6 @@ const Header = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const user = useSelector(state => state.user);
-  // const username = useSelector(state => state.user);
   const anchorRef = useRef(null);
 
   const { mobileView } = menuSate;
