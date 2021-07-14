@@ -24,40 +24,48 @@ import useStyles from "./UploadFiles.styles";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-const category = [
-  { label: "Animals" },
-  { label: "Architecture" },
-  { label: "Backgrounds / Textures" },
-  { label: "Business / Finance" },
-  { label: "Computer / Communication" },
-  { label: "Education" },
-  { label: "Fashion" },
-  { label: "Foods & Drinks" },
-  { label: "Health / Medical" },
-  { label: "Industry / Craft" },
-  { label: "Music" },
-  { label: "Nature / Landscapes" },
-  { label: "People" },
-  { label: "Places" },
-  { label: "Religion" },
-  { label: "Science / Technology" },
-  { label: "Sports" },
-  { label: "Transportation / Cars" },
-  { label: "Travel" },
-  { label: "Uncategorized" },
+const categoryItem = [
+  { id: 1, value: "Animals", label: "Animals" },
+  { id: 2, value: "Architecture", label: "Architecture" },
+  { id: 3, value: "Backgrounds / Textures", label: "Backgrounds / Textures" },
+  { id: 4, value: "Business / Finance", label: "Business / Finance" },
+  {
+    id: 5,
+    value: "Computer / Communication",
+    label: "Computer / Communication",
+  },
+  { id: 6, value: "Education", label: "Education" },
+  { id: 7, value: "Fashion", label: "Fashion" },
+  { id: 8, value: "Foods & Drinks", label: "Foods & Drinks" },
+  { id: 9, value: "Health / Medical", label: "Health / Medical" },
+  { id: 10, value: "Industry / Craft", label: "Industry / Craft" },
+  { id: 11, value: "Music", label: "Music" },
+  { id: 12, value: "Nature / Landscapes", label: "Nature / Landscapes" },
+  { id: 13, value: "People", label: "People" },
+  { id: 14, value: "Places", label: "Places" },
+  { id: 15, value: "Religion", label: "Religion" },
+  { id: 16, value: "Science / Technology", label: "Science / Technology" },
+  { id: 17, value: "Sports", label: "Sports" },
+  { id: 18, value: "Transportation / Cars", label: "Transportation / Cars" },
+  { id: 19, value: "Travel", label: "Travel" },
+  { id: 20, value: "Uncategorized", label: "Uncategorized" },
 ];
 
-const ItemForSale = [{ label: "Item Free" }, { label: "Item for sale" }];
+const ItemForSale = [
+  { value: "free", label: "Item Free" },
+  { value: "sale", label: "Item for sale" },
+];
 
 const usePhoto = [
-  { label: "Free for commercial use" },
-  { label: "Free for personal use" },
-  { label: "Editorial use only" },
-  { label: "Use only on website" },
+  { value: "free", label: "Free for commercial use" },
+  { value: "free_personal", label: "Free for personal use" },
+  { value: "editorial_only", label: "Editorial use only" },
+  { value: "web_only", label: "Use only on website" },
 ];
 
-const typeOfImage = [
+const typeOfImageItem = [
   { label: "Image (JPG, PNG, GIF)" },
   { label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
@@ -73,23 +81,28 @@ const UploadFiles = () => {
     psdColor: false,
     psdPreviewSize: false,
     psdFileTitle: false,
-    pngFileExtension: false,
-    pngColor: false,
+    pngFileExtension: true,
+    pngColor: true,
     pngPreviewSize: false,
     pngFileTitle: false,
   });
-  const [imageSelected, setImageSelected] = useState("");
+
   const [title, setTitle] = useState("");
-  const [itemForSale, setItemForSale] = useState("");
-  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState(1);
+  const [item_for_sale, setItem_for_sale] = useState("free");
+  const [price, setPrice] = useState("0");
   const [image, setImage] = useState("");
-  const [additionalImage, setAdditionalImage] = useState("");
+  const [additional_image, setAdditional_image] = useState("");
   const [attribution, setAttribution] = useState("yes");
-  const [usages, setUsages] = useState("");
+  const [usages, setUsages] = useState("free");
+  const [typeOfImage, setTypeOfImage] = useState("")
+  const [description, setDescription] = useState("");
   const [titleError, setTitleError] = useState(false);
   const [itemForSaleError, setItemForSaleError] = useState(false);
+  const [imageError, setImageError] = useState("");
 
   const user = useSelector((state) => state.user);
+  const history = useHistory();
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -102,7 +115,12 @@ const UploadFiles = () => {
 
   const addTags = (event) => {
     event.preventDefault();
-    if (event.target.value !== " " && tags.length < 10 && event.target.value !== "  " && event.target.value !== ",") {
+    if (
+      event.target.value !== " " &&
+      tags.length < 10 &&
+      event.target.value !== "  " &&
+      event.target.value !== ","
+    ) {
       setTags([...tags, event.target.value]);
       event.target.value = "";
     }
@@ -115,6 +133,24 @@ const UploadFiles = () => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
 
+  const handleUsagesChange = (event) => {
+    setUsages(event.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const handleSaleChange = (e) => {
+    setItem_for_sale(e.target.value);
+    setItemSale(!itemSale);
+  };
+
+  const handleTypeOfImage=(e)=>{
+    setTypeOfImage(e.target.value);
+    setImageType(!imageType);
+  }
+
   const handlePrice = (e) => {
     if (e.target.value < 0) {
       e.target.value = 0;
@@ -122,15 +158,43 @@ const UploadFiles = () => {
     setPrice(e.target.value);
   };
 
+  const handleImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    setImage(imageFile);
+    if (!imageFile) {
+      setImageError("Image is required");
+      return false;
+    }
+    if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      setImageError("Select valid image.");
+      return false;
+    } else {
+      setImageError("");
+    }
+  };
+
+  const handleFileChange= (e) =>{
+      const additionalFile = e.target.files[0];
+      setAdditional_image(additionalFile);
+
+      if (!additionalFile.name.match(/\.(psd|svg|eps|ai)$/)) {
+        setImageError("Select valid file.");
+        return false;
+      } else {
+        setImageError("");
+      }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setTitleError(false);
+    setAttribution("yes");
     setItemForSaleError(false);
     setState({ ...state, [e.target.name]: e.target.checked });
 
-    const formData = new FormData();
-    formData.append("file", image[0]);
-
+    if (imageError) {
+      toast.error("Please upload valid image");
+    }
     if (title === "") {
       setTitleError(true);
       toast.error("The Title field is required.");
@@ -148,55 +212,49 @@ const UploadFiles = () => {
       toast.error("The tag field is required");
     }
     if (!itemSale) {
-     
+      setPrice("0");
     }
     if (itemForSaleError === "") {
       setItemForSaleError(true);
       toast.error("Item for sale status must be 'free' or 'sale'");
     }
 
-    axios
-      .post(
-        "https://piktask.com/api/images/upload",
-        {
-          image,
-          title,
-          tags,
-          item_for_sale: itemForSale,
-          price,
-          usages,
-          attribution,
-        },
-        {
-          headers: { Authorization: user.token },
-        }
-      )
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("tags", tags);
+    formData.append("category", category);
+    formData.append("item_for_sale", item_for_sale);
+    formData.append("price", price);
+    formData.append("usages", usages);
+    formData.append("attribution", attribution);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("additional_image", additional_image);
+
+    const url = "https://piktask.com/api/images/upload";
+    axios({
+      method: "post",
+      url: url,
+      data: formData,
+      headers: {
+        Authorization: user.token,
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then((res) => {
-        if (res.status === 200) {
+        if (res?.status === 200) {
           toast.success("Photo added successful");
+        }
+        if(res?.status === 401){
+          localStorage.clear();
+          toast.success("Please login Again");
+          window.location.reload(history.replace('/login'));  
         }
       })
       .catch((error) => {
         toast.error(error.message);
       });
-      console.log(user.token)
-
-    console.log("I'm clicked");
   };
-
-  const maxSize = 2097152;
-
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-  }, []);
-
-  const { isDragActive, getRootProps, getInputProps, acceptedFiles } =
-    useDropzone({
-      onDrop,
-      accept: ".png, .gif, .jpg, .jpeg",
-      minSize: 0,
-      maxSize,
-    });
 
   return (
     <>
@@ -246,36 +304,31 @@ const UploadFiles = () => {
                 Upload Your Content
               </Heading>
 
-              <div
-                className={classes.fileUploadContainer}
-                {...getRootProps()}
-                style={isDragActive ? { borderColor: "#117A00" } : undefined}
-              >
-                <div
-                  className={classes.uploadIconWrapper}
-                  style={
-                    isDragActive ? { backgroundColor: "#117A00" } : undefined
-                  }
-                >
-                  <input {...getInputProps()} />
-                  <FontAwesomeIcon icon={faCloudUploadAlt} />
+              <div className={classes.fileUploadContainer}>
+                <div className={classes.uploadIconWrapper}>
+                  <label htmlFor="btn-upload">
+                    <input
+                      id="btn-upload"
+                      name="btn-upload"
+                      style={{ display: "none" }}
+                      type="file"
+                      files={image}
+                      onChange={handleImageChange}
+                    />
+                    <FontAwesomeIcon icon={faCloudUploadAlt} />
+                  </label>
                 </div>
 
-                {isDragActive ? (
-                  <Heading tag="h2">Drop the files here...</Heading>
-                ) : (
-                  <Heading tag="h2">
-                    Drag and drop or click to upload an photo
-                  </Heading>
-                )}
-                {isDragActive && "Drop it like it's hot!"}
-
+                <h2 className={classes.imageErrorText}>{imageError}</h2>
+                <Typography className={classes.photoUploadText} variant="body1">
+                  Click to upload an photo
+                </Typography>
                 <Typography className={classes.subtitle} variant="body1">
                   The photo must be greater than or equal to: 1600x900 - 2MB{" "}
                 </Typography>
               </div>
 
-              <ul className="list-group mt-2">
+              {/* <ul className="list-group mt-2">
                 {acceptedFiles.length > 0 &&
                   acceptedFiles.map((acceptedFile) => (
                     <li
@@ -285,9 +338,9 @@ const UploadFiles = () => {
                       {acceptedFile.name}
                     </li>
                   ))}
-              </ul>
+              </ul> */}
 
-              <Heading tag="h2">
+              <Heading className={classes.formHeadText} tag="h2">
                 What type of content are you going to upload?
               </Heading>
 
@@ -324,53 +377,55 @@ const UploadFiles = () => {
                     className={classes.input}
                     type="text"
                     onKeyUp={(event) =>
-                      event.code === 'Space' || event.key === ',' ? addTags(event) : null
+                      event.code === "Space" || event.key === ","
+                        ? addTags(event)
+                        : null
                     }
                     placeholder="Add Tag"
                   />
                 </div>
                 <p className={classes.helperText}>
-                  * Press Enter to add tag (Maximum 8 tags)
+                  * Press Enter to add tag (Maximum 10 tags)
                 </p>
 
                 <div className={classes.category}>
                   <h4 className={classes.titleText}>Category</h4>
-                  <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={category}
-                    getOptionLabel={(option) => option.label}
-                    style={{ width: "100%" }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        className={classes.inputField}
-                        variant="outlined"
-                        placeholder="Animals"
-                      />
-                    )}
-                  />
+                  <TextField
+                    id="standard-select-currency-native"
+                    className={classes.inputField}
+                    variant="outlined"
+                    select
+                    value={category}
+                    onChange={handleCategoryChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {categoryItem.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+
                   <h4 className={classes.titleText}>Item for sale?</h4>
-                  <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={ItemForSale}
-                    getOptionLabel={(option) => option.label}
-                    onChange={() => setItemSale(!itemSale)}
-                    defaultValue={ItemForSale.find((v) => v.label[0])}
-                    style={{ width: "100%" }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        className={classes.inputField}
-                        variant="outlined"
-                        required
-                        error={itemForSaleError}
-                        value={itemForSale}
-                        onChange={(e) => setItemForSale(e.target.value)}
-                      />
-                    )}
-                  />
+                  <TextField
+                    id="standard-select-currency-native"
+                    className={classes.inputField}
+                    variant="outlined"
+                    select
+                    value={item_for_sale}
+                    onChange={handleSaleChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {ItemForSale.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
                 </div>
                 {itemSale && (
                   <div>
@@ -401,32 +456,51 @@ const UploadFiles = () => {
                     </div>
                   </div>
                 )}
-                {!itemSale && (
-                  <div>
-                    <h4 className={classes.titleText}>
-                      How they can use this photo
-                    </h4>
-                    <Autocomplete
-                      disablePortal
-                      id="combo-box-demo"
-                      options={usePhoto}
-                      getOptionLabel={(option) => option.label}
-                      style={{ width: "100%" }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          className={classes.inputField}
-                          variant="outlined"
-                          value={usages}
-                          onChange={(e) => setUsages(e.target.value)}
-                          placeholder="Free for commercial use"
-                        />
-                      )}
-                    />
-                  </div>
-                )}
+                <div>
+                  <h4 className={classes.titleText}>
+                    How they can use this photo
+                  </h4>
+                  <TextField
+                    id="standard-select-currency-native"
+                    className={classes.inputField}
+                    select
+                    label=""
+                    variant="outlined"
+                    value={usages}
+                    onChange={handleUsagesChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {usePhoto.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </div>
+
                 <h4 className={classes.titleText}>Type of Image?</h4>
-                <Autocomplete
+                <TextField
+                    id="standard-select-currency-native"
+                    className={classes.inputField}
+                    select
+                    label=""
+                    variant="outlined"
+                    value={typeOfImage}
+                    onChange={handleTypeOfImage}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    
+                    {typeOfImageItem.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                {/* <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={typeOfImage}
@@ -441,25 +515,22 @@ const UploadFiles = () => {
                       variant="outlined"
                     />
                   )}
-                />
+                /> */}
+
                 {imageType && (
-                  <div
-                    className={classes.imageFileUploadBox}
-                    {...getRootProps()}
-                    style={
-                      isDragActive ? { borderColor: "#117A00" } : undefined
-                    }
-                  >
-                    <div
-                      className={classes.uploadIconImage}
-                      style={
-                        isDragActive
-                          ? { backgroundColor: "#117A00" }
-                          : undefined
-                      }
-                    >
-                      <input {...getInputProps()} />
-                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+                  <div className={classes.imageFileUploadBox}>
+                    <div className={classes.uploadIconImage}>
+                      <label htmlFor="additionalImageUpload">
+                        <input
+                          id="additionalImageUpload"
+                          name="additionalImageUpload"
+                          style={{ display: "none" }}
+                          type="file"
+                          files={additional_image}
+                          onChange= {handleFileChange}
+                        />
+                        <FontAwesomeIcon icon={faCloudUploadAlt} />
+                      </label>
                       <p className={classes.selectFileText}>
                         Select a file (AI,EPS,PSD,SVG)
                       </p>
@@ -478,12 +549,12 @@ const UploadFiles = () => {
                         onChange={(e) => setAttribution(e.target.value)}
                       >
                         <FormControlLabel
-                          value="Yes"
+                          value="yes"
                           control={<Radio />}
                           label="Yes"
                         />
                         <FormControlLabel
-                          value="No"
+                          value="no"
                           control={<Radio />}
                           label="No"
                         />
@@ -498,6 +569,8 @@ const UploadFiles = () => {
                   aria-label="minimum height"
                   rowsMin={5}
                   placeholder="Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
                 <div className={classes.singleBorder}></div>
                 <button
