@@ -7,9 +7,7 @@ import {
   FormControl,
   TextareaAutosize,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCloudUploadAlt,
