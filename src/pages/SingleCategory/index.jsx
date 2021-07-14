@@ -19,19 +19,14 @@ import moment from 'moment';
 import { useSelector } from "react-redux";
 import authorPhoto from "../../assets/author.png";
 
-
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [imageDetails, setImageDetails] = useState({});
   const [follower, setFollower] = useState(false);
-
   const user = useSelector((state) => state.user);
-  console.log(user.token);
-
   const history = useHistory();
 
- 
   useEffect(() => {
     window.scrollTo(0, 500);
     try {
@@ -40,17 +35,14 @@ const SingleCategory = () => {
           `https://piktask.com/api/images/${id}`
         )
         .then(({ data }) => {
-          console.log(data.detail);
           if(data?.success) {
           // const singleImage = data?.detail.find(item => item.id === Number(id));
           setImageDetails(data.detail);
-          console.log("user-token",user.token);
           if (user.token) {
             axios.get(`https://piktask.com/api/sellers/follow_status/${data.detail.user_id}`, {
               headers: {"Authorization" : user.token}
             })
             .then((response) => {
-              console.log(response);
               if(response.data.status){
                 setFollower(true);
               } 
@@ -77,7 +69,6 @@ const SingleCategory = () => {
         headers: {"Authorization" : user.token}
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setFollower(!follower);
         }
@@ -108,7 +99,6 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                <div className={`${classes.buttonGroup} ${classes.buttonGroup1}`}>
                   <Button className={classes.button}>Save</Button>
                   <Button className={classes.button}>
                     <img
@@ -118,8 +108,6 @@ const SingleCategory = () => {
                     />
                     Try
                   </Button>
-                </div>
-                <div className={classes.buttonGroup}>
                   <Button className={classes.button}>
                     <img
                       className={classes.buttonIcon}
@@ -136,7 +124,6 @@ const SingleCategory = () => {
                     />
                     Copy Link
                   </Button>
-                </div>
               </div>
             </div>
           </Grid>
@@ -245,7 +232,7 @@ const SingleCategory = () => {
         </Grid>
 
         {/* BUTTONS OF TAGS */}
-        <TagButtons />
+        <TagButtons imageDetails={imageDetails} />
 
         <SectionHeading
           title="Related Products"

@@ -53,25 +53,21 @@ const App = () => {
         });
       }
     });
-
-    
-    // //check normal user state
-    const token = localStorage.getItem("token");
-
-     if(token !== null){
-     const decodedToken = jwt_decode(token.split(" ")[1]);
-      if(decodedToken.email){
+    // Check username/password auth state
+    const setUserToken = window.localStorage.getItem("token") || "";
+    if (setUserToken) {
+      const decode = jwt_decode(setUserToken.split(" ")[1]);
+      if(decode.email){
         dispatch({
           type: "SET_USER",
           payload: {
-           ...decodedToken,
-           token,
-          },
-        });
+            ...decode,
+            token: setUserToken,
+          }
+        })
       }
-     }
- 
-  return () => unsubscribe();
+    }
+    return () => unsubscribe();
   }, [dispatch]);
 
   return (

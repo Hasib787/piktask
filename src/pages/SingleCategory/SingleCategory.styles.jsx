@@ -32,17 +32,17 @@ const useStyles = makeStyles((theme) => ({
     borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",
     padding: "1.5rem 3rem",
+
+    [theme.breakpoints.up(1279)]: {
+      display: "flex",
+    },
+
+    [theme.breakpoints.down(625)]: {
+      display: "flex",
+    },
     
     [theme.breakpoints.down(480)]: {
       justifyContent: "center",
-      flexDirection: "column",
-
-    },
-  },
-  buttonGroup: {
-    display: "flex",
-
-    [theme.breakpoints.down(480)]: {
       flexDirection: "column",
     },
   },
@@ -58,11 +58,21 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#F0F7EF",
     },
 
+    [theme.breakpoints.up(1279)]: {
+      marginLeft: ".8rem",
+    },
+
+    [theme.breakpoints.down(653)]: {
+      marginLeft: "1rem",
+      padding: ".6rem 1.5rem",
+    },
+    
     [theme.breakpoints.down(480)]: {
       padding: ".6rem 1.2rem",
       fontSize: "1.4rem",
       marginBottom: "1rem",
       marginLeft: "1rem",
+      flexDirection: "column",
     },
   },
   buttonIcon: {
