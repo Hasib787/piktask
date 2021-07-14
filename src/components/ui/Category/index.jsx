@@ -6,7 +6,7 @@ const Category = ({ photo }) => {
   return (
     <Item>
       <img src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"} alt="" />
-      <CategoryButton>Category</CategoryButton>
+      <CategoryButton>{photo?.name}</CategoryButton>
     </Item>
   );
 };

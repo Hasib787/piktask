@@ -17,7 +17,9 @@ export const CategoryCarousel = () => {
           "https://piktask.com/api/categories/popular"
         )
         .then(({ data }) => {
-          setPhotos(data.categories);
+          if (data?.status) {
+            setPhotos(data.categories);
+          }
         });
     } 
     catch (error) {

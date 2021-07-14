@@ -149,7 +149,7 @@ const SingleCategory = () => {
               {imageDetails?.description}
             </Typography>
             <Typography className={classes.subHeading} variant="subtitle1">
-              <span>Designhill License</span>
+              <span>bdtask License</span>
               Free for personal and commercial purpose with attribution
             </Typography>
 
@@ -163,12 +163,12 @@ const SingleCategory = () => {
                     <strong>Image Size </strong>{imageDetails?.height}*{imageDetails?.width}
                   </Typography>
                 </div>
-                <div className={classes.singleItem}>
+                {/* <div className={classes.singleItem}>
                   <Typography>
                     <strong>Copyright Information Copyright:</strong>
                     Designhill
                   </Typography>
-                </div>
+                </div> */}
               </Grid>
 
               <Grid item xs={6} className={classes.gridItem}>
@@ -180,11 +180,11 @@ const SingleCategory = () => {
                     <strong>Category: </strong>{imageDetails?.category?.name}
                   </Typography>
                 </div>
-                <div>
+                {/* <div>
                   <Typography>
                     <strong>Scope of authorization: </strong>personal/enterprise
                   </Typography>
-                </div>
+                </div> */}
               </Grid>
             </Grid>
             <Grid container>
