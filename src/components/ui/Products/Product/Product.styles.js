@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   itemFooter: {
-    height: "15.8rem",
+    height: "10rem",
     display: "flex",
     flexDirection: "column",
   },
@@ -156,7 +156,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   itemContainer: {
     position: "relative",
-    height: 405,
+    height: 230,
   },
   singlePageLink: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -174,13 +174,13 @@ export const useStyles = makeStyles((theme) => ({
     top: "60%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    fontSize: "1.6rem",
+    fontSize: "5.6rem",
     letterSpacing: ".05rem",
     fontWeight: 500,
     color: theme.palette.common.white,
     backgroundColor: theme.palette.secondary.main,
     lineHeight: 1,
-    padding: "1.2rem 2rem",
+    padding: "2rem 2rem",
     transition: "all 250ms ease-in-out",
     opacity: 0,
     visibility: "hidden",

@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import SearchIcon from '@material-ui/icons/Search';
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
@@ -52,13 +53,19 @@ const Product = ({ photo }) => {
 
       <div className={classes.itemContainer}>
         <Link className={classes.singlePageLink} to={`/photo/${photo?.id}`} />
-        <Button
+        {/* <Button
           href={`${photo?.links?.download}?force=true`}
           disableRipple
           classes={{ root: classes.downloadItem }}
         >
           Download
-        </Button>
+        </Button> */}
+        <IconButton
+          classes={{ root: classes.downloadItem }}
+          // onClick={handleClick}
+        >
+          <SearchIcon />
+        </IconButton>
         <Link to={`/photo/${photo?.id}`}>
           <img 
             className={classes.image} 
