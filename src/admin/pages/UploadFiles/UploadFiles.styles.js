@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   uploadIconWrapper: {
-    width: "18rem",
+    width: "22rem",
     height: "18rem",
     fontSize: "8.5rem",
     color: "#97A1A8",
@@ -65,11 +65,23 @@ const useStyles = makeStyles((theme) => ({
       height: "6rem",
     },
   },
-  subtitle: {
-    fontSize: "1.4rem",
+  imageErrorText:{
+    marginTop: "-4rem",
+    color: "red",
+    fontWeight: "bold",
+    fontSize:"3rem"
+  },
+  photoUploadText: {
+    fontSize: "2.5rem",
     color: "#97A1A8",
   },
-
+  subtitle: {
+    fontSize: "1.8rem",
+    color: "#97A1A8",
+  },
+  formHeadText:{
+      marginBottom: "2rem",
+  },
   //input field
   uploadForm: {
     padding: "30px 80px",
