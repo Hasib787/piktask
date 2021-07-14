@@ -60,12 +60,14 @@ const Product = ({ photo }) => {
         >
           Download
         </Button> */}
-        <IconButton
-          classes={{ root: classes.downloadItem }}
-          // onClick={handleClick}
-        >
-          <SearchIcon />
-        </IconButton>
+        <Link to={`/photo/${photo?.id}`}>
+          <IconButton
+            classes={{ root: classes.downloadItem }}
+            // onClick={handleClick}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Link>
         <Link to={`/photo/${photo?.id}`}>
           <img 
             className={classes.image} 
