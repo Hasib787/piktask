@@ -1,11 +1,18 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./TagButtons.styles";
 
-const TagButtons = () => {
+const TagButtons = ({ imageDetails }) => {
   const classes = useStyles();
-
+  // const [allTag, setAllTag] = useState([]);
+  // let str = imageDetails.tags;
+  // if (str) {
+  //   const words = str.split(",");
+  //   setAllTag(words);
+  //   console.log(words);
+  // }
+  
   return (
     <>
       <Grid container>
@@ -13,6 +20,12 @@ const TagButtons = () => {
           <Typography className={classes.tagTitle} variant="h3">
             Related Tags
           </Typography>
+          {/* {
+            allTag.map((tag) => 
+            <Button className={classes.tagButton} tag={tag} component={Link} to={`/tag/2`}>
+              {tag}
+            </Button>)
+          } */}
           <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
             Business Card
           </Button>

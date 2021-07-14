@@ -42,7 +42,6 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {
@@ -52,28 +51,22 @@ const App = () => {
         });
       }
     });
-    
     // Check username/password auth state
-
     const setUserToken = window.localStorage.getItem("token") || "";
     if (setUserToken) {
       const decode = jwt_decode(setUserToken.split(" ")[1]);
-      console.log(decode);
       if(decode.email){
         dispatch({
           type: "SET_USER",
           payload: {
             ...decode,
             token: setUserToken,
-  
           }
         })
       }
     }
-
     return () => unsubscribe();
   }, [dispatch]);
-
 
   return (
     <ThemeProvider theme={theme}>
