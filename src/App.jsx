@@ -39,11 +39,11 @@ const App = () => {
 
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-
         dispatch({
           type: "LOGGED_IN_USER",
           payload: {
@@ -53,25 +53,21 @@ const App = () => {
         });
       }
     });
-
-    
-    // //check normal user state
-    const token = localStorage.getItem("token");
-
-     if(token !== null){
-     const decodedToken = jwt_decode(token.split(" ")[1]);
-      if(decodedToken.email){
+    // Check username/password auth state
+    const setUserToken = window.localStorage.getItem("token") || "";
+    if (setUserToken) {
+      const decode = jwt_decode(setUserToken.split(" ")[1]);
+      if(decode.email){
         dispatch({
           type: "SET_USER",
           payload: {
-           ...decodedToken,
-           token,
-          },
-        });
+            ...decode,
+            token: setUserToken,
+          }
+        })
       }
-     }
- 
-  return () => unsubscribe();
+    }
+    return () => unsubscribe();
   }, [dispatch]);
 
   return (
@@ -80,7 +76,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Admin */}
-        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard}/>
         <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />

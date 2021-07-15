@@ -50,7 +50,6 @@ const Header = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const user = useSelector(state => state.user);
-  // const username = useSelector(state => state.username);
   const anchorRef = useRef(null);
 
   const { mobileView } = menuSate;
@@ -129,7 +128,17 @@ const Header = () => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                <AccountCircleIcon className={classes.avatar} />
+                {
+                  user && user?.avatar ? (
+                    <img
+                      className={classes.avatar}
+                      src={user.avatar}
+                      alt="UserPhoto"
+                    />
+                  ) : (
+                    <AccountCircleIcon className={classes.avatar} />
+                  )
+                }
                 <ArrowDropDownIcon className={classes.arrowDown} />
               </div>
             ) : (

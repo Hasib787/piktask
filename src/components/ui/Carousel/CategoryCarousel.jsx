@@ -4,43 +4,33 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 import { Container } from "./Carousel.styles";
 
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
-export const CategoryCarousel = ({ categories }) => {
+export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
-
-  // const getPhotos = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
-  //     );
-  //     setPhotos(data.results);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
   useEffect(() => {
     try {
       axios
         .get(
-          `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
+          // "https://piktask.com/api/categories?query=Meeting room&per_page=12"
+          "https://piktask.com/api/categories/popular"
         )
         .then(({ data }) => {
-          setPhotos(data.results);
+          if (data?.status) {
+            setPhotos(data.categories);
+          }
         });
-
-      // setPhotos(data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error.message);
     }
   }, []);
 
-  // console.log(photos);
-
   const settings = {
     dots: false,
     infinite: true,
+    autoplay: true,
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -52,25 +42,27 @@ export const CategoryCarousel = ({ categories }) => {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 4,
+          slidesToScroll: 1,
           infinite: true,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 3,
+          slidesToShow: 3,
+          slidesToScroll: 1,
           infinite: true,
+          centerPadding: "0px",
         },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           initialSlide: 2,
+          infinite: true,
           centerPadding: "0px",
         },
       },
@@ -79,6 +71,7 @@ export const CategoryCarousel = ({ categories }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          infinite: true,
           centerPadding: "0px",
         },
       },

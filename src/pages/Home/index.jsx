@@ -1,5 +1,5 @@
 import { Button, Container } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Blog from "../../components/ui/Blog";
@@ -13,14 +13,13 @@ import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
-import categoryData from "../../data/category.json";
-import productData from "../../data/products.json";
 import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const { products } = productData;
-  const { categories } = categoryData;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -42,7 +41,7 @@ export const Home = () => {
       </Container>
 
       {/* Carousel with Categories */}
-      <CategoryCarousel categories={categories} />
+      <CategoryCarousel />
 
       <Container>
         <SectionHeading
