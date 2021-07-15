@@ -159,8 +159,9 @@ const UploadFiles = () => {
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setImage(imageFile);
-    if (!imageFile) {
+    if (!imageFile || imageFile==="") {
       setImageError("Image is required");
+      toast.error("Image is required");
       return false;
     }
     if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
@@ -235,7 +236,7 @@ const UploadFiles = () => {
       url: url,
       data: formData,
       headers: {
-        Authorization: user.token,
+        Authorization: user.token,  
         "Content-Type": "multipart/form-data",
       },
     })
@@ -244,9 +245,9 @@ const UploadFiles = () => {
           toast.success("Photo added successful");
         }
         if(res?.status === 401){
-          localStorage.clear();
+          localStorage.removeItem("token");
           toast.success("Please login Again");
-          window.location.reload(history.replace('/login'));  
+          history.replace('/login');  
         }
       })
       .catch((error) => {
@@ -383,7 +384,7 @@ const UploadFiles = () => {
                   />
                 </div>
                 <p className={classes.helperText}>
-                  * Press Enter to add tag (Maximum 10 tags)
+                  * Press Space or comma to add tag (Maximum 10 tags)
                 </p>
 
                 <div className={classes.category}>
@@ -518,15 +519,15 @@ const UploadFiles = () => {
                 {imageType && (
                   <div className={classes.imageFileUploadBox}>
                     <div className={classes.uploadIconImage}>
-                      <label htmlFor="additionalImageUpload">
-                        <input
+                    <input
                           id="additionalImageUpload"
                           name="additionalImageUpload"
-                          style={{ display: "none" }}
+                          // style={{ display: "none" }}
                           type="file"
                           files={additional_image}
                           onChange= {handleFileChange}
                         />
+                      <label htmlFor="additionalImageUpload">
                         <FontAwesomeIcon icon={faCloudUploadAlt} />
                       </label>
                       <p className={classes.selectFileText}>
