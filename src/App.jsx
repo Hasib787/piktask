@@ -57,7 +57,7 @@ const App = () => {
     const setUserToken = window.localStorage.getItem("token") || "";
     if (setUserToken) {
       const decode = jwt_decode(setUserToken.split(" ")[1]);
-      if(decode.email){
+      if (decode.email) {
         dispatch({
           type: "SET_USER",
           payload: {
@@ -76,7 +76,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Admin */}
-        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard}/>
+        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
@@ -104,7 +104,7 @@ const App = () => {
         <Route exact path="/:category/:id" component={SingleCategory} />
       </Switch>
     </ThemeProvider>
-    
+
   );
 };
 

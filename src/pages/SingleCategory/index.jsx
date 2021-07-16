@@ -2,16 +2,16 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import bannerImg from "../../assets/banner/banner.png";
+// import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
-import downArrow from "../../assets/icons/downArrow.svg";
+// import downArrow from "../../assets/icons/downArrow.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
-import HeroSection from "../../components/ui/Hero";
+// import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
@@ -24,11 +24,11 @@ const SingleCategory = () => {
   const { id } = useParams();
   const [imageDetails, setImageDetails] = useState({});
   const [follower, setFollower] = useState(false);
+  const [allTags, setAllTags] = useState([]);
   const user = useSelector((state) => state.user);
   const history = useHistory();
-
   useEffect(() => {
-    window.scrollTo(0, 500);
+    window.scrollTo(0, 150);
     try {
       axios
         .get(
@@ -38,7 +38,11 @@ const SingleCategory = () => {
           if(data?.success) {
           // const singleImage = data?.detail.find(item => item.id === Number(id));
           setImageDetails(data.detail);
-          if (user.token) {
+          if (data?.detail.tags) {
+            const words = data.detail.tags.split(",");
+            setAllTags(words.slice(1));
+          }
+          if (user?.token) {
             axios.get(`https://piktask.com/api/sellers/follow_status/${data.detail.user_id}`, {
               headers: {"Authorization" : user.token}
             })
@@ -79,12 +83,12 @@ const SingleCategory = () => {
   return (
     <>
       <Header />
-      <HeroSection
+      {/* <HeroSection
         background={bannerImg}
         size="medium"
         title="Graphic Resource for Free Download"
         subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
-      />
+      /> */}
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -99,7 +103,7 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                  <Button className={classes.button}>Save</Button>
+                  {/* <Button className={classes.button}>Save</Button>
                   <Button className={classes.button}>
                     <img
                       className={classes.buttonIcon}
@@ -107,7 +111,7 @@ const SingleCategory = () => {
                       alt="Down arrow"
                     />
                     Try
-                  </Button>
+                  </Button> */}
                   <Button className={classes.button}>
                     <img
                       className={classes.buttonIcon}
@@ -221,7 +225,7 @@ const SingleCategory = () => {
                       Unfollow
                     </Button>
                 }
-                
+
                 <Button className={`${classes.authorBtn} ${classes.downloadBtn}`}>
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
@@ -232,7 +236,10 @@ const SingleCategory = () => {
         </Grid>
 
         {/* BUTTONS OF TAGS */}
-        <TagButtons imageDetails={imageDetails} />
+        {/* {
+          allTags.map((allTags) => <TagButtons allTags={allTags} />)
+        } */}
+        <TagButtons allTags={allTags} />
 
         <SectionHeading
           title="Related Products"

@@ -100,7 +100,7 @@ const DesktopMenu = () => {
                 label="Help"
               /> */}
             </Tabs>
-            {user && user.token && (
+            {user && user?.token && (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}

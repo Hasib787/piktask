@@ -7,7 +7,8 @@ import {
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
@@ -65,7 +66,7 @@ const Product = ({ photo }) => {
             classes={{ root: classes.downloadItem }}
             // onClick={handleClick}
           >
-            <SearchIcon />
+            <GetAppIcon className={classes.downloadImageIcon} />
           </IconButton>
         </Link>
         <Link to={`/photo/${photo?.id}`}>
@@ -81,7 +82,7 @@ const Product = ({ photo }) => {
         <CardContent>
           <Link className={classes.titleLink} to={`/photo/${photo?.id}`}>
             <Typography variant="h2" className={classes.title}>
-              {photo?.alt_description}
+              {photo?.title}
             </Typography>
           </Link>
           <Typography variant="body1" className={classes.itemStatus}>

@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from "@material-ui/core";
 import React, { FC } from "react";
 import heroBG from "../../../assets/490cdcd7579.svg";
+import heroBackground from "../../../assets/herobg.jpg";
 import { keywords } from "../../../data/demoData";
 import SectionHeading from "../Heading";
 import Search from "../Search";
@@ -28,6 +29,7 @@ const HeroSection: FC<Props> = ({
       className={classes.heroWrapper}
       style={{
         backgroundImage: `url(${heroBG})`,
+        // backgroundImage: `url(${heroBackground})`,
         minHeight: size === "large" ? "60rem" : "35.5rem",
       }}
     >

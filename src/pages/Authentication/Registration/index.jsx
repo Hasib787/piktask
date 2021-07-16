@@ -94,12 +94,12 @@ export const Registration = ({ history }) => {
     }
 
     axios.post("https://piktask.com/api/auth/signup", {
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
+      username,
+      email,
+      password,
+      confirmPassword,
     }).then((res) => {
-      if (res.status === 200) {
+      if (res?.status === 200) {
         openModal()
       }
     }).catch((error) => {
@@ -133,9 +133,9 @@ export const Registration = ({ history }) => {
     setModalIsOpen(true);
   }
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-  }
+  // const closeModal = () => {
+  //   setModalIsOpen(false);
+  // }
 
   const handleGoogleLogin = async googleData => {
     const res = await fetch("https://piktask.com/api/auth/google_login", {
@@ -335,7 +335,7 @@ export const Registration = ({ history }) => {
                     >
                       Signup
                     </Button>
-                    <ModalAuth modalIsOpen={modalIsOpen} closeModal={closeModal}></ModalAuth>
+                    <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
                   </form>
 
                   <Button

@@ -28,7 +28,8 @@ const Products = ({ count = 8, query = "popular" }) => {
       )
       .then(({ data }) => {
         if (data?.success) {
-          setPhotos(data.images);
+          const showImage = data?.images;
+          setPhotos(showImage.slice(0, 8));
         }
       })
     } catch (error) {

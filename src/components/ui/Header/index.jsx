@@ -120,7 +120,7 @@ const Header = () => {
               En
             </Button>
 
-            {user && user.token ? (
+            {user && user?.token ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}

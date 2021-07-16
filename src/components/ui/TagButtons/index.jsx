@@ -1,17 +1,10 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import React, {useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./TagButtons.styles";
 
-const TagButtons = ({ imageDetails }) => {
+const TagButtons = ({ allTags }) => {
   const classes = useStyles();
-  // const [allTag, setAllTag] = useState([]);
-  // let str = imageDetails.tags;
-  // if (str) {
-  //   const words = str.split(",");
-  //   setAllTag(words);
-  //   console.log(words);
-  // }
   
   return (
     <>
@@ -20,13 +13,13 @@ const TagButtons = ({ imageDetails }) => {
           <Typography className={classes.tagTitle} variant="h3">
             Related Tags
           </Typography>
-          {/* {
-            allTag.map((tag) => 
+          {
+            allTags.map((tag) => 
             <Button className={classes.tagButton} tag={tag} component={Link} to={`/tag/2`}>
               {tag}
             </Button>)
-          } */}
-          <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
+          }
+          {/* <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
             Business Card
           </Button>
           <Button className={classes.tagButton} component={Link} to={`/tag/3`}>
@@ -46,7 +39,7 @@ const TagButtons = ({ imageDetails }) => {
           </Button>
           <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
             Business
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </>
