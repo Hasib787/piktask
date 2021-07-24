@@ -1,5 +1,6 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import React, { FC } from "react";
+import axios from "axios";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -26,11 +27,26 @@ type Params = {
   id: string;
 };
 
+const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
+
 const SingleCategory: FC<Props> = (): JSX.Element => {
+  const [photos, setPhotos] = useState([]);
+
   const classes = useStyles();
   const { products } = productsData;
   const { id } = useParams<Params>();
-  console.log(id);
+
+  useEffect(() => {
+    try {
+      const data = axios.get(`https://api.unsplash.com/photos`).then((res) => {
+        console.log(res);
+      });
+
+      // setPhotos(data.results);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
 
   const product = products.find((product) => product._id === id);
 
