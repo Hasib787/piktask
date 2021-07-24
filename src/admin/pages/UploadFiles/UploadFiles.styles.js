@@ -96,10 +96,62 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "100%",
     "& input": {
-      height: "1px",
+      padding: "1.28rem 1.5rem"
     },
     "& p": {
       fontSize: "14px",
+    },
+  },
+  //category
+  categoryInput:{
+    width: "100%",
+    maxWidth: "100%",
+    "& select": {
+      padding: "1.27rem 1.5rem",
+     "& svg": {
+      height: "2.6rem",
+      marginTop: "-1px",
+      width: "3rem",
+     }, 
+    },
+  },
+  //itemSaleInput
+  itemSaleInput:{
+    width: "100%",
+    maxWidth: "100%",
+    "& select": {
+      padding: "1.27rem 1.5rem",
+     "& svg": {
+      height: "2.6rem",
+      marginTop: "-1px",
+      width: "3rem",
+     }, 
+    },
+  },
+  //usagesInput
+  usagesInput:{
+    width: "100%",
+    maxWidth: "100%",
+    "& select": {
+      padding: "1.27rem 1.5rem",
+     "& svg": {
+      height: "2.6rem",
+      marginTop: "-1px",
+      width: "3rem",
+     }, 
+    },
+  },
+  //typeOfImageInput
+  typeOfImageInput:{
+    width: "100%",
+    maxWidth: "100%",
+    "& select": {
+      padding: "1.27rem 1.5rem",
+     "& svg": {
+      height: "2.6rem",
+      marginTop: "-1px",
+      width: "3rem",
+     }, 
     },
   },
   //tag

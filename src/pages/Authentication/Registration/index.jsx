@@ -99,9 +99,15 @@ export const Registration = ({ history }) => {
       password,
       confirmPassword,
     }).then((res) => {
+<<<<<<< HEAD
       if (res?.status === 200) {
+=======
+      if (res.status === 200) {
+        toast.success(res.data.message);
+>>>>>>> 590656b4c54b4355a39cbbf3ebc7fdc6c9d048a0
         openModal()
       }
+
     }).catch((error) => {
       toast.error(error.message);
     })

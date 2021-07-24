@@ -163,7 +163,7 @@ const Header = () => {
       )}
 
       <Drawer
-        anchor="left"
+        anchor="right"
         classes={{ paper: classes.paper }}
         open={openMobileMenu}
         onClose={() => setOpenMobileMenu(false)}
