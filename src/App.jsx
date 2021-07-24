@@ -32,7 +32,6 @@ import TagTemplate from "./pages/TagTemplate";
 import jwt_decode from "jwt-decode";
 import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
-
 const App = () => {
   const dispatch = useDispatch();
   // const history = useHistory()
