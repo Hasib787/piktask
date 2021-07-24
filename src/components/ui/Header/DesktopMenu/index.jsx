@@ -15,10 +15,10 @@ import useStyles from "./DesktopMenu.styles";
 
 const DesktopMenu = () => {
   const classes = useStyles();
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState(0);
   const user = useSelector((state) => state.user);
 
-  const handleChange = (event: object, index: number): void => {
+  const handleChange = (event, index) => {
     setValue(index);
   };
 

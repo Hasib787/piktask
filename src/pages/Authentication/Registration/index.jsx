@@ -43,6 +43,7 @@ export const Registration = ({ history }) => {
   const handleShowHideConfirmPassword = () => {
     setConfirmValue((value) => !value);
   };
+  
   const pathHistory = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: '/' } };
@@ -57,6 +58,8 @@ export const Registration = ({ history }) => {
     };
   }, [user, history]);
 
+
+//Registration form submit and validation
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -123,10 +126,6 @@ export const Registration = ({ history }) => {
     window.localStorage.setItem("password", password);
     window.localStorage.setItem("confirmPassword", confirmPassword);
 
-    // Remove the existing value
-    // setUsername("");
-    // setEmail("");
-    // setPassword("");
     setIsLoading(false);
   };
 
@@ -134,10 +133,8 @@ export const Registration = ({ history }) => {
     setModalIsOpen(true);
   }
 
-  // const closeModal = () => {
-  //   setModalIsOpen(false);
-  // }
 
+//login with google
   const handleGoogleLogin = async googleData => {
     const res = await fetch("https://piktask.com/api/auth/google_login", {
       method: "POST",
@@ -169,6 +166,7 @@ export const Registration = ({ history }) => {
     }
 
   }
+
 
   //login with facebook
   const handleFacebookLogin = async facebookData => {

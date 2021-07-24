@@ -71,12 +71,15 @@ export const Login = ({ history }) => {
             },
           });
         }
+        console.log(res.status);
         toast.success(res.data.message);
         // handleResponse(true);
         pathHistory.replace(from);
       }
+      
 
     }).catch((error) => {
+      
       toast.error("Username/Email or Password doesn't match", error.message);
     })
 
