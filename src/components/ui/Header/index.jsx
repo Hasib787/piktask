@@ -120,36 +120,38 @@ const Header = () => {
               En
             </Button>
 
-            {user && user?.token ? (
-              <div
-                className={classes.userAvatarArea}
-                onClick={handleToggle}
-                aria-controls={open ? "menu-list-grow" : undefined}
-                aria-haspopup="true"
-                ref={anchorRef}
-              >
-                {
-                  user && user?.avatar ? (
-                    <img
-                      className={classes.avatar}
-                      src={user.avatar}
-                      alt="UserPhoto"
-                    />
-                  ) : (
-                    <AccountCircleIcon className={classes.avatar} />
-                  )
-                }
-                <ArrowDropDownIcon className={classes.arrowDown} />
-              </div>
-            ) : (
-              <Button
-                className={classes.signupBtn}
-                component={Link}
-                to="/registration"
-              >
-                Signup
-              </Button>
-            )}
+            {
+              user && user?.token ? (
+                <div
+                  className={classes.userAvatarArea}
+                  onClick={handleToggle}
+                  aria-controls={open ? "menu-list-grow" : undefined}
+                  aria-haspopup="true"
+                  ref={anchorRef}
+                >
+                  {
+                    user && user?.avatar ? (
+                      <img
+                        className={classes.avatar}
+                        src={user.avatar}
+                        alt="UserPhoto"
+                      />
+                    ) : (
+                      <AccountCircleIcon className={classes.avatar} />
+                    )
+                  }
+                  <ArrowDropDownIcon className={classes.arrowDown} />
+                </div>
+              ) : (
+                <Button
+                  className={classes.signupBtn}
+                  component={Link}
+                  to="/registration"
+                >
+                  Signup
+                </Button>
+              )
+            }
           </Toolbar>
         </Container>
       </div>

@@ -43,7 +43,7 @@ export const Login = ({ history }) => {
     return () => {
       document.body.style.backgroundColor = "";
     };
-  }, [user, history]);
+  }, [user, history, from]);
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
