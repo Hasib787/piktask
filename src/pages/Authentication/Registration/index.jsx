@@ -94,14 +94,16 @@ export const Registration = ({ history }) => {
     }
 
     axios.post("https://piktask.com/api/auth/signup", {
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
+      username,
+      email,
+      password,
+      confirmPassword,
     }).then((res) => {
       if (res.status === 200) {
+        toast.success(res.data.message);
         openModal()
       }
+
     }).catch((error) => {
       toast.error(error.message);
     })
