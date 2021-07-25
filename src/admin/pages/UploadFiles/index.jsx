@@ -52,8 +52,8 @@ const categoryItem = [
 ];
 
 const ItemForSale = [
-  { value: "free", label: "Item Free" },
-  { value: "sale", label: "Item for sale" },
+  { value: "free", label: "Free" },
+  { value: "sale", label: "Premium" },
 ];
 
 const usePhoto = [
@@ -102,8 +102,6 @@ const UploadFiles = () => {
   const [imageError, setImageError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  
-
   //item for sale
   const [itemSale, setItemSale] = useState(false);
 
@@ -117,7 +115,6 @@ const UploadFiles = () => {
   //   const { name, value } = e.target;
   //   setValues({ ...values, [name]: value });
   // }
-  
 
   const addTags = (event) => {
     event.preventDefault();
@@ -131,7 +128,7 @@ const UploadFiles = () => {
       event.target.value = "";
     }
     if (tags.length > 9) {
-      toast.error("Tag is full / No more tag");
+      toast.error("Tag is full / No more tags");
     }
   };
 
@@ -163,8 +160,9 @@ const UploadFiles = () => {
   };
 
   const handlePrice = (e) => {
-    if (e.target.value < 0) {
-      e.target.value = 0;
+    if (e.target.value < 5){
+      toast.error("Minimum price should be 5");
+      return;
     }
     setPrice(e.target.value);
   };
@@ -203,26 +201,23 @@ const UploadFiles = () => {
     setLoading(true);
     setTitleError(false);
     // setAttribution("yes");
-    
 
     if (imageError) {
+      setLoading(false);
       toast.error("Please upload valid image");
-    }
-    if (title === "") {
-      setTitleError(true);
+      return;
+    } else if (title === "") {
+      setLoading(false);
       toast.error("The Title field is required.");
-    }
-    if (!title.match(/^[a-zA-Z\s]+$/)) {
-      setTitleError(true);
-      toast.error("Title should be a character");
-    }
-    if (title.length < 3 || title.length > 200) {
-      setTitleError(true);
+      return;
+    } else if (title.length < 3 || title.length > 200) {
+      setLoading(false);
       toast.error("Title must be between 3 to 200 characters");
-    }
-
-    if (tags.length < 0) {
+      return;
+    } else if (tags.length < 0) {
+      setLoading(false);
       toast.error("The tag field is required");
+      return;
     }
 
     if (itemForSaleError === "") {
@@ -232,19 +227,19 @@ const UploadFiles = () => {
 
     const formData = new FormData();
 
-    formData.append("title", title);
-    formData.append("tags", tags);
-    formData.append("category", category);
-    formData.append("item_for_sale", item_for_sale);
-    formData.append("price", price);
-    formData.append("usages", usages);
-    formData.append("attribution", attribution);
-    formData.append("description", description);
-    formData.append("image", image);
-    formData.append("additional_image", additional_image);
+    formData.append("title", "this is title");
+    // formData.append("tags", tags);
+    // formData.append("category", category);
+    // formData.append("item_for_sale", item_for_sale);
+    // formData.append("price", price);
+    // formData.append("usages", usages);
+    // formData.append("attribution", attribution);
+    // formData.append("description", description);
+    // formData.append("image", image);
+    // formData.append("additional_image", additional_image);
 
     console.log(formData);
-
+    return;
     const url = "https://piktask.com/api/images/upload";
     axios({
       method: "post",
@@ -270,7 +265,6 @@ const UploadFiles = () => {
           setUsages("");
           setAttribution("");
           setItem_for_sale("");
-
         }
         if (res?.status === 401) {
           localStorage.removeItem("token");
@@ -280,7 +274,7 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        toast.error("error message", error.message);
+        toast.error(error.message);
         setLoading(false);
       });
   };
@@ -356,12 +350,11 @@ const UploadFiles = () => {
                   The photo must be greater than or equal to: 1600x900 - 2MB{" "}
                 </Typography>
               </div>
-            
 
               <Heading className={classes.formHeadText} tag="h2">
                 What type of content are you going to upload?
               </Heading>
-                
+
               <div className={classes.uploadForm}>
                 <h4 className={classes.titleText}>Title</h4>
                 <TextField
@@ -406,7 +399,7 @@ const UploadFiles = () => {
                   * Press Space or comma to add tag (Maximum 10 tags)
                 </p>
 
-                <div className={classes.category}>
+                <div>
                   <h4 className={classes.titleText}>Category</h4>
                   <TextField
                     id="standard-select-currency-native"
@@ -517,7 +510,6 @@ const UploadFiles = () => {
                     </option>
                   ))}
                 </TextField>
-               
 
                 {imageType && (
                   <div className={classes.imageFileUploadBox}>

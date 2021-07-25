@@ -88,6 +88,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     borderRadius: "5px",
     maxWidth: "100%",
+    "@media (max-width: 768px)": {
+      padding: "20px 24px",
+    },
+    "@media (max-width: 1024px)": {
+      padding: "20px 28px",
+    },
   },
   titleText: {
     margin: "15px 0px 5px 0px",
@@ -108,25 +114,26 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     "& select": {
       padding: "1.27rem 1.5rem",
-     "& svg": {
+    },
+    "& svg":{
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
-     }, 
-    },
+     },
   },
+  
   //itemSaleInput
   itemSaleInput:{
     width: "100%",
     maxWidth: "100%",
     "& select": {
       padding: "1.27rem 1.5rem",
-     "& svg": {
+    },
+    "& svg": {
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
      }, 
-    },
   },
   //usagesInput
   usagesInput:{
@@ -134,12 +141,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     "& select": {
       padding: "1.27rem 1.5rem",
-     "& svg": {
+    },
+    "& svg": {
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
      }, 
-    },
   },
   //typeOfImageInput
   typeOfImageInput:{
@@ -147,12 +154,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     "& select": {
       padding: "1.27rem 1.5rem",
-     "& svg": {
+    },
+    "& svg": {
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
      }, 
-    },
   },
   //tag
   tagsInput: {
