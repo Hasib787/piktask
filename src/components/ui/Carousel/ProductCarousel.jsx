@@ -4,23 +4,23 @@ import "slick-carousel/slick/slick.css";
 import Product from "../Products/Product";
 import { Container } from "./Carousel.styles";
 
-const ACCESS_KEY = "nw4TpvwFYuQYe5aw0eQ-oJxJoMy6px8yttv4vMWHQRM";
 
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
-  const getPhotos = async () => {
+  useEffect(() => {
     try {
-      const { data } = await axios.get(
-        `https://api.unsplash.com/search/photos?query=${query}&per_page=${count}&client_id=${ACCESS_KEY}`
-      );
-      setPhotos(data.results);
+      axios.get(
+        // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
+        `https://piktask.com/api/images/recent`
+      )
+      .then(({ data }) => {
+        if (data?.success) {
+          setPhotos(data.images);
+        }
+      })
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  useEffect(() => {
-    getPhotos();
   }, []);
 
   const settings = {
@@ -37,26 +37,27 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
       {
         breakpoint: 1440,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 4,
+          slidesToScroll: 1,
           infinite: true,
         },
       },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 3,
+          slidesToShow: 3,
+          slidesToScroll: 1,
           infinite: true,
+          centerPadding: "0px",
         },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           initialSlide: 2,
-          centerPadding: "0rem",
+          centerPadding: "0px",
         },
       },
       {
@@ -64,7 +65,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerPadding: "0",
+          centerPadding: "0px",
         },
       },
     ],
@@ -73,8 +74,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
   return (
     <>
       <Container {...settings}>
-        {photos.length > 0 &&
-          photos.map((photo) => <Product key={photo.id} photo={photo} />)}
+        {photos.map((photo) => <Product key={photo.id} photo={photo} />)}
       </Container>
     </>
   );

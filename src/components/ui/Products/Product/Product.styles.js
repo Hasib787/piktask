@@ -15,12 +15,16 @@ export const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  itemContainer: {
+    position: "relative",
+    height: 250,
+  },
   image: {
     width: "100%",
     height: "100%",
   },
   itemFooter: {
-    height: "15.8rem",
+    padding: "1rem 0rem",
     display: "flex",
     flexDirection: "column",
   },
@@ -61,6 +65,10 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: 0,
     marginTop: "auto",
 
+    "@media (max-width: 1024px)": {
+      alignItems: "baseline",
+      flexDirection: "column",
+    },
     "@media (max-width: 768px)": {
       alignItems: "baseline",
       flexDirection: "column",
@@ -150,10 +158,6 @@ export const useStyles = makeStyles((theme) => ({
       width: "2.2rem",
     },
   },
-  itemContainer: {
-    position: "relative",
-    height: 405,
-  },
   singlePageLink: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     position: "absolute",
@@ -170,19 +174,22 @@ export const useStyles = makeStyles((theme) => ({
     top: "60%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    fontSize: "1.6rem",
+    fontSize: "1.5rem",
     letterSpacing: ".05rem",
     fontWeight: 500,
     color: theme.palette.common.white,
     backgroundColor: theme.palette.secondary.main,
     lineHeight: 1,
-    padding: "1.2rem 2rem",
+    padding: "1.6rem 1.6rem",
     transition: "all 250ms ease-in-out",
     opacity: 0,
     visibility: "hidden",
     "&:hover": {
       backgroundColor: "rgb(21 100 8 / 94%)",
     },
+  },
+  downloadImageIcon: {
+    fontSize: "2.5rem",
   },
 }));
 
@@ -201,6 +208,10 @@ export const CardFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 1.5rem;
+  }
 
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;

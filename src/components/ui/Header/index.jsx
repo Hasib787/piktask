@@ -42,7 +42,7 @@ const customStyles = makeStyles({
   },
 });
 
-const Header = (): JSX.Element => {
+const Header = () => {
   const classes = useStyles();
   const iconClass = customStyles();
 
@@ -128,7 +128,17 @@ const Header = (): JSX.Element => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                <AccountCircleIcon className={classes.avatar} />
+                {
+                  user && user?.avatar ? (
+                    <img
+                      className={classes.avatar}
+                      src={user.avatar}
+                      alt="UserPhoto"
+                    />
+                  ) : (
+                    <AccountCircleIcon className={classes.avatar} />
+                  )
+                }
                 <ArrowDropDownIcon className={classes.arrowDown} />
               </div>
             ) : (

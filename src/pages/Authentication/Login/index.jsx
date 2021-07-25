@@ -5,30 +5,38 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import facebookLogo from "../../../assets/facebookLogo.png";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
-import googleLogo from "../../../assets/googleLogo.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
-import { auth, googleAuthProvider } from "../../../database";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from 'react-facebook-login';
 import useStyles from "../Auth.styles";
+import jwt_decode from "jwt-decode";
+import { useHistory, useLocation } from "react-router-dom";
+
+const clientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
   const [value, setValue] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const pathHistory = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: '/' } };
+
   useEffect(() => {
-    if (user && user.token) history.push("/admin/dashboard");
+    if (user && user.token) history.replace(from);
 
     document.body.style.backgroundColor = "#143340";
 
@@ -45,45 +53,103 @@ export const Login = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const result = await auth.signInWithEmailAndPassword(email, password);
-      const { user } = result;
-      const idTokenResult = user?.getIdTokenResult();
+    axios.post("https://piktask.com/api/auth/login", {
+      username,
+      password,
+    }).then((res) => {
+      if (res.data.status) {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        const decodedToken = jwt_decode(token.split(" ")[1]);
 
-      if ((await idTokenResult)?.token) {
+        if (decodedToken.email) {
+          dispatch({
+            type: "SET_USER",
+            payload: {
+              ...decodedToken,
+              token,
+            },
+          });
+        }
+        console.log(res.status);
+        toast.success(res.data.message);
+        // handleResponse(true);
+        pathHistory.replace(from);
+      }
+      
+
+    }).catch((error) => {
+      
+      toast.error("Username/Email or Password doesn't match", error.message);
+    })
+
+  };
+
+
+  //login with google
+  const handleGoogleLogin = async googleData => {
+    const res = await fetch("https://piktask.com/api/auth/google_login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    // store returned user somehow
+    if (data.status) {
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
+
+      if (decodedToken.email) {
         dispatch({
-          type: "LOGGED_IN_USER",
+          type: "SET_USER",
           payload: {
-            email: user?.email,
-            token: (await idTokenResult)?.token,
+            ...decodedToken,
+            token,
           },
         });
       }
-    } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
+      toast.success(data.message);
+      // handleResponse(true);
+      pathHistory.replace(from);
     }
-  };
+  }
 
-  const signInWithGoogle = async () => {
-    await auth
-      .signInWithPopup(googleAuthProvider)
-      .then(async (result) => {
-        const { user } = result;
-        const idTokenResult = await user?.getIdTokenResult();
+  //login with facebook
+  const handleFacebookLogin = async facebookData => {
+    const res = await fetch("https://piktask.com/api/auth/facebook_login", {
+      method: "POST",
+      body: JSON.stringify({
+        token: facebookData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await res.json()
+    // store returned user somehow
+    if (data.status) {
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
 
+      if (decodedToken.email) {
         dispatch({
-          type: "LOGGED_IN_USER",
+          type: "SET_USER",
           payload: {
-            email: user?.email,
-            token: idTokenResult?.token,
+            ...decodedToken,
+            token,
           },
         });
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
+      }
+      toast.success(data.message);
+      pathHistory.replace(from);
+    }
+  }
 
   return (
     <>
@@ -116,15 +182,22 @@ export const Login = ({ history }) => {
 
               <div>
                 <div className={classes.socialsButtons}>
-                  <Button
+                  <GoogleLogin
+                    clientId={clientId}
                     className={classes.googleBtn}
-                    onClick={signInWithGoogle}
-                  >
-                    <img src={googleLogo} alt="Signup with Google" />
-                  </Button>
-                  <Button className={classes.facebookBtn}>
-                    <img src={facebookLogo} alt="Signup with facebook" />
-                  </Button>
+                    buttonText="Google"
+                    onSuccess={handleGoogleLogin}
+                    onFailure={handleGoogleLogin}
+                    cookiePolicy={'single_host_origin'}
+                  />
+                  <FacebookLogin
+                    className={classes.facebookBtn}
+                    appId="168140328625744"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={handleFacebookLogin}
+                    callback={handleFacebookLogin} 
+                    />
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>
@@ -142,8 +215,8 @@ export const Login = ({ history }) => {
                       variant="outlined"
                       label="User name / Email"
                       className={classes.formControl}
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <div className={classes.passwordField}>
                       <TextField
@@ -174,6 +247,7 @@ export const Login = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
+                      disabled={loading & !username || !password}
                     >
                       Signin
                     </Button>

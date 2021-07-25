@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   rootContainer: {
     width: "65rem",
     top: "50%",
-    position: "absolute",
     left: "50%",
+    position: "absolute",
     transform: "translate(-50%, -50%)",
 
     "@media (max-width: 768px)": {
@@ -82,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
   formTitle: {
     marginBottom: "0.4rem",
     fontSize: "2.4rem",
+    textAlign: "center",
   },
   formSubtitle: {
     fontSize: "1.6rem",
@@ -93,8 +94,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1.5rem",
   },
   googleBtn: {
-    backgroundColor: "#1B3F4E",
-    padding: "1.2rem 2rem",
+    backgroundColor: "#fff !important",
+    fontSize: "30px !important",
+    textAlign: "center",
+    padding: "0.2rem 5rem !important",
     width: "49%",
     borderRadius: 0,
     "&:hover": {
@@ -110,6 +113,7 @@ const useStyles = makeStyles((theme) => ({
   facebookBtn: {
     backgroundColor: "#425993",
     padding: "1.2rem 2rem",
+    fontSize: "26px !important",
     width: "49%",
     borderRadius: 0,
     "&:hover": {

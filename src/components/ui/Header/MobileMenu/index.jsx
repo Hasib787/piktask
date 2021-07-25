@@ -8,10 +8,10 @@ import useStyles from "./MobileMenu.styles";
 
 const MobileMenu = () => {
   const classes = useStyles();
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState(0);
   const user = useSelector((state) => state.user);
 
-  const handleChange = (event: object, index: number): void => {
+  const handleChange = (event, index) => {
     setValue(index);
   };
 

@@ -32,17 +32,18 @@ const CustomPopper = ({
   const history = useHistory();
 
   const userSignout = () => {
-    if (user && user.token) {
+    if (user && user?.token) {
       firebase
         .auth()
         .signOut()
         .then(() => {
           toast.success("You successfully signed out");
-          history.push("/");
+          window.location.reload(history.replace("/"));
         })
         .catch((error) => {
           console.log("Signout error", error.message);
         });
+        localStorage.clear();
     }
   };
 
@@ -73,16 +74,26 @@ const CustomPopper = ({
               >
                 <Grid container className={classes.gridUserInfo}>
                   <Grid item xs={6} className={classes.userInDropdown}>
-                    <AccountCircleIcon className={classes.dropdownUserAvatar} />
+                    {
+                      user && user?.avatar ? (
+                        <img
+                          className={classes.dropdownUserAvatar}
+                          src={user.avatar}
+                          alt="UserPhoto"
+                        />
+                      ) : (
+                        <AccountCircleIcon className={classes.dropdownUserAvatar} />
+                      )
+                    }
                     <div>
                       <Typography
                         variant="h3"
                         className={classes.dropdownUserName}
                       >
-                        Design Studio
+                        {user && user?.token && user?.username}
                       </Typography>
                       <Typography variant="body1" className={classes.userEmail}>
-                        {user && user.token && user.email}
+                        {user && user?.token && user?.email}
                       </Typography>
                     </div>
                   </Grid>
@@ -128,9 +139,11 @@ const CustomPopper = ({
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
-                  onClick={handleClose}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/admin/upload"
                 >
-                  <span>Go Upload</span>
+                  <span >Go Upload</span>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem

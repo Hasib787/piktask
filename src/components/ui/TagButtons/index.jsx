@@ -3,9 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./TagButtons.styles";
 
-const TagButtons = () => {
+const TagButtons = ({ allTags }) => {
   const classes = useStyles();
-
+  
   return (
     <>
       <Grid container>
@@ -13,7 +13,13 @@ const TagButtons = () => {
           <Typography className={classes.tagTitle} variant="h3">
             Related Tags
           </Typography>
-          <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
+          {
+            allTags.map((tag) => 
+            <Button className={classes.tagButton} tag={tag} component={Link} to={`/tag/2`}>
+              {tag}
+            </Button>)
+          }
+          {/* <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
             Business Card
           </Button>
           <Button className={classes.tagButton} component={Link} to={`/tag/3`}>
@@ -33,7 +39,7 @@ const TagButtons = () => {
           </Button>
           <Button className={classes.tagButton} component={Link} to={`/tag/2`}>
             Business
-          </Button>
+          </Button> */}
         </Grid>
       </Grid>
     </>

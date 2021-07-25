@@ -5,9 +5,9 @@ const Category = ({ photo }) => {
   console.log(photo);
   return (
     <Item>
-      <img src={photo.urls.regular} alt="" />
-
-      <CategoryButton>Category</CategoryButton>
+      {/* <img src={"https://i.ibb.co/hsysXV4/luke-stackpoole-m-OEq-Otmu-PG8-unsplash.jpg"} alt="" /> */}
+      <img src={photo?.thumbnail} alt="" />
+      <CategoryButton>{photo?.name}</CategoryButton>
     </Item>
   );
 };

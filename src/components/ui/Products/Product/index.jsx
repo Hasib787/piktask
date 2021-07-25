@@ -1,12 +1,14 @@
 import {
   Button,
   CardContent,
-  CardMedia,
+  // CardMedia,
   IconButton,
   Typography,
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+// import SearchIcon from '@material-ui/icons/Search';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
@@ -52,15 +54,27 @@ const Product = ({ photo }) => {
 
       <div className={classes.itemContainer}>
         <Link className={classes.singlePageLink} to={`/photo/${photo?.id}`} />
-        <Button
-          href={`${photo?.links.download}?force=true`}
+        {/* <Button
+          href={`${photo?.links?.download}?force=true`}
           disableRipple
           classes={{ root: classes.downloadItem }}
         >
           Download
-        </Button>
+        </Button> */}
         <Link to={`/photo/${photo?.id}`}>
-          <img className={classes.image} src={photo?.urls.regular} alt="" />
+          <IconButton
+            classes={{ root: classes.downloadItem }}
+            // onClick={handleClick}
+          >
+            <GetAppIcon className={classes.downloadImageIcon} />
+          </IconButton>
+        </Link>
+        <Link to={`/photo/${photo?.id}`}>
+          <img 
+            className={classes.image} 
+            src={photo?.thumbnail} 
+            alt="" 
+          />
         </Link>
       </div>
 
@@ -68,7 +82,7 @@ const Product = ({ photo }) => {
         <CardContent>
           <Link className={classes.titleLink} to={`/photo/${photo?.id}`}>
             <Typography variant="h2" className={classes.title}>
-              {photo?.alt_description}
+              {photo?.title}
             </Typography>
           </Link>
           <Typography variant="body1" className={classes.itemStatus}>
@@ -79,21 +93,21 @@ const Product = ({ photo }) => {
               alt="Total Download"
             />{" "}
             {/* {photo?.total_downloads} */}
-            66
+            /66
             <FavoriteBorderIcon className={classes.heartIcon} /> {photo?.likes}
           </Typography>
         </CardContent>
 
         <CardContent className={classes.cardFooter}>
           <CardFooter>
-            <CardMedia
+            {/* <CardMedia
               component="img"
               className={classes.authorImage}
               image={photo?.user.profile_image.medium}
               title={photo?.user.name}
-            />
+            /> */}
             <Typography paragraph className={classes.profileName}>
-              {photo?.user.name}
+              {photo?.category}
             </Typography>
           </CardFooter>
 
