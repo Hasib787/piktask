@@ -14,16 +14,11 @@ const useStyles = makeStyles((theme) => ({
       background: "rgb(20 51 64 / 94%)",
       content: '""',
       position: "absolute",
-      //   backgroundImage: `url(${heroBG})`,
-      //   opacity: "0.9",
       top: 0,
       left: 0,
       width: "100%",
       height: "100%",
     },
-  },
-  heroBg: {
-    // backgroundColor: "red",
   },
   contentWrapper: {
     display: "flex",

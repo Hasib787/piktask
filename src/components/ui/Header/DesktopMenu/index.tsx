@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../../assets/icons/crown.svg";
-import logo from "../../../../assets/logo-back.png";
+import logo from "../../../../assets/piktaskLogo.png";
 import useStyles from "./DesktopMenu.styles";
 
 const DesktopMenu = () => {
