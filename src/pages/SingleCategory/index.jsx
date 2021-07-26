@@ -1,7 +1,10 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import authorPhoto from "../../assets/author.png";
 // import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 // import downArrow from "../../assets/icons/downArrow.svg";
@@ -15,9 +18,6 @@ import SectionHeading from "../../components/ui/Heading";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
-import moment from 'moment';
-import { useSelector } from "react-redux";
-import authorPhoto from "../../assets/author.png";
 
 const SingleCategory = () => {
   const classes = useStyles();
@@ -31,54 +31,58 @@ const SingleCategory = () => {
     window.scrollTo(0, 150);
     try {
       axios
-        .get(
-          `https://piktask.com/api/images/${id}`
-        )
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
         .then(({ data }) => {
-          if(data?.success) {
-          // const singleImage = data?.detail.find(item => item.id === Number(id));
-          setImageDetails(data.detail);
-          if (data?.detail.tags) {
-            const words = data.detail.tags.split(",");
-            setAllTags(words.slice(1));
+          if (data?.success) {
+            // const singleImage = data?.detail.find(item => item.id === Number(id));
+            setImageDetails(data.detail);
+            if (data?.detail.tags) {
+              const words = data.detail.tags.split(",");
+              setAllTags(words.slice(1));
+            }
+            if (user?.token) {
+              axios
+                .get(
+                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                  {
+                    headers: { Authorization: user.token },
+                  }
+                )
+                .then((response) => {
+                  if (response.data.status) {
+                    setFollower(true);
+                  } else {
+                    setFollower(false);
+                  }
+                });
+            }
           }
-          if (user?.token) {
-            axios.get(`https://piktask.com/api/sellers/follow_status/${data.detail.user_id}`, {
-              headers: {"Authorization" : user.token}
-            })
-            .then((response) => {
-              if(response.data.status){
-                setFollower(true);
-              } 
-              else{
-                setFollower(false);
-              }
-            })
-          }
-          }
-          
         });
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error.message);
     }
   }, [id, user.token]);
 
   const handleFollower = () => {
     if (!user.token) {
-      history.push("/login")
-    } else{
-      const followerAPI = `https://piktask.com/api/sellers/followers/${imageDetails.user_id}`;
-      axios.post(followerAPI, {},{
-        headers: {"Authorization" : user.token}
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setFollower(!follower);
-        }
-      })
+      history.push("/login");
+    } else {
+      const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails.user_id}`;
+      axios
+        .post(
+          followerAPI,
+          {},
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            setFollower(!follower);
+          }
+        });
     }
-  }
+  };
 
   return (
     <>
@@ -103,7 +107,7 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                  {/* <Button className={classes.button}>Save</Button>
+                {/* <Button className={classes.button}>Save</Button>
                   <Button className={classes.button}>
                     <img
                       className={classes.buttonIcon}
@@ -112,22 +116,22 @@ const SingleCategory = () => {
                     />
                     Try
                   </Button> */}
-                  <Button className={classes.button}>
-                    <img
-                      className={classes.buttonIcon}
-                      src={shareIcon}
-                      alt="Share"
-                    />
-                    Share
-                  </Button>
-                  <Button className={classes.button}>
-                    <img
-                      className={classes.buttonIcon}
-                      src={copyIcon}
-                      alt="Copy Link"
-                    />
-                    Copy Link
-                  </Button>
+                <Button className={classes.button}>
+                  <img
+                    className={classes.buttonIcon}
+                    src={shareIcon}
+                    alt="Share"
+                  />
+                  Share
+                </Button>
+                <Button className={classes.button}>
+                  <img
+                    className={classes.buttonIcon}
+                    src={copyIcon}
+                    alt="Copy Link"
+                  />
+                  Copy Link
+                </Button>
               </div>
             </div>
           </Grid>
@@ -148,10 +152,12 @@ const SingleCategory = () => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Image ID: </strong>{imageDetails?.id}
+                    <strong>Image ID: </strong>
+                    {imageDetails?.id}
                   </Typography>
                   <Typography>
-                    <strong>Image Size </strong>{imageDetails?.height}*{imageDetails?.width}
+                    <strong>Image Size </strong>
+                    {imageDetails?.height}*{imageDetails?.width}
                   </Typography>
                 </div>
                 {/* <div className={classes.singleItem}>
@@ -165,10 +171,12 @@ const SingleCategory = () => {
               <Grid item xs={6} className={classes.gridItem}>
                 <div className={classes.singleItem}>
                   <Typography>
-                    <strong>Created: </strong>{moment(imageDetails?.createdAt).format("LL")}
+                    <strong>Created: </strong>
+                    {moment(imageDetails?.createdAt).format("LL")}
                   </Typography>
                   <Typography>
-                    <strong>Category: </strong>{imageDetails?.category?.name}
+                    <strong>Category: </strong>
+                    {imageDetails?.category?.name}
                   </Typography>
                 </div>
                 {/* <div>
@@ -181,22 +189,20 @@ const SingleCategory = () => {
             <Grid container>
               <Grid item className={classes.authorArea}>
                 <div className={classes.authorProfile}>
-                  {
-                    imageDetails?.user?.avatar ? (
-                      <img
-                        className={classes.authorImg}
-                        src={imageDetails?.user?.avatar}
-                        alt={imageDetails?.user?.username}
-                      />
-                    ) : (
-                      <img
-                        className={classes.authorImg}
-                        src={authorPhoto}
-                        alt="AuthorPhoto"
-                      />
-                    )
-                  }
-                  
+                  {imageDetails?.user?.avatar ? (
+                    <img
+                      className={classes.authorImg}
+                      src={imageDetails?.user?.avatar}
+                      alt={imageDetails?.user?.username}
+                    />
+                  ) : (
+                    <img
+                      className={classes.authorImg}
+                      src={authorPhoto}
+                      alt="AuthorPhoto"
+                    />
+                  )}
+
                   <div>
                     <Typography className={classes.profileName} variant="h3">
                       {imageDetails?.user?.username}
@@ -209,24 +215,25 @@ const SingleCategory = () => {
                     </Typography>
                   </div>
                 </div>
-                {
-                  !follower ? 
-                    <Button 
-                      className={`${classes.authorBtn} ${classes.followBtn}`}
-                      onClick={handleFollower}
-                    >
-                      Follow
-                    </Button>
-                    : 
-                    <Button 
-                      className={`${classes.authorBtn} ${classes.unFollowBtn}`}
-                      onClick={handleFollower}
-                    >
-                      Unfollow
-                    </Button>
-                }
+                {!follower ? (
+                  <Button
+                    className={`${classes.authorBtn} ${classes.followBtn}`}
+                    onClick={handleFollower}
+                  >
+                    Follow
+                  </Button>
+                ) : (
+                  <Button
+                    className={`${classes.authorBtn} ${classes.unFollowBtn}`}
+                    onClick={handleFollower}
+                  >
+                    Unfollow
+                  </Button>
+                )}
 
-                <Button className={`${classes.authorBtn} ${classes.downloadBtn}`}>
+                <Button
+                  className={`${classes.authorBtn} ${classes.downloadBtn}`}
+                >
                   <img src={downArrowIconWhite} alt="Download" />
                   Download
                 </Button>

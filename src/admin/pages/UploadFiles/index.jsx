@@ -1,28 +1,28 @@
 import {
-  TextField,
-  Typography,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  TextareaAutosize,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
   faCloudUploadAlt,
   faExclamationTriangle,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import axios from "axios";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 const categoryItem = [
   { id: 1, value: "Animals", label: "Animals" },
@@ -160,7 +160,7 @@ const UploadFiles = () => {
   };
 
   const handlePrice = (e) => {
-    if (e.target.value < 5){
+    if (e.target.value < 5) {
       toast.error("Minimum price should be 5");
       return;
     }
@@ -240,7 +240,7 @@ const UploadFiles = () => {
 
     console.log(formData);
     return;
-    const url = "https://piktask.com/api/images/upload";
+    const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",
       url,
