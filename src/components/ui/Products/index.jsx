@@ -22,16 +22,14 @@ const Products = ({ count = 8, query = "popular" }) => {
 
   useEffect(() => {
     try {
-      axios.get(
-        // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-        `https://piktask.com/api/images/recent`
-      )
-      .then(({ data }) => {
-        if (data?.success) {
-          const showImage = data?.images;
-          setPhotos(showImage.slice(0, 8));
-        }
-      })
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            const showImage = data?.images;
+            setPhotos(showImage.slice(0, 8));
+          }
+        });
     } catch (error) {
       console.log(error.message);
     }
