@@ -1,8 +1,10 @@
+import { Container } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import Category from "../Category";
-import { Container } from "./Carousel.styles";
+// import { Container } from "./Carousel.styles";
 
 
 export const CategoryCarousel = () => {
@@ -34,9 +36,9 @@ export const CategoryCarousel = () => {
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "130px",
-    arrows: false,
+    // centerMode: true,
+    // centerPadding: "130px",
+    arrows: true,
 
     responsive: [
       {
@@ -53,7 +55,7 @@ export const CategoryCarousel = () => {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          centerPadding: "0px",
+          // centerPadding: "0px",
         },
       },
       {
@@ -63,7 +65,7 @@ export const CategoryCarousel = () => {
           slidesToScroll: 1,
           initialSlide: 2,
           infinite: true,
-          centerPadding: "0px",
+          // centerPadding: "0px",
         },
       },
       {
@@ -72,7 +74,7 @@ export const CategoryCarousel = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           infinite: true,
-          centerPadding: "0px",
+          // centerPadding: "0px",
         },
       },
     ],
@@ -80,10 +82,12 @@ export const CategoryCarousel = () => {
 
   return (
     <>
-      <Container {...settings}>
-        {photos?.map((photo) => (
-          <Category key={photo?.id} photo={photo} />
-        ))}
+      <Container maxWidth="lg">
+        <Slider {...settings}>
+          {photos?.map((photo) => (
+            <Category key={photo?.id} photo={photo} />
+          ))}
+        </Slider>
       </Container>
     </>
   );
