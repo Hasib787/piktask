@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+
+  shortListItem: {
+    backgroundColor: "#F8F8F8",
+    padding: "4rem 3rem", 
+  },
   totalResources: {
     fontSize: "4rem",
     padding: "3.5rem 0 6rem",

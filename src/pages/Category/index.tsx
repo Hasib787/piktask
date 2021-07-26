@@ -129,6 +129,17 @@ const Category = () => {
           </Grid>
         </Container>
       </div>
+
+      <div className={classes.shortListItem}>
+        <Container>
+        <Grid container className={classes.root}>
+            <Typography className={classes.tagTitle} variant="h5">
+            Sorted By :
+            </Typography>
+
+          </Grid>
+        </Container>
+      </div>
       <Container>
         <Typography className={classes.totalResources} variant="h3">
           6,283 Resources

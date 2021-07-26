@@ -68,6 +68,7 @@ const typeOfImageItem = [
   { label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
 
+
 const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
@@ -116,6 +117,7 @@ const UploadFiles = () => {
   //   setValues({ ...values, [name]: value });
   // }
 
+
   const addTags = (event) => {
     event.preventDefault();
     if (
@@ -160,7 +162,7 @@ const UploadFiles = () => {
   };
 
   const handlePrice = (e) => {
-    if (e.target.value < 5){
+    if (e.target.value < 5) {
       toast.error("Minimum price should be 5");
       return;
     }
@@ -200,7 +202,6 @@ const UploadFiles = () => {
     e.preventDefault();
     setLoading(true);
     setTitleError(false);
-    // setAttribution("yes");
 
     if (imageError) {
       setLoading(false);
@@ -228,18 +229,18 @@ const UploadFiles = () => {
     const formData = new FormData();
 
     formData.append("title", "this is title");
-    // formData.append("tags", tags);
-    // formData.append("category", category);
-    // formData.append("item_for_sale", item_for_sale);
-    // formData.append("price", price);
-    // formData.append("usages", usages);
-    // formData.append("attribution", attribution);
-    // formData.append("description", description);
-    // formData.append("image", image);
-    // formData.append("additional_image", additional_image);
+    formData.append("tags", tags);
+    formData.append("category", category);
+    formData.append("item_for_sale", item_for_sale);
+    formData.append("price", price);
+    formData.append("usages", usages);
+    formData.append("attribution", attribution);
+    formData.append("description", description);
+    formData.append("image", image);
+    formData.append("additional_image", additional_image);
 
     console.log(formData);
-    return;
+
     const url = "https://piktask.com/api/images/upload";
     axios({
       method: "post",
@@ -363,7 +364,6 @@ const UploadFiles = () => {
                   placeholder="Title"
                   variant="outlined"
                   fullWidth
-                  required
                   error={titleError}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
