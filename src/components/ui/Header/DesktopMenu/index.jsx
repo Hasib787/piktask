@@ -9,10 +9,13 @@ import React, { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../../assets/icons/crown.svg";
-import logo from "../../../../assets/piktaskLogo.png";
+import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
+import signInIcon from "../../../../assets/icons/signInIcon.svg";
+import logo from "../../../../assets/piktaskLogo.svg";
 import useStyles from "./DesktopMenu.styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import CustomPopper from "../../CustomPopper";
 
 const DesktopMenu = () => {
   const classes = useStyles();
@@ -27,6 +30,20 @@ const DesktopMenu = () => {
 
   const handleToggle = () => {
     setOpen((prevState) => !prevState);
+  };
+
+  const handleClose = (e) => {
+    if (anchorRef.current && anchorRef.current.contains(e.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleListKeyDown = (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      setOpen(false);
+    }
   };
 
 
@@ -89,17 +106,8 @@ const DesktopMenu = () => {
             {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {user && user?.token && (
-              <Button
-                className={classes.sellContentBtn}
-                component={Link}
-                to="/sell-content"
-              >
-                Sell Your Content
-              </Button>
-            )}
             <Button className={classes.enterprise}>
-              <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
+              <img className={classes.crownIcon} src={enterpriseCrownIcon} alt="Crown" />
               Enterprise
             </Button>
             <Button className={classes.premium}>
@@ -134,15 +142,21 @@ const DesktopMenu = () => {
                   component={Link}
                   to="/registration"
                 >
+                  <img className={classes.crownIcon} src={signInIcon} alt="Crown" />
                   Sign In
                 </Button>
               )
             }
           </Toolbar>
-          
-          
         </Toolbar>
       </Container>
+      <CustomPopper
+          open={open}
+          handleToggle={handleToggle}
+          anchorRef={anchorRef}
+          handleClose={handleClose}
+          handleListKeyDown={handleListKeyDown}
+        />
     </> 
   );
 };
