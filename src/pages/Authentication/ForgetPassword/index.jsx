@@ -40,7 +40,7 @@ export const ForgetPassword = () => {
     setPasswordChange(true);
 
     if (email && !passwordChange) {
-      axios.post("http://174.138.30.55/api/auth/forgot-password", {
+      axios.post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
         email,
       }).then((res) => {
         if (res.status === 200) {

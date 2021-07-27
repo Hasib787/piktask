@@ -54,7 +54,7 @@ export const Login = ({ history }) => {
     setLoading(true);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username,
         password,
       })

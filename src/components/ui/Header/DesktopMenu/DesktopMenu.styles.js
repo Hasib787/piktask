@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  
   container: {
     height: "100%",
   },
@@ -38,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     opacity: 1,
     minWidth: "1rem",
+    fontSize: "16px",
     "&:last-child": {
       marginRight: "3rem",
     },
@@ -79,29 +79,25 @@ const useStyles = makeStyles((theme) => ({
     }
 },
 enterprise: {
-    ...theme.typography.button,
+    color: "#FDAF01",
     paddingLeft: "2.4rem",
     paddingRight: "2.4rem",
-    textTransform: "uppercase",
-    border: ".2rem solid",
-    borderColor: "transparent",
+    fontSize: "16px",
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
       paddingLeft: "1rem",
       fontSize: "1.4rem",
-
-      "& img": {
-        display: "none",
-      },
     },
   },
   premium: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
+    fontSize: "16px",
     paddingLeft: "2.4rem",
     paddingRight: "2.4rem",
-    textTransform: "uppercase",
     border: ".2rem solid",
+    marginLeft: "1rem",
+    marginRight: "1rem",
     borderColor: "transparent",
     "&:hover": {
       borderColor: `${theme.palette.common.white}`,
@@ -110,14 +106,11 @@ enterprise: {
       paddingRight: "1rem",
       paddingLeft: "1rem",
       fontSize: "1.4rem",
-
-      "& img": {
-        display: "none",
-      },
     },
   },
   crownIcon: {
     marginRight: ".8rem",
+    height: "20px"
   },
   sellContentBtn: {
     ...theme.typography.button,
@@ -141,11 +134,11 @@ enterprise: {
     ...theme.typography.button,
     ...theme.typography.darkButton,
     marginLeft: "1rem",
-    padding: ".8rem 3.4rem",
+    fontSize: "16px",
+    padding: ".8rem 2.4rem",
 
     "@media (max-width: 480px)": {
         padding: ".8rem 1.5rem !important",
-
     }
   },
     userAvatarArea: {
