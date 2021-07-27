@@ -16,12 +16,12 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const DesktopMenu = () => {
   const classes = useStyles();
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState(0);
   const user = useSelector(state => state.user);
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
-  const handleChange = (event: object, index: number): void => {
+  const handleChange = (event, index) => {
     setValue(index);
   };
 

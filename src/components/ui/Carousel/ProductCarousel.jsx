@@ -4,20 +4,17 @@ import "slick-carousel/slick/slick.css";
 import Product from "../Products/Product";
 import { Container } from "./Carousel.styles";
 
-
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
   useEffect(() => {
     try {
-      axios.get(
-        // `https://piktask.com/api/categories?query=${query}&per_page=${count}`
-        `https://piktask.com/api/images/recent`
-      )
-      .then(({ data }) => {
-        if (data?.success) {
-          setPhotos(data.images);
-        }
-      })
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            setPhotos(data.images);
+          }
+        });
     } catch (error) {
       console.log(error.message);
     }
@@ -74,7 +71,9 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
   return (
     <>
       <Container {...settings}>
-        {photos.map((photo) => <Product key={photo.id} photo={photo} />)}
+        {photos.map((photo) => (
+          <Product key={photo.id} photo={photo} />
+        ))}
       </Container>
     </>
   );

@@ -8,7 +8,7 @@ import {
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 // import SearchIcon from '@material-ui/icons/Search';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import GetAppIcon from "@material-ui/icons/GetApp";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
@@ -70,11 +70,7 @@ const Product = ({ photo }) => {
           </IconButton>
         </Link>
         <Link to={`/photo/${photo?.id}`}>
-          <img 
-            className={classes.image} 
-            src={photo?.thumbnail} 
-            alt="" 
-          />
+          <img className={classes.image} src={photo?.thumbnail} alt="" />
         </Link>
       </div>
 

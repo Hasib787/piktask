@@ -6,25 +6,19 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 // import { Container } from "./Carousel.styles";
 
-
 export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     try {
       axios
-        .get(
-          // `https://api.unsplash.com/search/photos?query=Meeting room&per_page=12&client_id=${ACCESS_KEY}`
-          // "https://piktask.com/api/categories?query=Meeting room&per_page=12"
-          "https://piktask.com/api/categories/popular"
-        )
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
             setPhotos(data.categories);
           }
         });
-    } 
-    catch (error) {
+    } catch (error) {
       console.log(error.message);
     }
   }, []);

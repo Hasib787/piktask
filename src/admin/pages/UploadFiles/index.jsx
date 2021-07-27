@@ -1,30 +1,28 @@
 import {
-  TextField,
-  Typography,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  TextareaAutosize,
-} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
   faCloudUploadAlt,
   faExclamationTriangle,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import axios from "axios";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 const categoryItem = [
   { id: 1, value: "Animals", label: "Animals" },
@@ -54,8 +52,8 @@ const categoryItem = [
 ];
 
 const ItemForSale = [
-  { value: "free", label: "Item Free" },
-  { value: "sale", label: "Item for sale" },
+  { value: "free", label: "Free" },
+  { value: "sale", label: "Premium" },
 ];
 
 const usePhoto = [
@@ -71,21 +69,23 @@ const typeOfImageItem = [
 ];
 
 const UploadFiles = () => {
+  const user = useSelector((state) => state.user);
+  const history = useHistory();
   const classes = useStyles();
-  const [state, setState] = useState({
-    vectorFileExtension: false,
-    vectorColor: false,
-    vectorPreviewSize: false,
-    vectorFileTitle: false,
-    psdFileExtension: false,
-    psdColor: false,
-    psdPreviewSize: false,
-    psdFileTitle: false,
-    pngFileExtension: true,
-    pngColor: true,
-    pngPreviewSize: false,
-    pngFileTitle: false,
-  });
+
+  // const [values, setValues] = useState({
+  //   title: "",
+  //   category: "",
+  //   description: "",
+  //   price: "",
+  //   attribution: "",
+  //   image: "",
+  //   additional_image: "",
+  //   usages: "",
+  //   item_for_sale: "free",
+  //   typeOfImage: "",
+
+  // });
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
@@ -95,14 +95,12 @@ const UploadFiles = () => {
   const [additional_image, setAdditional_image] = useState("");
   const [attribution, setAttribution] = useState("yes");
   const [usages, setUsages] = useState("free");
-  const [typeOfImage, setTypeOfImage] = useState("")
+  const [typeOfImage, setTypeOfImage] = useState("");
   const [description, setDescription] = useState("");
   const [titleError, setTitleError] = useState(false);
   const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
-
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
+  const [isLoading, setLoading] = useState(false);
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -112,6 +110,11 @@ const UploadFiles = () => {
 
   //for tag element
   const [tags, setTags] = useState([]);
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setValues({ ...values, [name]: value });
+  // }
 
   const addTags = (event) => {
     event.preventDefault();
@@ -125,7 +128,7 @@ const UploadFiles = () => {
       event.target.value = "";
     }
     if (tags.length > 9) {
-      toast.error("Tag is full / No more tag");
+      toast.error("Tag is full / No more tags");
     }
   };
 
@@ -144,16 +147,22 @@ const UploadFiles = () => {
   const handleSaleChange = (e) => {
     setItem_for_sale(e.target.value);
     setItemSale(!itemSale);
+    if (e.target.value === "sale") {
+      setPrice("5");
+    } else {
+      setPrice("0");
+    }
   };
 
-  const handleTypeOfImage=(e)=>{
+  const handleTypeOfImage = (e) => {
     setTypeOfImage(e.target.value);
     setImageType(!imageType);
-  }
+  };
 
   const handlePrice = (e) => {
-    if (e.target.value < 0) {
-      e.target.value = 0;
+    if (e.target.value < 5) {
+      toast.error("Minimum price should be 5");
+      return;
     }
     setPrice(e.target.value);
   };
@@ -161,10 +170,12 @@ const UploadFiles = () => {
   const handleImageChange = (e) => {
     const imageFile = e.target.files[0];
     setImage(imageFile);
-    if (!imageFile) {
+    if (!imageFile || imageFile === "") {
       setImageError("Image is required");
+      toast.error("Image is required");
       return false;
     }
+
     if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
       setImageError("Select valid image.");
       return false;
@@ -173,68 +184,66 @@ const UploadFiles = () => {
     }
   };
 
-  const handleFileChange= (e) =>{
-      const additionalFile = e.target.files[0];
-      setAdditional_image(additionalFile);
+  const handleFileChange = (e) => {
+    const additionalFile = e.target.files[0];
+    setAdditional_image(additionalFile);
 
-      if (!additionalFile.name.match(/\.(psd|svg|eps|ai)$/)) {
-        setImageError("Select valid file.");
-        return false;
-      } else {
-        setImageError("");
-      }
-  }
+    if (!additionalFile.name.match(/\.(psd|svg|eps|ai)$/)) {
+      setImageError("Select valid file.");
+      return false;
+    } else {
+      setImageError("");
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     setTitleError(false);
-    setAttribution("yes");
-    setItemForSaleError(false);
-    setState({ ...state, [e.target.name]: e.target.checked });
+    // setAttribution("yes");
 
     if (imageError) {
+      setLoading(false);
       toast.error("Please upload valid image");
-    }
-    if (title === "") {
-      setTitleError(true);
+      return;
+    } else if (title === "") {
+      setLoading(false);
       toast.error("The Title field is required.");
-    }
-    if (!title.match(/^[a-zA-Z]+$/)) {
-      setTitleError(true);
-      toast.error("Title should be a character");
-    }
-    if (title.length < 3 || title.length > 200) {
-      setTitleError(true);
+      return;
+    } else if (title.length < 3 || title.length > 200) {
+      setLoading(false);
       toast.error("Title must be between 3 to 200 characters");
+      return;
+    } else if (tags.length < 0) {
+      setLoading(false);
+      toast.error("The tag field is required");
+      return;
     }
 
-    if (tags.length < 0) {
-      toast.error("The tag field is required");
-    }
-    if (!itemSale) {
-      setPrice("0");
-    }
     if (itemForSaleError === "") {
       setItemForSaleError(true);
       toast.error("Item for sale status must be 'free' or 'sale'");
     }
 
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("tags", tags);
-    formData.append("category", category);
-    formData.append("item_for_sale", item_for_sale);
-    formData.append("price", price);
-    formData.append("usages", usages);
-    formData.append("attribution", attribution);
-    formData.append("description", description);
-    formData.append("image", image);
-    formData.append("additional_image", additional_image);
 
-    const url = "https://piktask.com/api/images/upload";
+    formData.append("title", "this is title");
+    // formData.append("tags", tags);
+    // formData.append("category", category);
+    // formData.append("item_for_sale", item_for_sale);
+    // formData.append("price", price);
+    // formData.append("usages", usages);
+    // formData.append("attribution", attribution);
+    // formData.append("description", description);
+    // formData.append("image", image);
+    // formData.append("additional_image", additional_image);
+
+    console.log(formData);
+    return;
+    const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",
-      url: url,
+      url,
       data: formData,
       headers: {
         Authorization: user.token,
@@ -242,17 +251,31 @@ const UploadFiles = () => {
       },
     })
       .then((res) => {
+        console.log("res", res);
         if (res?.status === 200) {
-          toast.success("Photo added successful");
+          toast.success(res.data.message);
+          setLoading(false);
+          setTitle("");
+          setDescription("");
+          setImage("");
+          setAdditional_image("");
+          setTags([]);
+          setCategory("");
+          setPrice("");
+          setUsages("");
+          setAttribution("");
+          setItem_for_sale("");
         }
-        if(res?.status === 401){
-          localStorage.clear();
+        if (res?.status === 401) {
+          localStorage.removeItem("token");
           toast.success("Please login Again");
-          window.location.reload(history.replace('/login'));  
+          history.replace("/login");
+          setLoading(false);
         }
       })
       .catch((error) => {
         toast.error(error.message);
+        setLoading(false);
       });
   };
 
@@ -328,18 +351,6 @@ const UploadFiles = () => {
                 </Typography>
               </div>
 
-              {/* <ul className="list-group mt-2">
-                {acceptedFiles.length > 0 &&
-                  acceptedFiles.map((acceptedFile) => (
-                    <li
-                      key={[0]}
-                      className="list-group-item list-group-item-success"
-                    >
-                      {acceptedFile.name}
-                    </li>
-                  ))}
-              </ul> */}
-
               <Heading className={classes.formHeadText} tag="h2">
                 What type of content are you going to upload?
               </Heading>
@@ -385,14 +396,14 @@ const UploadFiles = () => {
                   />
                 </div>
                 <p className={classes.helperText}>
-                  * Press Enter to add tag (Maximum 10 tags)
+                  * Press Space or comma to add tag (Maximum 10 tags)
                 </p>
 
-                <div className={classes.category}>
+                <div>
                   <h4 className={classes.titleText}>Category</h4>
                   <TextField
                     id="standard-select-currency-native"
-                    className={classes.inputField}
+                    className={classes.categoryInput}
                     variant="outlined"
                     select
                     value={category}
@@ -411,7 +422,7 @@ const UploadFiles = () => {
                   <h4 className={classes.titleText}>Item for sale?</h4>
                   <TextField
                     id="standard-select-currency-native"
-                    className={classes.inputField}
+                    className={classes.itemSaleInput}
                     variant="outlined"
                     select
                     value={item_for_sale}
@@ -462,7 +473,7 @@ const UploadFiles = () => {
                   </h4>
                   <TextField
                     id="standard-select-currency-native"
-                    className={classes.inputField}
+                    className={classes.usagesInput}
                     select
                     label=""
                     variant="outlined"
@@ -482,53 +493,36 @@ const UploadFiles = () => {
 
                 <h4 className={classes.titleText}>Type of Image?</h4>
                 <TextField
-                    id="standard-select-currency-native"
-                    className={classes.inputField}
-                    select
-                    label=""
-                    variant="outlined"
-                    value={typeOfImage}
-                    onChange={handleTypeOfImage}
-                    SelectProps={{
-                      native: true,
-                    }}
-                  >
-                    
-                    {typeOfImageItem.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                {/* <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={typeOfImage}
-                  getOptionLabel={(option) => option.label}
-                  onChange={() => setImageType(!imageType)}
-                  defaultValue={typeOfImage.find((v) => v.label[0])}
-                  style={{ width: "100%" }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      className={classes.inputField}
-                      variant="outlined"
-                    />
-                  )}
-                /> */}
+                  id="standard-select-currency-native"
+                  className={classes.typeOfImageInput}
+                  select
+                  label=""
+                  variant="outlined"
+                  value={typeOfImage}
+                  onChange={handleTypeOfImage}
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  {typeOfImageItem.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
 
                 {imageType && (
                   <div className={classes.imageFileUploadBox}>
                     <div className={classes.uploadIconImage}>
+                      <input
+                        id="additionalImageUpload"
+                        name="additionalImageUpload"
+                        // style={{ display: "none" }}
+                        type="file"
+                        files={additional_image}
+                        onChange={handleFileChange}
+                      />
                       <label htmlFor="additionalImageUpload">
-                        <input
-                          id="additionalImageUpload"
-                          name="additionalImageUpload"
-                          style={{ display: "none" }}
-                          type="file"
-                          files={additional_image}
-                          onChange= {handleFileChange}
-                        />
                         <FontAwesomeIcon icon={faCloudUploadAlt} />
                       </label>
                       <p className={classes.selectFileText}>
@@ -577,6 +571,7 @@ const UploadFiles = () => {
                   variant="contained"
                   className={classes.uploadBtn}
                   type="submit"
+                  disabled={isLoading}
                 >
                   <FontAwesomeIcon
                     icon={faCloudUploadAlt}

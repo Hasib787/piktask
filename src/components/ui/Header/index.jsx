@@ -6,15 +6,11 @@ import {
   makeStyles,
   MenuItem,
   MenuList,
-  Toolbar
+  Toolbar,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
-import React, {
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../assets/icons/crown.svg";
@@ -49,7 +45,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const anchorRef = useRef(null);
 
   const { mobileView } = menuSate;
@@ -70,10 +66,7 @@ const Header = () => {
   };
 
   const handleClose = (e) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(e.target)
-    ) {
+    if (anchorRef.current && anchorRef.current.contains(e.target)) {
       return;
     }
     setOpen(false);
