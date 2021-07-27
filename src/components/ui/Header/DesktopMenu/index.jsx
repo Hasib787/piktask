@@ -51,13 +51,27 @@ function a11yProps(index: number) {
 
 const DesktopMenu = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const user = useSelector((state) => state.user);
   const anchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
+
+  const [value, setValue] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
 
+  const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const [authData, setAuthData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleAuthData = (e) => {
+    const { name, value } = e.target;
+
+    setAuthData({ ...authData, [name]: value });
+  };
 
   const handleCloseAuthModal = () => {
     setOpenAuthModal(false);
@@ -73,6 +87,11 @@ const DesktopMenu = () => {
 
   const handleToggle = () => {
     setOpen((prevState) => !prevState);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
   };
 
   return (
@@ -275,10 +294,24 @@ const DesktopMenu = () => {
 
                 {/* Tab panel for Sign In */}
                 <TabPanel value={tabIndex} index={0}>
-                  <InputField label="Email" type="email" />
-                  <InputField label="Password" type="password" />
+                  <form onSubmit={handleSubmit}>
+                    <InputField
+                      label="Email"
+                      type="email"
+                      name="email"
+                      value={authData.email}
+                      onChange={handleAuthData}
+                    />
+                    <InputField
+                      label="Password"
+                      type="password"
+                      name="password"
+                      value={authData.password}
+                      onChange={handleAuthData}
+                    />
 
-                  <CustomBtn type="submit" text="Sign In" color="green" />
+                    <CustomBtn type="submit" text="Sign In" color="green" />
+                  </form>
 
                   <Spacing space={{ height: "1.5rem" }} />
 
@@ -296,11 +329,30 @@ const DesktopMenu = () => {
 
                 {/* Tab panel for Sign Up */}
                 <TabPanel value={tabIndex} index={1}>
-                  <InputField label="User Name" />
-                  <InputField label="Email" type="email" />
-                  <InputField label="Password" type="password" />
+                  <form onSubmit={handleSubmit}>
+                    <InputField
+                      label="User Name"
+                      name="userName"
+                      value={authData.password}
+                      onChange={handleAuthData}
+                    />
+                    <InputField
+                      label="Email"
+                      type="email"
+                      name="email"
+                      value={authData.password}
+                      onChange={handleAuthData}
+                    />
+                    <InputField
+                      label="Password"
+                      type="password"
+                      name="password"
+                      value={authData.password}
+                      onChange={handleAuthData}
+                    />
 
-                  <CustomBtn type="submit" text="Sign Up" color="green" />
+                    <CustomBtn type="submit" text="Sign Up" color="green" />
+                  </form>
 
                   <Spacing space={{ height: "0.5rem" }} />
 
