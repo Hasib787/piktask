@@ -28,7 +28,7 @@ const HeroSection: FC<Props> = ({
       className={classes.heroWrapper}
       style={{
         backgroundImage: `url(${heroBG})`,
-        minHeight: size === "large" ? "35rem" : "35.5rem",
+        minHeight: size === "large" ? "30rem" : "30rem",
       }}
     >
       <Container>
@@ -43,13 +43,13 @@ const HeroSection: FC<Props> = ({
 
           <Search />
 
-          {/* {popularKeywords && (
+          {popularKeywords && (
             <div className={classes.popularSearch}>
               <Typography variant="h5" className={classes.searchTitle}>
-                Popular Search
+                Example : banner, Background, Abstract Banner , Logo Design , Business card , Post Card Design , web template
               </Typography>
 
-              <div className={classes.buttonGroups}>
+              {/* <div className={classes.buttonGroups}>
                 {keywords.length > 0 &&
                   keywords.map((keyword, index) => (
                     <Button
@@ -60,9 +60,9 @@ const HeroSection: FC<Props> = ({
                       {keyword}
                     </Button>
                   ))}
-              </div>
+              </div> */}
             </div>
-          )} */}
+          )}
         </div>
       </Container>
     </div>

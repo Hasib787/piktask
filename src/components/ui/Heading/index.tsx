@@ -30,10 +30,10 @@ const SectionHeading: FC<Props> = ({
         flexDirection: center ? "column" : "row",
         padding:
           size === "large"
-            ? "3rem 0"
+            ? "0 0 3rem"
             : size === "medium"
             ? ".5rem 0"
-            : "3rem 0",
+            : "0 0 3rem",
       }}
     >
       <div
@@ -58,19 +58,6 @@ const SectionHeading: FC<Props> = ({
         >
           {title}
         </Typography>
-
-        {subtitle && (
-          <Typography
-            className={classes.headingSubtitle}
-            variant="subtitle2"
-            style={{
-              color: color === "white" ? whiteColor : primaryColor,
-              textAlign: "left",
-            }}
-          >
-            {subtitle}
-          </Typography>
-        )}
       </div>
 
       {children}

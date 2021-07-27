@@ -14,10 +14,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../assets/icons/crown.svg";
-import logo from "../../../assets/piktaskLogo.png";
+import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../CustomPopper";
 import DesktopMenu from "./DesktopMenu";
 import useStyles from "./Header.styles";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const customStyles = makeStyles({
   menuWrapper: {
@@ -26,10 +28,19 @@ const customStyles = makeStyles({
     color: "#FFF",
     display: "flex",
     justifyContent: "space-between",
+
+    "@media (max-width: 425px)": {
+      marginTop: 10,
+  }
   },
   closeIconWrapper: {
-    marginRight: "auto",
+    // marginRight: "auto",
+    backgroundColor: "#063B52",
     padding: "1rem",
+    boxShadow: "0px 0px 50px 50px #042C3D",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   menuIcon: {
     fontSize: "4rem",
@@ -71,14 +82,12 @@ const Header = () => {
     }
     setOpen(false);
   };
-
   const handleListKeyDown = (e) => {
     if (e.key === "Escape") {
       e.preventDefault();
       setOpen(false);
     }
   };
-
   const handleMobileMenu = () => {
     setOpenMobileMenu(true);
   };
@@ -86,39 +95,71 @@ const Header = () => {
   return (
     <>
       <div className={classes.headerBottom}>
-      <AppBar position="static">
-
-      {mobileView ? (
-        <Container>
-          <div className={iconClass.menuWrapper}>
-            <div>
-              <Button
-                component={Link}
-                to="/"
-                className={classes.logoWrapper}
-                disableRipple
-              >
-                <img src={logo} className={classes.logo} alt="Dev" />
-              </Button>
-            </div>
-            <div>
-              <MenuIcon onClick={handleMobileMenu} className={iconClass.menuIcon} />
-            </div>
-          </div>
-        </Container>
-      ) : (
-        <DesktopMenu />
-      )}
-
-      </AppBar>
-      <CustomPopper
-        open={open}
-        handleToggle={handleToggle}
-        anchorRef={anchorRef}
-        handleClose={handleClose}
-        handleListKeyDown={handleListKeyDown}
-      />
-    </div>
+        <AppBar position="static">
+          {mobileView ? (
+            <Container>
+              <div className={iconClass.menuWrapper}>
+                <div>
+                  <Button
+                    component={Link}
+                    to="/"
+                    className={classes.logoWrapper}
+                    disableRipple
+                  >
+                    <img src={logo} className={classes.logo} alt="Dev" />
+                  </Button>
+                </div>
+                <div className={classes.menuButton}>
+                  {
+                    user && user?.token ? (
+                      <div
+                        className={classes.userAvatarArea}
+                        onClick={handleToggle}
+                        aria-controls={open ? "menu-list-grow" : undefined}
+                        aria-haspopup="true"
+                        ref={anchorRef}
+                      >
+                        {
+                          user && user?.avatar ? (
+                            <img
+                              className={classes.avatar}
+                              src={user.avatar}
+                              alt="UserPhoto"
+                            />
+                          ) : (
+                            <AccountCircleIcon className={classes.avatar} />
+                          )
+                        }
+                        <ArrowDropDownIcon className={classes.arrowDown} />
+                      </div>
+                    ) : (
+                      <div>
+                        <Button
+                          className={classes.loginBtn}
+                          component={Link}
+                          to="/login"
+                        >
+                          Login
+                        </Button>
+                        <Button
+                          className={classes.signUpBtn}
+                          component={Link}
+                          to="/registration"
+                        >
+                          Sign Up
+                        </Button>
+                      </div>
+                    )
+                  }
+                  <MenuIcon onClick={handleMobileMenu} className={iconClass.menuIcon} />
+                </div>
+              </div>
+            </Container>
+          ) : (
+            <DesktopMenu />
+          )}
+        </AppBar>
+      </div>
 
       <Drawer
         anchor="right"
@@ -131,17 +172,37 @@ const Header = () => {
             onClick={() => setOpenMobileMenu(false)}
             className={iconClass.menuIcon}
           />
+          {
+            user && user?.token ? (
+              <Button
+                component={Link}
+                to="/"
+                className={classes.logoWrapper}
+                disableRipple
+              >
+                <img src={logo} className={classes.logo} alt="Dev" />
+              </Button>
+            ) : (
+              <div>
+                <Button
+                  className={classes.loginBtn}
+                  component={Link}
+                  to="/login"
+                >
+                  Login
+                </Button>
+                <Button
+                  className={classes.signUpBtn}
+                  component={Link}
+                  to="/registration"
+                >
+                  Sign Up
+                </Button>
+              </div>
+            )
+          }
         </div>
         <Toolbar disableGutters className={classes.menuWrapper}>
-          <Button
-            component={Link}
-            to="/"
-            disableRipple
-            className={classes.mobileMenuLogo}
-          >
-            <img src={logo} alt="Piktask" />
-          </Button>
-
           <MenuList className={classes.navItems}>
             <MenuItem
               onClick={() => setOpenMobileMenu(false)}
@@ -228,5 +289,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;
