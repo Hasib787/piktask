@@ -1,5 +1,6 @@
 import { FormControl, Input, NativeSelect } from "@material-ui/core";
-import React, { useRef } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import searchIcon from "../../../assets/search.svg";
 import { categories } from "../../../data/demoData";
 import useStyles from "./Search.styles";
@@ -7,6 +8,20 @@ import useStyles from "./Search.styles";
 const Search = () => {
   const classes = useStyles();
   const searchRef = useRef("");
+
+  const [search, setSearch] = useState();
+
+  useEffect(() => {
+    try {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/client/search/nature?collection_title=collection1&limit=10&page=1`)
+      .then(({data}) => {
+        setSearch(data);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
 
   return (
     <>
@@ -23,7 +38,7 @@ const Search = () => {
 
         <FormControl>
           <NativeSelect className={classes.selectContainer} disableUnderline>
-            <option value="" disabled>
+            <option value="">
               All Resources
             </option>
             {categories.length > 0 &&

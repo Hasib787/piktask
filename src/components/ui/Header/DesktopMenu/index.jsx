@@ -20,10 +20,12 @@ import authImage from "../../../../assets/auth.png";
 import facebookLogo from "../../../../assets/facebook.png";
 import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
+import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import logoWhite from "../../../../assets/logo-white.png";
-import logo from "../../../../assets/piktaskLogo.png";
+import logo from "../../../../assets/piktaskLogo.svg";
 import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
+import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
 
 const TabPanel = (props) => {
@@ -92,6 +94,19 @@ const DesktopMenu = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
+  };
+  const handleClose = (e) => {
+    if (anchorRef.current && anchorRef.current.contains(e.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleListKeyDown = (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      setOpen(false);
+    }
   };
 
   return (
@@ -163,13 +178,18 @@ const DesktopMenu = () => {
             )}
 
             <Button className={classes.enterprise}>
-              <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
+              <img
+                className={classes.crownIcon}
+                src={enterpriseCrownIcon}
+                alt="Crown"
+              />
               Enterprise
             </Button>
             <Button className={classes.premium}>
               <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
               Premium
             </Button>
+
             {user && user?.token ? (
               <div
                 className={classes.userAvatarArea}
@@ -192,8 +212,6 @@ const DesktopMenu = () => {
             ) : (
               <Button
                 className={classes.signInBtn}
-                // component={Link}
-                // to="/registration"
                 onClick={() => setOpenAuthModal(true)}
               >
                 Sign In
@@ -202,6 +220,14 @@ const DesktopMenu = () => {
           </Toolbar>
         </Toolbar>
       </Container>
+
+      <CustomPopper
+        open={open}
+        handleToggle={handleToggle}
+        anchorRef={anchorRef}
+        handleClose={handleClose}
+        handleListKeyDown={handleListKeyDown}
+      />
 
       <Dialog
         open={openAuthModal}

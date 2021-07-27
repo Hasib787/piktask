@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchTitle: {
     color: theme.palette.common.white,
-    fontSize: 21,
+    fontSize: 16,
     fontWeight: 400,
     marginBottom: "3.5rem",
   },
