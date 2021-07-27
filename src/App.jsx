@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@material-ui/core/styles";
+import jwt_decode from "jwt-decode";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
@@ -29,16 +30,14 @@ import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
 import TagTemplate from "./pages/TagTemplate";
-import jwt_decode from "jwt-decode";
 import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const dispatch = useDispatch();
   // const history = useHistory()
 
-
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -62,8 +61,8 @@ const App = () => {
           payload: {
             ...decode,
             token: setUserToken,
-          }
-        })
+          },
+        });
       }
     }
     return () => unsubscribe();
@@ -75,7 +74,11 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         {/* Admin */}
-        <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <PrivateRoute
+          exact
+          path="/admin/dashboard"
+          component={AdminDashboard}
+        />
         <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
@@ -97,13 +100,17 @@ const App = () => {
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/new-password" component={ForgetPassword} />
+        <Route
+          exact
+          path="/reset-password"
+          component={() => <h1>Reset password page</h1>}
+        />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
         <Route exact path="/:category/:id" component={SingleCategory} />
       </Switch>
     </ThemeProvider>
-
   );
 };
 
