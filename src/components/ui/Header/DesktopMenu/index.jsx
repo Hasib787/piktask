@@ -1,105 +1,94 @@
 import {
-  AppBar,
   Button,
   Container,
   Tab,
   Tabs,
   Toolbar,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../../assets/icons/crown.svg";
-import logo from "../../../../assets/logo-back.png";
+import logo from "../../../../assets/piktaskLogo.png";
 import useStyles from "./DesktopMenu.styles";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const DesktopMenu = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
+  const anchorRef = useRef(null);
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event, index) => {
     setValue(index);
   };
 
-  return (
-    <div className={classes.headerBottom}>
-      <AppBar position="static">
-        <Container className={classes.container}>
-          <Toolbar disableGutters className={classes.headerBottomToolbar}>
-            <Button
-              component={Link}
-              to="/"
-              className={classes.logoWrapper}
-              disableRipple
-            >
-              <img src={logo} className={"classes.logo"} alt="Dev" />
-            </Button>
+  const handleToggle = () => {
+    setOpen((prevState) => !prevState);
+  };
 
-            <Tabs
-              value={value}
-              className={classes.menuTab}
-              classes={{ indicator: classes.menuUnderline }}
-              onChange={handleChange}
-              aria-label="main navigation"
-            >
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/categories"
-                label="Categories"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/vector"
-                label="vector"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/psd"
-                label="Psd"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/background"
-                label="Background"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/template"
-                label="Template"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/png-images"
-                label="Png images"
-              />
-              {/* <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/pricing"
-                label="Pricing"
-              />
-              <Tab
-                className={classes.menuItem}
-                disableRipple
-                component={Link}
-                to="/help"
-                label="Help"
-              /> */}
-            </Tabs>
+
+
+  return (
+    <>
+      <Container className={classes.container}>
+        <Toolbar disableGutters className={classes.headerBottomToolbar}>
+          <Button
+            component={Link}
+            to="/"
+            className={classes.logoWrapper}
+            disableRipple
+          >
+            <img src={logo} className={classes.logo} alt="Dev" />
+          </Button>
+
+          <Tabs
+            value={value}
+            className={classes.menuTab}
+            classes={{ indicator: classes.menuUnderline }}
+            onChange={handleChange}
+            aria-label="main navigation"
+          >
+            <Tab
+              className={classes.menuItem}
+              disableRipple
+              component={Link}
+              to="/vector"
+              label="Vector"
+            />
+            <Tab
+              className={classes.menuItem}
+              disableRipple
+              component={Link}
+              to="/photos"
+              label="Photos"
+            />
+            <Tab
+              className={classes.menuItem}
+              disableRipple
+              component={Link}
+              to="/psd"
+              label="PSD"
+            />
+            <Tab
+              className={classes.menuItem}
+              disableRipple
+              component={Link}
+              to="/png"
+              label="PNG"
+            />
+            <Tab
+              className={classes.menuItem}
+              disableRipple
+              component={Link}
+              to="/category"
+              label="Category"
+            />
+            {/* <ArrowDropDownIcon /> */}
+          </Tabs>
+          <Toolbar disableGutters className={classes.toolBarContainer}>
             {user && user?.token && (
               <Button
                 className={classes.sellContentBtn}
@@ -109,14 +98,52 @@ const DesktopMenu = () => {
                 Sell Your Content
               </Button>
             )}
+            <Button className={classes.enterprise}>
+              <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
+              Enterprise
+            </Button>
             <Button className={classes.premium}>
               <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
               Premium
             </Button>
+            {
+              user && user?.token ? (
+                <div
+                  className={classes.userAvatarArea}
+                  onClick={handleToggle}
+                  aria-controls={open ? "menu-list-grow" : undefined}
+                  aria-haspopup="true"
+                  ref={anchorRef}
+                >
+                  {
+                    user && user?.avatar ? (
+                      <img
+                        className={classes.avatar}
+                        src={user.avatar}
+                        alt="UserPhoto"
+                      />
+                    ) : (
+                      <AccountCircleIcon className={classes.avatar} />
+                    )
+                  }
+                  <ArrowDropDownIcon className={classes.arrowDown} />
+                </div>
+              ) : (
+                <Button
+                  className={classes.signInBtn}
+                  component={Link}
+                  to="/registration"
+                >
+                  Sign In
+                </Button>
+              )
+            }
           </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
+          
+          
+        </Toolbar>
+      </Container>
+    </> 
   );
 };
 

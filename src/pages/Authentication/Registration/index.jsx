@@ -6,9 +6,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
@@ -17,12 +20,9 @@ import brandLogo from "../../../assets/piktaskLogo.png";
 import { auth } from "../../../database";
 import useStyles from "../Auth.styles";
 import ModalAuth from "./Modal/ModalAuth";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from 'react-facebook-login';
-import jwt_decode from "jwt-decode";
-import { useHistory, useLocation } from "react-router-dom";
 
-const clientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+const clientId =
+  "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 export const Registration = ({ history }) => {
   const classes = useStyles();
@@ -43,10 +43,10 @@ export const Registration = ({ history }) => {
   const handleShowHideConfirmPassword = () => {
     setConfirmValue((value) => !value);
   };
-  
+
   const pathHistory = useHistory();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' } };
+  const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
     if (user.token) history.push("/");
@@ -58,8 +58,7 @@ export const Registration = ({ history }) => {
     };
   }, [user, history]);
 
-
-//Registration form submit and validation
+  //Registration form submit and validation
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -77,7 +76,8 @@ export const Registration = ({ history }) => {
     }
 
     if (email) {
-      const validateEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const validateEmail =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (!validateEmail.test(String(email).toLowerCase())) {
         setModalIsOpen(false);
         toast.error("Your email is not validate");
@@ -96,19 +96,21 @@ export const Registration = ({ history }) => {
       toast.error("Password not match");
     }
 
-    axios.post("https://piktask.com/api/auth/signup", {
-      username,
-      email,
-      password,
-      confirmPassword,
-    }).then((res) => {
-      if (res?.status === 200) {
-        openModal()
-      }
-
-    }).catch((error) => {
-      toast.error(error.message);
-    })
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        username,
+        email,
+        password,
+        confirmPassword,
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          openModal();
+        }
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
 
     await auth.sendSignInLinkToEmail(email, {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
@@ -131,21 +133,23 @@ export const Registration = ({ history }) => {
 
   const openModal = () => {
     setModalIsOpen(true);
-  }
+  };
 
-
-//login with google
-  const handleGoogleLogin = async googleData => {
-    const res = await fetch("https://piktask.com/api/auth/google_login", {
-      method: "POST",
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        "Content-Type": "application/json"
+  //login with google
+  const handleGoogleLogin = async (googleData) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/auth/google_login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          token: googleData.tokenId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    })
-    const data = await res.json()
+    );
+    const data = await res.json();
     // store returned user somehow
     if (data.status) {
       const token = data.token;
@@ -164,22 +168,20 @@ export const Registration = ({ history }) => {
       toast.success(data.message);
       pathHistory.replace(from);
     }
-
-  }
-
+  };
 
   //login with facebook
-  const handleFacebookLogin = async facebookData => {
-    const res = await fetch("https://piktask.com/api/auth/facebook_login", {
+  const handleFacebookLogin = async (facebookData) => {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/facebook_login`, {
       method: "POST",
       body: JSON.stringify({
         token: facebookData.tokenId,
       }),
       headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    const data = await res.json()
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
     // store returned user somehow
     if (data.status) {
       const token = data.token;
@@ -198,8 +200,7 @@ export const Registration = ({ history }) => {
       toast.success(data.message);
       pathHistory.replace(from);
     }
-  }
-
+  };
 
   return (
     <>
@@ -239,7 +240,7 @@ export const Registration = ({ history }) => {
                     className={classes.googleBtn}
                     onSuccess={handleGoogleLogin}
                     onFailure={handleGoogleLogin}
-                    cookiePolicy={'single_host_origin'}
+                    cookiePolicy={"single_host_origin"}
                   />
 
                   <FacebookLogin
@@ -249,7 +250,7 @@ export const Registration = ({ history }) => {
                     fields="name,email,picture"
                     onClick={handleFacebookLogin}
                     callback={handleFacebookLogin}
-                  />      
+                  />
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>
@@ -330,7 +331,9 @@ export const Registration = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
-                      disabled={!username || !email || !password || !confirmPassword}
+                      disabled={
+                        !username || !email || !password || !confirmPassword
+                      }
                     >
                       Signup
                     </Button>
