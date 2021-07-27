@@ -1,7 +1,7 @@
 import {
   AppBar,
-  Container,
   Button,
+  Container,
   Drawer,
   makeStyles,
   MenuItem,
@@ -86,39 +86,40 @@ const Header = () => {
   return (
     <>
       <div className={classes.headerBottom}>
-      <AppBar position="static">
-
-      {mobileView ? (
-        <Container>
-          <div className={iconClass.menuWrapper}>
-            <div>
-              <Button
-                component={Link}
-                to="/"
-                className={classes.logoWrapper}
-                disableRipple
-              >
-                <img src={logo} className={classes.logo} alt="Dev" />
-              </Button>
-            </div>
-            <div>
-              <MenuIcon onClick={handleMobileMenu} className={iconClass.menuIcon} />
-            </div>
-          </div>
-        </Container>
-      ) : (
-        <DesktopMenu />
-      )}
-
-      </AppBar>
-      <CustomPopper
-        open={open}
-        handleToggle={handleToggle}
-        anchorRef={anchorRef}
-        handleClose={handleClose}
-        handleListKeyDown={handleListKeyDown}
-      />
-    </div>
+        <AppBar position="static">
+          {mobileView ? (
+            <Container>
+              <div className={iconClass.menuWrapper}>
+                <div>
+                  <Button
+                    component={Link}
+                    to="/"
+                    className={classes.logoWrapper}
+                    disableRipple
+                  >
+                    <img src={logo} className={classes.logo} alt="Dev" />
+                  </Button>
+                </div>
+                <div>
+                  <MenuIcon
+                    onClick={handleMobileMenu}
+                    className={iconClass.menuIcon}
+                  />
+                </div>
+              </div>
+            </Container>
+          ) : (
+            <DesktopMenu />
+          )}
+        </AppBar>
+        <CustomPopper
+          open={open}
+          handleToggle={handleToggle}
+          anchorRef={anchorRef}
+          handleClose={handleClose}
+          handleListKeyDown={handleListKeyDown}
+        />
+      </div>
 
       <Drawer
         anchor="right"
