@@ -55,6 +55,7 @@ const DesktopMenu = () => {
   const user = useSelector((state) => state.user);
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
 
@@ -67,7 +68,7 @@ const DesktopMenu = () => {
   };
 
   const handleChangeTab = () => {
-    return value === 0 ? setValue(1) : value === 1 && setValue(0);
+    return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
   };
 
   const handleToggle = () => {
@@ -186,8 +187,8 @@ const DesktopMenu = () => {
       <Dialog
         open={openAuthModal}
         onClose={handleCloseAuthModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="authentication-dialog"
+        aria-describedby="authentication-dialog"
         style={{ backgroundColor: "rgb(20 51 64 / 77%)" }}
         maxWidth="md"
       >
@@ -215,8 +216,8 @@ const DesktopMenu = () => {
             <Grid item sm={7}>
               <div className={classes.rightPanel}>
                 <Tabs
-                  value={value}
-                  onChange={handleChange}
+                  value={tabIndex}
+                  onChange={handleChangeTab}
                   aria-label="authentication tabs"
                   className={classes.tabsWrapper}
                   variant="fullWidth"
@@ -273,7 +274,7 @@ const DesktopMenu = () => {
                 <Spacing space={{ height: "3.2rem" }} />
 
                 {/* Tab panel for Sign In */}
-                <TabPanel value={value} index={0}>
+                <TabPanel value={tabIndex} index={0}>
                   <InputField label="Email" type="email" />
                   <InputField label="Password" type="password" />
 
@@ -294,7 +295,7 @@ const DesktopMenu = () => {
                 </TabPanel>
 
                 {/* Tab panel for Sign Up */}
-                <TabPanel value={value} index={1}>
+                <TabPanel value={tabIndex} index={1}>
                   <InputField label="User Name" />
                   <InputField label="Email" type="email" />
                   <InputField label="Password" type="password" />
@@ -323,13 +324,6 @@ const DesktopMenu = () => {
             </Grid>
           </Grid>
         </DialogContent>
-
-        {/* <DialogActions>
-          <Button onClick={handleCloseAuthModal}>Disagree</Button>
-          <Button onClick={handleCloseAuthModal} autoFocus>
-            Agree
-          </Button>
-        </DialogActions> */}
       </Dialog>
     </>
   );
