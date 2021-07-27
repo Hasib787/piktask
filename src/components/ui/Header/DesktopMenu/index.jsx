@@ -1,8 +1,10 @@
 import {
   Button,
+  Checkbox,
   Container,
   Dialog,
   DialogContent,
+  FormControlLabel,
   Grid,
   Tab,
   Tabs,
@@ -15,11 +17,37 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import authImage from "../../../../assets/auth.png";
+import facebookLogo from "../../../../assets/facebook.png";
+import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import logoWhite from "../../../../assets/logo-white.png";
 import logo from "../../../../assets/piktaskLogo.png";
+import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
 import useStyles from "./DesktopMenu.styles";
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`authentication-tabpanel-${index}`}
+      aria-labelledby={`authentication-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+};
+
+function a11yProps(index: number) {
+  return {
+    id: `user-authentication-tab-${index}`,
+    "aria-controls": `user-authentication-tabpanel-${index}`,
+  };
+}
 
 const DesktopMenu = () => {
   const classes = useStyles();
@@ -36,6 +64,10 @@ const DesktopMenu = () => {
 
   const handleChange = (event, index) => {
     setValue(index);
+  };
+
+  const handleChangeTab = () => {
+    return value === 0 ? setValue(1) : value === 1 && setValue(0);
   };
 
   const handleToggle = () => {
@@ -152,18 +184,17 @@ const DesktopMenu = () => {
       </Container>
 
       <Dialog
-        open={true}
-        // open={openAuthModal}
+        open={openAuthModal}
         onClose={handleCloseAuthModal}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         style={{ backgroundColor: "rgb(20 51 64 / 77%)" }}
         maxWidth="md"
       >
-        <DialogContent style={{ padding: 0 }}>
-          <Grid container>
+        <DialogContent style={{ padding: 0, overflow: "hidden" }}>
+          <Grid container spacing={3}>
             <Grid item sm={5}>
-              <div className={classes.authLeft}>
+              <div className={classes.leftPanel}>
                 <img
                   className={classes.authLogo}
                   src={logoWhite}
@@ -182,7 +213,113 @@ const DesktopMenu = () => {
               </div>
             </Grid>
             <Grid item sm={7}>
-              <div className={classes.authRight}></div>
+              <div className={classes.rightPanel}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="authentication tabs"
+                  className={classes.tabsWrapper}
+                  variant="fullWidth"
+                >
+                  <Tab
+                    label="Login"
+                    {...a11yProps(0)}
+                    className={classes.tabItem}
+                    classes={{ selected: classes.selected }}
+                    disableRipple
+                  />
+                  <Tab
+                    label="Sign Up"
+                    {...a11yProps(1)}
+                    className={classes.tabItem}
+                    classes={{ selected: classes.selected }}
+                    disableRipple
+                  />
+                </Tabs>
+                {/* End tabs */}
+
+                <Typography
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1.5rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  with your social network
+                </Typography>
+
+                <div className={classes.socialLoginBtns}>
+                  <Button
+                    disableRipple
+                    className={`${classes.googleBtn} ${classes.socialLogin}`}
+                  >
+                    <img src={googleLogo} alt="Login with Google" />
+                  </Button>
+
+                  <Spacing space={{ margin: "0 0.5rem" }} />
+
+                  <Button
+                    disableRipple
+                    className={`${classes.facebookBtn} ${classes.socialLogin}`}
+                  >
+                    <img src={facebookLogo} alt="Login with facebook" />
+                  </Button>
+                </div>
+
+                <Spacing space={{ height: "2rem" }} />
+                <div className={classes.horizontalLine}>
+                  <span>OR</span>
+                </div>
+                <Spacing space={{ height: "3.2rem" }} />
+
+                {/* Tab panel for Sign In */}
+                <TabPanel value={value} index={0}>
+                  <InputField label="Email" type="email" />
+                  <InputField label="Password" type="password" />
+
+                  <CustomBtn type="submit" text="Sign In" color="green" />
+
+                  <Spacing space={{ height: "1.5rem" }} />
+
+                  <Link
+                    to="/reset-password"
+                    className={classes.passwordResetLink}
+                  >
+                    Password Reset
+                  </Link>
+
+                  <div className={classes.signUpLink}>
+                    Not a member? <span onClick={handleChangeTab}>Sign Up</span>
+                  </div>
+                </TabPanel>
+
+                {/* Tab panel for Sign Up */}
+                <TabPanel value={value} index={1}>
+                  <InputField label="User Name" />
+                  <InputField label="Email" type="email" />
+                  <InputField label="Password" type="password" />
+
+                  <CustomBtn type="submit" text="Sign Up" color="green" />
+
+                  <Spacing space={{ height: "0.5rem" }} />
+
+                  <FormControlLabel
+                    className={classes.checkboxLabel}
+                    control={
+                      <Checkbox
+                        name="receiveNewsLetter"
+                        size="medium"
+                        className={classes.checkbox}
+                      />
+                    }
+                    label="I do not wish to receive news and promotions from piktask Company by email."
+                  />
+
+                  <div onClick={handleChangeTab} className={classes.authText}>
+                    Already registered? Log in
+                  </div>
+                </TabPanel>
+              </div>
             </Grid>
           </Grid>
         </DialogContent>
