@@ -7,6 +7,7 @@ export const Item = styled.div`
   justify-content: center;
   position: relative;
   width: 100%;
+  padding: 5px;
 
   img {
     cursor: all-scroll;
@@ -24,8 +25,8 @@ export const CategoryButton = styled(Button)`
   z-index: 99;
   background-color: #1b3f4e;
   color: #fff;
-  border-radius: 3rem;
-  padding: 0.6rem 3rem;
+  // border-radius: 3rem;
+  padding: 0.6rem 8rem;
   width: fit-content;
   font-size: 1.6rem;
 

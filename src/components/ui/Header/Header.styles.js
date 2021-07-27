@@ -1,73 +1,32 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles( theme => ({
-    headerTop: {
+    headerBottom: {
+      "& > .MuiAppBar-colorPrimary": {
         background: "#143340",
-        height: 80
+        height: 80,
+      },
     },
-    topBarContainer: {
-        height: "100%"
-    },
-    toolBarContainer: {
-        marginLeft: "auto",
-        display: "flex",
-        justifyContent: "flex-end",
-        height: "100%",
 
-        "@media (max-width: 768px)": {
-            justifyContent: "flex-end",
-            "& a": {
-                paddingRight: "2rem",
-                paddingLeft: "2rem",
-                marginLeft: "0.5rem",
-            }
+    logoWrapper: {
+      width: 153,
+      marginRight: "2rem",
+      padding: 0,
+      "&:hover": {
+        background: "transparent",
+      },
+  
+      "@media (max-width: 1024px)": {
+        width: "12rem",
+  
+        "& img": {
+          width: "100%",
         },
-        "@media (max-width: 480px)": {
-            "& a": {
-                paddingRight: ".6rem",
-                paddingLeft: ".6rem",
-                marginLeft: "0rem",
-                fontSize: "1.4rem",
-                minWidth: "fit-content",
-            }
-
-        }
+      },
     },
-    topBarLink: {
-        opacity: 1,
-        color: "#FFFFFF",
-        marginLeft: "1rem"
-    },
-    
-    signupBtn: {
-        ...theme.typography.button,
-        ...theme.typography.darkButton,
-        marginLeft: "1rem",
-        padding: ".8rem 3.4rem",
-        textTransform: "uppercase",
-
-        "@media (max-width: 480px)": {
-            padding: ".8rem 1.5rem !important",
-
-        }
-    },
-    userAvatarArea: {
-        cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-    },
-    avatar: {
-        fontSize: "4.8rem",
-        width: "4.8rem",
-        height: "4.8rem",
-        borderRadius: "100%",
-        position: "relative",
-        right: "-0.6rem",
-        color: "#FB5252",
-    }, 
-    arrowDown: {
-        fontSize: "5rem",
-        color: "#244e5f"
+    logo: {
+      width: "10.5rem",
+      display: "block",
     },
 
     // Mobile Menu
@@ -107,6 +66,9 @@ const useStyles = makeStyles( theme => ({
           marginRight: "1rem",
         },
       },
+
+
+      
 }));
 
 export default useStyles;

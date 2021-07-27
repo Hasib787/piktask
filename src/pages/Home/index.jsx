@@ -29,7 +29,6 @@ export const Home = () => {
         size="large"
         popularKeywords
         title="Graphic Resource for Free Download"
-        subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
       />
 
       <Container>
