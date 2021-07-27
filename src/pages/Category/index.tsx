@@ -1,4 +1,4 @@
-import { Container, Grid, ListItem, Typography } from "@material-ui/core";
+import { Container, Grid, Tabs, Tab, ListItem, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-category-page.png";
@@ -129,9 +129,68 @@ const Category = () => {
           </Grid>
         </Container>
       </div>
+
+      <div className={classes.shortList}>
+        <Container>
+          <div className={classes.shortListWrapper}>
+          <Typography className={classes.shortListTag}>
+            Sorted By: 
+          </Typography>
+        <Tabs className={classes.sortListMenu}>
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="Popular"
+              style={{ color: "#117A00" }}
+            />
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="Top Download"
+            />
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="Brand New"
+            />
+            <p className={classes.borderStyle}></p>
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="All Product"
+            />
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="Free"
+            />
+            <Tab
+              className={classes.sortListItem}
+              disableRipple
+              component={Link}
+              to="#"
+              label="Premium"
+            />
+          </Tabs>
+          </div>
+        </Container>
+      </div>
       <Container>
         <Typography className={classes.totalResources} variant="h3">
           6,283 Resources
+        </Typography>
+        <Typography className={classes.abstractBanner} variant="h4">
+           Abstract Banner
         </Typography>
         <Products />
         <Pagination />

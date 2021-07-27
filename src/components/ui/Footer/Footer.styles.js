@@ -15,6 +15,12 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: "2.4rem",
     fontSize: "1.9rem",
   },
+  socialMediaTitle: {
+    textTransform: "uppercase",
+    marginTop: "2.4rem",
+    marginBottom: "1rem",
+    fontSize: "1.9rem",
+  },
   menuWrapper: {
     listStyleType: "none",
     padding: 0,
@@ -33,6 +39,15 @@ export const useStyles = makeStyles((theme) => ({
     "&:hover": {
       textDecoration: "none",
       color: theme.palette.secondary.main,
+    },
+  },
+  gridRoot: {
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
+
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
     },
   },
 }));
