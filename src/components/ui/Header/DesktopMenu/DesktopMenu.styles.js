@@ -1,12 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  headerBottom: {
-    "& > .MuiAppBar-colorPrimary": {
-      background: "#1B3F4E",
-      height: 100,
-    },
-  },
+  
   container: {
     height: "100%",
   },
@@ -29,17 +24,20 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  logo: {
+    width: "13.5rem",
+    display: "block",
+  },
   menuUnderline: {
     height: 0,
     backgroundColor: "transparent",
   },
   menuTab: {
-    marginLeft: "auto",
+    marginLeft: 25,
   },
   menuItem: {
     opacity: 1,
     minWidth: "1rem",
-    textTransform: "uppercase",
     "&:last-child": {
       marginRight: "3rem",
     },
@@ -52,6 +50,48 @@ const useStyles = makeStyles((theme) => ({
 
       "&:last-child": {
         marginRight: ".5rem",
+      },
+    },
+  },
+  toolBarContainer: {
+    marginLeft: "auto",
+    display: "flex",
+    justifyContent: "flex-end",
+    height: "100%",
+
+    "@media (max-width: 768px)": {
+        justifyContent: "flex-end",
+        "& a": {
+            paddingRight: "2rem",
+            paddingLeft: "2rem",
+            marginLeft: "0.5rem",
+        }
+    },
+    "@media (max-width: 480px)": {
+        "& a": {
+            paddingRight: ".6rem",
+            paddingLeft: ".6rem",
+            marginLeft: "0rem",
+            fontSize: "1.4rem",
+            minWidth: "fit-content",
+        }
+
+    }
+},
+enterprise: {
+    ...theme.typography.button,
+    paddingLeft: "2.4rem",
+    paddingRight: "2.4rem",
+    textTransform: "uppercase",
+    border: ".2rem solid",
+    borderColor: "transparent",
+    "@media (max-width: 1024px)": {
+      paddingRight: "1rem",
+      paddingLeft: "1rem",
+      fontSize: "1.4rem",
+
+      "& img": {
+        display: "none",
       },
     },
   },
@@ -96,6 +136,35 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "1rem",
       fontSize: "1.4rem",
     },
+  },
+  signInBtn: {
+    ...theme.typography.button,
+    ...theme.typography.darkButton,
+    marginLeft: "1rem",
+    padding: ".8rem 3.4rem",
+
+    "@media (max-width: 480px)": {
+        padding: ".8rem 1.5rem !important",
+
+    }
+  },
+    userAvatarArea: {
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+  },
+  avatar: {
+      fontSize: "4.8rem",
+      width: "4.8rem",
+      height: "4.8rem",
+      borderRadius: "100%",
+      position: "relative",
+      right: "-0.6rem",
+      color: "#FB5252",
+  }, 
+  arrowDown: {
+      fontSize: "5rem",
+      color: "#244e5f"
   },
 }));
 
