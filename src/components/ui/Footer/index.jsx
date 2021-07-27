@@ -7,12 +7,32 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import SocialShare from "../SocialShare";
 import Copyright from "./CopyRight";
 import { Column, useStyles } from "./Footer.styles";
+import facebook from "../../../assets/icons/facebook-round.svg";
+import twitter from "../../../assets/icons/twitter-round.svg";
+import instagram from "../../../assets/icons/instagram-round.svg";
 
 const Footer = ({ addminFooter = false }) => {
   const classes = useStyles();
-
+  const socialMedias = [
+    {
+      name: "Instagram",
+      url: "https://www.instagram.com/",
+      image: instagram,
+    },
+    {
+      name: "Twitter",
+      url: "https://twitter.com/",
+      image: twitter,
+    },
+    {
+      name: "Facebook",
+      url: "https://www.facebook.com/",
+      image: facebook,
+    },
+  ];
   return (
     <footer
       style={addminFooter ? { marginTop: "4rem" } : undefined}
@@ -163,6 +183,19 @@ const Footer = ({ addminFooter = false }) => {
                   Contact
                 </Link>
               </ListItem>
+              <Typography variant="h3" className={classes.socialMediaTitle}>
+              Social Media
+            </Typography>
+            <Grid className={classes.gridRoot}>
+            <Grid item xs={12} sm={5}>
+            <SocialShare
+              title="Social Share"
+              textCase="uppercase"
+              socialMedias={socialMedias}
+              position="right"
+            />
+          </Grid>
+          </Grid>
             </List>
           </Column>
         </Grid>
