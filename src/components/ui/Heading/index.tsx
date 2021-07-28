@@ -47,7 +47,7 @@ const SectionHeading: FC<Props> = (props) => {
           variant="h1"
           style={{
             color: color === "white" ? whiteColor : primaryColor,
-            textAlign: "left",
+            textAlign: "center",
           }}
         >
           {title}

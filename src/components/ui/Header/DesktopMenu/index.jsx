@@ -22,6 +22,7 @@ import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import logoWhite from "../../../../assets/logo-white.png";
+import signInIcon from "../../../../assets/icons/signInIcon.svg";
 import logo from "../../../../assets/piktaskLogo.svg";
 import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
@@ -44,7 +45,7 @@ const TabPanel = (props) => {
   );
 };
 
-function a11yProps(index: number) {
+function a11yProps(index) {
   return {
     id: `user-authentication-tab-${index}`,
     "aria-controls": `user-authentication-tabpanel-${index}`,
@@ -177,7 +178,7 @@ const DesktopMenu = () => {
               </Button>
             )}
 
-            <Button className={classes.enterprise}>
+            <Button disableRipple className={classes.enterprise}>
               <img
                 className={classes.crownIcon}
                 src={enterpriseCrownIcon}
@@ -214,6 +215,7 @@ const DesktopMenu = () => {
                 className={classes.signInBtn}
                 onClick={() => setOpenAuthModal(true)}
               >
+                <img className={classes.crownIcon} src={signInIcon} alt="Crown" />
                 Sign In
               </Button>
             )}

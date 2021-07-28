@@ -6,6 +6,14 @@ const green = "#117A00";
 const lightBlack = "#14323F";
 
 const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 480,
+      sm: 960,
+      md: 1280,
+      lg: 1440,
+    },
+  },
   overrides: {
     MuiTypography: {
       body1: {
