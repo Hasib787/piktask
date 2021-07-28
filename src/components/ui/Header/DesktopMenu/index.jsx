@@ -13,9 +13,11 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import {useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import authImage from "../../../../assets/auth.png";
 import facebookLogo from "../../../../assets/facebook.png";
 import googleLogo from "../../../../assets/google.png";
@@ -27,6 +29,8 @@ import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
+import { toast } from "react-toastify";
+import lockIcon from "../../../../assets/password.png";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -44,21 +48,23 @@ const TabPanel = (props) => {
   );
 };
 
-function a11yProps(index: number) {
+function a11yProps(index) {
   return {
     id: `user-authentication-tab-${index}`,
     "aria-controls": `user-authentication-tabpanel-${index}`,
   };
 }
 
-const DesktopMenu = () => {
+const DesktopMenu = ({history}) => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const anchorRef = useRef(null);
-
   const [value, setValue] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
 
+  const [passwordValue, setPasswordValue] = useState(false);
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -67,7 +73,34 @@ const DesktopMenu = () => {
     userName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
+  
+  //Handle the password show and hide
+  const handleShowHidePassword = () => {
+    setPasswordValue((value) => !value);
+  };
+  const handleShowHideConfirmPassword = () => {
+    setConfirmPasswordValue((value) => !value);
+  };
+
+
+  //Redirect to home page when user logs in
+  const pathHistory = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
+
+  useEffect(() => {
+    // if (user.token) history.push("/");
+
+    document.body.style.backgroundColor = "#143340";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [user, history]);
+
 
   const handleAuthData = (e) => {
     const { name, value } = e.target;
@@ -91,9 +124,71 @@ const DesktopMenu = () => {
     setOpen((prevState) => !prevState);
   };
 
-  const handleSubmit = (e) => {
+
+  //handleSignIn
+  const handleSignIn = (e) => {
     e.preventDefault();
     setLoading(true);
+  }
+
+  //Handle signIn and signUp form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (authData.userName.length < 3) {
+      toast.error("Username should be at least 3 or more characters");
+      return;
+    }
+    if (authData.email) {
+      const validateEmail =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!validateEmail.test(String(authData.email).toLowerCase())) {
+        toast.error("Your email is not validate");
+        return;
+      }
+    }
+    
+    if (authData.password.length < 5) {
+      toast.error("Password should be at least 6 or more characters");
+      return;
+    }
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        username: authData.userName,
+        email: authData.email,
+        password: authData.password,
+        confirmPassword: authData.password,
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          // openModal();
+        }
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+      console.log(authData);
+
+      // await auth.sendSignInLinkToEmail(email, {
+      //   url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      //   handleCodeInApp: true,
+      // });
+  
+      // // Show success message to the user
+      // toast.success(
+      //   `An email has been sent to ${email}. Please check and verify your email`
+      // );
+  
+      // // Save username, email, and password, to localStorage
+      // window.localStorage.setItem("userName", username);
+      // window.localStorage.setItem("email", email);
+      // window.localStorage.setItem("password", password);
+      // window.localStorage.setItem("confirmPassword", confirmPassword);
+  
+      // setIsLoading(false);
+
   };
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -320,7 +415,7 @@ const DesktopMenu = () => {
 
                 {/* Tab panel for Sign In */}
                 <TabPanel value={tabIndex} index={0}>
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSignIn}>
                     <InputField
                       label="Email"
                       type="email"
@@ -328,13 +423,20 @@ const DesktopMenu = () => {
                       value={authData.email}
                       onChange={handleAuthData}
                     />
+                    <div className={classes.passwordField}>
                     <InputField
                       label="Password"
-                      type="password"
+                      type={passwordValue ? "text" : "password"}
                       name="password"
                       value={authData.password}
                       onChange={handleAuthData}
                     />
+                    <img
+                        src={lockIcon}
+                        alt="Show or hide password"
+                        onClick={handleShowHidePassword}
+                      />
+                    </div>
 
                     <CustomBtn type="submit" text="Sign In" color="green" />
                   </form>
@@ -359,25 +461,38 @@ const DesktopMenu = () => {
                     <InputField
                       label="User Name"
                       name="userName"
-                      value={authData.password}
+                      value={authData.userName}
                       onChange={handleAuthData}
                     />
                     <InputField
                       label="Email"
                       type="email"
                       name="email"
-                      value={authData.password}
+                      value={authData.email}
                       onChange={handleAuthData}
                     />
+                    <div className={classes.passwordField}>
                     <InputField
                       label="Password"
-                      type="password"
+                      type={passwordValue ? "text" : "password"}
                       name="password"
                       value={authData.password}
                       onChange={handleAuthData}
                     />
+                     <img
+                        src={lockIcon}
+                        alt="Show or hide password"
+                        onClick={handleShowHidePassword}
+                      />
+                    </div>
 
-                    <CustomBtn type="submit" text="Sign Up" color="green" />
+                    <CustomBtn  
+                      text="Sign Up" 
+                      color="green" 
+                      disabledBtn={
+                        !authData.userName || !authData.email || !authData.password 
+                      }
+                    />
                   </form>
 
                   <Spacing space={{ height: "0.5rem" }} />

@@ -262,6 +262,24 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     cursor: "pointer",
   },
+  passwordField: {
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    "& img": {
+      position: "absolute",
+      top: ".8rem",
+      right: "3rem",
+      width: "3rem",
+      cursor: "pointer",
+    },
+
+    "@media (max-width: 768px)": {
+      "& img": {
+        width: "2rem",
+      },
+    },
+  },
   signUpLink: {
     marginTop: "17%",
     fontSize: 17,
