@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   itemContainer: {
     position: "relative",
-    height: 250,
+    height: 210,
   },
   image: {
     width: "100%",
@@ -39,6 +39,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#1B3F4E",
     marginBottom: ".5rem",
     textTransform: "capitalize",
+    wordBreak: "break-all",
   },
   itemStatus: {
     fontSize: 12,
@@ -79,7 +80,7 @@ export const useStyles = makeStyles((theme) => ({
     height: 37,
     borderRadius: "100%",
     marginRight: "0.8rem",
-    border: "1px solid #1B3F4E",
+    // border: "1px solid #1B3F4E",
   },
   profileName: {
     marginBottom: 0,
@@ -148,7 +149,7 @@ export const useStyles = makeStyles((theme) => ({
     left: "1rem",
     width: "4rem",
     height: "4rem",
-    backgroundColor: "rgb(68 68 68 / 60%)",
+    backgroundColor: "#26AA10",
     borderRadius: "50%",
     zIndex: 1,
     "&:hover": {

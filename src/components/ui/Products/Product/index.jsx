@@ -1,17 +1,16 @@
 import {
   Button,
   CardContent,
-  // CardMedia,
+  CardMedia,
   IconButton,
   Typography,
 } from "@material-ui/core";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-// import SearchIcon from '@material-ui/icons/Search';
-import GetAppIcon from "@material-ui/icons/GetApp";
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import crownIcon from '../../../../assets/icons/crownEnterpriseIcon.svg';
 import {
   ButtonWrapper,
   CardFooter,
@@ -33,7 +32,7 @@ const Product = ({ photo }) => {
 
   return (
     <CardWrapper className={classes.container}>
-      {/* {photo.isPremium ? (
+      {photo?.item_for_sale ? (
         <IconButton
           disableRipple
           classes={{ root: classes.premiumIcon }}
@@ -41,7 +40,7 @@ const Product = ({ photo }) => {
         >
           <img src={crownIcon} alt="Premium" />
         </IconButton>
-      ) : null} */}
+      ) : null}
 
       <IconButton
         ref={likeRef}
@@ -53,66 +52,56 @@ const Product = ({ photo }) => {
       </IconButton>
 
       <div className={classes.itemContainer}>
-        <Link className={classes.singlePageLink} to={`/photo/${photo?.id}`} />
-        {/* <Button
-          href={`${photo?.links?.download}?force=true`}
-          disableRipple
-          classes={{ root: classes.downloadItem }}
-        >
-          Download
-        </Button> */}
-        <Link to={`/photo/${photo?.id}`}>
-          <IconButton
-            classes={{ root: classes.downloadItem }}
-            // onClick={handleClick}
-          >
-            <GetAppIcon className={classes.downloadImageIcon} />
-          </IconButton>
-        </Link>
-        <Link to={`/photo/${photo?.id}`}>
+        <Link className={classes.singlePageLink} to={`/photo/${photo?.image_id}`} />
+        <Link to={`/photo/${photo?.image_id}`}>
           <img className={classes.image} src={photo?.thumbnail} alt="" />
         </Link>
       </div>
 
       <div className={classes.itemFooter}>
         <CardContent>
-          <Link className={classes.titleLink} to={`/photo/${photo?.id}`}>
+          <Link className={classes.titleLink} to={`/photo/${photo?.image_id}`}>
             <Typography variant="h2" className={classes.title}>
               {photo?.title}
             </Typography>
           </Link>
-          <Typography variant="body1" className={classes.itemStatus}>
-            Download:{" "}
-            <img
-              className={classes.downloadIcon}
-              src={downloadIcon}
-              alt="Total Download"
-            />{" "}
-            {/* {photo?.total_downloads} */}
-            /66
-            <FavoriteBorderIcon className={classes.heartIcon} /> {photo?.likes}
-          </Typography>
+          
         </CardContent>
 
         <CardContent className={classes.cardFooter}>
           <CardFooter>
-            {/* <CardMedia
-              component="img"
-              className={classes.authorImage}
-              image={photo?.user.profile_image.medium}
-              title={photo?.user.name}
-            /> */}
+            {
+              photo?.avatar ? (
+                <CardMedia
+                  component="img"
+                  className={classes.authorImage}
+                  image={photo?.avatar}
+                  title={photo?.name}
+                />
+              ) : (
+                <AccountCircleIcon className={classes.authorImage} />
+              )
+            }
+            
             <Typography paragraph className={classes.profileName}>
-              {photo?.category}
+              {photo?.username}
             </Typography>
           </CardFooter>
 
+          <Typography variant="body1" className={classes.itemStatus}>
+            <img
+              className={classes.downloadIcon}
+              src={downloadIcon}
+              alt="Total Download"
+            />
+            {photo?.total_download}
+            <FavoriteBorderIcon className={classes.heartIcon} /> {photo?.total_likes}
+          </Typography>
+
           <ButtonWrapper>
             <Button className={classes.categoryButton}>
-              <ArrowDownwardIcon className={classes.buttonIcon} />
-              Vector
+              Download
             </Button>
-            <Button className={classes.productStatusButton}>Free</Button>
           </ButtonWrapper>
         </CardContent>
       </div>
