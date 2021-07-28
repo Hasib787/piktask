@@ -5,7 +5,7 @@ import searchIcon from "../../../assets/search.svg";
 import { categories } from "../../../data/demoData";
 import useStyles from "./Search.styles";
 
-const Search = () => {
+const Search = ({mobileView}: {mobileView: boolean}) => {
   const classes = useStyles();
   const searchRef = useRef("");
 
@@ -16,10 +16,12 @@ const Search = () => {
       axios
       .get(`${process.env.REACT_APP_API_URL}/client/search/nature?collection_title=collection1&limit=10&page=1`)
       .then(({data}) => {
-        setSearch(data);
+        if (data?.status) {
+          setSearch(data);
+        }
       })
     } catch (error) {
-      console.log(error.message);
+      console.warn("Search api error", error)
     }
   }, []);
 
@@ -28,27 +30,30 @@ const Search = () => {
       <FormControl className={classes.searchWrapper}>
         <Input
           fullWidth
-          className={classes.inputield}
+          className={classes.inputField}
           id="search"
           aria-describedby="search-resources"
           placeholder="Search All Resources"
           disableUnderline
           ref={searchRef}
         />
-
-        <FormControl>
-          <NativeSelect className={classes.selectContainer} disableUnderline>
-            <option value="">
-              All Resources
-            </option>
-            {categories.length > 0 &&
-              categories.map((category, index) => (
-                <option key={index} value={index}>
-                  {category}
-                </option>
-              ))}
-          </NativeSelect>
-        </FormControl>
+        {
+          !mobileView && 
+          <FormControl>
+            <NativeSelect className={classes.selectContainer} disableUnderline>
+              <option value="">
+                All Resources
+              </option>
+              {categories.length > 0 &&
+                categories.map((category, index) => (
+                  <option key={index} value={index}>
+                    {category}
+                  </option>
+                ))}
+            </NativeSelect>
+          </FormControl>
+        }
+        
         <div className={classes.searchIconWrapper}>
           <img className={classes.searchIcon} src={searchIcon} alt="Search" />
         </div>
