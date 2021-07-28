@@ -6,21 +6,15 @@ import Search from "../Search";
 import useStyles from "./Hero.styles";
 
 type Props = {
-  background: string;
-  size: string;
+  background?: string | undefined;
+  size?: string | undefined;
   popularKeywords?: boolean;
-  title: string;
-  subtitle: string;
+  title?: string | undefined;
 };
 
-const HeroSection: FC<Props> = ({
-  background,
-  size,
-  popularKeywords,
-  title,
-  subtitle,
-}): JSX.Element => {
+const HeroSection: FC<Props> = (props): JSX.Element => {
   const classes = useStyles();
+  const { size, popularKeywords, title, background } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -49,7 +43,6 @@ const HeroSection: FC<Props> = ({
           
           {title && <SectionHeading
             title={title}
-            subtitle={subtitle}
             color="white"
             center
             size={size}
@@ -60,21 +53,9 @@ const HeroSection: FC<Props> = ({
           {popularKeywords && (
             <div className={classes.popularSearch}>
               <Typography variant="h5" className={classes.searchTitle}>
-                Example : banner, Background, Abstract Banner , Logo Design , Business card , Post Card Design , web template
+                Example : banner, Background, Abstract Banner , Logo Design ,
+                Business card , Post Card Design , web template
               </Typography>
-
-              {/* <div className={classes.buttonGroups}>
-                {keywords.length > 0 &&
-                  keywords.map((keyword, index) => (
-                    <Button
-                      key={index}
-                      className={classes.popularSearchKeyword}
-                      variant="outlined"
-                    >
-                      {keyword}
-                    </Button>
-                  ))}
-              </div> */}
             </div>
           )}
         </div>

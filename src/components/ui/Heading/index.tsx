@@ -3,22 +3,16 @@ import React, { FC } from "react";
 import useStyles from "./Heading.styles";
 
 type Props = {
-  title: string;
-  subtitle?: string;
+  title?: string;
   color?: string;
   children?: any;
   center?: boolean;
   size?: string;
 };
 
-const SectionHeading: FC<Props> = ({
-  title,
-  subtitle,
-  color,
-  children,
-  center,
-  size,
-}) => {
+const SectionHeading: FC<Props> = (props) => {
+  const { title, color, children, center, size } = props;
+
   const primaryColor: string = "#1B3F4E";
   const classes = useStyles();
   const whiteColor: string = "#FFFFFF";
