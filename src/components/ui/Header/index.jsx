@@ -34,7 +34,6 @@ const customStyles = makeStyles({
     },
   },
   closeIconWrapper: {
-    // marginRight: "auto",
     backgroundColor: "#063B52",
     padding: "1rem",
     boxShadow: "0px 0px 50px 50px #042C3D",
@@ -110,10 +109,6 @@ const Header = () => {
                   </Button>
                 </div>
                 <div>
-                  <MenuIcon
-                    onClick={handleMobileMenu}
-                    className={iconClass.menuIcon}
-                  />
                   <div className={classes.menuButton}>
                     {user && user?.token ? (
                       <div
@@ -164,14 +159,8 @@ const Header = () => {
             <DesktopMenu />
           )}
         </AppBar>
-        <CustomPopper
-          open={open}
-          handleToggle={handleToggle}
-          anchorRef={anchorRef}
-          handleClose={handleClose}
-          handleListKeyDown={handleListKeyDown}
-        />
-
+        
+      </div>
         <Drawer
           anchor="right"
           classes={{ paper: classes.paper }}
@@ -287,7 +276,13 @@ const Header = () => {
             </Button>
           </Toolbar>
         </Drawer>
-      </div>
+      <CustomPopper
+        open={open}
+        handleToggle={handleToggle}
+        anchorRef={anchorRef}
+        handleClose={handleClose}
+        handleListKeyDown={handleListKeyDown}
+      />
     </>
   );
 };
