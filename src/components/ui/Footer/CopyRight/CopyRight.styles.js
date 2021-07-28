@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: "10.5rem",
+    width: "13.5rem",
     display: "block",
   },
   copyRightText: {
