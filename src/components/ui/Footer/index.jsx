@@ -187,12 +187,10 @@ const Footer = ({ addminFooter = false }) => {
               Social Media
             </Typography>
             <Grid className={classes.gridRoot}>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12}>
             <SocialShare
-              title="Social Share"
-              textCase="uppercase"
               socialMedias={socialMedias}
-              position="right"
+              position="left"
             />
           </Grid>
           </Grid>

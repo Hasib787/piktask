@@ -23,7 +23,7 @@ const SocialShare = ({ title, socialMedias, textCase, position }: Props) => {
     <div
       className={classes.container}
       style={{
-        justifyContent: position === "right" ? "flex-end" : "flex-start",
+        justifyContent: position === "left" ? "flex-start" : "flex-end",
         display: "flex",
       }}
     >

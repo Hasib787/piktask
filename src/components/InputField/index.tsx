@@ -51,16 +51,17 @@ export const InputField: FC<inputProps> = (props) => {
 
 type ButtonProps = {
   text: string;
+  disabledBtn?: boolean ;
   isLoading?: boolean;
   styles?: object;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 export const CustomBtn: FC<ButtonProps> = (props) => {
   const classes = useStyles();
-  const { isLoading, text, onClick, styles } = props;
+  const {disabledBtn, isLoading, text, onClick, styles } = props;
 
   return (
-    <div>
+    <>
       <Button
         type="submit"
         size="medium"
@@ -70,11 +71,11 @@ export const CustomBtn: FC<ButtonProps> = (props) => {
         disableRipple
         onClick={onClick}
         style={{ ...styles }}
-        disabled={isLoading}
+        disabled={isLoading || disabledBtn}
       >
         {text}
       </Button>
       {isLoading && <CircularProgress size={24} />}
-    </div>
+    </>
   );
 };

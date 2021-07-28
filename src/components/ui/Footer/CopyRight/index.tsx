@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../../../assets/logo.svg";
+import logo from "../../../../assets/piktaskLogo.svg";
 import useStyles from "./CopyRight.styles";
 
 const CopyRight = () => {
@@ -18,7 +18,7 @@ const CopyRight = () => {
           </Grid>
           <Grid item xs={12} sm={5}>
             <Typography className={classes.copyRightText}>
-              &copy; Designhill International Ltd. {new Date().getFullYear()}
+              &copy; Piktask International Ltd. {new Date().getFullYear()}
             </Typography>
           </Grid>
         </Grid>

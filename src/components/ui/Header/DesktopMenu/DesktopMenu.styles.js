@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
   // New user authentication modal
   leftPanel: {
     backgroundColor: "#117A00",
-    padding: "2.5rem",
+    padding: "2.5rem 2.5rem 5.4rem 2.5rem",
     width: "100%",
 
     "& p": {
@@ -220,27 +220,66 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "underline",
     },
   },
-  socialLoginBtns: {
+  socialsButtons: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-  },
-  socialLogin: {
-    flex: 1,
-    height: 48,
+    justifyContent: "space-between",
+    marginBottom: "1.5rem",
   },
   googleBtn: {
-    backgroundColor: "#1B3F4E",
+    backgroundColor: "#fff !important",
+    fontSize: "30px !important",
+    textAlign: "center",
+    padding: "0.2rem 5rem !important",
+    width: "49%",
+    borderRadius: 0,
     "&:hover": {
-      backgroundColor: "#214e61",
+      backgroundColor: "rgb(28 81 103)",
+    },
+    "@media (max-width: 768px)": {
+      padding: "1.5rem",
+      "& img": {
+        width: "8rem",
+      },
     },
   },
   facebookBtn: {
     backgroundColor: "#425993",
+    padding: "1.2rem 2rem",
+    fontSize: "26px !important",
+    width: "49%",
+    borderRadius: 0,
     "&:hover": {
-      backgroundColor: "#374b7d",
+      backgroundColor: "rgb(48 72 132)",
+    },
+    "@media (max-width: 768px)": {
+      padding: "1.5rem",
+      "& img": {
+        width: "8rem",
+      },
     },
   },
+  // socialLoginBtns: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // socialLogin: {
+  //   flex: 1,
+  //   height: 48,
+  // },
+  // googleBtn: {
+  //   backgroundColor: "#1B3F4E",
+  //   "&:hover": {
+  //     backgroundColor: "#214e61",
+  //   },
+  // },
+  // facebookBtn: {
+  //   backgroundColor: "#425993",
+  //   "&:hover": {
+  //     backgroundColor: "#374b7d",
+  //   },
+  // },
 
   horizontalLine: {
     backgroundColor: "#CBCBCB",
@@ -261,6 +300,24 @@ const useStyles = makeStyles((theme) => ({
     color: "#469439",
     textAlign: "center",
     cursor: "pointer",
+  },
+  passwordField: {
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    "& img": {
+      position: "absolute",
+      top: ".8rem",
+      right: "3rem",
+      width: "3rem",
+      cursor: "pointer",
+    },
+
+    "@media (max-width: 768px)": {
+      "& img": {
+        width: "2rem",
+      },
+    },
   },
   signUpLink: {
     marginTop: "17%",

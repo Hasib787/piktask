@@ -227,7 +227,6 @@ const UploadFiles = () => {
     }
 
     const formData = new FormData();
-
     formData.append("title", "this is title");
     formData.append("tags", tags);
     formData.append("category", category);
@@ -238,9 +237,7 @@ const UploadFiles = () => {
     formData.append("description", description);
     formData.append("image", image);
     formData.append("additional_image", additional_image);
-
-    console.log(formData);
-    return;
+    
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",

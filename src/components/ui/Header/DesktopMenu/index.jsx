@@ -13,9 +13,11 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import authImage from "../../../../assets/auth.png";
 import facebookLogo from "../../../../assets/facebook.png";
 import googleLogo from "../../../../assets/google.png";
@@ -28,6 +30,15 @@ import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
+import { toast } from "react-toastify";
+import lockIcon from "../../../../assets/password.png";
+import { auth } from "../../../../database";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
+
+
+const clientId =
+  "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -52,14 +63,16 @@ function a11yProps(index) {
   };
 }
 
-const DesktopMenu = () => {
+const DesktopMenu = ({ history }) => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const anchorRef = useRef(null);
-
   const [value, setValue] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
 
+  const [passwordValue, setPasswordValue] = useState(false);
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -68,7 +81,31 @@ const DesktopMenu = () => {
     userName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
+  //Handle the password show and hide
+  const handleShowHidePassword = () => {
+    setPasswordValue((value) => !value);
+  };
+  const handleShowHideConfirmPassword = () => {
+    setConfirmPasswordValue((value) => !value);
+  };
+
+  //Redirect to home page when user logs in
+  const pathHistory = useHistory();
+  const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
+
+  useEffect(() => {
+    // if (user.token) history.push("/");
+
+    document.body.style.backgroundColor = "#143340";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, [user, history]);
 
   const handleAuthData = (e) => {
     const { name, value } = e.target;
@@ -92,10 +129,165 @@ const DesktopMenu = () => {
     setOpen((prevState) => !prevState);
   };
 
-  const handleSubmit = (e) => {
+  //handle SignIn
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        username: authData.userName,
+        password: authData.password,
+      })
+      .then((res) => {
+        if (res.data.status) {
+          setOpenAuthModal(false);
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          const decodedToken = jwt_decode(token.split(" ")[1]);
+
+          if (decodedToken.email) {
+            dispatch({
+              type: "SET_USER",
+              payload: {
+                ...decodedToken,
+                token,
+              },
+            });
+          }
+          pathHistory.replace(from);
+        }
+      })
+      .catch((error) => {
+        toast.error("Username/Email or Password doesn't match", error.message);
+      });
   };
+
+  //Handle signIn and signUp form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (authData.userName.length < 3) {
+      toast.error("Username should be at least 3 or more characters");
+      return;
+    } else if (authData.email) {
+      const validateEmail =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!validateEmail.test(String(authData.email).toLowerCase())) {
+        toast.error("Your email is invalid");
+        return;
+      }
+    } else if (authData.password.length < 5) {
+      toast.error("Password should be 6 or more characters");
+      return;
+    }
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        username: authData.userName,
+        email: authData.email,
+        password: authData.password,
+        confirmPassword: authData.password,
+      })
+      .then((res) => {
+        if (res?.status === 200) {
+          // openModal();
+        }
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+
+    await auth.sendSignInLinkToEmail(authData.email, {
+      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      handleCodeInApp: true,
+    });
+
+    // Show success message to the user
+    toast.success(
+      `An email has been sent to ${authData.email}. Please check and verify your email`
+    );
+
+    // Save username, email, and password, to localStorage
+    window.localStorage.setItem("userName", authData.userName);
+    window.localStorage.setItem("email", authData.email);
+    window.localStorage.setItem("password", authData.password);
+    window.localStorage.setItem("confirmPassword", authData.password);
+
+    setLoading(false);
+  };
+
+  //login with google
+  const handleGoogleLogin = async (googleData) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/auth/google_login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          token: googleData.tokenId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    // store user data in localStorage
+    if (data.status) {
+      setOpenAuthModal(false);
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
+
+      if (decodedToken.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decodedToken,
+            token,
+          },
+        });
+      }
+      pathHistory.replace(from);
+    }
+  };
+
+  //login with facebook
+  const handleFacebookLogin = async (facebookData) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/auth/facebook_login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          token: facebookData.tokenId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+   // store user data in localStorage
+    if (data.status) {
+      setOpenAuthModal(false);
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
+
+      if (decodedToken.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decodedToken,
+            token,
+          },
+        });
+      }
+      pathHistory.replace(from);
+    }
+  };
+
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
       return;
@@ -296,22 +488,26 @@ const DesktopMenu = () => {
                   with your social network
                 </Typography>
 
-                <div className={classes.socialLoginBtns}>
-                  <Button
-                    disableRipple
-                    className={`${classes.googleBtn} ${classes.socialLogin}`}
-                  >
-                    <img src={googleLogo} alt="Login with Google" />
-                  </Button>
+                <div className={classes.socialsButtons}>
+                <GoogleLogin
+                    clientId={clientId}
+                    className={classes.googleBtn}
+                    buttonText="Google"
+                    onSuccess={handleGoogleLogin}
+                    onFailure={handleGoogleLogin}
+                    cookiePolicy={"single_host_origin"}
+                  />
 
                   <Spacing space={{ margin: "0 0.5rem" }} />
 
-                  <Button
-                    disableRipple
-                    className={`${classes.facebookBtn} ${classes.socialLogin}`}
-                  >
-                    <img src={facebookLogo} alt="Login with facebook" />
-                  </Button>
+                  <FacebookLogin
+                    className={classes.facebookBtn}
+                    appId="168140328625744"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={handleFacebookLogin}
+                    callback={handleFacebookLogin}
+                  />
                 </div>
 
                 <Spacing space={{ height: "2rem" }} />
@@ -322,21 +518,27 @@ const DesktopMenu = () => {
 
                 {/* Tab panel for Sign In */}
                 <TabPanel value={tabIndex} index={0}>
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSignIn}>
                     <InputField
-                      label="Email"
-                      type="email"
-                      name="email"
-                      value={authData.email}
+                      label="User Name / Email"
+                      name="userName"
+                      value={authData.userName}
                       onChange={handleAuthData}
                     />
-                    <InputField
-                      label="Password"
-                      type="password"
-                      name="password"
-                      value={authData.password}
-                      onChange={handleAuthData}
-                    />
+                    <div className={classes.passwordField}>
+                      <InputField
+                        label="Password"
+                        type={passwordValue ? "text" : "password"}
+                        name="password"
+                        value={authData.password}
+                        onChange={handleAuthData}
+                      />
+                      <img
+                        src={lockIcon}
+                        alt="Show or hide password"
+                        onClick={handleShowHidePassword}
+                      />
+                    </div>
 
                     <CustomBtn type="submit" text="Sign In" color="green" />
                   </form>
@@ -361,25 +563,40 @@ const DesktopMenu = () => {
                     <InputField
                       label="User Name"
                       name="userName"
-                      value={authData.password}
+                      value={authData.userName}
                       onChange={handleAuthData}
                     />
                     <InputField
                       label="Email"
                       type="email"
                       name="email"
-                      value={authData.password}
+                      value={authData.email}
                       onChange={handleAuthData}
                     />
-                    <InputField
-                      label="Password"
-                      type="password"
-                      name="password"
-                      value={authData.password}
-                      onChange={handleAuthData}
-                    />
+                    <div className={classes.passwordField}>
+                      <InputField
+                        label="Password"
+                        type={passwordValue ? "text" : "password"}
+                        name="password"
+                        value={authData.password}
+                        onChange={handleAuthData}
+                      />
+                      <img
+                        src={lockIcon}
+                        alt="Show or hide password"
+                        onClick={handleShowHidePassword}
+                      />
+                    </div>
 
-                    <CustomBtn type="submit" text="Sign Up" color="green" />
+                    <CustomBtn
+                      text="Sign Up"
+                      color="green"
+                      disabledBtn={
+                        !authData.userName ||
+                        !authData.email ||
+                        !authData.password
+                      }
+                    />
                   </form>
 
                   <Spacing space={{ height: "0.5rem" }} />
