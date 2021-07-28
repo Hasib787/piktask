@@ -22,6 +22,7 @@ import {
   Login,
   Pricing,
   Registration,
+  ResetPassword,
 } from "./pages";
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import AuthorProfile from "./pages/AuthorProfile";
@@ -100,11 +101,7 @@ const App = () => {
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/new-password" component={ForgetPassword} />
-        <Route
-          exact
-          path="/reset-password"
-          component={() => <h1>Reset password page</h1>}
-        />
+        <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
