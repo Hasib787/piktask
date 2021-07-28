@@ -1,6 +1,6 @@
 import { Container, Typography } from "@material-ui/core";
-import React, { FC } from "react";
-// import { keywords } from "../../../data/demoData";
+import React, { FC, useEffect, useState } from "react";
+import heroBG from "../../../assets/490cdcd7579.svg";
 import SectionHeading from "../Heading";
 import Search from "../Search";
 import useStyles from "./Hero.styles";
@@ -16,19 +16,39 @@ const HeroSection: FC<Props> = (props): JSX.Element => {
   const classes = useStyles();
   const { size, popularKeywords, title, background } = props;
 
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 576
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
   return (
     <div
       className={classes.heroWrapper}
       style={{
-        backgroundImage: `url(${background})`,
-        minHeight: size === "large" ? "30rem" : "30rem",
+        backgroundImage: `url(${heroBG})`,
+        minHeight: size === "large" ? "30rem" : "20rem",
       }}
     >
       <Container>
         <div className={classes.contentWrapper}>
-          <SectionHeading title={title} color="white" center size={size} />
+          
+          {title && <SectionHeading
+            title={title}
+            color="white"
+            center
+            size={size}
+          />}
 
-          <Search />
+          <Search mobileView={mobileView} />
 
           {popularKeywords && (
             <div className={classes.popularSearch}>

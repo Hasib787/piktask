@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import authorPhoto from "../../assets/author.png";
-// import bannerImg from "../../assets/banner/banner.png";
+import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 // import downArrow from "../../assets/icons/downArrow.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
@@ -14,6 +14,7 @@ import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
+import HeroSection from "../../components/ui/Hero";
 // import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
@@ -87,12 +88,10 @@ const SingleCategory = () => {
   return (
     <>
       <Header />
-      {/* <HeroSection
+      <HeroSection
         background={bannerImg}
         size="medium"
-        title="Graphic Resource for Free Download"
-        subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
-      /> */}
+      />
       <Container className={classes.containerWrapper}>
         <Grid
           container

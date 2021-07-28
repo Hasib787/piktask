@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   searchTitle: {
-    color: theme.palette.common.white,
+    color: "#D0D0D0",
     fontSize: 16,
     fontWeight: 400,
     marginBottom: "3.5rem",
@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
       height: "3.5rem",
     },
   },
+
 }));
 
 export default useStyles;

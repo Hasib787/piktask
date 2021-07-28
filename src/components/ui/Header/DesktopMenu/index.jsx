@@ -24,6 +24,7 @@ import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import logoWhite from "../../../../assets/logo-white.png";
+import signInIcon from "../../../../assets/icons/signInIcon.svg";
 import logo from "../../../../assets/piktaskLogo.svg";
 import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
@@ -369,7 +370,7 @@ const DesktopMenu = ({ history }) => {
               </Button>
             )}
 
-            <Button className={classes.enterprise}>
+            <Button disableRipple className={classes.enterprise}>
               <img
                 className={classes.crownIcon}
                 src={enterpriseCrownIcon}
@@ -406,6 +407,7 @@ const DesktopMenu = ({ history }) => {
                 className={classes.signInBtn}
                 onClick={() => setOpenAuthModal(true)}
               >
+                <img className={classes.crownIcon} src={signInIcon} alt="Crown" />
                 Sign In
               </Button>
             )}

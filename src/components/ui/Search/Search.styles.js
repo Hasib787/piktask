@@ -8,7 +8,7 @@ const useStyles = makeStyles( theme => ({
         width: "100%",
         // height: "6.5rem"
     },
-    inputield: {
+    inputField: {
         backgroundColor: theme.palette.common.white,
         border: "none",
         padding: ".5rem 3rem",
@@ -30,7 +30,12 @@ const useStyles = makeStyles( theme => ({
         borderBottomRightRadius: ".2rem",
         [theme.breakpoints.down('sm')]: {
             height: "4.5rem"
-        }
+        },
+
+        [theme.breakpoints.down(576)]: {
+            height: "4.6rem",
+            width: 76,
+          },
     },
     searchIcon: {
         color: theme.palette.common.white,

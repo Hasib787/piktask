@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 // import { Container } from "./Carousel.styles";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
@@ -33,6 +35,8 @@ export const CategoryCarousel = () => {
     // centerMode: true,
     // centerPadding: "130px",
     arrows: true,
+    prevArrow: <ArrowBackIosIcon />,
+    nextArrow: <ArrowForwardIosIcon />,
 
     responsive: [
       {
@@ -76,7 +80,7 @@ export const CategoryCarousel = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container>
         <Slider {...settings}>
           {photos?.map((photo) => (
             <Category key={photo?.id} photo={photo} />
