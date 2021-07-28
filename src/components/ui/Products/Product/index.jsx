@@ -32,7 +32,7 @@ const Product = ({ photo }) => {
 
   return (
     <CardWrapper className={classes.container}>
-      {photo?.item_for_sale ? (
+      {photo?.item_for_sale && (
         <IconButton
           disableRipple
           classes={{ root: classes.premiumIcon }}
@@ -40,7 +40,7 @@ const Product = ({ photo }) => {
         >
           <img src={crownIcon} alt="Premium" />
         </IconButton>
-      ) : null}
+      )}
 
       <IconButton
         ref={likeRef}
