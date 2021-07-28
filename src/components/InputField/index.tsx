@@ -1,5 +1,5 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core";
-import React, { FC } from "react";
+import React, { ChangeEvent, FC, MouseEvent } from "react";
 import useStyles from "./inputField.styles";
 
 type inputProps = {
@@ -12,7 +12,7 @@ type inputProps = {
   disabled?: boolean;
   others?: object;
   value: string | number;
-  onChange: () => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 export const InputField: FC<inputProps> = (props) => {
   const classes = useStyles();
@@ -53,7 +53,7 @@ type ButtonProps = {
   text: string;
   isLoading?: boolean;
   styles?: object;
-  onClick: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 export const CustomBtn: FC<ButtonProps> = (props) => {
   const classes = useStyles();

@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   inputField: {
-    // ...theme.typography.input,
     marginBottom: "2rem",
   },
   primaryBtn: {
@@ -12,8 +11,10 @@ const useStyles = makeStyles((theme) => ({
   },
   authBtn: {
     backgroundColor: "#117A00",
-    padding: "8px 16px",
+    padding: "12px 16px",
     color: theme.palette.common.white,
+    fontSize: "1.8rem",
+
     "&:hover": {
       backgroundColor: "#146b06",
     },
