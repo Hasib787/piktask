@@ -10,7 +10,7 @@ import React, { useRef } from "react";
 import { Link} from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import crownIcon from '../../../../assets/icons/crownEnterpriseIcon.svg';
+import crownIcon from '../../../../assets/icons/crown.svg';
 import {
   ButtonWrapper,
   CardFooter,
@@ -32,24 +32,27 @@ const Product = ({ photo }) => {
 
   return (
     <CardWrapper className={classes.container}>
-      {photo?.item_for_sale && (
-        <IconButton
-          disableRipple
-          classes={{ root: classes.premiumIcon }}
-          title="Premium for Commercial Use"
-        >
-          <img src={crownIcon} alt="Premium" />
-        </IconButton>
-      )}
+      <div className={classes.buttonsWrapper}>
+        {photo?.item_for_sale && (
+          <IconButton
+            disableRipple
+            classes={{ root: classes.premiumIcon }}
+            className={classes.iconBtn}
+            title="Premium for Commercial Use"
+          >
+            <img src={crownIcon} alt="Premium" />
+          </IconButton>
+        )}
 
-      <IconButton
-        ref={likeRef}
-        classes={{ root: classes.favouriteIcon }}
-        className="favourite"
-        onClick={handleClick}
-      >
-        <FavoriteBorderIcon />
-      </IconButton>
+        <IconButton
+          ref={likeRef}
+          classes={{ root: classes.favouriteIcon }}
+          className={classes.iconBtn}
+          onClick={handleClick}
+        >
+          <FavoriteBorderIcon fontSize={"large"} />
+        </IconButton>
+      </div>
 
       <div className={classes.itemContainer}>
         <Link className={classes.singlePageLink} to={`/photo/${photo?.image_id}`} />
@@ -59,19 +62,17 @@ const Product = ({ photo }) => {
       </div>
 
       <div className={classes.itemFooter}>
-        <CardContent>
+        <CardContent className={classes.productTitle}>
           <Link className={classes.titleLink} to={`/photo/${photo?.image_id}`}>
             <Typography variant="h2" className={classes.title}>
               {photo?.title}
             </Typography>
           </Link>
-          
         </CardContent>
 
         <CardContent className={classes.cardFooter}>
           <CardFooter>
-            {
-              photo?.avatar ? (
+            {photo?.avatar ? (
                 <CardMedia
                   component="img"
                   className={classes.authorImage}
@@ -80,8 +81,7 @@ const Product = ({ photo }) => {
                 />
               ) : (
                 <AccountCircleIcon className={classes.authorImage} />
-              )
-            }
+              )}
             
             <Typography paragraph className={classes.profileName}>
               {photo?.username}

@@ -1,8 +1,10 @@
+import { Container } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import Product from "../Products/Product";
-import { Container } from "./Carousel.styles";
+// import { Container } from "./Carousel.styles";
 
 export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const [photos, setPhotos] = useState([]);
@@ -23,11 +25,10 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
   const settings = {
     dots: false,
     infinite: true,
+    autoplay: true,
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "130px",
     arrows: false,
 
     responsive: [
@@ -45,7 +46,6 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          centerPadding: "0px",
         },
       },
       {
@@ -54,7 +54,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
-          centerPadding: "0px",
+          infinite: true,
         },
       },
       {
@@ -62,7 +62,7 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerPadding: "0px",
+          infinite: true,
         },
       },
     ],
@@ -70,10 +70,13 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
 
   return (
     <>
-      <Container {...settings}>
+      <Container>
+        <Slider {...settings}>
         {photos.map((photo) => (
-          <Product key={photo.id} photo={photo} />
-        ))}
+            <Product key={photo.id} photo={photo} />
+          ))}
+        </Slider>
+         
       </Container>
     </>
   );
