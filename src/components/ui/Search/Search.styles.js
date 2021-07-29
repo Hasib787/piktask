@@ -6,14 +6,14 @@ const useStyles = makeStyles( theme => ({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        // height: "6.5rem"
+        height: "6.5rem"
     },
     inputField: {
         backgroundColor: theme.palette.common.white,
         border: "none",
         padding: ".5rem 3rem",
         fontSize: 18,
-        height: "6.5rem",
+        height: "5.2rem",
         borderTopLeftRadius: ".2rem",
         borderBottomLeftRadius: ".2rem",
         [theme.breakpoints.down('sm')]: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles( theme => ({
     searchIconWrapper: {
         backgroundColor: theme.palette.primary.light,
         width: 122,
-        height: "6.5rem",
+        height: "5.2rem",
         cursor: "pointer",
         textAlign: "center",
         borderTopRightRadius: ".2rem",
@@ -44,7 +44,7 @@ const useStyles = makeStyles( theme => ({
     },
     selectContainer: {
         backgroundColor: theme.palette.common.white,
-        height: "6.5rem",
+        height: "5.2rem",
         [theme.breakpoints.down('sm')]: {
             height: "4.5rem"
         },
