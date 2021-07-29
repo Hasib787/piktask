@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "8rem",
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
     width: "calc(100vw - 315px)",
     marginLeft: "2rem",
@@ -50,8 +48,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   uploadIconWrapper: {
-    width: "22rem",
-    height: "18rem",
+    flexDirection: "column",
+    // height: "18rem",
     fontSize: "8.5rem",
     color: "#97A1A8",
     borderRadius: "100%",
@@ -59,17 +57,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: "0.8rem",
-
-    "& img": {
-      width: "6rem",
-      height: "6rem",
-    },
   },
-  imageErrorText:{
-    marginTop: "-4rem",
+  imageErrorText: {
     color: "red",
     fontWeight: "bold",
-    fontSize:"3rem"
+    fontSize: "3rem",
   },
   photoUploadText: {
     fontSize: "2.5rem",
@@ -79,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.8rem",
     color: "#97A1A8",
   },
-  formHeadText:{
-      marginBottom: "2rem",
+  formHeadText: {
+    marginBottom: "2rem",
   },
   //input field
   uploadForm: {
@@ -102,28 +94,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "100%",
     "& input": {
-      padding: "1.28rem 1.5rem"
+      padding: "1.28rem 1.5rem",
     },
     "& p": {
       fontSize: "14px",
     },
   },
   //category
-  categoryInput:{
-    width: "100%",
-    maxWidth: "100%",
-    "& select": {
-      padding: "1.27rem 1.5rem",
-    },
-    "& svg":{
-      height: "2.6rem",
-      marginTop: "-1px",
-      width: "3rem",
-     },
-  },
-  
-  //itemSaleInput
-  itemSaleInput:{
+  categoryInput: {
     width: "100%",
     maxWidth: "100%",
     "& select": {
@@ -133,10 +111,24 @@ const useStyles = makeStyles((theme) => ({
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
-     }, 
+    },
+  },
+
+  //itemSaleInput
+  itemSaleInput: {
+    width: "100%",
+    maxWidth: "100%",
+    "& select": {
+      padding: "1.27rem 1.5rem",
+    },
+    "& svg": {
+      height: "2.6rem",
+      marginTop: "-1px",
+      width: "3rem",
+    },
   },
   //usagesInput
-  usagesInput:{
+  usagesInput: {
     width: "100%",
     maxWidth: "100%",
     "& select": {
@@ -146,10 +138,10 @@ const useStyles = makeStyles((theme) => ({
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
-     }, 
+    },
   },
   //typeOfImageInput
-  typeOfImageInput:{
+  typeOfImageInput: {
     width: "100%",
     maxWidth: "100%",
     "& select": {
@@ -159,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
       height: "2.6rem",
       marginTop: "-1px",
       width: "3rem",
-     }, 
+    },
   },
   //tag
   tagsInput: {
