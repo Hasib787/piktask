@@ -32,6 +32,7 @@ export const ResetPassword = () => {
     };
   }, []);
 
+  // Reset Password
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -65,6 +66,7 @@ export const ResetPassword = () => {
     setIsLoading(false);
   };
 
+  //For Set Password
   const handleSetPassword = () => {
     if (passwordChange && token && password && confirmPassword) {
       axios

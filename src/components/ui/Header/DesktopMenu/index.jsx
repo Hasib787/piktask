@@ -36,7 +36,6 @@ import { auth } from "../../../../database";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 
-
 const clientId =
   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
@@ -129,11 +128,16 @@ const DesktopMenu = ({ history }) => {
     setOpen((prevState) => !prevState);
   };
 
-  //handle SignIn 
+  //handle SignIn
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    if (!authData.userName || !authData.password) {
+      toast.error("Please fill in all the fields");
+      setLoading(false);
+      return;
+    }
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -141,6 +145,7 @@ const DesktopMenu = ({ history }) => {
         password: authData.password,
       })
       .then((res) => {
+        console.log("signIN",res);
         if (res.data.status) {
           setOpenAuthModal(false);
           const token = res.data.token;
@@ -160,7 +165,7 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error("Username/Email or Password doesn't match", error.message);
+        console.warn("Caught signIn error", error);
       });
   };
 
@@ -170,22 +175,22 @@ const DesktopMenu = ({ history }) => {
     setLoading(true);
 
     const validateEmail =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (authData.userName.length < 3) {
       toast.error("Username should be at least 3 or more characters");
       setLoading(false);
       return;
     } else if (authData.email && !validateEmail.test(String(authData.email))) {
-        toast.error("Your email is invalid");
-        setLoading(false);
-        return;
-      } else if (authData.password.length < 6) {
-        toast.error("Password should be at least 6 characters");
-        setLoading(false);
-        return;
-      }
-      
+      toast.error("Your email is invalid");
+      setLoading(false);
+      return;
+    } else if (authData.password.length < 6) {
+      toast.error("Password should be at least 6 characters");
+      setLoading(false);
+      return;
+    }
+
     //   else if(!authData.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/)){
     //     toast.error("Password should contain at least a number, lowercase, uppercase and a special character @,#,%,& etc.");
     //     setLoading(false);
@@ -277,7 +282,7 @@ const DesktopMenu = ({ history }) => {
       }
     );
     const data = await res.json();
-   // store user data in localStorage
+    // store user data in localStorage
     if (data.status) {
       setOpenAuthModal(false);
       const token = data.token;
@@ -416,7 +421,11 @@ const DesktopMenu = ({ history }) => {
                 className={classes.signInBtn}
                 onClick={() => setOpenAuthModal(true)}
               >
-                <img className={classes.crownIcon} src={signInIcon} alt="Crown" />
+                <img
+                  className={classes.crownIcon}
+                  src={signInIcon}
+                  alt="Crown"
+                />
                 Sign In
               </Button>
             )}
@@ -498,7 +507,7 @@ const DesktopMenu = ({ history }) => {
                 </Typography>
 
                 <div className={classes.socialsButtons}>
-                <GoogleLogin
+                  <GoogleLogin
                     clientId={clientId}
                     className={classes.googleBtn}
                     buttonText="Google"
