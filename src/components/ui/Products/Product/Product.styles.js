@@ -3,15 +3,16 @@ import styled from "styled-components";
 
 export const useStyles = makeStyles((theme) => ({
   container: {
+    backgroundColor: "#F8F8F8",
+    // margin: 5,
     "&:hover": {
-      "& $singlePageLink": {
+      "& $singlePageLink, $favouriteIcon": {
         opacity: 1,
         visibility: "visible",
       },
-      "& $downloadItem": {
-        top: "50%",
-        opacity: 1,
-        visibility: "visible",
+      "& $categoryButton": {
+        background: theme.palette.primary.light,
+        color: theme.palette.common.white,
       },
     },
   },
@@ -24,9 +25,13 @@ export const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   itemFooter: {
+    
     padding: "1rem 0rem",
     display: "flex",
     flexDirection: "column",
+  },
+  productTitle: {
+    padding: "1px 16px",
   },
   titleLink: {
     textDecoration: "none",
@@ -65,6 +70,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     paddingTop: 0,
     marginTop: "auto",
+    
+    paddingBottom: "4px !important",
 
     "@media (max-width: 1024px)": {
       alignItems: "baseline",
@@ -93,42 +100,35 @@ export const useStyles = makeStyles((theme) => ({
   },
   categoryButton: {
     ...theme.typography.button,
-    background: theme.palette.primary.light,
+    background: "#EEF0F5",
+    color: "#97999F",
     width: "8.5rem",
     height: "5rem",
     fontSize: "1.2rem",
-    "&:hover": {
-      background: theme.palette.primary.dark,
-    },
+    
   },
-  productStatusButton: {
-    ...theme.typography.button,
-    background: theme.palette.primary.main,
-    width: "8.5rem",
-    height: "5rem",
-    fontSize: "1.2rem",
-    "&:hover": {
-      background: theme.palette.primary.light,
-    },
+  buttonsWrapper: {
+    right: "1rem",
+    top: "1rem",
+    position: "absolute",
   },
-  favouriteIcon: {
-    backgroundColor: "#ffffff",
+  iconBtn: {
     borderRadius: "50%",
     width: "3.8rem",
     height: "3.8rem",
-    position: "absolute",
-    right: "1rem",
-    top: "1rem",
+    zIndex: 1,
+    transition: "all 0.3s linear",
+  },
+  favouriteIcon: {
+    backgroundColor: "#ffffff",
+    fontSize: "16px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
     visibility: "hidden",
     opacity: 0,
-    transition: "all 0.3s linear",
-    zIndex: 1,
-    boxShadow:
-      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+    boxShadow:"rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
 
     "&:hover": {
       backgroundColor: "#469439",
@@ -144,14 +144,8 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   premiumIcon: {
-    position: "absolute",
-    top: "1rem",
-    left: "1rem",
-    width: "4rem",
-    height: "4rem",
     backgroundColor: "#26AA10",
-    borderRadius: "50%",
-    zIndex: 1,
+    marginBottom: "8px",
     "&:hover": {
       backgroundColor: "rgb(68 68 68 / 60%)",
     },
@@ -223,8 +217,9 @@ export const ButtonWrapper = styled.div`
   display: flex;
 
   button {
-    height: 3rem;
-    width: 8.7rem;
+    height: 3.5rem;
+    width: 9.7rem;
+    font-size: 12px;
   }
 
   button:first-child {
