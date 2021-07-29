@@ -5,11 +5,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 // import { Container } from "./Carousel.styles";
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import useStyles from "./Carousel.styles";
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
+  const classes= useStyles();
 
   useEffect(() => {
     try {
@@ -32,11 +34,9 @@ export const CategoryCarousel = () => {
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    // centerMode: true,
-    // centerPadding: "130px",
     arrows: true,
-    prevArrow: <ArrowBackIosIcon />,
-    nextArrow: <ArrowForwardIosIcon />,
+    prevArrow: <NavigateBeforeIcon />,
+    nextArrow: <NavigateNextIcon />,
 
     responsive: [
       {
@@ -53,7 +53,6 @@ export const CategoryCarousel = () => {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          // centerPadding: "0px",
         },
       },
       {
@@ -63,7 +62,6 @@ export const CategoryCarousel = () => {
           slidesToScroll: 1,
           initialSlide: 2,
           infinite: true,
-          // centerPadding: "0px",
         },
       },
       {
@@ -72,7 +70,6 @@ export const CategoryCarousel = () => {
           slidesToShow: 1,
           slidesToScroll: 1,
           infinite: true,
-          // centerPadding: "0px",
         },
       },
     ],
@@ -81,7 +78,7 @@ export const CategoryCarousel = () => {
   return (
     <>
       <Container>
-        <Slider {...settings}>
+        <Slider {...settings} className={classes.carousel}>
           {photos?.map((photo) => (
             <Category key={photo?.id} photo={photo} />
           ))}

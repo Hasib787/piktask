@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
 export const Item = styled.div`
@@ -17,20 +17,22 @@ export const Item = styled.div`
   }
 `;
 
-export const CategoryButton = styled(Button)`
+export const CategoryButton = styled.div`
   position: relative;
   transform: translateX(-50%);
   left: 50%;
-  bottom: 2.5rem;
   z-index: 99;
-  background-color: #1b3f4e;
-  color: #fff;
-  // border-radius: 3rem;
-  padding: 0.6rem 8rem;
+  background-color: #FFFFFF;
+  color: #333333;
   width: fit-content;
-  font-size: 1.6rem;
+  font-size: 1.9rem;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  &:hover {
-    background-color: #469439;
-  }
+  // &:hover {
+  //   background-color: #469439;
+  // }
 `;
