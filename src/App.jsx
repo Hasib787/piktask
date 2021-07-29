@@ -35,7 +35,6 @@ import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const dispatch = useDispatch();
-  // const history = useHistory()
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -80,7 +79,11 @@ const App = () => {
           path="/admin/dashboard"
           component={AdminDashboard}
         />
-        <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
+        <PrivateRoute 
+          exact 
+          path="/admin/upload" 
+          component={UploadFiles} 
+        />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
         <Route exact path="/admin/reject" component={RejectFiles} />
