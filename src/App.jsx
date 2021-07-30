@@ -20,6 +20,7 @@ import {
   Help,
   Home,
   Login,
+  NotFoundPage,
   Pricing,
   Registration,
   ResetPassword,
@@ -79,11 +80,7 @@ const App = () => {
           path="/admin/dashboard"
           component={AdminDashboard}
         />
-        <PrivateRoute 
-          exact 
-          path="/admin/upload" 
-          component={UploadFiles} 
-        />
+        <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
         <Route exact path="/admin/reject" component={RejectFiles} />
@@ -109,6 +106,7 @@ const App = () => {
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
         <Route exact path="/:category/:id" component={SingleCategory} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
     </ThemeProvider>
   );
