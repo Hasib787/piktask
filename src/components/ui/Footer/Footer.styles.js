@@ -43,7 +43,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   gridRoot: {
     display: "flex",
-    alignItems: "center",
+    marginLeft: "-2rem",
+    alignItems: "flex-start",
     height: "100%",
 
     "@media (max-width: 768px)": {
