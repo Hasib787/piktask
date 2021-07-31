@@ -42,6 +42,13 @@ export const ResetPassword = () => {
     const validateEmail =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+      if (email && !validateEmail.test(String(email))) {
+        toast.error("Your email is invalid");
+        setPasswordChange(false);
+        setIsLoading(false);
+        return;
+      }
+
     if (email && !passwordChange) {
       axios
         .post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
@@ -57,17 +64,31 @@ export const ResetPassword = () => {
           toast.error("No user found with this email", error.message);
         });
     }
-    if (email && !validateEmail.test(String(email))) {
-      toast.error("Your email is invalid");
-      setIsLoading(false);
-      return;
-    }
-
     setIsLoading(false);
   };
 
   //For Set Password
   const handleSetPassword = () => {
+    if (!token || !password || !confirmPassword) {
+      setIsLoading(false);
+      toast.error("All fields are required");
+      return;
+    } else if (password.length < 6) {
+      setIsLoading(false);
+      toast.error("Password should be at least 6 characters");
+      return;
+    }
+    //   else if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/)){
+    //     toast.error("Password should contain at least a number, lowercase, uppercase and a special character @,#,%,& etc.");
+    //     setLoading(false);
+    //     return;
+    // }
+    else if (password !== confirmPassword) {
+      setIsLoading(false);
+      toast.error("Password not match");
+      return;
+    }
+
     if (passwordChange && token && password && confirmPassword) {
       axios
         .post(`${process.env.REACT_APP_API_URL}/auth/reset-password`, {
@@ -84,24 +105,8 @@ export const ResetPassword = () => {
         .catch((error) => {
           toast.error("No user with this token found on server", error.message);
         });
-
-      if (!token || !password || !confirmPassword) {
-        toast.error("All fields are required");
-        return;
-      } else if (password.length < 6) {
-        toast.error("Password should be at least 6 characters");
-        setIsLoading(false);
-        return;
-      }
-      //   else if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/)){
-      //     toast.error("Password should contain at least a number, lowercase, uppercase and a special character @,#,%,& etc.");
-      //     setLoading(false);
-      //     return;
-      // }
-      else if (password !== confirmPassword) {
-        toast.error("Password not match");
-      }
     }
+    setIsLoading(false);
   };
 
   return (

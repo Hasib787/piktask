@@ -51,7 +51,6 @@ export const Registration = ({ history }) => {
   useEffect(() => {
     if (user.token) history.push("/");
 
-    document.body.style.backgroundColor = "#143340";
 
     return () => {
       document.body.style.backgroundColor = "";

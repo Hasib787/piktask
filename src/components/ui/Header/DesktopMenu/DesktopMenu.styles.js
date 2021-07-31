@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
   // New user authentication modal
   leftPanel: {
     backgroundColor: "#117A00",
-    padding: "2.5rem 2.5rem 5.4rem 2.5rem",
+    padding: "2.5rem 2.5rem 5.2rem 2.5rem",
     width: "100%",
 
     "& p": {
@@ -174,6 +174,9 @@ const useStyles = makeStyles((theme) => ({
     "& img": {
       width: "100%",
     },
+    [theme.breakpoints.up(1441)]: {
+      padding: "2.5rem 2.5rem 7rem 2.5rem",
+     },
   },
   authLogo: {
     maxWidth: 120,
@@ -236,12 +239,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "rgb(28 81 103)",
     },
-    "@media (max-width: 768px)": {
-      padding: "1.5rem",
-      "& img": {
-        width: "8rem",
-      },
-    },
   },
   facebookBtn: {
     backgroundColor: "#425993",
@@ -252,12 +249,13 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "rgb(48 72 132)",
     },
-    "@media (max-width: 768px)": {
-      padding: "1.5rem",
-      "& img": {
-        width: "8rem",
-      },
-    },
+    [theme.breakpoints.down(1025)]: {
+      fontSize: "17px !important",
+      padding: "20px !important",
+     },
+    [theme.breakpoints.up(2039)]: {
+      padding: "20px !important",
+     },
   },
   // socialLoginBtns: {
   //   display: "flex",

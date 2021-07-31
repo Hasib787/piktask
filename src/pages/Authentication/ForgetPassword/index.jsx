@@ -26,7 +26,6 @@ export const ForgetPassword = () => {
   // const [value, setValue] = useState(false);
 
   useEffect(() => {
-    document.body.style.backgroundColor = "#143340";
 
     return () => {
       document.body.style.backgroundColor = "";
