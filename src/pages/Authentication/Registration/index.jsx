@@ -62,38 +62,38 @@ export const Registration = ({ history }) => {
     e.preventDefault();
     setIsLoading(true);
 
+    const validateEmail =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (!username || !email || !password || !confirmPassword) {
       setModalIsOpen(false);
+      setIsLoading(false);
       toast.error("All fields are required");
       return;
-    }
-
-    if (username.length < 3) {
+    } else if (username.length < 3) {
       setModalIsOpen(false);
+      setIsLoading(false);
       toast.error("Username should be at least 3 or more characters");
       return;
-    }
-
-    if (email) {
-      const validateEmail =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!validateEmail.test(String(email).toLowerCase())) {
-        setModalIsOpen(false);
-        toast.error("Your email is not validate");
-        return;
-      }
-    }
-
-    if (password.length < 5) {
+    }  else if (email && !validateEmail.test(String(email))) {
+      toast.error("Your email is invalid");
+      setIsLoading(false);
+      return;
+    } else if (password.length < 6) {
       setModalIsOpen(false);
+      setIsLoading(false);
       toast.error("Password should be at least 6 or more characters");
+      return;
+    } else if (password !== confirmPassword) {
+      setModalIsOpen(false);
+      setIsLoading(false);
+      toast.error("Password not match");
       return;
     }
 
-    if (password !== confirmPassword) {
-      setModalIsOpen(false);
-      toast.error("Password not match");
-    }
+    // const openModal = () => {
+    //   setModalIsOpen(true);
+    // };
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
@@ -104,7 +104,7 @@ export const Registration = ({ history }) => {
       })
       .then((res) => {
         if (res?.status === 200) {
-          openModal();
+        setModalIsOpen(true);
         }
       })
       .catch((error) => {
@@ -130,9 +130,6 @@ export const Registration = ({ history }) => {
     setIsLoading(false);
   };
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
 
   //login with google
   const handleGoogleLogin = async (googleData) => {
@@ -331,7 +328,7 @@ export const Registration = ({ history }) => {
                       className={classes.formButton}
                       type="submit"
                       disabled={
-                        !username || !email || !password || !confirmPassword
+                        isLoading || !username || !email || !password || !confirmPassword
                       }
                     >
                       Signup
