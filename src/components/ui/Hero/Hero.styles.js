@@ -30,17 +30,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     zIndex: 1,
   },
-  popularSearch: {
-    marginTop: "2.2rem",
-    textAlign: "center",
-    width: "100%",
-  },
-  searchTitle: {
-    color: "#D0D0D0",
-    fontSize: 16,
-    fontWeight: 400,
-    marginBottom: "3.5rem",
-  },
   buttonGroups: {
     display: "flex",
     justifyContent: "space-between",
