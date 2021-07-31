@@ -14,10 +14,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
@@ -68,6 +70,36 @@ const typeOfImageItem = [
   { label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
 
+const thumbsContainer = {
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  marginTop: 16,
+};
+
+const thumb = {
+  display: "inline-flex",
+  borderRadius: 2,
+  border: "1px solid #eaeaea",
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: "border-box",
+};
+
+const thumbInner = {
+  display: "flex",
+  minWidth: 0,
+  overflow: "hidden",
+};
+
+const img = {
+  display: "block",
+  width: "auto",
+  height: "100%",
+};
 
 const UploadFiles = () => {
   const user = useSelector((state) => state.user);
@@ -112,11 +144,42 @@ const UploadFiles = () => {
   //for tag element
   const [tags, setTags] = useState([]);
 
+  const [files, setFiles] = useState([]);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: "image/*",
+    onDrop: (acceptedFiles) => {
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+  });
+
+  const thumbs = files.map((file) => (
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img src={file.preview} alt="thumbnail" style={img} />
+      </div>
+    </div>
+  ));
+
+  const isActive = isDragActive && "2px dashed #26AA10";
+
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    },
+    [files]
+  );
+
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   setValues({ ...values, [name]: value });
   // }
-
 
   const addTags = (event) => {
     event.preventDefault();
@@ -237,7 +300,7 @@ const UploadFiles = () => {
     formData.append("description", description);
     formData.append("image", image);
     formData.append("additional_image", additional_image);
-    
+
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",
@@ -325,33 +388,44 @@ const UploadFiles = () => {
                 Upload Your Content
               </Heading>
 
-              <div className={classes.fileUploadContainer}>
+              <label
+                htmlFor="btn-upload"
+                className={classes.fileUploadContainer}
+                {...getRootProps({
+                  onClick: (e) =>
+                    (e.currentTarget.style.border = "2px dashed #26AA10"),
+                })}
+                style={{ border: isActive }}
+              >
                 <div className={classes.uploadIconWrapper}>
-                  <label htmlFor="btn-upload">
-                    <input
-                      id="btn-upload"
-                      name="btn-upload"
-                      style={{ display: "none" }}
-                      type="file"
-                      files={image}
-                      onChange={handleImageChange}
-                    />
-                    <FontAwesomeIcon icon={faCloudUploadAlt} />
-                  </label>
-                </div>
+                  <input
+                    {...getInputProps({
+                      multiple: false,
+                    })}
+                  />
+                  <FontAwesomeIcon icon={faCloudUploadAlt} />
 
-                <h2 className={classes.imageErrorText}>{imageError}</h2>
-                <Typography className={classes.photoUploadText} variant="body1">
-                  Click to upload an photo
-                </Typography>
-                <Typography className={classes.subtitle} variant="body1">
-                  The photo must be greater than or equal to: 1600x900 - 2MB{" "}
-                </Typography>
-              </div>
+                  <h2 className={classes.imageErrorText}>{imageError}</h2>
+
+                  <Typography
+                    className={classes.photoUploadText}
+                    variant="body1"
+                  >
+                    Click to upload an photo
+                  </Typography>
+                  <Typography className={classes.subtitle} variant="body1">
+                    The photo must be greater than or equal to: 1600x900 - 2MB{" "}
+                  </Typography>
+                </div>
+              </label>
+
+              {thumbs}
 
               <Heading className={classes.formHeadText} tag="h2">
                 What type of content are you going to upload?
               </Heading>
+
+              <Spacing space={{ height: "2.5rem" }} />
 
               <div className={classes.uploadForm}>
                 <h4 className={classes.titleText}>Title</h4>
@@ -480,8 +554,8 @@ const UploadFiles = () => {
                       native: true,
                     }}
                   >
-                    {usePhoto.map((option) => (
-                      <option key={option.value} value={option.value}>
+                    {usePhoto.map((option, index) => (
+                      <option key={index} value={option.value}>
                         {option.label}
                       </option>
                     ))}
@@ -501,8 +575,8 @@ const UploadFiles = () => {
                     native: true,
                   }}
                 >
-                  {typeOfImageItem.map((option) => (
-                    <option key={option.value} value={option.value}>
+                  {typeOfImageItem.map((option, index) => (
+                    <option key={index} value={option.value}>
                       {option.label}
                     </option>
                   ))}

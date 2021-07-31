@@ -4,4 +4,5 @@ export * from "./Authentication/Registration";
 export * from "./Authentication/ResetPassword";
 export * from "./Help";
 export * from "./Home";
+export * from "./NotFoundPage";
 export * from "./Pricing";
