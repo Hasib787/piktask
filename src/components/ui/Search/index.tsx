@@ -21,7 +21,7 @@ const Search = ({mobileView}: {mobileView: boolean}) => {
         }
       })
     } catch (error) {
-      console.warn("Search api error", error)
+      console.error("Search api error", error)
     }
   }, []);
 
