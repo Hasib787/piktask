@@ -19,21 +19,26 @@ import { makeStyles } from "@material-ui/core";
       position: "absolute",
       top: "50%",
       transform: "translateY(-50%)",
+      zIndex: "1",
       background: "#D5D5D5",
       color: "#1B3F4E",
-      fontSize: 24,
-      zIndex: "1",
+      // height: "100%",
       height: 30,
       width: 30,
-      borderRadius:"50%",
+      borderRadius: "50%",
+
+      "& svg":{
+        color: "red",
+      }
     },
     "& .slick-prev": {
-      left: 20,
+      left: 15,
     },
     "& .slick-next": {
-      right: 20,
-    }
+      right: 15,
+    },
   },
+  
   
 }));
 
