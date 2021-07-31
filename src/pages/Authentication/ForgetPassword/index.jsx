@@ -67,7 +67,7 @@ export const ForgetPassword = () => {
 
   const handleSetPassword = () => {
     if (passwordChange && token && password && confirmPassword) {
-      axios.post("http://174.138.30.55/api/auth/reset-password", {
+      axios.post(`${process.env.REACT_APP_API_URL}/auth/reset-password`, {
         token,
         password,
         confirmPassword,

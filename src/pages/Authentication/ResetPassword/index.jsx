@@ -11,7 +11,7 @@ import Header from "../../../components/ui/Header";
 import HeroSection from "../../../components/ui/Hero";
 import useStyles from "./ResetPassword.styles";
 
-export const ResetPassword = (): JSX.Element => {
+export const ResetPassword = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [passwordChange, setPasswordChange] = useState(false);
@@ -19,7 +19,6 @@ export const ResetPassword = (): JSX.Element => {
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [value, setValue] = useState("");
 
   const history = useHistory();
   const location = useLocation();
@@ -33,11 +32,15 @@ export const ResetPassword = (): JSX.Element => {
     };
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  // Reset Password
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     setPasswordChange(true);
+
+    const validateEmail =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (email && !passwordChange) {
       axios
@@ -54,19 +57,16 @@ export const ResetPassword = (): JSX.Element => {
           toast.error("No user found with this email", error.message);
         });
     }
-
-    if (email) {
-      const validateEmail =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!validateEmail.test(String(email).toLowerCase())) {
-        toast.error("Your email is not validate");
-        return;
-      }
+    if (email && !validateEmail.test(String(email))) {
+      toast.error("Your email is invalid");
+      setIsLoading(false);
+      return;
     }
 
     setIsLoading(false);
   };
 
+  //For Set Password
   const handleSetPassword = () => {
     if (passwordChange && token && password && confirmPassword) {
       axios
@@ -88,14 +88,17 @@ export const ResetPassword = (): JSX.Element => {
       if (!token || !password || !confirmPassword) {
         toast.error("All fields are required");
         return;
-      }
-
-      if (password.length < 5) {
-        toast.error("Password should be at least 6 or more characters");
+      } else if (password.length < 6) {
+        toast.error("Password should be at least 6 characters");
+        setIsLoading(false);
         return;
       }
-
-      if (password !== confirmPassword) {
+      //   else if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/)){
+      //     toast.error("Password should contain at least a number, lowercase, uppercase and a special character @,#,%,& etc.");
+      //     setLoading(false);
+      //     return;
+      // }
+      else if (password !== confirmPassword) {
         toast.error("Password not match");
       }
     }
@@ -137,14 +140,54 @@ export const ResetPassword = (): JSX.Element => {
               <Spacing space={{ height: "3.5rem" }} />
 
               <form autoComplete="off" onSubmit={handleSubmit}>
-                <InputField
-                  label="User name/Email"
-                  name="userNameOrEmail"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                />
+                {!passwordChange && (
+                  <InputField
+                    label="User name/Email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                )}
+                {passwordChange && (
+                  <InputField
+                    label="Enter Your Token"
+                    name="token"
+                    value={token}
+                    onChange={(e) => setToken(e.target.value)}
+                  />
+                )}
+                {passwordChange && (
+                  <InputField
+                    label="New Password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                )}
+                {passwordChange && (
+                  <InputField
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                )}
 
-                <CustomBtn text="Reset Password" />
+                {!passwordChange && (
+                  <CustomBtn
+                    text="Reset Password"
+                    disabledBtn={isLoading || !email}
+                  />
+                )}
+                {passwordChange && (
+                  <CustomBtn
+                    text="Set Password"
+                    disabledBtn={
+                      isLoading || !token || !password || !confirmPassword
+                    }
+                    onClick={() => handleSetPassword()}
+                  />
+                )}
               </form>
 
               <div className={classes.formButtonGroups}>
