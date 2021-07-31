@@ -38,7 +38,6 @@ export const Login = ({ history }) => {
   useEffect(() => {
     if (user && user.token) history.replace(from);
 
-    document.body.style.backgroundColor = "#143340";
 
     return () => {
       document.body.style.backgroundColor = "";
