@@ -35,6 +35,8 @@ const Products = ({ count = 8, query = "popular" }) => {
     }
   }, []);
 
+  // title, category_id
+
   return (
     <Grid classes={{ container: classes.container }} container spacing={2}>
       {photos?.length > 0 &&
