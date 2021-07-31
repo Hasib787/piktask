@@ -98,9 +98,6 @@ const DesktopMenu = ({ history }) => {
 
   useEffect(() => {
     // if (user.token) history.push("/");
-
-    document.body.style.backgroundColor = "#143340";
-
     return () => {
       document.body.style.backgroundColor = "";
     };
@@ -165,7 +162,7 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        console.warn("Caught signIn error", error);
+        toast.error("Invalid email or password",error.message);
       });
   };
 
