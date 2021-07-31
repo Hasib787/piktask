@@ -15,6 +15,8 @@ import { makeStyles } from "@material-ui/core";
 
  const useStyles = makeStyles((theme) => ({
   carousel: {
+    marginBottom: "3rem",
+
     "& .slick-arrow": {
       position: "absolute",
       top: "50%",
@@ -22,7 +24,6 @@ import { makeStyles } from "@material-ui/core";
       zIndex: "1",
       background: "#D5D5D5",
       color: "#1B3F4E",
-      // height: "100%",
       height: 30,
       width: 30,
       borderRadius: "50%",

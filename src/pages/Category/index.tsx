@@ -18,9 +18,9 @@ const Category = () => {
       <Header />
       <HeroSection
         background={heroBanner}
-        size="medium"
-        title="Free Background Photos"
-        subtitle="Royalty Free PNG Images, Vectors, Backgrounds, Templates, Text Effect"
+        size="large"
+        creativeWorksDone
+        title="Graphic Resource for Free Download"
       />
 
       <div className={classes.tagWrapper}>
