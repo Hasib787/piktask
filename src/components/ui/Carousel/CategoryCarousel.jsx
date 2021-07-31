@@ -35,8 +35,8 @@ export const CategoryCarousel = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: <div><NavigateBeforeIcon /></div>,
-    nextArrow: <div><NavigateNextIcon /></div>,
+    prevArrow: <NavigateBeforeIcon />,
+    nextArrow: <NavigateNextIcon />,
 
     responsive: [
       {
