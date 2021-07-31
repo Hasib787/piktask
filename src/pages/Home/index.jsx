@@ -38,40 +38,36 @@ export const Home = () => {
           </Button>
         </SectionHeading>
       </Container>
-
       {/* Carousel with Categories */}
       <CategoryCarousel />
 
       <Container>
         <SectionHeading
           title="Photo Collections"
-          subtitle="Top website templates with the highest sales volume."
           large
         >
           <Button className={classes.headingButton} component={Link} to="#">
             See More
           </Button>
         </SectionHeading>
-        <Products query="Fashion" count={8} />
+        <Products query="Nature" count={8} />
       </Container>
 
       <Container>
         <SectionHeading
           title="Vector Collections"
-          subtitle="Top website templates with the highest sales volume."
           large
         >
           <Button className={classes.headingButton} component={Link} to="#">
             See More
           </Button>
         </SectionHeading>
-        <Products query="london" count={8} />
+        <Products query="Test" count={8} />
       </Container>
 
       <Container>
         <SectionHeading
           title="Mockup Collection"
-          subtitle="Top website templates with the highest sales volume."
           large
         >
           <Button className={classes.headingButton} component={Link} to="#">
@@ -91,7 +87,6 @@ export const Home = () => {
       <Container>
         <SectionHeading
           title="Top Selling Author"
-          subtitle="Top website templates with the highest sales volume."
           large
         >
           <Button className={classes.headingButton} component={Link} to="#">
