@@ -19,8 +19,8 @@ import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import authImage from "../../../../assets/auth.png";
-import facebookLogo from "../../../../assets/facebook.png";
-import googleLogo from "../../../../assets/google.png";
+// import facebookLogo from "../../../../assets/facebook.png";
+// import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import logoWhite from "../../../../assets/logo-white.png";
@@ -35,6 +35,7 @@ import lockIcon from "../../../../assets/password.png";
 import { auth } from "../../../../database";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
+import ModalAuth from "../../../../pages/Authentication/Registration/Modal/ModalAuth";
 
 const clientId =
   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
@@ -71,7 +72,7 @@ const DesktopMenu = ({ history }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [passwordValue, setPasswordValue] = useState(false);
-  const [confirmPasswordValue, setConfirmPasswordValue] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -87,9 +88,9 @@ const DesktopMenu = ({ history }) => {
   const handleShowHidePassword = () => {
     setPasswordValue((value) => !value);
   };
-  const handleShowHideConfirmPassword = () => {
-    setConfirmPasswordValue((value) => !value);
-  };
+  // const handleShowHideConfirmPassword = () => {
+  //   setConfirmPasswordValue((value) => !value);
+  // };
 
   //Redirect to home page when user logs in
   const pathHistory = useHistory();
@@ -162,7 +163,7 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        console.warn("Caught signIn error", error);
+        toast.error("Invalid email or password",error.message);
       });
   };
 
@@ -194,6 +195,10 @@ const DesktopMenu = ({ history }) => {
     //     return;
     // }
 
+    const openModal = () => {
+      setModalIsOpen(true);
+    };
+
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         username: authData.userName,
@@ -203,7 +208,7 @@ const DesktopMenu = ({ history }) => {
       })
       .then((res) => {
         if (res?.status === 200) {
-          // openModal();
+          openModal();
         }
       })
       .catch((error) => {
@@ -583,7 +588,6 @@ const DesktopMenu = ({ history }) => {
                     />
                     <InputField
                       label="Email"
-                      type="email"
                       name="email"
                       value={authData.email}
                       onChange={handleAuthData}
@@ -612,6 +616,7 @@ const DesktopMenu = ({ history }) => {
                         !authData.password
                       }
                     />
+                     <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
                   </form>
 
                   <Spacing space={{ height: "0.5rem" }} />
