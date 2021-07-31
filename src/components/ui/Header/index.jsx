@@ -15,7 +15,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import crownIcon from "../../../assets/icons/crown.svg";
+// import crownIcon from "../../../assets/icons/crown.svg";
 import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../CustomPopper";
 import DesktopMenu from "./DesktopMenu";
@@ -161,121 +161,133 @@ const Header = () => {
         </AppBar>
         
       </div>
-        <Drawer
-          anchor="right"
-          classes={{ paper: classes.paper }}
-          open={openMobileMenu}
-          onClose={() => setOpenMobileMenu(false)}
-        >
-          <div className={iconClass.closeIconWrapper}>
-            <CloseIcon
-              onClick={() => setOpenMobileMenu(false)}
-              className={iconClass.menuIcon}
-            />
-            {user && user?.token ? (
-              <Button
-                component={Link}
-                to="/"
-                className={classes.logoWrapper}
-                disableRipple
-              >
-                <img src={logo} className={classes.logo} alt="Dev" />
-              </Button>
-            ) : (
-              <div>
-                <Button
-                  className={classes.loginBtn}
-                  component={Link}
-                  to="/login"
-                >
-                  Login
-                </Button>
-                <Button
-                  className={classes.signUpBtn}
-                  component={Link}
-                  to="/registration"
-                >
-                  Sign Up
-                </Button>
-              </div>
-            )}
-          </div>
-          <Toolbar disableGutters className={classes.menuWrapper}>
-            <MenuList className={classes.navItems}>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/vector">Vectors</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/photos">Photos</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/psd">PSD</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/png image">PNG Image</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/illustration">Illustration</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/templates">Templates</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/background">Background</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/3d models">3d Models</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/sell your content">Sell your content</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/help">Help</Link>
-              </MenuItem>
-            </MenuList>
-
+      <Drawer
+        anchor="right"
+        classes={{ paper: classes.paper }}
+        open={openMobileMenu}
+        onClose={() => setOpenMobileMenu(false)}
+      >
+        <div className={iconClass.closeIconWrapper}>
+          <CloseIcon
+            onClick={() => setOpenMobileMenu(false)}
+            className={iconClass.menuIcon}
+          />
+          {user && user?.token ? (
             <Button
               component={Link}
-              disableRipple
               to="/"
-              className={classes.mobileBtn}
-              onClick={() => setOpenMobileMenu(false)}
+              className={classes.logoWrapper}
+              disableRipple
             >
-              <img src={crownIcon} alt="Crown" />
-              Premium
+              <img src={logo} className={classes.logo} alt="Dev" />
             </Button>
-          </Toolbar>
-        </Drawer>
+          ) : (
+            <div>
+              <Button
+                className={classes.loginBtn}
+                component={Link}
+                to="/login"
+              >
+                Login
+              </Button>
+              <Button
+                className={classes.signUpBtn}
+                component={Link}
+                to="/registration"
+              >
+                Sign Up
+              </Button>
+            </div>
+          )}
+        </div>
+        <Toolbar disableGutters className={classes.menuWrapper}>
+          <MenuList className={classes.navItems}>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/vector">Vectors</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/photos">Photos</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/psd">PSD</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/png image">PNG Image</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/illustration">Illustration</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/templates">Templates</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/background">Background</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/3d models">3d Models</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/sell your content">Sell your content</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/sell your content">Pricing</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/sell your content">Personal</Link>
+            </MenuItem>
+            <MenuItem
+              onClick={() => setOpenMobileMenu(false)}
+              classes={{ selected: classes.selected }}
+            >
+              <Link to="/sell your content">Team</Link>
+            </MenuItem>
+          </MenuList>
+
+          {/* <Button
+            component={Link}
+            disableRipple
+            to="/"
+            className={classes.mobileBtn}
+            onClick={() => setOpenMobileMenu(false)}
+          >
+            <img src={crownIcon} alt="Crown" />
+            Premium
+          </Button> */}
+        </Toolbar>
+      </Drawer>
       <CustomPopper
         open={open}
         handleToggle={handleToggle}

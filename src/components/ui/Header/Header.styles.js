@@ -69,15 +69,18 @@ const useStyles = makeStyles( theme => ({
       mobileTabWrapper: {},
       navItems: {
         width: "100%",
-    
+        
         "& a": {
           color: theme.palette.common.white,
-          textTransform: "uppercase",
           textDecoration: "none",
+          transition: "all 0.3s linear",
+          "&:hover": {
+            color: "#FFCE00",
+          },
         },
       },
       selected: {
-        background: "red",
+        color: "#FFCE00",
       },
       mobileBtn: {
         ...theme.typography.button,
