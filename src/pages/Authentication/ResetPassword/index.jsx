@@ -147,7 +147,7 @@ export const ResetPassword = () => {
               <form autoComplete="off" onSubmit={handleSubmit}>
                 {!passwordChange && (
                   <InputField
-                    label="User name/Email"
+                    label="Email"
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

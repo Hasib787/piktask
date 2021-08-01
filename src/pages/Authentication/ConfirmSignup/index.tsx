@@ -66,7 +66,7 @@ export const ConfirmSignup = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.message);;
           setToken("");
           setLoading(false); 
         });
@@ -79,7 +79,6 @@ export const ConfirmSignup = () => {
       {isRedirectTo && <Redirect to="/login" />}
 
       <Header />
-      
 
       <Spacing space={{ height: "2.5rem" }} />
 
