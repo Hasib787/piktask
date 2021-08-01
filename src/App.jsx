@@ -81,7 +81,7 @@ const App = () => {
           path="/admin/dashboard"
           component={AdminDashboard}
         />
-        <PrivateRoute exact path="/admin/upload" component={UploadFiles} />
+        <Route exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />
         <Route exact path="/admin/reject" component={RejectFiles} />
