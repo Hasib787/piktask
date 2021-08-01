@@ -78,7 +78,7 @@ const CustomPopper = ({
                       user && user?.avatar ? (
                         <img
                           className={classes.dropdownUserAvatar}
-                          src={user.avatar}
+                          src={user?.avatar}
                           alt="UserPhoto"
                         />
                       ) : (

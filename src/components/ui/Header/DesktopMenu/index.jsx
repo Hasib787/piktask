@@ -37,8 +37,7 @@ import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
 
-const clientId =
-  "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+const clientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -409,7 +408,7 @@ const DesktopMenu = ({ history }) => {
                 {user && user?.avatar ? (
                   <img
                     className={classes.avatar}
-                    src={user.avatar}
+                    src={user?.avatar}
                     alt="UserPhoto"
                   />
                 ) : (
