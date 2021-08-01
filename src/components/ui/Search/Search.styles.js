@@ -51,7 +51,7 @@ const useStyles = makeStyles( theme => ({
         "& > select": {
             width: 200,
             paddingLeft: "1rem",
-            borderLeft: "1px solid",
+            borderLeft: "1px solid #BEBEBE",
             fontSize: "1.8rem",
             height: "3.2rem",
             "&:focus": {
