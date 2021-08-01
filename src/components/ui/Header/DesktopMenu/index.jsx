@@ -13,29 +13,29 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import React, { useEffect, useRef, useState } from "react";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import authImage from "../../../../assets/auth.png";
 // import facebookLogo from "../../../../assets/facebook.png";
 // import googleLogo from "../../../../assets/google.png";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
-import logoWhite from "../../../../assets/logo-white.png";
 import signInIcon from "../../../../assets/icons/signInIcon.svg";
+import logoWhite from "../../../../assets/logo-white.png";
+import lockIcon from "../../../../assets/password.png";
 import logo from "../../../../assets/piktaskLogo.svg";
+import { auth } from "../../../../database";
+import ModalAuth from "../../../../pages/Authentication/Registration/Modal/ModalAuth";
 import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
-import { toast } from "react-toastify";
-import lockIcon from "../../../../assets/password.png";
-import { auth } from "../../../../database";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
-import ModalAuth from "../../../../pages/Authentication/Registration/Modal/ModalAuth";
 
 const clientId =
   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
@@ -76,6 +76,7 @@ const DesktopMenu = ({ history }) => {
   const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [isRedirectTo, setRedirectTo] = useState(false);
 
   const [authData, setAuthData] = useState({
     userName: "",
@@ -143,7 +144,7 @@ const DesktopMenu = ({ history }) => {
         password: authData.password,
       })
       .then((res) => {
-        console.log("signIN",res);
+        console.log("signIN", res);
         if (res.data.status) {
           setOpenAuthModal(false);
           const token = res.data.token;
@@ -163,7 +164,7 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error("Invalid email or password",error.message);
+        toast.error("Invalid email or password", error.message);
       });
   };
 
@@ -195,10 +196,6 @@ const DesktopMenu = ({ history }) => {
     //     return;
     // }
 
-    const openModal = () => {
-      setModalIsOpen(true);
-    };
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         username: authData.userName,
@@ -206,32 +203,33 @@ const DesktopMenu = ({ history }) => {
         password: authData.password,
         confirmPassword: authData.password,
       })
-      .then((res) => {
+      .then(async (res) => {
         if (res?.status === 200) {
-          openModal();
+          await auth.sendSignInLinkToEmail(authData.email, {
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+            handleCodeInApp: true,
+          });
+
+          // Show success message to the user
+          toast.success(
+            `An email has been sent to ${authData.email}. Please check and confirm your registration`
+          );
+
+          // Save username, email, and password, to localStorage
+          localStorage.setItem("userName", authData.userName);
+          localStorage.setItem("email", authData.email);
+          localStorage.setItem("password", authData.password);
+
+          setLoading(false);
+          setRedirectTo(true);
+          setAuthData({ userName: "", email: "", password: "" });
+        } else {
+          console.warn("Something went wrong with signup");
         }
       })
       .catch((error) => {
         toast.error(error.message);
       });
-
-    await auth.sendSignInLinkToEmail(authData.email, {
-      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-      handleCodeInApp: true,
-    });
-
-    // Show success message to the user
-    toast.success(
-      `An email has been sent to ${authData.email}. Please check and verify your email`
-    );
-
-    // Save username, email, and password, to localStorage
-    window.localStorage.setItem("userName", authData.userName);
-    window.localStorage.setItem("email", authData.email);
-    window.localStorage.setItem("password", authData.password);
-    window.localStorage.setItem("confirmPassword", authData.password);
-
-    setLoading(false);
   };
 
   //login with google
@@ -320,6 +318,7 @@ const DesktopMenu = ({ history }) => {
 
   return (
     <>
+      {isRedirectTo && <Redirect to="/confirm-signup" />}
       <Container className={classes.container}>
         <Toolbar disableGutters className={classes.headerBottomToolbar}>
           <Button
@@ -616,7 +615,7 @@ const DesktopMenu = ({ history }) => {
                         !authData.password
                       }
                     />
-                     <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
+                    <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
                   </form>
 
                   <Spacing space={{ height: "0.5rem" }} />

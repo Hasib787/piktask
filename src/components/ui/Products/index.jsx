@@ -1,7 +1,8 @@
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
+import SectionHeading from "../Heading";
 import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,43 +17,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Products = ({ count = 8, query = "popular" }) => {
-  const [photos, setPhotos] = useState([]);
+const Products = ({ photos, count = 8, title = "", catname }) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
-        .then(({ data }) => {
-          if (data?.success) {
-            const showImage = data?.images;
-            setPhotos(showImage.slice(0, 8));
-          }
-        });
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
-
-  // title, category_id
+  const displayPhotos = () => {
+    return photos?.filter((item) => item.category === catname);
+  };
 
   return (
-    <Grid classes={{ container: classes.container }} container spacing={2}>
-      {photos?.length > 0 &&
-        photos?.map((photo) => (
-          <Grid
-            key={photo.id}
-            item
-            xs={6}
-            sm={4}
-            md={3}
-            className={classes.productItem}
-          >
-            <Product key={photo.id} photo={photo} />
-          </Grid>
-        ))}
-    </Grid>
+    <>
+      <SectionHeading title={title} large>
+        <Button className={classes.headingButton} component={Link} to="">
+          See More
+        </Button>
+      </SectionHeading>
+
+      <Grid classes={{ container: classes.container }} container spacing={2}>
+        {displayPhotos()
+          .slice(0, 8)
+          .map((photo) => (
+            <Grid
+              key={photo.image_id}
+              item
+              xs={6}
+              sm={4}
+              md={3}
+              className={classes.productItem}
+            >
+              <Product photo={photo} />
+            </Grid>
+          ))}
+      </Grid>
+    </>
   );
 };
 

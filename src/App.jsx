@@ -16,6 +16,7 @@ import UploadFiles from "./admin/pages/UploadFiles";
 import theme from "./components/ui/Theme";
 import { auth } from "./database";
 import {
+  ConfirmSignup,
   ForgetPassword,
   Help,
   Home,
@@ -99,6 +100,7 @@ const App = () => {
         <Route exact path="/pricing" component={Pricing} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/registration" component={Registration} />
+        <Route exact path="/confirm-signup" component={ConfirmSignup} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/new-password" component={ForgetPassword} />
         <Route exact path="/reset-password" component={ResetPassword} />
