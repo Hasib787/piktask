@@ -1,8 +1,9 @@
 import {
-  Button,
   Checkbox,
   FormControlLabel,
-  TextField,
+  Grid,
+  Tab,
+  Tabs,
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
@@ -17,48 +18,84 @@ import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
 import lockIcon from "../../../assets/password.png";
 import brandLogo from "../../../assets/piktaskLogo.png";
+import Spacing from "../../../components/Spacing";
 import useStyles from "../Auth.styles";
+import logoWhite from "../../../assets/logo-white.png"
+import authImage from "../../../assets/auth.png";
+import { TabPanel } from "@material-ui/lab";
+import { CustomBtn, InputField } from "../../../components/InputField";
 
 const clientId =
   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
 
+  const [passwordValue, setPasswordValue] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  const [authData, setAuthData] = useState({
+    userName: "",
+    password: "",
+  });
+
+  //Handle the password show and hide
+  const handleShowHidePassword = () => {
+    setPasswordValue((value) => !value);
+  };
+  // const handleShowHideConfirmPassword = () => {
+  //   setConfirmPasswordValue((value) => !value);
+  // };
+
+  //Redirect to home page when user logs in
   const pathHistory = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
-    if (user && user.token) history.replace(from);
-
-
+    // if (user.token) history.push("/");
     return () => {
       document.body.style.backgroundColor = "";
     };
-  }, [user, history, from]);
+  }, [user, history]);
 
-  const handleShowHidePassword = () => {
-    setValue((value) => !value);
+  const handleAuthData = (e) => {
+    const { name, value } = e.target;
+
+    setAuthData({ ...authData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+
+  const handleChangeTab = () => {
+    return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
+  };
+
+  //handle SignIn
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    if (!authData.userName || !authData.password) {
+      toast.error("Please fill in all the fields");
+      setLoading(false);
+      return;
+    }
+
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        username,
-        password,
+        username: authData.userName,
+        password: authData.password,
       })
       .then((res) => {
+        console.log("signIN", res);
         if (res.data.status) {
+          setOpenAuthModal(false);
           const token = res.data.token;
           localStorage.setItem("token", token);
           const decodedToken = jwt_decode(token.split(" ")[1]);
@@ -72,17 +109,13 @@ export const Login = ({ history }) => {
               },
             });
           }
-          console.log(res.status);
-          toast.success(res.data.message);
-          // handleResponse(true);
           pathHistory.replace(from);
         }
       })
       .catch((error) => {
-        toast.error("Username/Email or Password doesn't match", error.message);
+        toast.error("Invalid email or password", error.message);
       });
   };
-
   //login with google
   const handleGoogleLogin = async (googleData) => {
     const res = await fetch(
@@ -172,18 +205,56 @@ export const Login = ({ history }) => {
             alt="Background Icon"
             className={classes.backgroundIconTop}
           />
-          <div className={classes.formWrapper}>
-            <div className={classes.formWrapperInner}>
-              <div className={classes.formHeading}>
-                <Typography className={classes.formTitle} variant="h2">
-                  Sign in
+           <div style={{ padding: 0, overflow: "hidden" }}>
+          <Grid container spacing={3}>
+            <Grid item sm={5}>
+              <div className={classes.leftPanel}>
+                <img
+                  className={classes.authLogo}
+                  src={logoWhite}
+                  alt="Piktask"
+                />
+                <Typography>Enjoy Free Download Now!</Typography>
+                <Typography>*Get 50% OFF Discount for Premium Plan</Typography>
+                <Typography>*Download 6 Images for Free Everyday</Typography>
+                <Typography>
+                  *2,600,000+ Images to energize your Design
                 </Typography>
-                <Typography className={classes.formSubtitle}>
+
+                <Spacing space={{ height: 30 }} />
+
+                <img src={authImage} alt="Piktask" />
+              </div>
+            </Grid>
+            <Grid item sm={7}>
+              <div className={classes.rightPanel}>
+                <Tabs
+                  value={tabIndex}
+                  onChange={handleChangeTab}
+                  aria-label="authentication tabs"
+                  className={classes.tabsWrapper}
+                  variant="fullWidth"
+                >
+                  <Tab
+                    label="Login"
+                    
+                    className={classes.tabItem}
+                    classes={{ selected: classes.selected }}
+                    disableRipple
+                  />
+                  </Tabs>
+                {/* End tabs */}
+
+                <Typography
+                  style={{
+                    textAlign: "center",
+                    marginTop: "1.5rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
                   with your social network
                 </Typography>
-              </div>
 
-              <div>
                 <div className={classes.socialsButtons}>
                   <GoogleLogin
                     clientId={clientId}
@@ -193,6 +264,9 @@ export const Login = ({ history }) => {
                     onFailure={handleGoogleLogin}
                     cookiePolicy={"single_host_origin"}
                   />
+
+                  <Spacing space={{ margin: "0 0.5rem" }} />
+
                   <FacebookLogin
                     className={classes.facebookBtn}
                     appId="168140328625744"
@@ -203,33 +277,28 @@ export const Login = ({ history }) => {
                   />
                 </div>
 
-                <Typography variant="subtitle1" className={classes.formDevider}>
-                  Or
-                </Typography>
+                <Spacing space={{ height: "2rem" }} />
+                <div className={classes.horizontalLine}>
+                  <span>OR</span>
+                </div>
+                <Spacing space={{ height: "3.2rem" }} />
 
-                <div>
-                  <form
-                    onSubmit={handleSubmit}
-                    autoComplete="off"
-                    className={classes.form}
-                  >
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      label="User name / Email"
-                      className={classes.formControl}
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                {/* Tab panel for Sign In */}
+                <TabPanel value={tabIndex} index={0}>
+                  <form onSubmit={handleSignIn}>
+                    <InputField
+                      label="User Name / Email"
+                      name="userName"
+                      value={authData.userName}
+                      onChange={handleAuthData}
                     />
                     <div className={classes.passwordField}>
-                      <TextField
-                        fullWidth
-                        variant="outlined"
+                      <InputField
                         label="Password"
-                        type={value ? "text" : "password"}
-                        className={classes.formControl}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        type={passwordValue ? "text" : "password"}
+                        name="password"
+                        value={authData.password}
+                        onChange={handleAuthData}
                       />
                       <img
                         src={lockIcon}
@@ -238,44 +307,44 @@ export const Login = ({ history }) => {
                       />
                     </div>
 
-                    <FormControlLabel
-                      value="end"
-                      label="I can't remember my password"
-                      labelPlacement="end"
-                      control={<Checkbox color="primary" />}
-                      className={classes.checkboxLabel}
-                    />
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      className={classes.formButton}
-                      type="submit"
-                      disabled={loading & !username || !password}
-                    >
-                      Signin
-                    </Button>
-                    <Button
-                      component={Link}
-                      to="/new-password"
-                      className={classes.resetPasswordLink}
-                      disableElevation
-                      disableFocusRipple
-                      disableRipple
-                    >
-                      Forget Password
-                    </Button>
+                    <CustomBtn type="submit" text="Sign In" color="green" />
                   </form>
-                  <Button
-                    component={Link}
-                    to="/registration"
-                    className={classes.formLink}
+
+                  <Spacing space={{ height: "1.5rem" }} />
+
+                  <Link
+                    to="/reset-password"
+                    className={classes.passwordResetLink}
                   >
-                    Not a member? Sign up
-                  </Button>
-                </div>
+                    Password Reset
+                  </Link>
+
+                  <div className={classes.signUpLink}>
+                    Not a member? <span onClick={handleChangeTab}>Sign Up</span>
+                  </div>
+                </TabPanel>
+
+                  <Spacing space={{ height: "0.5rem" }} />
+
+                  <FormControlLabel
+                    className={classes.checkboxLabel}
+                    control={
+                      <Checkbox
+                        name="receiveNewsLetter"
+                        size="medium"
+                        className={classes.checkbox}
+                      />
+                    }
+                    label="I do not wish to receive news and promotions from piktask Company by email."
+                  />
+
+                  <div onClick={handleChangeTab} className={classes.authText}>
+                    Already registered? Log in
+                  </div>
               </div>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
+        </div>
           <img
             src={formIconBottom}
             alt="Background"
