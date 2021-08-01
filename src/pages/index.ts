@@ -1,3 +1,4 @@
+export * from "./Authentication/ConfirmSignup";
 export * from "./Authentication/ForgetPassword";
 export * from "./Authentication/Login";
 export * from "./Authentication/Registration";

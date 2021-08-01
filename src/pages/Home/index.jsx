@@ -1,5 +1,6 @@
 import { Button, Container } from "@material-ui/core";
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Blog from "../../components/ui/Blog";
@@ -17,8 +18,27 @@ import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
+  const [photos, setPhotos] = useState([]);
+  const [category, setCategory] = useState("People");
+
+  const [isLoading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            setLoading(false);
+            const showImage = data?.images;
+            setPhotos(showImage);
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
   }, []);
 
   return (
@@ -38,43 +58,44 @@ export const Home = () => {
           </Button>
         </SectionHeading>
       </Container>
+
       {/* Carousel with Categories */}
       <CategoryCarousel />
 
       <Container>
-        <SectionHeading
-          title="Photo Collections"
-          large
-        >
-          <Button className={classes.headingButton} component={Link} to="#">
-            See More
-          </Button>
-        </SectionHeading>
-        <Products query="Nature" count={8} />
+        {isLoading ? (
+          <h2>Loaing...</h2>
+        ) : (
+          <Products
+            photos={photos}
+            title="Vector images"
+            catname="Nature / Landscapes"
+          />
+        )}
       </Container>
 
       <Container>
-        <SectionHeading
-          title="Vector Collections"
-          large
-        >
-          <Button className={classes.headingButton} component={Link} to="#">
-            See More
-          </Button>
-        </SectionHeading>
-        <Products query="Test" count={8} />
+        {isLoading ? (
+          <h2>Loaing...</h2>
+        ) : (
+          <Products
+            photos={photos}
+            title="Vector Collections"
+            catname="People"
+          />
+        )}
       </Container>
 
       <Container>
-        <SectionHeading
-          title="Mockup Collection"
-          large
-        >
-          <Button className={classes.headingButton} component={Link} to="#">
-            See More
-          </Button>
-        </SectionHeading>
-        <Products query="Photography" count={8} />
+        {isLoading ? (
+          <h2>Loaing...</h2>
+        ) : (
+          <Products
+            photos={photos}
+            title="Architecture Collection"
+            catname="architecture"
+          />
+        )}
       </Container>
 
       <CallToAction
@@ -85,10 +106,7 @@ export const Home = () => {
       />
 
       <Container>
-        <SectionHeading
-          title="Top Selling Author"
-          large
-        >
+        <SectionHeading title="Top Selling Author" large>
           <Button className={classes.headingButton} component={Link} to="#">
             See More
           </Button>
