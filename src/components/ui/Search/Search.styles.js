@@ -45,6 +45,12 @@ const useStyles = makeStyles( theme => ({
     selectContainer: {
         backgroundColor: theme.palette.common.white,
         height: "5.2rem",
+        "& svg": {
+            height: "2.6rem",
+            marginTop: "-1px",
+            marginRight: "-10px",
+            width: "3rem",
+        },
         [theme.breakpoints.down('sm')]: {
             height: "4.5rem"
         },
