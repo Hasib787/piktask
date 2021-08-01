@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
+import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
 import CallToAction from "../../components/ui/CallToAction";
 import {
@@ -19,8 +20,7 @@ import useStyles from "./Home.styles";
 export const Home = () => {
   const classes = useStyles();
   const [photos, setPhotos] = useState([]);
-  const [category, setCategory] = useState("People");
-
+  // const [category, setCategory] = useState("People");
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const Home = () => {
 
       <Container>
         <SectionHeading title="Popular Album Collection" large>
-          <Button className={classes.headingButton} component={Link} to="#">
+          <Button disableRipple className={classes.headingButton} component={Link} to="#">
             See More
           </Button>
         </SectionHeading>
@@ -64,7 +64,7 @@ export const Home = () => {
 
       <Container>
         {isLoading ? (
-          <h2>Loaing...</h2>
+          <h2>Loading...</h2>
         ) : (
           <Products
             photos={photos}
@@ -76,24 +76,24 @@ export const Home = () => {
 
       <Container>
         {isLoading ? (
-          <h2>Loaing...</h2>
+          <h2>Loading...</h2>
         ) : (
           <Products
             photos={photos}
             title="Vector Collections"
-            catname="People"
+            catname="nature"
           />
         )}
       </Container>
 
       <Container>
         {isLoading ? (
-          <h2>Loaing...</h2>
+          <h2>Loading...</h2>
         ) : (
           <Products
             photos={photos}
             title="Architecture Collection"
-            catname="architecture"
+            catname="People"
           />
         )}
       </Container>
@@ -105,6 +105,7 @@ export const Home = () => {
         buttonText="Get Started"
       />
 
+      <Spacing space={{height: "2.5rem"}} />
       <Container>
         <SectionHeading title="Top Selling Author" large>
           <Button className={classes.headingButton} component={Link} to="#">
