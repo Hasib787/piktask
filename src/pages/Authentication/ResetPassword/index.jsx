@@ -112,8 +112,6 @@ export const ResetPassword = () => {
   return (
     <>
       <Header />
-      <HeroSection background={heroBanner} />
-
       <Spacing space={{ height: "2.5rem" }} />
 
       <Container>

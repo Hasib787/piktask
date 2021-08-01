@@ -3,12 +3,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import heroBanner from "../../../assets/banner/banner-single-page.png";
 import { CustomBtn, InputField } from "../../../components/InputField";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
-import HeroSection from "../../../components/ui/Hero";
 import useStyles from "../ResetPassword/ResetPassword.styles";
 
 export const ConfirmSignup = () => {
