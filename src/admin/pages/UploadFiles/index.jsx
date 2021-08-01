@@ -372,8 +372,8 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        // console.log(error.message.data.errors);
-        toast.error(error.message);
+        console.log("error", error.response);
+        toast.error(error.response.data.errors.image);
         setLoading(false);
       });
   };
@@ -449,7 +449,7 @@ const UploadFiles = () => {
                     className={classes.photoUploadText}
                     variant="body1"
                   >
-                    Click to upload an photo
+                    Drag and drop or click to upload an photo
                   </Typography>
                   <Typography className={classes.subtitle} variant="body1">
                     The photo must be greater than or equal to: 1600x900 - 2MB{" "}

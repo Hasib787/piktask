@@ -37,8 +37,7 @@ import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
 
-const clientId =
-  "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+const clientId ="461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -215,14 +214,8 @@ const DesktopMenu = ({ history }) => {
             `An email has been sent to ${authData.email}. Please check and confirm your registration`
           );
 
-          // Save username, email, and password, to localStorage
-          localStorage.setItem("userName", authData.userName);
-          localStorage.setItem("email", authData.email);
-          localStorage.setItem("password", authData.password);
-
           setLoading(false);
           setRedirectTo(true);
-          setAuthData({ userName: "", email: "", password: "" });
         } else {
           console.warn("Something went wrong with signup");
         }
@@ -409,7 +402,7 @@ const DesktopMenu = ({ history }) => {
                 {user && user?.avatar ? (
                   <img
                     className={classes.avatar}
-                    src={user.avatar}
+                    src={user?.avatar}
                     alt="UserPhoto"
                   />
                 ) : (
