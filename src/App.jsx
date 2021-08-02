@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@material-ui/core/styles";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -67,8 +68,54 @@ const App = () => {
         });
       }
     }
+
+    recentProducts();
+    getPopularPhotos();
     return () => unsubscribe();
   }, [dispatch]);
+
+  function recentProducts() {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            dispatch({
+              type: "RECENT_PHOTOS",
+              payload: [...data.images]
+            });
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  function getPopularPhotos() {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+        .then(({ data }) => {
+          if (data?.status) {
+            const images = [];
+            data.categories.map((category) =>
+              images.push({
+                id: category.id, 
+                name: category.name, 
+                slug: category.slug, 
+                totalItems: category.total_image
+              })
+            )
+            dispatch({
+              type: "POPULAR_CATEGORIES",
+              payload: [...images]
+            });
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,6 +154,7 @@ const App = () => {
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
+        <Route exact path="/category/:catName" component={Category} />
         <Route exact path="/:category/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
