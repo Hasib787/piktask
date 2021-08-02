@@ -12,14 +12,12 @@ import reportWebVitals from "./reportWebVitals";
 const store = createStore(rootReducer, composeWithDevTools());
 
 ReactDOM.render(
-  // <React.StrictMode>
   <Provider store={store}>
     <Router>
       <GlobalStyles />
       <App />
     </Router>
   </Provider>,
-  // </React.StrictMode>,
   document.getElementById("root")
 );
 

@@ -73,10 +73,9 @@ export const ProductCarousel = ({ query = "office", count = 12 }) => {
       <Container>
         <Slider {...settings}>
           {photos.map((photo) => (
-            <Product key={photo.id} photo={photo} />
+            <Product key={photo.image_id} photo={photo} />
           ))}
         </Slider>
-         
       </Container>
     </>
   );
