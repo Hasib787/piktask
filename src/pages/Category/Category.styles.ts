@@ -107,13 +107,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
      },
   },
-  abstractBanner: {
-    paddingTop:"1rem",
-    paddingBottom: "2rem",
-    [theme.breakpoints.up(426)]: {
-      display: "none",
-     },
-  },
 }));
 
 export default useStyles;
