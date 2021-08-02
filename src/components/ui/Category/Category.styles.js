@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     position: "relative",
     width: "100%",
-    padding: "5px",
+    padding: "0px 5px 0px 5px",
   },
   catImage: {
     cursor: "all-scroll",

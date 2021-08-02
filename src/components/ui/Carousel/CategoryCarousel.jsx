@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import Category from "../Category";
-// import { Container } from "./Carousel.styles";
 import useStyles from "./Carousel.styles";
 
 export const CategoryCarousel = () => {
@@ -25,7 +24,7 @@ export const CategoryCarousel = () => {
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [photos]);
 
   const settings = {
     dots: false,
@@ -36,11 +35,15 @@ export const CategoryCarousel = () => {
     slidesToScroll: 1,
     arrows: true,
     prevArrow: (
-      <div>
+      <div className={classes.prevIconWrapepr}>
         <NavigateBeforeIcon />
       </div>
     ),
-    nextArrow: <NavigateNextIcon />,
+    nextArrow: (
+      <div className={classes.nextIconWrapepr}>
+        <NavigateNextIcon />
+      </div>
+    ),
 
     responsive: [
       {
@@ -82,7 +85,7 @@ export const CategoryCarousel = () => {
   return (
     <>
       <Container>
-        <Slider {...settings} className={classes.carousel}>
+        <Slider {...settings} className={classes.carouselWrapper}>
           {photos?.map((photo) => (
             <Category key={photo?.id} photo={photo} />
           ))}
