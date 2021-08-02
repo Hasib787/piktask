@@ -11,15 +11,16 @@ import React, { useEffect, useState } from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
 import lockIcon from "../../../assets/password.png";
-import brandLogo from "../../../assets/piktaskLogo.png";
+import Spacing from "../../../components/Spacing";
+import Footer from "../../../components/ui/Footer";
+import Header from "../../../components/ui/Header";
 import { auth } from "../../../database";
 import useStyles from "../Auth.styles";
-import ModalAuth from "./Modal/ModalAuth";
 
 const clientId =
   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
@@ -31,11 +32,10 @@ export const Registration = ({ history }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [isRedirectTo, setRedirectTo] = useState(false);
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
@@ -65,65 +65,54 @@ export const Registration = ({ history }) => {
     const validateEmail =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (!username || !email || !password || !confirmPassword) {
-      setModalIsOpen(false);
-      setIsLoading(false);
-      toast.error("All fields are required");
-      return;
-    } else if (username.length < 3) {
-      setModalIsOpen(false);
-      setIsLoading(false);
+    if (username.length < 3) {
       toast.error("Username should be at least 3 or more characters");
+      setIsLoading(false);
       return;
-    }  else if (email && !validateEmail.test(String(email))) {
+    } else if (email && !validateEmail.test(String(email))) {
       toast.error("Your email is invalid");
       setIsLoading(false);
       return;
     } else if (password.length < 6) {
-      setModalIsOpen(false);
+      toast.error("Password should be at least 6 characters");
       setIsLoading(false);
-      toast.error("Password should be at least 6 or more characters");
-      return;
-    } else if (password !== confirmPassword) {
-      setModalIsOpen(false);
-      setIsLoading(false);
-      toast.error("Password not match");
       return;
     }
+
+    //   else if(password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/)){
+    //     toast.error("Password should contain at least a number, lowercase, uppercase and a special character @,#,%,& etc.");
+    //     setIsLoading(false);
+    //     return;
+    // }
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         username,
         email,
         password,
-        confirmPassword,
+        confirmPassword: password,
       })
-      .then((res) => {
+      .then(async (res) => {
         if (res?.status === 200) {
-        setModalIsOpen(true);
+          await auth.sendSignInLinkToEmail(email, {
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+            handleCodeInApp: true,
+          });
+
+          // Show success message to the user
+          toast.success(
+            `An email has been sent to ${email}. Please check and confirm your registration`
+          );
+
+          setIsLoading(false);
+          setRedirectTo(true);
+        } else {
+          console.warn("Something went wrong with signup");
         }
       })
       .catch((error) => {
         toast.error(error.message);
       });
-
-    await auth.sendSignInLinkToEmail(email, {
-      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-      handleCodeInApp: true,
-    });
-
-    // Show success message to the user
-    toast.success(
-      `An email has been sent to ${email}. Please check and verify your email`
-    );
-
-    // Save username, email, and password, to localStorage
-    window.localStorage.setItem("userName", username);
-    window.localStorage.setItem("email", email);
-    window.localStorage.setItem("password", password);
-    window.localStorage.setItem("confirmPassword", confirmPassword);
-
-    setIsLoading(false);
   };
 
 
@@ -196,16 +185,10 @@ export const Registration = ({ history }) => {
 
   return (
     <>
+     {isRedirectTo && <Redirect to="/confirm-signup" />}
+    <Header />
       <div className={classes.rootContainer}>
-        <div className={classes.logoArea}>
-          <Link to="/">
-            <img src={brandLogo} alt="Piktask" />
-          </Link>
-          <Typography variant="body1">
-            Registering to this website, you accept our Terms of Use and our
-            Privacy Policy
-          </Typography>
-        </div>
+      <Spacing space={{ height: "5rem" }} />
 
         <div className={classes.formPageContainer}>
           <img
@@ -217,10 +200,10 @@ export const Registration = ({ history }) => {
             <div className={classes.formWrapperInner}>
               <div className={classes.formHeading}>
                 <Typography className={classes.formTitle} variant="h2">
-                  Sign up
+                  Sign Up
                 </Typography>
                 <Typography className={classes.formSubtitle}>
-                  with your social network
+                  With your social network
                 </Typography>
               </div>
 
@@ -288,7 +271,7 @@ export const Registration = ({ history }) => {
                         onClick={handleShowHidePassword}
                       />
                     </div>
-                    <div className={classes.passwordField}>
+                    {/* <div className={classes.passwordField}>
                       <TextField
                         fullWidth
                         variant="outlined"
@@ -303,7 +286,7 @@ export const Registration = ({ history }) => {
                         alt="Show or hide password"
                         onClick={handleShowHideConfirmPassword}
                       />
-                    </div>
+                    </div> */}
 
                     <Typography variant="body1" className={classes.helpText}>
                       Your password must be at least 6 characters long and must
@@ -324,12 +307,11 @@ export const Registration = ({ history }) => {
                       className={classes.formButton}
                       type="submit"
                       disabled={
-                        isLoading || !username || !email || !password || !confirmPassword
+                        isLoading || !username || !email || !password 
                       }
                     >
-                      Signup
+                      Sign Up
                     </Button>
-                    <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
                   </form>
 
                   <Button
@@ -350,7 +332,9 @@ export const Registration = ({ history }) => {
             className={classes.backgroundIconBottom}
           />
         </div>
+        <Spacing space={{ height: "5rem" }} />
       </div>
+      <Footer />
     </>
   );
 };
