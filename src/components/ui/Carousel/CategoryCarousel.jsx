@@ -1,4 +1,6 @@
 import { Container } from "@material-ui/core";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
@@ -6,12 +8,10 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 // import { Container } from "./Carousel.styles";
 import useStyles from "./Carousel.styles";
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export const CategoryCarousel = () => {
   const [photos, setPhotos] = useState([]);
-  const classes= useStyles();
+  const classes = useStyles();
 
   useEffect(() => {
     try {
@@ -30,12 +30,16 @@ export const CategoryCarousel = () => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: <NavigateBeforeIcon />,
+    prevArrow: (
+      <div>
+        <NavigateBeforeIcon />
+      </div>
+    ),
     nextArrow: <NavigateNextIcon />,
 
     responsive: [

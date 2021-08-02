@@ -1,12 +1,16 @@
+import { Button } from "@material-ui/core";
 import React from "react";
-import { CategoryButton, Item } from "./Category.styles";
+import useStayles from "./Category.styles";
 
 const Category = ({ photo }) => {
+  const classes = useStayles();
+  console.log("photo", photo);
+
   return (
-    <Item>
-      <img src={photo?.thumbnail} alt="" />
-      <CategoryButton>{photo?.name}</CategoryButton>
-    </Item>
+    <div className={classes.catItem}>
+      <img className={classes.catImage} src={photo?.thumbnail} alt="" />
+      <Button className={classes.catName}>{photo?.name}</Button>
+    </div>
   );
 };
 
