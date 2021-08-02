@@ -27,6 +27,7 @@ import { makeStyles } from "@material-ui/core";
       height: 30,
       width: 30,
       borderRadius: "50%",
+      cursor: "pointer",
 
       "& svg":{
         color: "red",

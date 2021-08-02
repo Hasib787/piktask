@@ -10,12 +10,13 @@ const Search = ({mobileView}: {mobileView: boolean}) => {
   const searchRef = useRef("");
 
   const [search, setSearch] = useState();
-
+  
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/client/search/nature?collection_title=collection1&limit=10&page=1`)
+      .get(`${process.env.REACT_APP_API_URL}/client/search/?title=nature&category_id=22&limit=30&page=1`)
       .then(({data}) => {
+        
         if (data?.status) {
           setSearch(data);
         }

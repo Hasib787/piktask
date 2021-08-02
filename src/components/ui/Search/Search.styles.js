@@ -45,13 +45,19 @@ const useStyles = makeStyles( theme => ({
     selectContainer: {
         backgroundColor: theme.palette.common.white,
         height: "5.2rem",
+        "& svg": {
+            height: "2.6rem",
+            marginTop: "-1px",
+            marginRight: "-10px",
+            width: "3rem",
+        },
         [theme.breakpoints.down('sm')]: {
             height: "4.5rem"
         },
         "& > select": {
             width: 200,
             paddingLeft: "1rem",
-            borderLeft: "1px solid",
+            borderLeft: "1px solid #BEBEBE",
             fontSize: "1.8rem",
             height: "3.2rem",
             "&:focus": {

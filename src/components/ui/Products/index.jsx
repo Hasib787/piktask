@@ -15,14 +15,27 @@ const useStyles = makeStyles((theme) => ({
       flexBasis: "100%",
     },
   },
+  headingButton: {
+    ...theme.typography.button,
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    padding: "0.8rem 3rem",
+    fontSize: "1.7rem",
+    fontWeight: 500,
+    color: "#1B3F4E",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: "#117A00",
+      color: "#fff",
+    },
+  },
 }));
 
 const Products = ({ photos, count = 8, title = "", catname }) => {
   const classes = useStyles();
 
-  const displayPhotos = () => {
-    return photos?.filter((item) => item.category === catname);
-  };
+  const displayPhotos = photos?.filter((item) => item.category === catname);
+
 
   return (
     <>
@@ -33,9 +46,7 @@ const Products = ({ photos, count = 8, title = "", catname }) => {
       </SectionHeading>
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {displayPhotos()
-          .slice(0, 8)
-          .map((photo) => (
+        {displayPhotos?.slice(0, 8).map((photo) => (
             <Grid
               key={photo.image_id}
               item

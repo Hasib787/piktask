@@ -121,7 +121,7 @@ const Header = () => {
                         {user && user?.avatar ? (
                           <img
                             className={classes.avatar}
-                            src={user.avatar}
+                            src={user?.avatar}
                             alt="UserPhoto"
                           />
                         ) : (
