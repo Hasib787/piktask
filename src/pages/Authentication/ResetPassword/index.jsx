@@ -1,14 +1,12 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import heroBanner from "../../../assets/banner/banner-single-page.png";
 import { CustomBtn, InputField } from "../../../components/InputField";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
-import HeroSection from "../../../components/ui/Hero";
 import useStyles from "./ResetPassword.styles";
 
 export const ResetPassword = () => {
