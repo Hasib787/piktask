@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import userPhoto from "../../../assets/author.png";
 import crownIcon from "../../../assets/icons/crown.svg";
-import logo from "../../../assets/logo-front.png";
+import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
 import { useSelector } from "react-redux";

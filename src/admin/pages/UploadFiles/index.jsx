@@ -27,6 +27,7 @@ import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
 
 const categoryItem = [
+  { id: 0, value: "select_category", label: "Select Category" },
   { id: 1, value: "Animals", label: "Animals" },
   { id: 2, value: "Architecture", label: "Architecture" },
   { id: 3, value: "Backgrounds / Textures", label: "Backgrounds / Textures" },
@@ -106,20 +107,6 @@ const UploadFiles = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  // const [values, setValues] = useState({
-  //   title: "",
-  //   category: "",
-  //   description: "",
-  //   price: "",
-  //   attribution: "",
-  //   image: "",
-  //   additional_image: "",
-  //   usages: "",
-  //   item_for_sale: "free",
-  //   typeOfImage: "",
-
-  // });
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
   const [item_for_sale, setItem_for_sale] = useState("free");
@@ -145,9 +132,42 @@ const UploadFiles = () => {
   const [tags, setTags] = useState([]);
 
   const [files, setFiles] = useState([]);
+  const [thumbImage, setThumbImage] = useState("");
+  const [thumbWidth, setThumbWidth] = useState("");
+  const [thumbHeight, setThumbHeight] = useState("");
+
+  useEffect(
+    () => () => {
+      let image = new Image();
+      image.onload = () => {
+        setThumbWidth(image.width);
+        setThumbHeight(image.height);
+      };
+      image.src = thumbImage.preview;
+
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    },
+    [files, thumbImage]
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
+      setThumbImage(acceptedFiles[0]);
+
+      let image = new Image();
+      image.onchange = () => {
+        if (
+          (image.width > 360 || image.width < 360) &&
+          (image.height > 210 || image.height < 210)
+        ) {
+          toast.error("The thumbnail dimension should be 360x210 asdfa");
+          return;
+        }
+      };
+      image.src = thumbImage.preview;
+
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -168,13 +188,15 @@ const UploadFiles = () => {
 
   const isActive = isDragActive && "2px dashed #26AA10";
 
-  useEffect(
-    () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
-    },
-    [files]
-  );
+  const thumbnailDimension = () => {
+    if (
+      (thumbWidth > 360 || thumbWidth < 360) &&
+      (thumbHeight > 210 || thumbHeight < 210)
+    ) {
+      toast.error("The thumbnail dimension should be 360x210");
+      return;
+    }
+  };
 
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
@@ -266,40 +288,55 @@ const UploadFiles = () => {
     setLoading(true);
     setTitleError(false);
 
-    if (imageError) {
-      setLoading(false);
-      toast.error("Please upload valid image");
-      return;
-    } else if (title === "") {
-      setLoading(false);
-      toast.error("The Title field is required.");
-      return;
-    } else if (title.length < 3 || title.length > 200) {
-      setLoading(false);
-      toast.error("Title must be between 3 to 200 characters");
-      return;
-    } else if (tags.length < 0) {
-      setLoading(false);
-      toast.error("The tag field is required");
+    if (!user.token) {
+      toast.error("You have no authorizatoin");
       return;
     }
 
-    if (itemForSaleError === "") {
-      setItemForSaleError(true);
-      toast.error("Item for sale status must be 'free' or 'sale'");
-    }
+    // if (thumbs.length === 0) {
+    //   setLoading(false);
+    //   toast.error("Please upload a thumbnail with the dimention of 360 x 210");
+    //   return;
+    // } else if (!title) {
+    //   setLoading(false);
+    //   toast.error("The Title field is required.");
+    //   return;
+    // } else if (title.length < 3 || title.length > 200) {
+    //   setLoading(false);
+    //   toast.error("Title must be between 3 and 200 characters");
+    //   return;
+    // } else if (tags.length === 0) {
+    //   setLoading(false);
+    //   toast.error("The tag field is required");
+    //   return;
+    // } else if (category === "0") {
+    //   toast.error("Please select your item category");
+    //   setLoading(false);
+    //   return;
+    // } else if (item_for_sale !== "free") {
+    //   toast.error("Item for sale status must be Free or Sale");
+    //   setLoading(false);
+    //   return;
+    // } else if (price) {
+    //   toast.error("Item for sale status must be Free or Sale");
+    //   setLoading(false);
+    //   return;
+    // }
 
+    console.log("thumbImage", thumbImage);
     const formData = new FormData();
     formData.append("title", "this is title");
-    formData.append("tags", tags);
+    formData.append("tags", tags.toString());
     formData.append("category", category);
     formData.append("item_for_sale", item_for_sale);
     formData.append("price", price);
     formData.append("usages", usages);
     formData.append("attribution", attribution);
     formData.append("description", description);
-    formData.append("image", image);
+    formData.append("image", thumbImage);
     formData.append("additional_image", additional_image);
+
+    return;
 
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
@@ -335,7 +372,8 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        toast.error(error.message);
+        console.log("error", error.response);
+        toast.error(error.response.data.errors.image);
         setLoading(false);
       });
   };
@@ -411,7 +449,7 @@ const UploadFiles = () => {
                     className={classes.photoUploadText}
                     variant="body1"
                   >
-                    Click to upload an photo
+                    Drag and drop or click to upload an photo
                   </Typography>
                   <Typography className={classes.subtitle} variant="body1">
                     The photo must be greater than or equal to: 1600x900 - 2MB{" "}

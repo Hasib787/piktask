@@ -112,8 +112,6 @@ export const ResetPassword = () => {
   return (
     <>
       <Header />
-      <HeroSection background={heroBanner} />
-
       <Spacing space={{ height: "2.5rem" }} />
 
       <Container>
@@ -147,7 +145,7 @@ export const ResetPassword = () => {
               <form autoComplete="off" onSubmit={handleSubmit}>
                 {!passwordChange && (
                   <InputField
-                    label="User name/Email"
+                    label="Email"
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

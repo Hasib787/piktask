@@ -91,10 +91,6 @@ export const Registration = ({ history }) => {
       return;
     }
 
-    // const openModal = () => {
-    //   setModalIsOpen(true);
-    // };
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         username,

@@ -214,14 +214,8 @@ const DesktopMenu = ({ history }) => {
             `An email has been sent to ${authData.email}. Please check and confirm your registration`
           );
 
-          // Save username, email, and password, to localStorage
-          localStorage.setItem("userName", authData.userName);
-          localStorage.setItem("email", authData.email);
-          localStorage.setItem("password", authData.password);
-
           setLoading(false);
           setRedirectTo(true);
-          setAuthData({ userName: "", email: "", password: "" });
         } else {
           console.warn("Something went wrong with signup");
         }

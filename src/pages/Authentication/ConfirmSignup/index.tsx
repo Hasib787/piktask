@@ -3,12 +3,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import heroBanner from "../../../assets/banner/banner-single-page.png";
 import { CustomBtn, InputField } from "../../../components/InputField";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
-import HeroSection from "../../../components/ui/Hero";
 import useStyles from "../ResetPassword/ResetPassword.styles";
 
 export const ConfirmSignup = () => {
@@ -36,11 +34,18 @@ export const ConfirmSignup = () => {
 
     if (!token) {
       setLoading(false);
+      setToken("");
       toast.error("Field should not be empty. ");
       return;
-    } else if (token.length < 8 || token.length > 8) {
+    } else if (!token.match(/^(?=.*[0-9])/)){
       setLoading(false);
-      toast.error("You entered an invalid token.");
+      setToken("");
+      toast.error("Token only contains numeric value");
+      return;
+    }else if (token.length < 8 || token.length > 8) {
+      setLoading(false);
+      setToken("");
+      toast.error("Token should be 8 digit number");
       return;
     }
 
@@ -55,12 +60,13 @@ export const ConfirmSignup = () => {
             setLoading(false);
             setToken("");
             setRedirectTo(true);
+            return;
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.message);;
           setToken("");
-          setLoading(false);
+          setLoading(false); 
         });
     }
   };
@@ -71,7 +77,6 @@ export const ConfirmSignup = () => {
       {isRedirectTo && <Redirect to="/login" />}
 
       <Header />
-      <HeroSection background={heroBanner} />
 
       <Spacing space={{ height: "2.5rem" }} />
 
