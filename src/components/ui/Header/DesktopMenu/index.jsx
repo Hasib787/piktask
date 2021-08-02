@@ -31,13 +31,12 @@ import logoWhite from "../../../../assets/logo-white.png";
 import lockIcon from "../../../../assets/password.png";
 import logo from "../../../../assets/piktaskLogo.svg";
 import { auth } from "../../../../database";
-import ModalAuth from "../../../../pages/Authentication/Registration/Modal/ModalAuth";
 import { CustomBtn, InputField } from "../../../InputField";
 import Spacing from "../../../Spacing";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
 
-const clientId ="461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+const clientId = "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -143,7 +142,6 @@ const DesktopMenu = ({ history }) => {
         password: authData.password,
       })
       .then((res) => {
-        console.log("signIN", res);
         if (res.data.status) {
           setOpenAuthModal(false);
           const token = res.data.token;
@@ -608,7 +606,6 @@ const DesktopMenu = ({ history }) => {
                         !authData.password
                       }
                     />
-                    <ModalAuth modalIsOpen={modalIsOpen}></ModalAuth>
                   </form>
 
                   <Spacing space={{ height: "0.5rem" }} />

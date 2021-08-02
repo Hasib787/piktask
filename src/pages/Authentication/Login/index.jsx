@@ -1,9 +1,8 @@
 import {
+  Button,
   Checkbox,
   FormControlLabel,
-  Grid,
-  Tab,
-  Tabs,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
@@ -17,85 +16,49 @@ import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
 import lockIcon from "../../../assets/password.png";
-import brandLogo from "../../../assets/piktaskLogo.png";
 import Spacing from "../../../components/Spacing";
+import Footer from "../../../components/ui/Footer";
+import Header from "../../../components/ui/Header";
 import useStyles from "../Auth.styles";
-import logoWhite from "../../../assets/logo-white.png"
-import authImage from "../../../assets/auth.png";
-import { TabPanel } from "@material-ui/lab";
-import { CustomBtn, InputField } from "../../../components/InputField";
 
-const clientId =
-  "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+// const clientId =
+//   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
+  const [value, setValue] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const [value, setValue] = useState(0);
-  const [tabIndex, setTabIndex] = useState(0);
-
-  const [passwordValue, setPasswordValue] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-
-  const [authData, setAuthData] = useState({
-    userName: "",
-    password: "",
-  });
-
-  //Handle the password show and hide
-  const handleShowHidePassword = () => {
-    setPasswordValue((value) => !value);
-  };
-  // const handleShowHideConfirmPassword = () => {
-  //   setConfirmPasswordValue((value) => !value);
-  // };
-
-  //Redirect to home page when user logs in
+  const user = useSelector((state) => state.user);
   const pathHistory = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
-    // if (user.token) history.push("/");
+    if (user && user.token) history.replace(from);
     return () => {
       document.body.style.backgroundColor = "";
     };
-  }, [user, history]);
+  }, [user, history, from]);
 
-  const handleAuthData = (e) => {
-    const { name, value } = e.target;
-
-    setAuthData({ ...authData, [name]: value });
+  const handleShowHidePassword = () => {
+    setValue((value) => !value);
   };
 
-
-  const handleChangeTab = () => {
-    return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
-  };
-
-  //handle SignIn
-  const handleSignIn = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    if (!authData.userName || !authData.password) {
-      toast.error("Please fill in all the fields");
-      setLoading(false);
-      return;
-    }
-
+    
+  
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        username: authData.userName,
-        password: authData.password,
+        username,
+        password,
       })
       .then((res) => {
-        console.log("signIN", res);
         if (res.data.status) {
-          setOpenAuthModal(false);
           const token = res.data.token;
           localStorage.setItem("token", token);
           const decodedToken = jwt_decode(token.split(" ")[1]);
@@ -116,146 +79,101 @@ export const Login = ({ history }) => {
         toast.error("Invalid email or password", error.message);
       });
   };
-  //login with google
-  const handleGoogleLogin = async (googleData) => {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/auth/google_login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          token: googleData.tokenId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await res.json();
-    // store returned user somehow
-    if (data.status) {
-      const token = data.token;
-      localStorage.setItem("token", token);
-      const decodedToken = jwt_decode(token.split(" ")[1]);
+  // //login with google
+  // const handleGoogleLogin = async (googleData) => {
+  //   const res = await fetch(
+  //     `${process.env.REACT_APP_API_URL}/auth/google_login`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         token: googleData.tokenId,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   const data = await res.json();
+  //   // store returned user somehow
+  //   if (data.status) {
+  //     const token = data.token;
+  //     localStorage.setItem("token", token);
+  //     const decodedToken = jwt_decode(token.split(" ")[1]);
 
-      if (decodedToken.email) {
-        dispatch({
-          type: "SET_USER",
-          payload: {
-            ...decodedToken,
-            token,
-          },
-        });
-      }
-      toast.success(data.message);
-      // handleResponse(true);
-      pathHistory.replace(from);
-    }
-  };
+  //     if (decodedToken.email) {
+  //       dispatch({
+  //         type: "SET_USER",
+  //         payload: {
+  //           ...decodedToken,
+  //           token,
+  //         },
+  //       });
+  //     }
+  //     toast.success(data.message);
+  //     // handleResponse(true);
+  //     pathHistory.replace(from);
+  //   }
+  // };
 
-  //login with facebook
-  const handleFacebookLogin = async (facebookData) => {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/auth/facebook_login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          token: facebookData.tokenId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await res.json();
-    // store returned user somehow
-    if (data.status) {
-      const token = data.token;
-      localStorage.setItem("token", token);
-      const decodedToken = jwt_decode(token.split(" ")[1]);
+  // //login with facebook
+  // const handleFacebookLogin = async (facebookData) => {
+  //   const res = await fetch(
+  //     `${process.env.REACT_APP_API_URL}/auth/facebook_login`,
+  //     {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         token: facebookData.tokenId,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   const data = await res.json();
+  //   // store returned user somehow
+  //   if (data.status) {
+  //     const token = data.token;
+  //     localStorage.setItem("token", token);
+  //     const decodedToken = jwt_decode(token.split(" ")[1]);
 
-      if (decodedToken.email) {
-        dispatch({
-          type: "SET_USER",
-          payload: {
-            ...decodedToken,
-            token,
-          },
-        });
-      }
-      toast.success(data.message);
-      pathHistory.replace(from);
-    }
-  };
+  //     if (decodedToken.email) {
+  //       dispatch({
+  //         type: "SET_USER",
+  //         payload: {
+  //           ...decodedToken,
+  //           token,
+  //         },
+  //       });
+  //     }
+  //     toast.success(data.message);
+  //     pathHistory.replace(from);
+  //   }
+  // };
 
   return (
     <>
+      <Header />
       <div className={classes.rootContainer}>
-        <div className={classes.logoArea}>
-          <Link to="/">
-            <img src={brandLogo} alt="Piktask" />
-          </Link>
-          <Typography variant="body1">
-            Registering to this website, you accept our Terms of Use and our
-            Privacy Policy
-          </Typography>
-        </div>
+        <Spacing space={{ height: "5rem" }} />
         <div className={classes.formPageContainer}>
-          <img
+        <img
             src={formIconTop}
             alt="Background Icon"
             className={classes.backgroundIconTop}
           />
-           <div style={{ padding: 0, overflow: "hidden" }}>
-          <Grid container spacing={3}>
-            <Grid item sm={5}>
-              <div className={classes.leftPanel}>
-                <img
-                  className={classes.authLogo}
-                  src={logoWhite}
-                  alt="Piktask"
-                />
-                <Typography>Enjoy Free Download Now!</Typography>
-                <Typography>*Get 50% OFF Discount for Premium Plan</Typography>
-                <Typography>*Download 6 Images for Free Everyday</Typography>
-                <Typography>
-                  *2,600,000+ Images to energize your Design
+           {/* <Spacing space={{ height: "2rem" }} /> */}
+          <div className={classes.formWrapper}>
+            <div className={classes.formWrapperInner}>
+              <div className={classes.formHeading}>
+                <Typography className={classes.formTitle} variant="h2">
+                  Sign In
                 </Typography>
-
-                <Spacing space={{ height: 30 }} />
-
-                <img src={authImage} alt="Piktask" />
+                <Typography className={classes.formSubtitle}>
+                  Sign in with your email & password
+                </Typography>
               </div>
-            </Grid>
-            <Grid item sm={7}>
-              <div className={classes.rightPanel}>
-                <Tabs
-                  value={tabIndex}
-                  onChange={handleChangeTab}
-                  aria-label="authentication tabs"
-                  className={classes.tabsWrapper}
-                  variant="fullWidth"
-                >
-                  <Tab
-                    label="Login"
-                    
-                    className={classes.tabItem}
-                    classes={{ selected: classes.selected }}
-                    disableRipple
-                  />
-                  </Tabs>
-                {/* End tabs */}
-
-                <Typography
-                  style={{
-                    textAlign: "center",
-                    marginTop: "1.5rem",
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  with your social network
-                </Typography>
-
-                <div className={classes.socialsButtons}>
+              <div>
+                {/* <div className={classes.socialsButtons}>
                   <GoogleLogin
                     clientId={clientId}
                     className={classes.googleBtn}
@@ -265,8 +183,6 @@ export const Login = ({ history }) => {
                     cookiePolicy={"single_host_origin"}
                   />
 
-                  <Spacing space={{ margin: "0 0.5rem" }} />
-
                   <FacebookLogin
                     className={classes.facebookBtn}
                     appId="168140328625744"
@@ -275,30 +191,35 @@ export const Login = ({ history }) => {
                     onClick={handleFacebookLogin}
                     callback={handleFacebookLogin}
                   />
-                </div>
+                </div> */}
 
-                <Spacing space={{ height: "2rem" }} />
-                <div className={classes.horizontalLine}>
-                  <span>OR</span>
-                </div>
-                <Spacing space={{ height: "3.2rem" }} />
+                {/* <Typography variant="subtitle1" className={classes.formDevider}>
+                  Or
+                </Typography> */}
 
-                {/* Tab panel for Sign In */}
-                <TabPanel value={tabIndex} index={0}>
-                  <form onSubmit={handleSignIn}>
-                    <InputField
-                      label="User Name / Email"
-                      name="userName"
-                      value={authData.userName}
-                      onChange={handleAuthData}
+                <div>
+                  <form
+                    onSubmit={handleSubmit}
+                    autoComplete="off"
+                    className={classes.form}
+                  >
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      label="User name / Email"
+                      className={classes.formControl}
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <div className={classes.passwordField}>
-                      <InputField
+                      <TextField
+                        fullWidth
+                        variant="outlined"
                         label="Password"
-                        type={passwordValue ? "text" : "password"}
-                        name="password"
-                        value={authData.password}
-                        onChange={handleAuthData}
+                        type={value ? "text" : "password"}
+                        className={classes.formControl}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <img
                         src={lockIcon}
@@ -307,51 +228,50 @@ export const Login = ({ history }) => {
                       />
                     </div>
 
-                    <CustomBtn type="submit" text="Sign In" color="green" />
+                    <FormControlLabel
+                      value="end"
+                      label="I can't remember my password"
+                      labelPlacement="end"
+                      control={<Checkbox color="primary" />}
+                      className={classes.checkboxLabel}
+                    />
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      className={classes.formButton}
+                      type="submit"
+                      disabled={loading || !username || !password}
+                    >
+                      Sign In
+                    </Button>
+                    <Link
+                      to="/reset-password"
+                      className={classes.passwordResetLink}
+                    >
+                      Password Reset
+                    </Link>
+                    <Spacing space={{ height: "1rem" }} />
                   </form>
-
-                  <Spacing space={{ height: "1.5rem" }} />
-
-                  <Link
-                    to="/reset-password"
-                    className={classes.passwordResetLink}
+                  <Button
+                    component={Link}
+                    to="/registration"
+                    className={classes.formLink}
                   >
-                    Password Reset
-                  </Link>
-
-                  <div className={classes.signUpLink}>
-                    Not a member? <span onClick={handleChangeTab}>Sign Up</span>
-                  </div>
-                </TabPanel>
-
-                  <Spacing space={{ height: "0.5rem" }} />
-
-                  <FormControlLabel
-                    className={classes.checkboxLabel}
-                    control={
-                      <Checkbox
-                        name="receiveNewsLetter"
-                        size="medium"
-                        className={classes.checkbox}
-                      />
-                    }
-                    label="I do not wish to receive news and promotions from piktask Company by email."
-                  />
-
-                  <div onClick={handleChangeTab} className={classes.authText}>
-                    Already registered? Log in
-                  </div>
+                    Not a member? Sign up
+                  </Button>
+                </div>
               </div>
-            </Grid>
-          </Grid>
-        </div>
+            </div>
+          </div>
           <img
             src={formIconBottom}
             alt="Background"
             className={classes.backgroundIconBottom}
           />
         </div>
+        <Spacing space={{ height: "5rem" }} />
       </div>
+    <Footer />
     </>
   );
 };

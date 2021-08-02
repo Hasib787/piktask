@@ -106,15 +106,6 @@ const SingleCategory = () => {
                 alt={imageDetails?.original_name}
               />
               <div className={classes.buttons}>
-                {/* <Button className={classes.button}>Save</Button>
-                  <Button className={classes.button}>
-                    <img
-                      className={classes.buttonIcon}
-                      src={downArrow}
-                      alt="Down arrow"
-                    />
-                    Try
-                  </Button> */}
                 <Button className={classes.button}>
                   <img
                     className={classes.buttonIcon}

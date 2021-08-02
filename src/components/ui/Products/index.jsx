@@ -1,6 +1,8 @@
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Product from "./Product";
@@ -15,27 +17,60 @@ const useStyles = makeStyles((theme) => ({
       flexBasis: "100%",
     },
   },
+  headingButton: {
+    ...theme.typography.button,
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    padding: "0.8rem 3rem",
+    fontSize: "1.7rem",
+    fontWeight: 500,
+    color: "#1B3F4E",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: "#117A00",
+      color: "#fff",
+    },
+  },
 }));
 
-const Products = ({ photos, count = 8, title = "", catname }) => {
+const Products = (props) => {
   const classes = useStyles();
+  const { catIndex, count = 8, showHeading } = props;
+  const popularCategories = useSelector(state => state.popularCategories);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
-  const displayPhotos = () => {
-    return photos?.filter((item) => item.category === catname);
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            setProducts(data.images);
+            setLoading(false);
+            
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+
+  const displayPhotos = products?.filter((item) => item.categories_id === popularCategories[catIndex]?.id);
 
   return (
     <>
-      <SectionHeading title={title} large>
-        <Button className={classes.headingButton} component={Link} to="">
+      {showHeading && (
+        <SectionHeading title={popularCategories[catIndex]?.name} large>
+        <Button className={classes.headingButton} component={Link} to={`/category/${popularCategories[catIndex]?.slug}`}>
           See More
         </Button>
       </SectionHeading>
+      )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {displayPhotos()
-          .slice(0, 8)
-          .map((photo) => (
+        {displayPhotos?.slice(0, 8).map((photo) => (
             <Grid
               key={photo.image_id}
               item
