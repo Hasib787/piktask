@@ -18,7 +18,6 @@ import theme from "./components/ui/Theme";
 import { auth } from "./database";
 import {
   ConfirmSignup,
-  ForgetPassword,
   Help,
   Home,
   Login,
@@ -149,7 +148,6 @@ const App = () => {
         <Route exact path="/registration" component={Registration} />
         <Route exact path="/confirm-signup" component={ConfirmSignup} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/new-password" component={ForgetPassword} />
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
