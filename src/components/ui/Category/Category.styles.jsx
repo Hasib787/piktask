@@ -15,6 +15,10 @@ export const Item = styled.div`
     height: 240px;
     object-fit: cover;
   }
+
+  a {
+    text-decoration: none !important;
+  }
 `;
 
 export const CategoryButton = styled.div`
@@ -31,8 +35,9 @@ export const CategoryButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // &:hover {
-  //   background-color: #469439;
-  // }
+  transition: all 0.3s linear;
+  &:hover {
+    background-color: #117A00;
+    color: #fff;
+  }
 `;
