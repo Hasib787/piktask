@@ -16,30 +16,41 @@ import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
 import useStyles from "./Home.styles";
+import { useDispatch } from "react-redux";
 
 export const Home = () => {
   const classes = useStyles();
-  const [photos, setPhotos] = useState([]);
-  // const [category, setCategory] = useState("People");
   const [isLoading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
         .then(({ data }) => {
-          if (data?.success) {
+          if (data?.status) {
             setLoading(false);
-            const showImage = data?.images;
-            setPhotos(showImage);
+            const images = [];
+            data.categories.map((category) =>
+              images.push({id: category.id, name: category.name, slug: category.slug})
+            )
+            setCategories(images);
+            dispatch({
+              type: "POPULAR_CATEGORIES",
+              payload: [...images]
+            });
           }
         });
     } catch (error) {
       console.log(error.message);
     }
-  }, []);
+  }, [dispatch]);
+
+
+  
 
   return (
     <>
@@ -66,11 +77,7 @@ export const Home = () => {
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          <Products
-            photos={photos}
-            title="Vector images"
-            catname="Nature / Landscapes"
-          />
+          <Products catIndex={0} showHeading />
         )}
       </Container>
 
@@ -78,11 +85,7 @@ export const Home = () => {
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          <Products
-            photos={photos}
-            title="Vector Collections"
-            catname="nature"
-          />
+          <Products catIndex={1} showHeading />
         )}
       </Container>
 
@@ -90,11 +93,31 @@ export const Home = () => {
         {isLoading ? (
           <h2>Loading...</h2>
         ) : (
-          <Products
-            photos={photos}
-            title="Architecture Collection"
-            catname="People"
-          />
+          <Products catIndex={2} showHeading />
+        )}
+      </Container>
+
+      <Container>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <Products catIndex={3} showHeading />
+        )}
+      </Container>
+
+      <Container>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <Products catIndex={4} showHeading />
+        )}
+      </Container>
+
+      <Container>
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <Products catIndex={5} showHeading />
         )}
       </Container>
 

@@ -1,6 +1,7 @@
 import { Container, Grid, Tabs, Tab, ListItem, Typography } from "@material-ui/core";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-category-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
@@ -12,7 +13,13 @@ import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
+  const {catName} = useParams();
+  const { popularCategories} = useSelector(state => state);
 
+  const popularCatIndex =  popularCategories?.findIndex((item: string) => item.slug === catName);
+
+  const totalCatItems = popularCategories.filter((item: string) => item.slug === catName);
+  
   return (
     <>
       <Header />
@@ -186,13 +193,15 @@ const Category = () => {
         </Container>
       </div>
       <Container>
-        <Typography className={classes.totalResources} variant="h3">
-          6,283 Resources
+        {
+          totalCatItems[0] && (
+            <Typography className={classes.totalResources} variant="h3">
+          {totalCatItems[0]?.totalItems} Resources
         </Typography>
-        <Typography className={classes.abstractBanner} variant="h4">
-           Abstract Banner
-        </Typography>
-        <Products />
+          )
+        }
+        
+        <Products catIndex={popularCatIndex} />
         <Pagination />
       </Container>
 
