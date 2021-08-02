@@ -1,227 +1,90 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    height: "100%",
-  },
-  headerBottomToolbar: {
-    height: "100%",
-  },
-  logoWrapper: {
-    width: 153,
-    marginRight: "2rem",
-    padding: 0,
-    "&:hover": {
-      background: "transparent",
-    },
-
-    "@media (max-width: 1024px)": {
-      width: "12rem",
-
-      "& img": {
-        width: "100%",
-      },
-    },
-  },
-  logo: {
-    width: "13.5rem",
-    display: "block",
-  },
-  menuUnderline: {
-    height: 0,
-    backgroundColor: "transparent",
-  },
-  menuTab: {
-    marginLeft: 25,
-  },
-  menuItem: {
-    opacity: 1,
-    minWidth: "1rem",
-    fontSize: "16px",
-    "&:last-child": {
-      marginRight: "3rem",
-    },
-
-    "@media (max-width: 1024px)": {
-      marginRight: 0,
-      paddingLight: ".5rem",
-      paddingLeft: ".5rem",
-      fontSize: "1.4rem",
-
-      "&:last-child": {
-        marginRight: ".5rem",
-      },
-    },
-  },
-  toolBarContainer: {
-    marginLeft: "auto",
-    display: "flex",
-    justifyContent: "flex-end",
-    height: "100%",
-
-    "@media (max-width: 768px)": {
-      justifyContent: "flex-end",
-      "& a": {
-        paddingRight: "2rem",
-        paddingLeft: "2rem",
-        marginLeft: "0.5rem",
-      },
-    },
-    "@media (max-width: 480px)": {
-      "& a": {
-        paddingRight: ".6rem",
-        paddingLeft: ".6rem",
-        marginLeft: "0rem",
-        fontSize: "1.4rem",
-        minWidth: "fit-content",
-      },
-    },
-  },
-  enterprise: {
-    color: "#FDAF01",
-    paddingLeft: "2.4rem",
-    paddingRight: "2.4rem",
-    fontSize: "16px",
-    "@media (max-width: 1024px)": {
-      paddingRight: "1rem",
-      paddingLeft: "1rem",
-      fontSize: "1.4rem",
-    },
-  },
-  premium: {
-    ...theme.typography.button,
-    backgroundColor: theme.palette.secondary.main,
-    fontSize: "16px",
-    paddingLeft: "2.4rem",
-    paddingRight: "2.4rem",
-    border: ".2rem solid",
-    marginLeft: "1rem",
-    marginRight: "1rem",
-    borderColor: "transparent",
-    "&:hover": {
-      borderColor: `${theme.palette.common.white}`,
-    },
-    "@media (max-width: 1024px)": {
-      paddingRight: "1rem",
-      paddingLeft: "1rem",
-      fontSize: "1.4rem",
-    },
-  },
-  crownIcon: {
-    marginRight: ".8rem",
-    height: "20px",
-  },
-  sellContentBtn: {
-    ...theme.typography.button,
-    border: `.2rem solid`,
-    borderColor: theme.palette.secondary.main,
-    paddingRight: "2.4rem",
-    paddingLeft: "2.4rem",
-    marginRight: "1.5rem",
-    textTransform: "uppercase",
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
-    "@media (max-width: 1024px)": {
-      marginRight: "1rem",
-      paddingRight: "1rem",
-      paddingLeft: "1rem",
-      fontSize: "1.4rem",
-    },
-  },
-  signInBtn: {
-    ...theme.typography.button,
-    ...theme.typography.darkButton,
-    marginLeft: "1rem",
-    fontSize: "16px",
-    padding: ".8rem 2.4rem",
-
-    "@media (max-width: 480px)": {
-      padding: ".8rem 1.5rem !important",
-    },
-  },
-  userAvatarArea: {
-    cursor: "pointer",
+  logoArea: {
     display: "flex",
     alignItems: "center",
-  },
-  avatar: {
-    fontSize: "4.8rem",
-    width: "4.8rem",
-    height: "4.8rem",
-    borderRadius: "100%",
-    position: "relative",
-    right: "-0.6rem",
-    color: "#FB5252",
-  },
-  arrowDown: {
-    fontSize: "5rem",
-    color: "#244e5f",
-  },
+    justifyContent: "center",
+    flexDirection: "column",
+    textAlign: "center",
+    marginBottom: "3.5rem",
 
-  // New user authentication modal
-  leftPanel: {
-    backgroundColor: "#117A00",
-    padding: "2.5rem 2.5rem 5.2rem 2.5rem",
-    width: "100%",
-
+    "& img": {
+      width: "15rem",
+      marginBottom: "-.8rem",
+    },
     "& p": {
       color: theme.palette.common.white,
-      fontWeight: 500,
-      fontSize: 16,
-      lineHeight: 2,
-    },
-    "& img": {
-      width: "100%",
-    },
-    [theme.breakpoints.up(1441)]: {
-      padding: "2.5rem 2.5rem 7rem 2.5rem",
-     },
-  },
-  authLogo: {
-    maxWidth: 120,
-    marginBottom: "1.5rem",
-  },
-  checkbox: {
-    "& svg": {
-      fontSize: "2.5rem",
     },
   },
-  checkboxLabel: {
-    "& .MuiFormControlLabel-label": {
-      fontSize: 13,
-    },
-  },
+  rootContainer: {
+    width: "65rem",
+    left: "50%",
+    position: "relative",
+    transform: "translate(-50%, 0%)",
 
-  // Auth right panel
-  rightPanel: {
-    paddingTop: 25,
-    paddingRight: 30,
-    paddingBottom: 30,
-    minWidth: 531,
-    height: "100%",
-  },
-  tabsWrapper: {
-    "& .MuiTabs-flexContainer": {
-      justifyContent: "center",
-      borderBottom: "2px solid #E8E8E8",
+    "@media (max-width: 768px)": {
+      width: "100%",
+      padding: "0 2rem",
     },
   },
-  tabItem: {
-    color: "#CCCCCC",
+  formPageContainer: {
+    borderRadius: "1rem",
+    overflow: "hidden",
+    position: "relative",
+    backgroundColor: theme.palette.common.white,
+    "@media (max-width: 768px)": {
+      padding: "0 2.5rem",
+    },
   },
-  selected: {
-    color: "#117A00",
+  formWrapper: {
+    position: "relative",
+    margin: "2rem 0 2.5rem",
+    "@media (max-width: 768px)": {
+      margin: 0,
+    },
   },
-  passwordResetLink: {
-    fontSize: 17,
-    color: "#469439",
+  backgroundIconTop: {
+    position: "absolute",
+    top: "-.5rem",
+    left: 0,
+    width: "20rem",
+
+    "@media (max-width: 768px)": {
+      width: "13rem",
+    },
+  },
+  backgroundIconBottom: {
+    position: "absolute",
+    bottom: "-.5rem",
+    right: "-.1rem",
+    width: "16rem",
+    "@media (max-width: 768px)": {
+      width: "10rem",
+    },
+  },
+  formWrapperInner: {
+    width: "53rem",
+    margin: "0 auto 3rem",
+    "@media (max-width: 768px)": {
+      width: "100%",
+      marginBottom: "1.5rem",
+    },
+  },
+  formHeading: {
     textAlign: "center",
-    display: "block",
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "underline",
+    margin: "3rem 0 2.5rem",
+    "@media (max-width: 768px)": {
+      margin: "2rem 0 1em",
     },
+  },
+  formTitle: {
+    marginBottom: "0.4rem",
+    fontSize: "2.4rem",
+    textAlign: "center",
+  },
+  formSubtitle: {
+    fontSize: "1.6rem",
   },
   socialsButtons: {
     display: "flex",
@@ -239,6 +102,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "rgb(28 81 103)",
     },
+    "@media (max-width: 768px)": {
+      padding: "1.5rem",
+      "& img": {
+        width: "8rem",
+      },
+    },
   },
   facebookBtn: {
     backgroundColor: "#425993",
@@ -249,55 +118,119 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "rgb(48 72 132)",
     },
-    [theme.breakpoints.down(1025)]: {
-      fontSize: "17px !important",
-      padding: "20px !important",
-     },
-    [theme.breakpoints.up(2039)]: {
-      padding: "20px !important",
-     },
-  },
-  // socialLoginBtns: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-  // socialLogin: {
-  //   flex: 1,
-  //   height: 48,
-  // },
-  // googleBtn: {
-  //   backgroundColor: "#1B3F4E",
-  //   "&:hover": {
-  //     backgroundColor: "#214e61",
-  //   },
-  // },
-  // facebookBtn: {
-  //   backgroundColor: "#425993",
-  //   "&:hover": {
-  //     backgroundColor: "#374b7d",
-  //   },
-  // },
-
-  horizontalLine: {
-    backgroundColor: "#CBCBCB",
-    height: 1,
-    position: "relative",
-    "& span": {
-      position: "absolute",
-      backgroundColor: theme.palette.common.white,
-      left: "50%",
-      transform: "translate(-50%, -41%)",
-      padding: "0 5px",
-      fontStyle: "italic",
-      fontSize: 13,
+    "@media (max-width: 768px)": {
+      padding: "1.5rem",
+      "& img": {
+        width: "8rem",
+      },
     },
   },
-  authText: {
-    fontSize: 17,
-    color: "#469439",
+  formDevider: {
+    position: "relative",
     textAlign: "center",
-    cursor: "pointer",
+    fontSize: "1.6rem",
+    fontStyle: "italic",
+    marginBottom: "1.5rem",
+    "&:before": {
+      content: '""',
+      position: "absolute",
+      background: "#CBCBCB",
+      height: ".1rem",
+      width: "47%",
+      top: "1.2rem",
+      left: 0,
+    },
+    "&:after": {
+      content: '""',
+      position: "absolute",
+      background: "#CBCBCB",
+      height: ".1rem",
+      width: "47%",
+      top: "1.2rem",
+      right: 0,
+    },
+  },
+  form: {
+    "@media (max-width: 768px)": {
+      "& input": {
+        padding: "11px 14px",
+      },
+      "& label": {
+        fontSize: "1.4rem",
+        top: "-.6rem",
+      },
+    },
+  },
+  formControl: {
+    marginBottom: "1.5rem",
+    "& input": {
+      borderColor: "#CBCBCB",
+    },
+    "& input:focus": {
+      outlineColor: "red",
+    },
+    "@media (max-width: 768px)": {
+      marginBottom: "1.5rem",
+    },
+  },
+  helpText: {
+    padding: "0 3rem",
+    textAlign: "center",
+    marginBottom: "1rem",
+    fontSize: "1.4rem",
+    fontWeight: 500,
+    "@media (max-width: 768px)": {
+      padding: 0,
+      marginBottom: "1rem",
+    },
+  },
+  checkboxLabel: {
+    marginBottom: "2rem",
+    marginRight: 0,
+    "& span": {
+      color: theme.palette.primary.main,
+      fontSize: "1.4rem",
+    },
+  },
+  formButton: {
+    backgroundColor: "#3B9EE8",
+    fontSize: "2rem",
+    borderRadius: 0,
+    fontWeight: 400,
+    boxShadow: "none",
+    marginBottom: "3rem",
+    padding: "1rem 2rem",
+    "& span": {
+      color: theme.palette.common.white,
+    },
+    "&:hover": {
+      backgroundColor: "#3092da",
+      boxShadow: "none",
+    },
+    "@media (max-width: 768px)": {
+      marginBottom: ".5rem",
+      padding: ".5rem 2rem",
+      fontSize: "1.6rem",
+    },
+  },
+  formLink: {
+    color: theme.palette.secondary.main,
+    display: "block",
+    textAlign: "center",
+    fontSize: "1.5rem",
+    fontWeight: 500,
+
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+
+    "@media (max-width: 768px)": {
+      marginTop: "18px",
+      position: "relative",
+      left: "50%",
+      transform: "translateX(-50%)",
+      display: "inline-block",
+    },
   },
   passwordField: {
     display: "flex",
@@ -310,20 +243,58 @@ const useStyles = makeStyles((theme) => ({
       width: "3rem",
       cursor: "pointer",
     },
-
     "@media (max-width: 768px)": {
       "& img": {
         width: "2rem",
       },
     },
   },
-  signUpLink: {
-    marginTop: "17%",
+  passwordResetLink: {
     fontSize: 17,
+    color: "#469439",
     textAlign: "center",
+    display: "block",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    "@media (max-width: 768px)": {
+       top: "-.6rem",
+    },
+  },
+  formButtonGroups: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    top: "-2rem",
+    "& a": {
+      padding: 0,
+      zIndex: 1,
+    },
+    "& a:hover": {
+      backgroundColor: "transparent",
+    },
+
+    "@media (max-width: 768px)": {
+      top: "-.8rem",
+      justifyContent: "space-around",
+      "& a": {
+        left: "inherit",
+        transform: "inherit",
+      },
+    },
+  },
+  buttonTextLink: {
+    padding: 0,
+    display: "inline-block",
+    fontWeight: 500,
     "& span": {
-      cursor: "pointer",
-      color: "#469439",
+      color: "#3B9EE8",
+    },
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: "#143340",
     },
   },
 }));
