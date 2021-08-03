@@ -335,6 +335,7 @@ const DesktopMenu = ({ history }) => {
     }
   };
 
+
   return (
     <>
       {isRedirectTo && <Redirect to="/confirm-signup" />}

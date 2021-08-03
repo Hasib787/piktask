@@ -46,7 +46,27 @@ export const Home = () => {
     } catch (error) {
       console.log(error.message);
     }
+
+
   }, [dispatch]);
+
+
+  function getCategoriesWithId() {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .then(({ data }) => {
+          if (data?.success) {
+            dispatch({
+              type: "RECENT_PHOTOS",
+              payload: [...data.images]
+            });
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
 
   
@@ -63,9 +83,6 @@ export const Home = () => {
 
       <Container>
         <SectionHeading title="Popular Album Collection" large>
-          <Button disableRipple className={classes.headingButton} component={Link} to="#">
-            See More
-          </Button>
         </SectionHeading>
       </Container>
 
