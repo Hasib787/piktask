@@ -71,7 +71,7 @@ const App = () => {
     }
 
     // recentProducts();
-    getPopularPhotos();
+    // getPopularPhotos();
     return () => unsubscribe();
   }, [dispatch]);
 
