@@ -40,12 +40,12 @@ export const ResetPassword = () => {
     const validateEmail =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-      if (email && !validateEmail.test(String(email))) {
-        toast.error("Your email is invalid");
-        setPasswordChange(false);
-        setIsLoading(false);
-        return;
-      }
+    if (email && !validateEmail.test(String(email))) {
+      toast.error("Your email is invalid");
+      setPasswordChange(false);
+      setIsLoading(false);
+      return;
+    }
 
     if (email && !passwordChange) {
       axios
@@ -59,6 +59,7 @@ export const ResetPassword = () => {
         })
         .catch((error) => {
           setPasswordChange(false);
+          setEmail("");
           toast.error("No user found with this email", error.message);
         });
     }
@@ -71,8 +72,25 @@ export const ResetPassword = () => {
       setIsLoading(false);
       toast.error("All fields are required");
       return;
+    } else if (!token.match(/^(?=.*[0-9])/)) {
+      setIsLoading(false);
+      setToken("");
+      toast.error("Token only contains numeric values");
+      return;
+    } else if (token.match(/^(?=.*[0-9])/) && token.match(/^(?=.*[a-zA-Z])/)) {
+      setIsLoading(false);
+      setToken("");
+      toast.error("Token only contains numeric values");
+      return;
+    } else if (token.length < 8 || token.length > 8) {
+      setIsLoading(false);
+      setToken("");
+      toast.error("Token should be 8 digit number");
+      return;
     } else if (password.length < 6) {
       setIsLoading(false);
+      setPassword("");
+      setConfirmPassword("");
       toast.error("Password should be at least 6 characters");
       return;
     }
@@ -83,6 +101,8 @@ export const ResetPassword = () => {
     // }
     else if (password !== confirmPassword) {
       setIsLoading(false);
+      setPassword("");
+      setConfirmPassword("");
       toast.error("Password not match");
       return;
     }
@@ -102,6 +122,9 @@ export const ResetPassword = () => {
         })
         .catch((error) => {
           toast.error(error.response.data.message);
+          setToken("");
+          setPassword("");
+          setConfirmPassword("");
         });
     }
     setIsLoading(false);
