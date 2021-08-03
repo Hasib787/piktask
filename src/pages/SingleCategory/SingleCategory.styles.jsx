@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     width: "100%",
-    height: "52.2rem",
-    padding: "4rem 3rem 0rem",
+    height: "100%",
+    padding: "4rem 3rem",
 
     [theme.breakpoints.down("sm")]: {
       height: "auto",
@@ -27,11 +27,10 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: "flex",
-    justifyContent: "center",
+    // justifyContent: "center",
     flexWrap: "wrap",
-    borderTop: `1px solid #D4DADC`,
     marginTop: "2.5rem",
-    padding: "1.5rem 3rem",
+    // padding: "1.5rem 3rem",
 
     [theme.breakpoints.up(1279)]: {
       display: "flex",
@@ -50,8 +49,9 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     fontSize: "1.5rem",
     padding: ".6rem 3.5rem",
-    backgroundColor: "#F1F1F2",
+    // backgroundColor: "#F1F1F2",
     fontWeight: 500,
+    border: "1px solid #D9DBE1",
     color: "#14323F",
     marginLeft: "1.5rem",
     "&:hover": {
@@ -88,32 +88,34 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: 1.3,
     },
   },
+  creationDate: {
+    fontSize: "2rem",
+    marginRight: 10,
+  },
   description: {
     paddingRight: "13rem",
     marginTop: "1.5rem",
-    marginBottom: "2rem",
+    // marginBottom: "2rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.6rem",
       paddingRight: 0,
       marginBottom: "1rem",
     },
   },
-  subHeading: {
-    fontSize: "2rem",
-    "& span": {
-      color: theme.palette.secondary.main,
-      display: "block",
-    },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem",
-    },
-  },
+  // subHeading: {
+  //   fontSize: "2rem",
+  //   "& span": {
+  //     color: theme.palette.secondary.main,
+  //     display: "block",
+  //   },
+  //   [theme.breakpoints.down("sm")]: {
+  //     fontSize: "1.6rem",
+  //   },
+  // },
   detailsContainer: {
-    backgroundColor: theme.palette.common.white,
-    padding: "2.5rem",
     width: "55rem",
-    marginTop: "2.8rem",
-    marginBottom: "3rem",
+    marginTop: "2rem",
+    // marginBottom: "3rem",
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
@@ -122,7 +124,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   singleItem: {
-    marginBottom: "3rem",
+    marginBottom: "2rem",
+    "& p": {
+      fontSize: 16,
+    },
   },
   gridItem: {
     width: "100%",
@@ -143,15 +148,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     width: "fit-content",
-    marginRight: "3rem",
+    marginRight: "5rem",
     "@media (max-width: 768px)": {
       marginBottom: "2rem",
     },
   },
   authorImg: {
-    width: "6.5rem",
-    height: "6.5rem",
-    borderRadius: "3rem",
+    width: "7rem",
+    height: "7rem",
+    borderRadius: "50%",
     marginRight: "1.4rem",
     objectFit: "cover",
   },
@@ -168,7 +173,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     marginRight: "2rem",
     padding: "1rem 5.5rem",
-
+    fontSize: 17,
     [theme.breakpoints.down("sm")]: {
       paddingRight: "3rem",
       paddingLeft: "3rem",
@@ -181,14 +186,63 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   unFollowBtn: {
-    // backgroundColor: theme.palette.primary.main,
     backgroundColor: "red",
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
-      // backgroundColor: theme.palette.secondary.main,
     },
   },
+  premiumInfo: {
+    background: "#E1E3EB",
+    padding: "2rem",
+    width: "55rem",
+    marginTop: "2rem",
+
+    "& h4": {
+      marginBottom: "1rem",
+      fontSize: "2rem",
+    },
+    "& p": {
+      marginBottom: ".6rem",
+      fontSize: "1.6rem",
+    },
+  },
+  premiumViewBtn: {
+    background: "#EDAF41",
+    color: "#fff",
+    padding: ".5rem 2rem",
+    marginLeft: "2rem",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      background: "#EDAF41",
+    },
+  },
+  licenseBtn: {
+    background: "#CAD3D2",
+    color: "#117A00",
+    padding: ".5rem 2rem",
+    marginLeft: "16rem",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      // background: "#EDAF41",
+    },
+  },
+  moreInfoBtn: {
+    color: "#117A00",
+    textDecoration: "none",
+    fontSize: "1.6rem",
+  },
+  buttonGroup: {
+    marginTop: 25,
+    display: "flex",
+  },
+  downloadWrapper: {
+    position: "relative"
+  },
   downloadBtn: {
+    color: "#fff",
+    fontSize: 17,
+    padding: "1rem 10rem",
+    marginRight: "4rem",
     backgroundColor: theme.palette.secondary.main,
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -197,6 +251,27 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "1.5rem",
       width: "1.2rem",
     },
+  },
+  likeBtn: {
+    padding: "1rem 1.5rem",
+    backgroundColor: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+    },
+    "& img": {
+      width: "2.7rem",
+    },
+  },
+  downloadedImage: {
+    position: "absolute",
+    top: "-15px",
+    right: "25px",
+    color: "#117A00",
+    fontSize: "1.2rem",
+    padding: ".3rem 1.2rem",
+    borderRadius: "3rem",
+    background: "#fff",
+    border: "2px solid #117A00",
   },
 }));
 
