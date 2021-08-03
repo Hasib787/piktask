@@ -35,12 +35,12 @@ export const CategoryCarousel = () => {
     slidesToScroll: 1,
     arrows: true,
     prevArrow: (
-      <div className={classes.prevIconWrapepr}>
+      <div>
         <NavigateBeforeIcon />
       </div>
     ),
     nextArrow: (
-      <div className={classes.nextIconWrapepr}>
+      <div>
         <NavigateNextIcon />
       </div>
     ),

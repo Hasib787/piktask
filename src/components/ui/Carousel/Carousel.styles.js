@@ -31,11 +31,6 @@ const useStyles = makeStyles((theme) => ({
       right: 0,
     },
   },
-
-  prevIconWrapepr: {
-    backgroundColor: "#444",
-  },
-  nextIconWrapepr: {},
 }));
 
 export default useStyles;
