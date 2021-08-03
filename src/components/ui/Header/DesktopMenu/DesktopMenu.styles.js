@@ -162,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
   // New user authentication modal
   leftPanel: {
     backgroundColor: "#117A00",
-    padding: "2.5rem 2.5rem 5.2rem 2.5rem",
+    padding: "2.5rem 2.5rem 5.4rem 2.5rem",
     width: "100%",
 
     "& p": {
