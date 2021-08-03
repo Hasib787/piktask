@@ -3,13 +3,15 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import authorPhoto from "../../assets/author.png";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
 // import downArrow from "../../assets/icons/downArrow.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
+import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
+import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
@@ -98,14 +100,23 @@ const SingleCategory = () => {
           spacing={4}
           classes={{ container: classes.itemDetailsContainer }}
         >
-          <Grid item md={6} xs={6} className={classes.productColumn}>
+          <Grid item md={7} xs={6} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
               <img
                 className={classes.image}
                 src={imageDetails?.thumbnail}
                 alt={imageDetails?.original_name}
               />
+            </div>
+          </Grid>
+          <Grid item md={5} xs={6} className={classes.productColumn}>
+            <div className={classes.productDetails}>
+              <Typography className={classes.title} variant="h2">
+                {imageDetails?.title}
+              </Typography>
+
               <div className={classes.buttons}>
+                <Typography className={classes.creationDate}>{imageDetails?.creation_ago}</Typography>
                 <Button className={classes.button}>
                   <img
                     className={classes.buttonIcon}
@@ -123,112 +134,139 @@ const SingleCategory = () => {
                   Copy Link
                 </Button>
               </div>
-            </div>
-          </Grid>
-          <Grid item md={6} xs={6} className={classes.productColumn}>
-            <Typography className={classes.title} variant="h2">
-              {imageDetails?.title}
-            </Typography>
-            <Typography>{imageDetails?.creation_ago}</Typography>
-            <Typography className={classes.description} variant="body1">
-              {imageDetails?.description}
-            </Typography>
-            <Typography className={classes.subHeading} variant="subtitle1">
-              <span>bdtask License</span>
-              Free for personal and commercial purpose with attribution
-            </Typography>
 
-            <Grid container className={classes.detailsContainer}>
-              <Grid item xs={6} className={classes.gridItem}>
-                <div className={classes.singleItem}>
-                  <Typography>
-                    <strong>Image ID: </strong>
-                    {imageDetails?.id}
-                  </Typography>
-                  <Typography>
-                    <strong>Image Size </strong>
-                    {imageDetails?.height}*{imageDetails?.width}
-                  </Typography>
-                </div>
-                {/* <div className={classes.singleItem}>
-                  <Typography>
-                    <strong>Copyright Information Copyright:</strong>
-                    Designhill
-                  </Typography>
-                </div> */}
-              </Grid>
-
-              <Grid item xs={6} className={classes.gridItem}>
-                <div className={classes.singleItem}>
-                  <Typography>
-                    <strong>Created: </strong>
-                    {moment(imageDetails?.createdAt).format("LL")}
-                  </Typography>
-                  <Typography>
-                    <strong>Category: </strong>
-                    {imageDetails?.category?.name}
-                  </Typography>
-                </div>
-                {/* <div>
-                  <Typography>
-                    <strong>Scope of authorization: </strong>personal/enterprise
-                  </Typography>
-                </div> */}
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid item className={classes.authorArea}>
-                <div className={classes.authorProfile}>
-                  {imageDetails?.user?.avatar ? (
-                    <img
-                      className={classes.authorImg}
-                      src={imageDetails?.user?.avatar}
-                      alt={imageDetails?.user?.username}
-                    />
-                  ) : (
-                    <img
-                      className={classes.authorImg}
-                      src={authorPhoto}
-                      alt="AuthorPhoto"
-                    />
-                  )}
-
-                  <div>
-                    <Typography className={classes.profileName} variant="h3">
-                      {imageDetails?.user?.username}
+              <Grid container className={classes.detailsContainer}>
+                <Grid item xs={6} className={classes.gridItem}>
+                  <div className={classes.singleItem}>
+                    <Typography>
+                      <strong>Image ID: </strong>
+                      {imageDetails?.id}
                     </Typography>
-                    <Typography
-                      className={classes.resourceInfo}
-                      variant="body2"
-                    >
-                      {imageDetails?.user?.total_resources}
+                    <Typography>
+                      <strong>Image Size </strong>
+                      {imageDetails?.height}*{imageDetails?.width}
                     </Typography>
                   </div>
-                </div>
-                {!follower ? (
-                  <Button
-                    className={`${classes.authorBtn} ${classes.followBtn}`}
-                    onClick={handleFollower}
-                  >
-                    Follow
-                  </Button>
-                ) : (
-                  <Button
-                    className={`${classes.authorBtn} ${classes.unFollowBtn}`}
-                    onClick={handleFollower}
-                  >
-                    Unfollow
-                  </Button>
-                )}
+                  <div className={classes.singleItem}>
+                    <Typography>
+                      <strong>Copyright Information Copyright:</strong>
+                      Designhill
+                    </Typography>
+                  </div>
+                </Grid>
 
-                <Button
-                  className={`${classes.authorBtn} ${classes.downloadBtn}`}
-                >
-                  <img src={downArrowIconWhite} alt="Download" />
-                  Download
-                </Button>
+                <Grid item xs={6} className={classes.gridItem}>
+                  <div className={classes.singleItem}>
+                    <Typography>
+                      <strong>Created: </strong>
+                      {moment(imageDetails?.createdAt).format("LL")}
+                    </Typography>
+                    <Typography>
+                      <strong>Category: </strong>
+                      {imageDetails?.category?.name}
+                    </Typography>
+                  </div>
+                  <div className={classes.singleItem}>
+                    <Typography>
+                      <strong>Scope of authorization: </strong>personal/enterprise
+                    </Typography>
+                  </div>
+                </Grid>
               </Grid>
-            </Grid>
+
+              {/* <Typography className={classes.description} variant="body1">
+                {imageDetails?.description}
+              </Typography> */}
+              {/* <Typography className={classes.subHeading} variant="subtitle1">
+                <span>bdtask License</span>
+                Free for personal and commercial purpose with attribution
+              </Typography> */}
+
+              
+              <Grid container>
+                <Grid item className={classes.authorArea}>
+                  <div className={classes.authorProfile}>
+                    {imageDetails?.user?.avatar ? (
+                      <img
+                        className={classes.authorImg}
+                        src={imageDetails?.user?.avatar}
+                        alt={imageDetails?.user?.username}
+                      />
+                    ) : (
+                      <img
+                        className={classes.authorImg}
+                        src={authorPhoto}
+                        alt="AuthorPhoto"
+                      />
+                    )}
+
+                    <div>
+                      <Typography className={classes.profileName} variant="h3">
+                        {imageDetails?.user?.username}
+                      </Typography>
+                      <Typography
+                        className={classes.resourceInfo}
+                        variant="body2"
+                      >
+                        {imageDetails?.user?.total_resources} Resources
+                      </Typography>
+                    </div>
+                  </div>
+                  {!follower ? (
+                    <Button
+                      className={`${classes.authorBtn} ${classes.followBtn}`}
+                      onClick={handleFollower}
+                    >
+                      Follow
+                    </Button>
+                  ) : (
+                    <Button
+                      className={`${classes.authorBtn} ${classes.unFollowBtn}`}
+                      onClick={handleFollower}
+                    >
+                      Unfollow
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
+
+              <div className={classes.premiumInfo}>
+                <Typography variant="h4">
+                  Premium User: 
+                  <Button className={classes.premiumViewBtn}>View Plans</Button>
+                </Typography>
+                <Typography>
+                  - High-Speed Unlimited Download
+                </Typography>
+                <Typography>
+                  - For commercial use <Link to={"#"} className={classes.moreInfoBtn}>More info</Link>
+                </Typography>
+                <Typography>
+                  Images license agreement 
+                  <Button className={classes.licenseBtn}>Download License</Button>
+                </Typography>
+                <Typography>
+                  @ Copyright : Freepik
+                </Typography>
+              </div>
+
+              <div className={classes.buttonGroup}>
+                <div className={classes.downloadWrapper}>
+                  <Button
+                    className={classes.downloadBtn}
+                  >
+                    <img src={downArrowIconWhite} alt="Download" />
+                    Download
+                  </Button>
+                  <div className={classes.downloadedImage}>10K</div>
+                </div>
+                <Button
+                  className={classes.likeBtn}
+                >
+                  <img src={likeIcon} alt="Download" />
+                </Button>
+              </div>
+            </div>
           </Grid>
         </Grid>
 
@@ -236,14 +274,14 @@ const SingleCategory = () => {
         {/* {
           allTags.map((allTags) => <TagButtons allTags={allTags} />)
         } */}
-        <TagButtons allTags={allTags} />
-
+        <Spacing space={{height: "2.5rem"}}></Spacing>
         <SectionHeading
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."
           size="large"
         />
         <Products />
+        <TagButtons allTags={allTags} />
       </Container>
       <Blog />
       <Footer />
