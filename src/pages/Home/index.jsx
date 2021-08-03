@@ -47,7 +47,12 @@ export const Home = () => {
     } catch (error) {
       console.log(error.message);
     }
+
+
   }, [dispatch]);
+
+
+  
 
 
   
@@ -64,9 +69,6 @@ export const Home = () => {
 
       <Container>
         <SectionHeading title="Popular Album Collection" large>
-          <Button disableRipple className={classes.headingButton} component={Link} to="#">
-            See More
-          </Button>
         </SectionHeading>
       </Container>
 
