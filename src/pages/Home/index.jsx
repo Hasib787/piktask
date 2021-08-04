@@ -32,7 +32,6 @@ export const Home = () => {
         .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
-            setLoading(false);
             const images = [];
             data.categories.map((category) =>
               images.push({id: category.id, name: category.name, slug: category.slug})
@@ -52,7 +51,7 @@ export const Home = () => {
   }, [dispatch]);
 
 
-  function getCategoriesWithId() {
+  const getCategoriesWithId = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/recent`)
