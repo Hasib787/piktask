@@ -18,6 +18,9 @@ const useStyles = makeStyles( theme => ({
         borderBottomLeftRadius: ".2rem",
         [theme.breakpoints.down('sm')]: {
             height: "4.5rem"
+        },
+        [theme.breakpoints.down(480)]: {
+            height: "4rem"
         }
     },
     searchIconWrapper: {
@@ -32,8 +35,8 @@ const useStyles = makeStyles( theme => ({
             height: "4.5rem"
         },
 
-        [theme.breakpoints.down(576)]: {
-            height: "4.6rem",
+        [theme.breakpoints.down(480)]: {
+            height: "4rem",
             width: 76,
           },
     },
