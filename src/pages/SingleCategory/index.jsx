@@ -274,7 +274,7 @@ const SingleCategory = () => {
         {/* {
           allTags.map((allTags) => <TagButtons allTags={allTags} />)
         } */}
-        <Spacing space={{height: "2.5rem"}}></Spacing>
+        {/* <Spacing space={{height: "2.5rem"}}></Spacing> */}
         <SectionHeading
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."

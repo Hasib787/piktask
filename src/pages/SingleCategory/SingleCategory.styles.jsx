@@ -4,9 +4,6 @@ const useStyles = makeStyles((theme) => ({
   containerWrapper: {
     marginTop: "4.5rem",
   },
-  itemDetailsContainer: {
-    alignItems: "center",
-  },
   productColumn: {
     [theme.breakpoints.down("sm")]: {
       maxWidth: "100%",
@@ -19,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: "100%",
     height: "100%",
-    padding: "4rem 3rem",
+    padding: "2rem 2rem",
 
     [theme.breakpoints.down("sm")]: {
       height: "auto",
@@ -154,8 +151,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authorImg: {
-    width: "7rem",
-    height: "7rem",
+    width: "6.5rem",
+    height: "6.5rem",
     borderRadius: "50%",
     marginRight: "1.4rem",
     objectFit: "cover",
