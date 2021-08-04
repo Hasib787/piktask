@@ -1,6 +1,12 @@
-import { Container, Grid, Tabs, Tab, ListItem, Typography } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  ListItem,
+  Tab,
+  Tabs,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-category-page.png";
 import CallToAction from "../../components/ui/CallToAction";
@@ -13,13 +19,8 @@ import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const {catName} = useParams();
-  const { popularCategories} = useSelector(state => state);
+  const { catName }: { catName: string } = useParams();
 
-  const popularCatIndex =  popularCategories?.findIndex((item: string) => item.slug === catName);
-
-  const totalCatItems = popularCategories.filter((item: string) => item.slug === catName);
-  
   return (
     <>
       <Header />
@@ -140,75 +141,69 @@ const Category = () => {
       <div className={classes.shortList}>
         <Container>
           <div className={classes.shortListWrapper}>
-          <Typography className={classes.shortListTag}>
-            Sorted By: 
-          </Typography>
-        <Tabs className={classes.sortListMenu}>
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="Popular"
-              style={{ color: "#117A00" }}
-            />
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="Top Download"
-            />
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="Brand New"
-            />
-            <p className={classes.borderStyle}></p>
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="All Product"
-            />
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="Free"
-            />
-            <Tab
-              className={classes.sortListItem}
-              disableRipple
-              component={Link}
-              to="#"
-              label="Premium"
-            />
-          </Tabs>
+            <Typography className={classes.shortListTag}>Sorted By:</Typography>
+            <Tabs className={classes.sortListMenu}>
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="Popular"
+                style={{ color: "#117A00" }}
+              />
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="Top Download"
+              />
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="Brand New"
+              />
+              <p className={classes.borderStyle}></p>
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="All Product"
+              />
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="Free"
+              />
+              <Tab
+                className={classes.sortListItem}
+                disableRipple
+                component={Link}
+                to="#"
+                label="Premium"
+              />
+            </Tabs>
           </div>
         </Container>
       </div>
       <Container>
-        {
-          totalCatItems[0] && (
-            <Typography className={classes.totalResources} variant="h3">
-          {totalCatItems[0]?.totalItems} Resources
+        <Typography className={classes.totalResources} variant="h3">
+          456456 Resources
         </Typography>
-          )
-        }
-        
-        <Products catIndex={popularCatIndex} />
+
+        <Products catName={catName} />
         <Pagination />
       </Container>
 
       <CallToAction
         title="Join Designhill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonLink="https://getbootstrap.com/"
+        buttonLink="https://piktask.com/"
         buttonText="Join Us"
         uppercase
       />
