@@ -51,7 +51,7 @@ export const Home = () => {
   }, [dispatch]);
 
 
-  function getCategoriesWithId() {
+  const getCategoriesWithId = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/recent`)

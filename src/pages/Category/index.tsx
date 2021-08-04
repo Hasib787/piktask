@@ -29,7 +29,7 @@ const Category = () => {
   const catId = categories.find((item: string) => item.slug === catName);
   console.log("catId", catId);
 
-  function getCategoriesWithId() {
+  const getCategoriesWithId = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/${catId?.id}`)
@@ -45,7 +45,7 @@ const Category = () => {
     }
   }
 
-  function getCategories() {
+  const getCategories = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories`)
