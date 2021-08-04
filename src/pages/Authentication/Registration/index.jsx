@@ -69,9 +69,9 @@ export const Registration = ({ history }) => {
       toast.error("Username must be between 3 and 15 characters long");
       setIsLoading(false);
       return;
-    } else if (!username.match(/^[a-z0-9_\.]/)) {
+    } else if (!/^[a-z0-9_.]+$/.test(username)) {
       toast.error(
-        "Username can only use lowercase letter, number, underscores and dot"
+        "Username can only use lowercase letters, numbers, underscores, and dots"
       );
       setIsLoading(false);
       return;

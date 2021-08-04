@@ -180,9 +180,9 @@ const DesktopMenu = ({ history }) => {
       toast.error("Username must be between 3 and 15 characters long");
       setLoading(false);
       return;
-    } else if (!authData.userName.match(/^[a-z0-9_\.]/)) {
+    } else if (!/^[a-z0-9_.]+$/.test(authData.userName)) {
       toast.error(
-        "Username can only use lowercase letter, number, underscores and dot"
+        "Username can only use lowercase letters, numbers, underscores, and dots"
       );
       setLoading(false);
       return;
