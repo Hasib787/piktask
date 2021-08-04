@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   },
   imageWrapper: {
     backgroundColor: theme.palette.common.white,
+    [theme.breakpoints.down(480)]: {
+      backgroundColor: "transparent",
+    },
   },
   image: {
     width: "100%",
@@ -21,32 +24,24 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "auto",
     },
+    [theme.breakpoints.down(480)]: {
+      padding: "0",
+    },
   },
   buttons: {
     display: "flex",
-    // justifyContent: "center",
-    flexWrap: "wrap",
     marginTop: "2.5rem",
-    // padding: "1.5rem 3rem",
-
     [theme.breakpoints.up(1279)]: {
       display: "flex",
     },
-
     [theme.breakpoints.down(625)]: {
       display: "flex",
-    },
-    
-    [theme.breakpoints.down(480)]: {
-      justifyContent: "center",
-      flexDirection: "column",
     },
   },
   button: {
     ...theme.typography.button,
     fontSize: "1.5rem",
     padding: ".6rem 3.5rem",
-    // backgroundColor: "#F1F1F2",
     fontWeight: 500,
     border: "1px solid #D9DBE1",
     color: "#14323F",
@@ -54,22 +49,14 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#F0F7EF",
     },
-
     [theme.breakpoints.up(1279)]: {
       marginLeft: ".8rem",
     },
-
-    [theme.breakpoints.down(653)]: {
-      marginLeft: "1rem",
-      padding: ".6rem 1.5rem",
-    },
-    
     [theme.breakpoints.down(480)]: {
       padding: ".6rem 1.2rem",
-      fontSize: "1.4rem",
-      marginBottom: "1rem",
+      fontSize: "1.1rem",
+      marginBottom: "0rem",
       marginLeft: "1rem",
-      flexDirection: "column",
     },
   },
   buttonIcon: {
@@ -84,46 +71,35 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "2.8rem",
       lineHeight: 1.3,
     },
+    [theme.breakpoints.down(480)]: {
+      fontSize: "2.4rem",
+    },
   },
   creationDate: {
     fontSize: "2rem",
     marginRight: 10,
-  },
-  description: {
-    paddingRight: "13rem",
-    marginTop: "1.5rem",
-    // marginBottom: "2rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem",
-      paddingRight: 0,
-      marginBottom: "1rem",
+    [theme.breakpoints.down(480)]: {
+      fontSize: "1.5rem",
     },
   },
-  // subHeading: {
-  //   fontSize: "2rem",
-  //   "& span": {
-  //     color: theme.palette.secondary.main,
-  //     display: "block",
-  //   },
-  //   [theme.breakpoints.down("sm")]: {
-  //     fontSize: "1.6rem",
-  //   },
-  // },
   detailsContainer: {
     width: "55rem",
     marginTop: "2rem",
-    // marginBottom: "3rem",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
+    [theme.breakpoints.down(768)]: {
+      width: "55rem",
     },
-    "@media (max-width: 576px)": {
-      display: "block",
+    [theme.breakpoints.down(480)]: {
+      width: "100%",
     },
   },
   singleItem: {
     marginBottom: "2rem",
     "& p": {
       fontSize: 16,
+
+      [theme.breakpoints.down(480)]: {
+        fontSize: "1.3rem",
+      },
     },
   },
   gridItem: {
@@ -136,10 +112,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
-    flexWrap: "wrap",
-    "@media (max-width: 768px)": {
-      display: "block",
-    },
   },
   authorProfile: {
     display: "flex",
@@ -149,6 +121,9 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width: 768px)": {
       marginBottom: "2rem",
     },
+    [theme.breakpoints.down(480)]: {
+      marginRight: "4rem",
+    },
   },
   authorImg: {
     width: "6.5rem",
@@ -156,15 +131,29 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     marginRight: "1.4rem",
     objectFit: "cover",
+    "@media (max-width: 768px)": {
+      width: "5.8rem",
+      height: "5.8rem",
+    },
+    [theme.breakpoints.down(480)]: {
+      width: "4.5rem",
+      height: "4.5rem",
+    },
   },
   profileName: {
     color: theme.palette.secondary.main,
     fontSize: "2.6rem",
     fontWeight: 400,
+    [theme.breakpoints.down(480)]: {
+      fontSize: "2rem",
+    },
   },
   resourceInfo: {
     fontSize: "1.7rem",
     fontWeight: 400,
+    [theme.breakpoints.down(480)]: {
+      fontSize: "1.4rem",
+    },
   },
   authorBtn: {
     ...theme.typography.button,
@@ -172,8 +161,14 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem 5.5rem",
     fontSize: 17,
     [theme.breakpoints.down("sm")]: {
-      paddingRight: "3rem",
-      paddingLeft: "3rem",
+      padding: "0.7rem 5rem",
+      marginBottom: "2rem",
+    },
+    [theme.breakpoints.down(480)]: {
+      padding: ".6rem 3.5rem",
+      fontSize: "1.4rem",
+      marginBottom: "2rem",
+      marginRight: "0rem",
     },
   },
   followBtn: {
@@ -190,17 +185,27 @@ const useStyles = makeStyles((theme) => ({
   },
   premiumInfo: {
     background: "#E1E3EB",
-    padding: "2rem",
+    padding: "1rem 2rem 2rem",
     width: "55rem",
     marginTop: "2rem",
-
+    borderRadius: "1rem",
     "& h4": {
       marginBottom: "1rem",
       fontSize: "2rem",
+      [theme.breakpoints.down(480)]: {
+        fontSize: "1.5rem",
+      },
     },
     "& p": {
       marginBottom: ".6rem",
       fontSize: "1.6rem",
+      [theme.breakpoints.down(480)]: {
+        fontSize: "1.4rem",
+      },
+    },
+    [theme.breakpoints.down(480)]: {
+      width: "100%",
+      padding: "1rem",
     },
   },
   premiumViewBtn: {
@@ -212,6 +217,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: "#EDAF41",
     },
+    [theme.breakpoints.down(480)]: {
+      padding: ".3rem 1.5rem",
+      marginLeft: "2rem",
+    },
   },
   licenseBtn: {
     background: "#CAD3D2",
@@ -219,8 +228,9 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 2rem",
     marginLeft: "16rem",
     transition: "all 0.3s linear",
-    "&:hover": {
-      // background: "#EDAF41",
+    [theme.breakpoints.down(480)]: {
+      padding: "0.3rem 1rem",
+      marginLeft: ".8rem",
     },
   },
   moreInfoBtn: {
@@ -248,6 +258,16 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "1.5rem",
       width: "1.2rem",
     },
+    "@media (max-width: 768px)": {
+      fontSize: 16,
+      padding: "0.8rem 9rem",
+      marginRight: "2.5rem",
+    },
+    [theme.breakpoints.down(480)]:{
+      fontSize: 16,
+      padding: "0.4rem 5.1rem",
+      marginRight: "2.5rem",
+    },
   },
   likeBtn: {
     padding: "1rem 1.5rem",
@@ -257,6 +277,10 @@ const useStyles = makeStyles((theme) => ({
     },
     "& img": {
       width: "2.7rem",
+    },
+
+    [theme.breakpoints.down(480)]:{
+      padding: "0.4rem 1.5rem",
     },
   },
   downloadedImage: {
@@ -269,6 +293,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "3rem",
     background: "#fff",
     border: "2px solid #117A00",
+    "@media (max-width: 768px)": {
+      right: "12px",
+    },
+    [theme.breakpoints.down(480)]:{
+      padding: ".2rem 1rem",
+      right: "12px",
+    },
   },
 }));
 
