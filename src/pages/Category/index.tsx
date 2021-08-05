@@ -6,7 +6,8 @@ import {
   Tabs,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-category-page.png";
 import CallToAction from "../../components/ui/CallToAction";
@@ -20,6 +21,47 @@ import useStyles from "./Category.styles";
 const Category = () => {
   const classes = useStyles();
   const { catName }: { catName: string } = useParams();
+
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  // console.log("categories", categories);
+
+  useEffect(() => {
+    getCategories();
+    getCategoriesWithId();
+  }, []);
+
+  const catId = categories.find((item: string) => item.slug === catName);
+  console.log("catId", catId);
+
+  const getCategoriesWithId = () => {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/${catId?.id}`)
+        .then(({ data }) => {
+          console.log("data", data);
+          if (data?.status) {
+            setCategoryProducts(data.category_image);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCategories = () => {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategories(data.categories);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>

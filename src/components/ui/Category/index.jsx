@@ -1,10 +1,10 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import useStayles from "./Category.styles";
+import useStyles from "./Category.styles";
 
 const Category = ({ photo }) => {
-  const classes = useStayles();
+  const classes = useStyles();
 
   return (
     <div className={classes.catItem}>

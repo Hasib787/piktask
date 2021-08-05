@@ -37,7 +37,7 @@ const HeroSection: FC<PropTypes> = (props): JSX.Element => {
       className={classes.heroWrapper}
       style={{
         backgroundImage: `url(${heroBG})`,
-        minHeight: size === "large" ? "30rem" : "20rem",
+        minHeight: size === "large" ? "30rem" : "15rem",
       }}
     >
       <Container>

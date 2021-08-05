@@ -2,6 +2,7 @@ import { Typography } from '@material-ui/core';
 import React, { FC } from 'react';
 import useStyles from "./SearchKeyWords.styles";
 import {PropTypes} from "../Hero";
+import { Link } from 'react-router-dom';
 
 
 const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
@@ -12,9 +13,43 @@ const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
           {popularKeywords && (
             <div className={classes.popularSearch}>
               <Typography variant="h5" className={classes.searchTitle}>
-                Example : banner, Background, Abstract Banner , Logo Design ,
-                Business card , Post Card Design , web template
+                Example :  
               </Typography>
+              <Link to={"/banner"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Banner, 
+                </Typography>
+              </Link>
+              <Link to={"/background"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Background, 
+                </Typography>
+              </Link>
+              <Link to={"/abstract Banner"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Abstract Banner, 
+                </Typography>
+              </Link>
+              <Link to={"/logo Design"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Logo Design, 
+                </Typography>
+              </Link>
+              <Link to={"/business card"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Business card, 
+                </Typography>
+              </Link>
+              <Link to={"/post Card Design"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  Post Card Design, 
+                </Typography>
+              </Link>
+              <Link to={"/web template"}>
+                <Typography variant="h5" className={classes.searchTitle}>
+                  web template 
+                </Typography>
+              </Link>
             </div>
           )}
 

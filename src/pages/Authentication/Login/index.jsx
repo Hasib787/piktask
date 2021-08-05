@@ -51,7 +51,6 @@ export const Login = ({ history }) => {
     e.preventDefault();
     setLoading(true);
     
-  
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username,
@@ -76,7 +75,9 @@ export const Login = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error("Invalid email or password", error.message);
+        toast.error(error.response.data.message);
+        setUsername("");
+        setPassword("");
       });
   };
   // //login with google
@@ -240,7 +241,7 @@ export const Login = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
-                      disabled={loading || !username || !password}
+                      disabled={!username || !password}
                     >
                       Sign In
                     </Button>

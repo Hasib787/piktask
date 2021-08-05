@@ -65,8 +65,26 @@ export const Registration = ({ history }) => {
     const validateEmail =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (username.length < 3) {
-      toast.error("Username should be at least 3 or more characters");
+    if (username.length < 3 || username.length > 15) {
+      toast.error("Username must be between 3 and 15 characters long");
+      setIsLoading(false);
+      return;
+    } else if (!/^[a-z0-9_.]+$/.test(username)) {
+      toast.error(
+        "Username can only use lowercase letters, numbers, underscores, and dots"
+      );
+      setIsLoading(false);
+      return;
+    } else if (username.match(/^_/)) {
+      toast.error("Username can not use only underscore. Ex: james_bond");
+      setIsLoading(false);
+      return;
+    } else if (username.match(/^\./)) {
+      toast.error("Username can not use only dot. Ex: james.bond");
+      setIsLoading(false);
+      return;
+    } else if (username.match(/^[0-9]/)) {
+      toast.error("Username can not be a number. Ex: bond007");
       setIsLoading(false);
       return;
     } else if (email && !validateEmail.test(String(email))) {
@@ -104,6 +122,9 @@ export const Registration = ({ history }) => {
             `An email has been sent to ${email}. Please check and confirm your registration`
           );
 
+          setUsername("");
+          setEmail("");
+          setPassword("");
           setIsLoading(false);
           setRedirectTo(true);
         } else {
@@ -111,7 +132,10 @@ export const Registration = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error(error.response.data.message);
+        setUsername("");
+        setEmail("");
+        setPassword("");
       });
   };
 
@@ -307,7 +331,7 @@ export const Registration = ({ history }) => {
                       className={classes.formButton}
                       type="submit"
                       disabled={
-                        isLoading || !username || !email || !password 
+                         !username || !email || !password 
                       }
                     >
                       Sign Up

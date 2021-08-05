@@ -71,7 +71,6 @@ const DesktopMenu = ({ history }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [passwordValue, setPasswordValue] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -131,12 +130,6 @@ const DesktopMenu = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!authData.userName || !authData.password) {
-      toast.error("Please fill in all the fields");
-      setLoading(false);
-      return;
-    }
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
@@ -162,7 +155,10 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error("Invalid email or password", error.message);
+        toast.error(error.response.data.message);
+          authData.userName = "";
+          authData.password = "";
+          setLoading(false);  
       });
   };
 
@@ -174,8 +170,26 @@ const DesktopMenu = ({ history }) => {
     const validateEmail =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (authData.userName.length < 3) {
-      toast.error("Username should be at least 3 or more characters");
+    if (authData.userName.length < 3 || authData.userName.length > 15) {
+      toast.error("Username must be between 3 and 15 characters long");
+      setLoading(false);
+      return;
+    } else if (!/^[a-z0-9_.]+$/.test(authData.userName)) {
+      toast.error(
+        "Username can only use lowercase letters, numbers, underscores, and dots"
+      );
+      setLoading(false);
+      return;
+    } else if (authData.userName.match(/^_/)) {
+      toast.error("Username can not use only underscore. Ex: james_bond");
+      setLoading(false);
+      return;
+    } else if (authData.userName.match(/^\./)) {
+      toast.error("Username can not use only dot. Ex: james.bond");
+      setLoading(false);
+      return;
+    } else if (authData.userName.match(/^[0-9]/)) {
+      toast.error("Username can not be a number. Ex: bond007");
       setLoading(false);
       return;
     } else if (authData.email && !validateEmail.test(String(authData.email))) {
@@ -207,12 +221,15 @@ const DesktopMenu = ({ history }) => {
             url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
             handleCodeInApp: true,
           });
-
+      
           // Show success message to the user
           toast.success(
             `An email has been sent to ${authData.email}. Please check and confirm your registration`
           );
 
+          authData.userName = "";
+          authData.email = "";
+          authData.password = "";
           setLoading(false);
           setRedirectTo(true);
         } else {
@@ -220,7 +237,11 @@ const DesktopMenu = ({ history }) => {
         }
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error(error.response.data.message);
+        authData.userName = "";
+        authData.email = "";
+        authData.password = "";
+        setLoading(false);
       });
   };
 
@@ -307,6 +328,7 @@ const DesktopMenu = ({ history }) => {
       setOpen(false);
     }
   };
+
 
   return (
     <>

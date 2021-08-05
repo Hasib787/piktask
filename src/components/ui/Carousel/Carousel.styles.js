@@ -9,10 +9,9 @@ const useStyles = makeStyles((theme) => ({
       top: "50%",
       transform: "translateY(-50%)",
       zIndex: "1",
-      backgroundColor: "#D5D5D5",
       color: "#1B3F4E",
       height: "100%",
-      width: 70,
+      width: 100,
       cursor: "pointer",
 
       "& .MuiSvgIcon-root": {
@@ -26,9 +25,13 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .slick-prev": {
       left: 0,
+      background:
+        "linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
     },
     "& .slick-next": {
       right: 0,
+      background:
+        "linear-gradient(-90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
     },
   },
 }));
