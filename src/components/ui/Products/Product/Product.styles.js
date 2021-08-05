@@ -103,7 +103,7 @@ export const useStyles = makeStyles((theme) => ({
     background: "#EEF0F5",
     color: "#97999F",
     width: "8.5rem",
-    height: "5rem",
+    height: "3.5rem",
     fontSize: "1.2rem",
     
   },
