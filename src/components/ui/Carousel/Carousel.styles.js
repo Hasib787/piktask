@@ -4,6 +4,13 @@ const useStyles = makeStyles((theme) => ({
   carouselWrapper: {
     marginBottom: "3rem",
 
+    "& .slick-list": {
+      margin: "0 -5px",
+    },
+    "& .slick-slide > div": {
+      margin: "0 5px",
+    },
+
     "& .slick-arrow": {
       position: "absolute",
       top: "50%",
@@ -26,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .slick-prev": {
-      left: 5,
+      left: 0,
       transition: "all 0.6s linear",
       background:
         "linear-gradient(90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
@@ -36,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .slick-next": {
-      right: 5,
+      right: 0,
       transition: "all 0.6s linear",
       background:
         "linear-gradient(-90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",

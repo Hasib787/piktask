@@ -52,6 +52,7 @@ export const CategoryCarousel = () => {
     speed: 1500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    initialSlide: 0,
     arrows: true,
     nextArrow: <NavigateNextArrow />,
     prevArrow: <NavigatePrevArrow />,
