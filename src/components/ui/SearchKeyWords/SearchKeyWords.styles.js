@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
 
       "& a":{
         textDecoration: "none",
-      }
+      },
+
+      [theme.breakpoints.down(480)]: {
+        marginBottom: "1.5rem",
+      },
     },
     searchTitle: {
       color: "#D0D0D0",
@@ -20,6 +24,16 @@ const useStyles = makeStyles((theme) => ({
       margin: "0px 5px",
       fontWeight: 400,
       marginBottom: "3.5rem",
+
+      "@media (max-width: 1024px)": {
+        marginBottom: "1.5rem",
+      },
+      "@media (max-width: 768px)": {
+        marginBottom: "1rem",
+      },
+      [theme.breakpoints.down(480)]: {
+        marginBottom: "0.5rem",
+      },
     },
 }));
 
