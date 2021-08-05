@@ -33,7 +33,7 @@ const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
             Example :  
           </Typography>
           {popularSearchKeywords?.map((keyWord, index) => (
-            <Link key={keyWord.index} to={`/tag/${keyWord}`}>
+            <Link key={index} to={`/tag/${keyWord}`}>
               <Typography variant="h5" className={classes.searchTitle}>
                 {keyWord},
               </Typography>
