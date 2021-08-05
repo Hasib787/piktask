@@ -40,6 +40,7 @@ const App = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -71,7 +72,7 @@ const App = () => {
     // recentProducts();
     // getPopularPhotos();
     return () => unsubscribe();
-  }, [dispatch]);
+  }, []);
 
   function recentProducts() {
     try {
@@ -81,12 +82,12 @@ const App = () => {
           if (data?.success) {
             dispatch({
               type: "RECENT_PHOTOS",
-              payload: [...data.images]
+              payload: [...data.images],
             });
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   }
 
@@ -96,25 +97,16 @@ const App = () => {
         .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
-            const images = [];
-            data.categories.map((category) =>
-              images.push({
-                id: category.id, 
-                name: category.name, 
-                slug: category.slug, 
-                totalItems: category.total_image
-              })
-            )
             dispatch({
               type: "POPULAR_CATEGORIES",
-              payload: [...images]
+              payload: [...data.categories],
             });
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
-  };
+  }
 
   return (
     <ThemeProvider theme={theme}>
