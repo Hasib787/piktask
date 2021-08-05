@@ -82,6 +82,7 @@ export const Home = () => {
       />
 
       <Container>
+      <Spacing space={{ height: "3rem" }} />
         <SectionHeading title="Popular Album Collection" large>
         </SectionHeading>
       </Container>

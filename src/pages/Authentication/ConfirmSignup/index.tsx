@@ -37,12 +37,17 @@ export const ConfirmSignup = () => {
       setToken("");
       toast.error("Field should not be empty. ");
       return;
-    } else if (!token.match(/^(?=.*[0-9])/)){
+    } else if (!token.match(/^(?=.*[0-9])/)) {
       setLoading(false);
       setToken("");
       toast.error("Token only contains numeric value");
       return;
-    }else if (token.length < 8 || token.length > 8) {
+    } else if (token.match(/^(?=.*[0-9])/) &&  token.match(/^(?=.*[a-zA-Z])/)) {
+      setLoading(false);
+      setToken("");
+      toast.error("Token only contains numeric values");
+      return;
+    } else if (token.length < 8 || token.length > 8) {
       setLoading(false);
       setToken("");
       toast.error("Token should be 8 digit number");
@@ -66,7 +71,7 @@ export const ConfirmSignup = () => {
         .catch((error) => {
           toast.error(error.response.data.message);
           setToken("");
-          setLoading(false); 
+          setLoading(false);
         });
     }
   };

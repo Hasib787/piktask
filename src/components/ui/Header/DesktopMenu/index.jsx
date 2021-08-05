@@ -130,12 +130,6 @@ const DesktopMenu = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!authData.userName || !authData.password) {
-      toast.error("Please fill in all the fields");
-      setLoading(false);
-      return;
-    }
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
@@ -162,9 +156,9 @@ const DesktopMenu = ({ history }) => {
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-        setLoading(false);
-        authData.userName = "";
-        authData.password = "";
+          authData.userName = "";
+          authData.password = "";
+          setLoading(false);  
       });
   };
 
