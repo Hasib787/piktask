@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "center",
       width: "100%",
       display: "flex",
+      flexWrap: "wrap",
       justifyContent: "center",
       alignItems: "center",
 
