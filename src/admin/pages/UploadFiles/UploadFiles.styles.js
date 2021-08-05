@@ -12,6 +12,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "2rem",
     marginTop: "2rem",
   },
+  adminSidebar: {
+    [theme.breakpoints.down(769)]: {
+     display: "none",
+    },
+  },
   uploadContainer: {
     marginBottom: "3rem",
   },
