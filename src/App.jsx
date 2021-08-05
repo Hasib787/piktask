@@ -2,7 +2,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -37,8 +37,6 @@ import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const fs = useSelector((state) => state)
 
   useEffect(() => {
     window.scrollTo(0, 0);
