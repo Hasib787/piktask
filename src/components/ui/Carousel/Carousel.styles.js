@@ -5,10 +5,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3rem",
 
     "& .slick-list": {
-      margin: "0 -5px",
+      margin: "0 0px",
     },
     "& .slick-slide > div": {
-      margin: "0 5px",
+      // margin: "0 5px",
     },
 
     "& .slick-arrow": {
@@ -25,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
         color: "rgb(20 51 64 / 94%)",
         position: "absolute",
         top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        transform: "translateY(-50%)",
         fontSize: "3.5rem",
         background: "#ddd",
         borderRadius: "50%",
@@ -37,16 +36,22 @@ const useStyles = makeStyles((theme) => ({
       transition: "all 0.6s linear",
       background:
         "linear-gradient(90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+      "& .MuiSvgIcon-root": {
+        left: "15%",
+      },
       "&:hover .MuiSvgIcon-root": {
         backgroundColor: "#117A00",
         color: "white",
       },
     },
     "& .slick-next": {
-      right: 0,
+      right: "-2px",
       transition: "all 0.6s linear",
       background:
         "linear-gradient(-90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+      "& .MuiSvgIcon-root": {
+        right: "15%",
+      },
       "&:hover .MuiSvgIcon-root": {
         backgroundColor: "#117A00",
         color: "white",

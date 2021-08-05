@@ -1,12 +1,15 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  catItem: {
+  catItemWrapper: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     position: "relative",
     width: "100%",
+  },
+  catItem: {
+    margin: "0 5px",
   },
   catImage: {
     cursor: "all-scroll",
@@ -22,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.9rem",
     height: "50px",
     width: "100%",
+    borderRadius: 0,
   },
 }));
 
