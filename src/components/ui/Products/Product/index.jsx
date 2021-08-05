@@ -105,8 +105,8 @@ const Product = ({ photo }) => {
           <ButtonWrapper>
             <Button
               className={classes.categoryButton}
-              // component={Link}
-              // to={`/photo/${photo.image_id}`}
+              component={Link}
+              to={`/photo/${photo?.image_id}`}
             >
               Download
             </Button>
