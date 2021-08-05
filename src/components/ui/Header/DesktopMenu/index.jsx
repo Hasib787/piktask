@@ -130,12 +130,6 @@ const DesktopMenu = ({ history }) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!authData.userName || !authData.password) {
-      toast.error("Please fill in all the fields");
-      setLoading(false);
-      return;
-    }
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
@@ -162,9 +156,9 @@ const DesktopMenu = ({ history }) => {
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-        setLoading(false);
-        authData.userName = "";
-        authData.password = "";
+          authData.userName = "";
+          authData.password = "";
+          setLoading(false);  
       });
   };
 
@@ -180,10 +174,8 @@ const DesktopMenu = ({ history }) => {
       toast.error("Username must be between 3 and 15 characters long");
       setLoading(false);
       return;
-    } else if (!authData.userName.match(/^[a-z0-9_\.]/)) {
-      toast.error(
-        "Username can only use lowercase letter, number, underscores and dot"
-      );
+    } else if (!/^[a-z0-9_.]+$/.test(authData.userName)) {
+      toast.error("Username can only use lowercase letters, numbers, underscores, and dots");
       setLoading(false);
       return;
     } else if (authData.userName.match(/^_/)) {

@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     position: "relative",
-    marginBottom: "3rem",
     "&::before": {
       background: "rgb(20 51 64 / 94%)",
       content: '""',
