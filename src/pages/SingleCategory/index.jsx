@@ -100,7 +100,7 @@ const SingleCategory = () => {
           spacing={4}
           classes={{ container: classes.itemDetailsContainer }}
         >
-          <Grid item md={7} xs={6} className={classes.productColumn}>
+          <Grid item md={7} sm={6} xs={12} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
               <img
                 className={classes.image}
@@ -109,7 +109,7 @@ const SingleCategory = () => {
               />
             </div>
           </Grid>
-          <Grid item md={5} xs={6} className={classes.productColumn}>
+          <Grid item md={5} sm={6} xs={12} className={classes.productColumn}>
             <div className={classes.productDetails}>
               <Typography className={classes.title} variant="h2">
                 {imageDetails?.title}

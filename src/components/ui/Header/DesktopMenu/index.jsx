@@ -175,7 +175,9 @@ const DesktopMenu = ({ history }) => {
       setLoading(false);
       return;
     } else if (!/^[a-z0-9_.]+$/.test(authData.userName)) {
-      toast.error("Username can only use lowercase letters, numbers, underscores, and dots");
+      toast.error(
+        "Username can only use lowercase letters, numbers, underscores, and dots"
+      );
       setLoading(false);
       return;
     } else if (authData.userName.match(/^_/)) {

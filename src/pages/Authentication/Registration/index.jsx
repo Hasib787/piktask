@@ -70,7 +70,9 @@ export const Registration = ({ history }) => {
       setIsLoading(false);
       return;
     } else if (!/^[a-z0-9_.]+$/.test(username)) {
-      toast.error("Username can only use lowercase letters, numbers, underscores, and dots");
+      toast.error(
+        "Username can only use lowercase letters, numbers, underscores, and dots"
+      );
       setIsLoading(false);
       return;
     } else if (username.match(/^_/)) {
