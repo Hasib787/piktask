@@ -252,17 +252,13 @@ const SingleCategory = () => {
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button
-                    className={classes.downloadBtn}
-                  >
+                  <Button className={classes.downloadBtn}>
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
                   </Button>
                   <div className={classes.downloadedImage}>10K</div>
                 </div>
-                <Button
-                  className={classes.likeBtn}
-                >
+                <Button className={classes.likeBtn}>
                   <img src={likeIcon} alt="Download" />
                 </Button>
               </div>
@@ -270,17 +266,15 @@ const SingleCategory = () => {
           </Grid>
         </Grid>
 
-        {/* BUTTONS OF TAGS */}
-        {/* {
-          allTags.map((allTags) => <TagButtons allTags={allTags} />)
-        } */}
         <Spacing space={{height: "2.5rem"}}></Spacing>
         <SectionHeading
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."
           size="large"
-        />
+          />
         <Products />
+
+        {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
       </Container>
       <Blog />
