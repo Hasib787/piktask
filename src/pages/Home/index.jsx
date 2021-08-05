@@ -47,7 +47,7 @@ export const Home = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
