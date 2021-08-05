@@ -1,7 +1,6 @@
 import { Button, Container } from "@material-ui/core";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Spacing from "../../components/Spacing";
@@ -17,36 +16,12 @@ import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const [popularCats, setPopularCats] = useState([]);
   const [categories, setCategories] = useState([]);
+  const popularCats = useSelector((state) => state.popularCategories);
   const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-        .then(({ data }) => {
-          if (data?.status) {
-            const images = [];
-            data.categories.map((category) =>
-              images.push({
-                id: category.id,
-                name: category.name,
-                slug: category.slug,
-              })
-            );
-            setCategories(images);
-            dispatch({
-              type: "POPULAR_CATEGORIES",
-              payload: [...images],
-            });
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
   }, []);
 
   return (
@@ -61,7 +36,7 @@ export const Home = () => {
 
       <Container>
         <Spacing space={{ height: "3rem" }} />
-        <SectionHeading title="Popular Album Collection" large></SectionHeading>
+        <SectionHeading title="Popular Album Collection" large />
       </Container>
 
       {/* Carousel with Categories */}
