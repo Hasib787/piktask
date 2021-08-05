@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
       height: "100%",
       width: 100,
       cursor: "pointer",
-      
+
       "& .MuiSvgIcon-root": {
         color: "red",
         position: "absolute",
@@ -25,16 +25,14 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .slick-prev": {
       left: 0,
-      background: "linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
+      background:
+        "linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
     },
     "& .slick-next": {
       right: 0,
-      background: "linear-gradient(-90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
+      background:
+        "linear-gradient(-90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
     },
-  },
-
-  prevIconWrapper: {
-    backgroundColor: "#444",
   },
 }));
 

@@ -8,23 +8,42 @@ import "slick-carousel/slick/slick.css";
 import Category from "../Category";
 import useStyles from "./Carousel.styles";
 
+function NavigateNextArrow(props) {
+  const { className, onClick } = props;
+  return (
+    <div className={className} onClick={onClick}>
+      <NavigateNextIcon />
+    </div>
+  );
+}
+
+function NavigatePrevArrow(props) {
+  const { className, onClick } = props;
+  return (
+    <div className={className} onClick={onClick}>
+      <NavigateBeforeIcon />
+    </div>
+  );
+}
+
 export const CategoryCarousel = () => {
-  const [photos, setPhotos] = useState([]);
   const classes = useStyles();
+
+  const [popularCategories, setPopularCategories] = useState([]);
 
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+        .get(`https://piktask.com/api/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
-            setPhotos(data.categories);
+            setPopularCategories(data?.categories);
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log("Popular categories error: ", error);
     }
-  }, [photos]);
+  }, []);
 
   const settings = {
     dots: false,
@@ -34,16 +53,8 @@ export const CategoryCarousel = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: (
-      <div className={classes.prevIconWrapper}>
-        <NavigateBeforeIcon />
-      </div>
-    ),
-    nextArrow: (
-      <div className={classes.prevIconWrapper}>
-        <NavigateNextIcon />
-      </div>
-    ),
+    nextArrow: <NavigateNextArrow />,
+    prevArrow: <NavigatePrevArrow />,
 
     responsive: [
       {
@@ -86,8 +97,8 @@ export const CategoryCarousel = () => {
     <>
       <Container>
         <Slider {...settings} className={classes.carouselWrapper}>
-          {photos?.map((photo) => (
-            <Category key={photo?.id} photo={photo} />
+          {popularCategories?.map((photo) => (
+            <Category key={photo.id} photo={photo} />
           ))}
         </Slider>
       </Container>

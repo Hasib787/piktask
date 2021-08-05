@@ -2,7 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Product from "./Product";
@@ -33,44 +33,87 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type ProductProps = {
+  catName: string,
+  count: number,
+  showHeading: boolean,
+};
 const Products = (props) => {
   const classes = useStyles();
-  const { catIndex, count = 8, showHeading } = props;
-  const popularCategories = useSelector(state => state.popularCategories);
+  const { catName, count, showHeading } = props;
+  const { popularCategories, allCategories } = useSelector((state) => state);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   const [isLoading, setLoading] = useState(true);
+  const [isCategoriesLoaded, setCategoriesLoaded] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
         .then(({ data }) => {
-          if (data?.success) {
-            setProducts(data.images);
-            setLoading(false);
-            
+          if (data?.status) {
+            setCategories(data.categories);
+            setCategoriesLoaded(true);
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
-  const displayPhotos = products?.filter((item) => item.categories_id === popularCategories[catIndex]?.id);
+  const getCatID = () => {
+    if (categories) {
+      return categories.find((item) => item.slug === catName?.slug);
+    }
+  };
+
+  const categoriesBasedItems = () => {
+    // .get(`${process.env.REACT_APP_API_URL}/categories/${getCatID()?.id}`)
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/categories/2`)
+
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategories(data?.category_image);
+          setCategoriesLoaded(false);
+          // setTotalImages(data?.total_image_count?.total_image);
+          setLoading(false);
+          dispatch({
+            type: "CATEGORY_BASED_ITEMS",
+            payload: {
+              totalImages: data.total_image_count.total_image,
+              categories: data.category_image,
+            },
+          });
+        }
+      });
+  };
+  // categoriesBasedItems();
 
   return (
     <>
       {showHeading && (
-        <SectionHeading title={popularCategories[catIndex]?.name} large>
-        <Button className={classes.headingButton} component={Link} to={`/category/${popularCategories[catIndex]?.slug}`}>
-          See More
-        </Button>
-      </SectionHeading>
+        <SectionHeading title={catName?.name} large>
+          <Button
+            className={classes.headingButton}
+            component={Link}
+            to={`/category/${catName?.slug}`}
+          >
+            See More
+          </Button>
+        </SectionHeading>
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {displayPhotos?.slice(0, 8).map((photo) => (
+        {isLoading ? (
+          <h2>Loading......</h2>
+        ) : (
+          categories?.slice(0, count).map((photo) => (
             <Grid
               key={photo.image_id}
               item
@@ -81,7 +124,8 @@ const Products = (props) => {
             >
               <Product photo={photo} />
             </Grid>
-          ))}
+          ))
+        )}
       </Grid>
     </>
   );
