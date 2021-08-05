@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     left: "-4.5rem !important",
     marginTop: "1rem",
     "@media (max-width: 576px)": {
-      minWidth: "35rem",
+      minWidth: "95%",
+      left: "auto !important",
     },
   },
   dropdownMenuWrapper: {
@@ -19,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     outline: "none",
     "@media (max-width: 576px)": {
-      paddingRight: "1.5rem",
-      paddingLeft: "1.5rem",
+      padding: "1rem",
     },
   },
   userInDropdown: {
@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "100%",
     marginRight: "1rem",
     "@media (max-width: 576px)": {
-      width: "5.4rem",
-      height: "5.4rem",
+      width: "4rem",
+      height: "4rem",
     },
   },
   dropdownUserName: {
@@ -62,14 +62,17 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       borderColor: theme.palette.secondary.main,
     },
-
     "@media (max-width: 576px)": {
-      padding: ".3rem 1.5rem",
-      fontSize: "1.6rem",
+      padding: ".2rem 1.5rem",
+      fontSize: "1.4rem",
     },
   },
   accountIcon: {
     marginRight: "1rem",
+    "@media (max-width: 576px)": {
+      width: "2rem",
+      marginRight: ".4rem",
+    },
   },
   productDownloadCount: {
     backgroundColor: "rgb(17 122 0 / 15%)",
@@ -93,14 +96,14 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3rem",
     lineHeight: 1,
     "@media (max-width: 576px)": {
-      fontSize: "2rem",
+      fontSize: "1.5rem",
     },
   },
   totalText: {
     fontSize: "1.5rem",
     fontWeight: 400,
     "@media (max-width: 576px)": {
-      fontSize: "1.5rem",
+      fontSize: "1.4rem",
     },
   },
   userMenuItem: {
@@ -118,8 +121,9 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "0px solid transparent",
     },
     "@media (max-width: 576px)": {
-      padding: ".8rem 2rem",
-      fontSize: "1.5rem",
+      padding: ".6rem 2rem",
+      fontSize: "1.4rem",
+      height: "2rem",
     },
   },
 }));
