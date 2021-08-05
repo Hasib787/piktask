@@ -20,7 +20,6 @@ const TagTemplate = () => {
         background={heroBanner}
         size="medium"
         title="Republicday images"
-        subtitle="+6,000 Free Graphic Resources. See only Photos or Vectors"
       />
 
       <div className={classes.tagWrapper}>

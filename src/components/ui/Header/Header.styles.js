@@ -141,8 +141,8 @@ const useStyles = makeStyles( theme => ({
         color: "#FB5252",
     }, 
     arrowDown: {
-        fontSize: "5rem",
-        color: "#244e5f"
+      fontSize: "5rem",
+      color: "#244e5f",
     },
       
 }));
