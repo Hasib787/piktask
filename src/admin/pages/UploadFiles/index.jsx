@@ -383,7 +383,9 @@ const UploadFiles = () => {
       <AdminHeader />
 
       <div className={classes.adminRoot}>
-        <Sidebar />
+        <Sidebar
+          className={classes.adminSidebar}
+        />
 
         <main className={classes.content}>
           <form autoComplete="off" onSubmit={handleSubmit}>
