@@ -1,9 +1,30 @@
 import { Container } from "@material-ui/core";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+import Category from "../Category";
 import useStyles from "./Carousel.styles";
+
+function NavigateNextArrow(props) {
+  const { className, onClick } = props;
+  return (
+    <div className={className} onClick={onClick}>
+      <NavigateNextIcon />
+    </div>
+  );
+}
+
+function NavigatePrevArrow(props) {
+  const { className, onClick } = props;
+  return (
+    <div className={className} onClick={onClick}>
+      <NavigateBeforeIcon />
+    </div>
+  );
+}
 
 export const CategoryCarousel = () => {
   const classes = useStyles();
@@ -32,8 +53,8 @@ export const CategoryCarousel = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: "next",
-    nextArrow: "Prev",
+    nextArrow: <NavigateNextArrow />,
+    prevArrow: <NavigatePrevArrow />,
 
     responsive: [
       {
@@ -72,13 +93,12 @@ export const CategoryCarousel = () => {
     ],
   };
 
-  console.log("popularCategories", popularCategories);
   return (
     <>
       <Container>
         <Slider {...settings} className={classes.carouselWrapper}>
           {popularCategories?.map((photo) => (
-            // <Category key={photo?.id} photo={photo} />
+            <Category key={photo.id} photo={photo} />
           ))}
         </Slider>
       </Container>

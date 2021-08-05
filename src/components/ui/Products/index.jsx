@@ -93,7 +93,7 @@ const Products = (props) => {
         }
       });
   };
-  categoriesBasedItems();
+  // categoriesBasedItems();
 
   return (
     <>
