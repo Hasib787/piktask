@@ -4,34 +4,53 @@ const useStyles = makeStyles((theme) => ({
   carouselWrapper: {
     marginBottom: "3rem",
 
+    "& .slick-list": {
+      margin: "0 -5px",
+    },
+    "& .slick-slide > div": {
+      margin: "0 5px",
+    },
+
     "& .slick-arrow": {
       position: "absolute",
       top: "50%",
-      transform: "translateY(-50%)",
+      transform: "translateY(-60.4%)",
       zIndex: "1",
       color: "#1B3F4E",
-      height: "100%",
-      width: 100,
+      height: "83%",
+      width: 150,
       cursor: "pointer",
 
       "& .MuiSvgIcon-root": {
-        color: "red",
+        color: "rgb(20 51 64 / 94%)",
         position: "absolute",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        fontSize: "5.5rem",
+        fontSize: "3.5rem",
+        background: "#ddd",
+        borderRadius: "50%",
       },
     },
     "& .slick-prev": {
       left: 0,
+      transition: "all 0.6s linear",
       background:
-        "linear-gradient(90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
+        "linear-gradient(90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+      "&:hover .MuiSvgIcon-root": {
+        backgroundColor: "#117A00",
+        color: "white",
+      },
     },
     "& .slick-next": {
       right: 0,
+      transition: "all 0.6s linear",
       background:
-        "linear-gradient(-90deg, rgba(128,128,128,1) 0%, rgba(128,128,128,0) 100%)",
+        "linear-gradient(-90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+      "&:hover .MuiSvgIcon-root": {
+        backgroundColor: "#117A00",
+        color: "white",
+      },
     },
   },
 }));

@@ -70,26 +70,9 @@ const App = () => {
     }
 
     // recentProducts();
-    // getPopularPhotos();
+    getPopularPhotos();
     return () => unsubscribe();
   }, []);
-
-  function recentProducts() {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent`)
-        .then(({ data }) => {
-          if (data?.success) {
-            dispatch({
-              type: "RECENT_PHOTOS",
-              payload: [...data.images],
-            });
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   function getPopularPhotos() {
     try {

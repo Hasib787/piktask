@@ -2,7 +2,7 @@ import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Product from "./Product";
@@ -41,72 +41,53 @@ type ProductProps = {
 const Products = (props) => {
   const classes = useStyles();
   const { catName, count, showHeading } = props;
-  const { popularCategories, allCategories } = useSelector((state) => state);
-  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const [isLoading, setLoading] = useState(true);
-  const [isCategoriesLoaded, setCategoriesLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data.categories);
-            setCategoriesLoaded(true);
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
-
-  const getCatID = () => {
-    if (categories) {
-      return categories.find((item) => item.slug === catName?.slug);
-    }
-  };
-
-  const categoriesBasedItems = () => {
-    // .get(`${process.env.REACT_APP_API_URL}/categories/${getCatID()?.id}`)
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/2`)
-
-      .then(({ data }) => {
-        if (data?.status) {
-          setCategories(data?.category_image);
-          setCategoriesLoaded(false);
-          // setTotalImages(data?.total_image_count?.total_image);
-          setLoading(false);
-          dispatch({
-            type: "CATEGORY_BASED_ITEMS",
-            payload: {
-              totalImages: data.total_image_count.total_image,
-              categories: data.category_image,
-            },
+    if (catName !== undefined) {
+      try {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+          .then(({ data }) => {
+            if (data?.status) {
+              setCategories(data?.category_image);
+              setLoading(false);
+              dispatch({
+                type: "CATEGORY_BASED_ITEMS",
+                payload: {
+                  totalImages: data.total_image_count.total_image,
+                  categories: data.category_image,
+                },
+              });
+            }
           });
-        }
-      });
-  };
-  // categoriesBasedItems();
+      } catch (error) {
+        console.log("Category based items", error);
+      }
+    }
+  }, [catName]);
 
   return (
     <>
-      {showHeading && (
-        <SectionHeading title={catName?.name} large>
-          <Button
-            className={classes.headingButton}
-            component={Link}
-            to={`/category/${catName?.slug}`}
-          >
-            See More
-          </Button>
-        </SectionHeading>
+      {isLoading ? (
+        <h2>Loading......</h2>
+      ) : (
+        showHeading && (
+          <SectionHeading title={catName?.name} large>
+            <Button
+              className={classes.headingButton}
+              component={Link}
+              to={`/category/${catName?.slug}`}
+            >
+              See More
+            </Button>
+          </SectionHeading>
+        )
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>

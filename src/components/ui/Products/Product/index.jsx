@@ -5,12 +5,12 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React, { useRef } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import crownIcon from '../../../../assets/icons/crown.svg';
+import crownIcon from "../../../../assets/icons/crown.svg";
 import {
   ButtonWrapper,
   CardFooter,
@@ -55,7 +55,10 @@ const Product = ({ photo }) => {
       </div>
 
       <div className={classes.itemContainer}>
-        <Link className={classes.singlePageLink} to={`/photo/${photo?.image_id}`} />
+        <Link
+          className={classes.singlePageLink}
+          to={`/photo/${photo?.image_id}`}
+        />
         <Link to={`/photo/${photo?.image_id}`}>
           <img className={classes.image} src={photo?.thumbnail} alt="" />
         </Link>
@@ -73,16 +76,16 @@ const Product = ({ photo }) => {
         <CardContent className={classes.cardFooter}>
           <CardFooter>
             {photo?.avatar ? (
-                <CardMedia
-                  component="img"
-                  className={classes.authorImage}
-                  image={photo?.avatar}
-                  title={photo?.name}
-                />
-              ) : (
-                <AccountCircleIcon className={classes.authorImage} />
-              )}
-            
+              <CardMedia
+                component="img"
+                className={classes.authorImage}
+                image={photo?.avatar}
+                title={photo?.name}
+              />
+            ) : (
+              <AccountCircleIcon className={classes.authorImage} />
+            )}
+
             <Typography paragraph className={classes.profileName}>
               {photo?.username}
             </Typography>
@@ -95,11 +98,16 @@ const Product = ({ photo }) => {
               alt="Total Download"
             />
             {photo?.total_download}
-            <FavoriteBorderIcon className={classes.heartIcon} /> {photo?.total_likes}
+            <FavoriteBorderIcon className={classes.heartIcon} />{" "}
+            {photo?.total_likes}
           </Typography>
 
           <ButtonWrapper>
-            <Button className={classes.categoryButton}>
+            <Button
+              className={classes.categoryButton}
+              // component={Link}
+              // to={`/photo/${photo.image_id}`}
+            >
               Download
             </Button>
           </ButtonWrapper>
