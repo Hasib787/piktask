@@ -1,30 +1,28 @@
 import { Container } from "@material-ui/core";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import Category from "../Category";
 import useStyles from "./Carousel.styles";
 
 export const CategoryCarousel = () => {
-  const [photos, setPhotos] = useState([]);
   const classes = useStyles();
+
+  const [popularCategories, setPopularCategories] = useState([]);
 
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+        .get(`https://piktask.com/api/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
-            setPhotos(data.categories);
+            setPopularCategories(data?.categories);
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log("Popular categories error: ", error);
     }
-  }, [photos]);
+  }, []);
 
   const settings = {
     dots: false,
@@ -34,16 +32,8 @@ export const CategoryCarousel = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
-    prevArrow: (
-      <div>
-        <NavigateBeforeIcon />
-      </div>
-    ),
-    nextArrow: (
-      <div>
-        <NavigateNextIcon />
-      </div>
-    ),
+    prevArrow: "next",
+    nextArrow: "Prev",
 
     responsive: [
       {
@@ -82,12 +72,13 @@ export const CategoryCarousel = () => {
     ],
   };
 
+  console.log("popularCategories", popularCategories);
   return (
     <>
       <Container>
         <Slider {...settings} className={classes.carouselWrapper}>
-          {photos?.map((photo) => (
-            <Category key={photo?.id} photo={photo} />
+          {popularCategories?.map((photo) => (
+            // <Category key={photo?.id} photo={photo} />
           ))}
         </Slider>
       </Container>

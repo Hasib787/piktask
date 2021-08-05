@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
+import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,13 +43,11 @@ const Products = (props) => {
   const { catName, count, showHeading } = props;
   const { popularCategories, allCategories } = useSelector((state) => state);
   const [products, setProducts] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [isCategoriesLoaded, setCategoriesLoaded] = useState(true);
-  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
 
-  const currentCatName = allCategories.categories.find(
-    (item) => item.slug === catName?.slug
-  );
+  const [isLoading, setLoading] = useState(true);
+  const [isCategoriesLoaded, setCategoriesLoaded] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,48 +57,29 @@ const Products = (props) => {
         .get(`${process.env.REACT_APP_API_URL}/categories`)
         .then(({ data }) => {
           if (data?.status) {
-            setLoading(false);
-            dispatch({
-              type: "CATEGORIES",
-              payload: {
-                categories: data.categories,
-              },
-            });
+            setCategories(data.categories);
+            setCategoriesLoaded(true);
           }
         });
     } catch (error) {
       console.log(error);
     }
+  }, [dispatch]);
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/${currentCatName?.id}`)
-      .then(({ data }) => {
-        console.log("cat data", data);
-
-        if (data?.status) {
-          setProducts(data?.category_image);
-          setCategoriesLoaded(false);
-          // setTotalImages(data?.total_image_count?.total_image);
-          setLoading(false);
-          dispatch({
-            type: "CATEGORY_BASED_ITEMS",
-            payload: {
-              totalImages: data.total_image_count.total_image,
-              categories: data.category_image,
-            },
-          });
-        }
-      });
-  }, [currentCatName, dispatch]);
+  const getCatID = () => {
+    if (categories) {
+      return categories.find((item) => item.slug === catName?.slug);
+    }
+  };
 
   const categoriesBasedItems = () => {
+    // .get(`${process.env.REACT_APP_API_URL}/categories/${getCatID()?.id}`)
     axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/24`)
-      .then(({ data }) => {
-        console.log("cat data", data);
+      .get(`${process.env.REACT_APP_API_URL}/categories/2`)
 
+      .then(({ data }) => {
         if (data?.status) {
-          setProducts(data?.category_image);
+          setCategories(data?.category_image);
           setCategoriesLoaded(false);
           // setTotalImages(data?.total_image_count?.total_image);
           setLoading(false);
@@ -113,40 +93,7 @@ const Products = (props) => {
         }
       });
   };
-
-  function getCategories() {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
-        .then(({ data }) => {
-          if (data?.status) {
-            const catID = data?.categories?.find(
-              (item: string) => item.slug === catName?.slug
-            );
-            console.log("catID", catID);
-
-            axios
-              .get(`${process.env.REACT_APP_API_URL}/categories/${catID?.id}`)
-              .then(({ data }) => {
-                if (data?.status) {
-                  setProducts(data?.category_image);
-                  // setTotalImages(data?.total_image_count?.total_image);
-                  setLoading(false);
-                  dispatch({
-                    type: "CATEGORY_BASED_ITEMS",
-                    payload: {
-                      totalImages: data.total_image_count.total_image,
-                      categories: data.category_image,
-                    },
-                  });
-                }
-              });
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  categoriesBasedItems();
 
   return (
     <>
@@ -163,10 +110,10 @@ const Products = (props) => {
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {/* {isLoading ? (
-          <h2>Loading foding......</h2>
+        {isLoading ? (
+          <h2>Loading......</h2>
         ) : (
-          products?.slice(0, count).map((photo) => (
+          categories?.slice(0, count).map((photo) => (
             <Grid
               key={photo.image_id}
               item
@@ -178,7 +125,7 @@ const Products = (props) => {
               <Product photo={photo} />
             </Grid>
           ))
-        )} */}
+        )}
       </Grid>
     </>
   );

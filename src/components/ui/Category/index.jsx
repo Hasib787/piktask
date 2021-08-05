@@ -8,7 +8,7 @@ const Category = ({ photo }) => {
 
   return (
     <div className={classes.catItem}>
-      <img className={classes.catImage} src={photo?.thumbnail} alt="" />
+      {/* <img className={classes.catImage} src={photo?.thumbnail} alt="" /> */}
       <Button
         className={classes.catName}
         component={Link}

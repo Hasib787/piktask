@@ -1,15 +1,12 @@
 import { Button, Container } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
 import CallToAction from "../../components/ui/CallToAction";
-import {
-  CategoryCarousel,
-  ProductCarousel,
-} from "../../components/ui/Carousel";
+import { CategoryCarousel } from "../../components/ui/Carousel";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
@@ -19,14 +16,22 @@ import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const popularCats = useSelector((state) => state.popularCategories);
-
-  const [isLoading, setLoading] = useState(true);
-  // const [popularCats, setPopularCats] = useState([]);
-  const dispatch = useDispatch();
+  const [popularCats, setPopularCats] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setPopularCats(data.categories);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
@@ -47,32 +52,28 @@ export const Home = () => {
       <CategoryCarousel />
 
       <Container>
-        {/* {popularCats && ( */}
         <Products catName={popularCats[0]} showHeading count={8} />
-        {/* )} */}
-      </Container>
-
-      {/* <Container>
-        {popularCats && (
-          <Products catName={popularCats[1]?.slug} showHeading count={8} />
-        )}
       </Container>
 
       <Container>
-        <Products catName={popularCats[2]?.slug} showHeading count={8} />
+        <Products catName={popularCats[1]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[3]?.slug} showHeading count={8} />
+        <Products catName={popularCats[2]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[4]?.slug} showHeading count={8} />
+        <Products catName={popularCats[3]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[5]?.slug} showHeading count={8} />
-      </Container> */}
+        <Products catName={popularCats[4]} showHeading count={8} />
+      </Container>
+
+      <Container>
+        <Products catName={popularCats[5]} showHeading count={8} />
+      </Container>
 
       <CallToAction
         title="Daily 10 image/photos Download"
@@ -92,7 +93,8 @@ export const Home = () => {
       </Container>
 
       {/* Carousel with Products */}
-      <ProductCarousel />
+      {/* <ProductCarousel /> */}
+      <CategoryCarousel />
 
       {/* BLOG SECTION */}
       <Blog />

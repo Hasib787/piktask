@@ -72,7 +72,7 @@ const App = () => {
     // recentProducts();
     // if (popularCats.length > 0) {
     // }
-    getPopularPhotos();
+    // getPopularPhotos();
     return () => unsubscribe();
   }, []);
 
