@@ -1,7 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({ 
+  paper: {
+    width: '45%',
+    [theme.breakpoints.down(480)]: {
+      width: '70%',
+     },
+  },
   appbarHeader: {
+    backgroundColor: "white",
     boxShadow: "none",
   },
   fullwidth: {
@@ -25,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   adminLogo: {
     width: "13rem",
   },
+  logo: {
+    width: "10rem",
+  },
   headerInfo: {
     display: "flex",
     alignItems: "center",
@@ -35,9 +45,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.8rem",
     fontWeight: 500,
     marginRight: "4rem",
-    [theme.breakpoints.down(769)]: {
-      display: "none",
-     },
+    color: "#1B3F4E",
   },
   uploadBtn: {
     ...theme.typography.button,
@@ -81,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "1.5rem",
     fontSize: "1.8rem",
     fontWeight: 500,
+    color: "#1B3F4E", 
   },
   avatar: {
     fontSize: "4.8rem",
@@ -95,56 +104,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3.5rem",
     color: "#376579",
   },
-  // Mobile Menu
-  paper: {
-    backgroundColor: theme.palette.primary.main,
-
-    [theme.breakpoints.down(426)]: {
-      width: "100%",
-    },
-},
-menuWrapper: {
-    width: "30rem",
-    flexDirection: "column",
-  },
-  mobileMenuLogo: {
-    "&:hover": {
-      background: "transparent",
-    },
-  },
-  mobileTabWrapper: {},
-  navItems: {
-    width: "100%",
-    
-    "& a": {
-      color: theme.palette.common.white,
-      textDecoration: "none",
-      transition: "all 0.3s linear",
-      "&:hover": {
-        color: "#FFCE00",
-      },
-    },
-  },
-  selected: {
-    color: "#FFCE00",
-  },
-  mobileBtn: {
-    ...theme.typography.button,
-    justifyContent: "flex-start",
-    width: "100%",
-    paddingLeft: "1.8rem",
-    alignItems: "center",
-
-    "& img": {
-      marginRight: "1rem",
-    },
-  },
-
-  menuButton: {
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
+  
 
 }));
 
