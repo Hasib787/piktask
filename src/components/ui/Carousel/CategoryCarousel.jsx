@@ -34,7 +34,7 @@ export const CategoryCarousel = () => {
   useEffect(() => {
     try {
       axios
-        .get(`https://piktask.com/api/categories/popular`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
         .then(({ data }) => {
           if (data?.status) {
             setPopularCategories(data?.categories);
