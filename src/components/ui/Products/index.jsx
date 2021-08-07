@@ -1,4 +1,4 @@
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -68,44 +68,57 @@ const Products = (props) => {
           });
       } catch (error) {
         console.log("Category based items", error);
+        setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   }, [catName]);
+
+  console.log("loading", isLoading);
 
   return (
     <>
       {isLoading ? (
         <h2>Loading......</h2>
       ) : (
-        showHeading && (
-          <SectionHeading title={catName?.name} large>
-            <Button
-              className={classes.headingButton}
-              component={Link}
-              to={`/category/${catName?.slug}`}
-            >
-              See More
-            </Button>
-          </SectionHeading>
-        )
+        <>
+          {categories.length !== 0 && showHeading && (
+            <SectionHeading title={catName?.name} large>
+              <Button
+                className={classes.headingButton}
+                component={Link}
+                to={`/category/${catName?.slug}`}
+              >
+                See More
+              </Button>
+            </SectionHeading>
+          )}
+        </>
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <h2>Loading......</h2>
+          <h2>Loading now......</h2>
         ) : (
-          categories?.slice(0, count).map((photo) => (
-            <Grid
-              key={photo.image_id}
-              item
-              xs={6}
-              sm={4}
-              md={3}
-              className={classes.productItem}
-            >
-              <Product photo={photo} />
-            </Grid>
-          ))
+          <>
+            {categories.length ? (
+              categories?.slice(0, count).map((photo) => (
+                <Grid
+                  key={photo.image_id}
+                  item
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <Product photo={photo} />
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="body1">Sorry, no products found</Typography>
+            )}
+          </>
         )}
       </Grid>
     </>

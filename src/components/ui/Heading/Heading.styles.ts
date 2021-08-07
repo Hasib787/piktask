@@ -18,9 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   headingH1: {
     color: theme.palette.common.white,
-    fontSize: "3rem",
-    marginBottom: "1rem",
-    textTransform: "uppercase",
+    fontSize: "2.2rem",
+    marginBottom: 0,
 
     [theme.breakpoints.down("sm")]: {
       fontSize: "3rem",

@@ -90,10 +90,7 @@ const SingleCategory = () => {
   return (
     <>
       <Header />
-      <HeroSection
-        background={bannerImg}
-        size="medium"
-      />
+      <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -116,7 +113,9 @@ const SingleCategory = () => {
               </Typography>
 
               <div className={classes.buttons}>
-                <Typography className={classes.creationDate}>{imageDetails?.creation_ago}</Typography>
+                <Typography className={classes.creationDate}>
+                  {imageDetails?.creation_ago}
+                </Typography>
                 <Button className={classes.button}>
                   <img
                     className={classes.buttonIcon}
@@ -168,7 +167,8 @@ const SingleCategory = () => {
                   </div>
                   <div className={classes.singleItem}>
                     <Typography>
-                      <strong>Scope of authorization: </strong>personal/enterprise
+                      <strong>Scope of authorization: </strong>
+                      personal/enterprise
                     </Typography>
                   </div>
                 </Grid>
@@ -182,7 +182,6 @@ const SingleCategory = () => {
                 Free for personal and commercial purpose with attribution
               </Typography> */}
 
-              
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
@@ -232,22 +231,23 @@ const SingleCategory = () => {
 
               <div className={classes.premiumInfo}>
                 <Typography variant="h4">
-                  Premium User: 
+                  Premium User:
                   <Button className={classes.premiumViewBtn}>View Plans</Button>
                 </Typography>
+                <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
-                  - High-Speed Unlimited Download
+                  - For commercial use{" "}
+                  <Link to={"#"} className={classes.moreInfoBtn}>
+                    More info
+                  </Link>
                 </Typography>
                 <Typography>
-                  - For commercial use <Link to={"#"} className={classes.moreInfoBtn}>More info</Link>
+                  Images license agreement
+                  <Button className={classes.licenseBtn}>
+                    Download License
+                  </Button>
                 </Typography>
-                <Typography>
-                  Images license agreement 
-                  <Button className={classes.licenseBtn}>Download License</Button>
-                </Typography>
-                <Typography>
-                  @ Copyright : Freepik
-                </Typography>
+                <Typography>@ Copyright : Freepik</Typography>
               </div>
 
               <div className={classes.buttonGroup}>
@@ -266,12 +266,12 @@ const SingleCategory = () => {
           </Grid>
         </Grid>
 
-        <Spacing space={{height: "2.5rem"}}></Spacing>
+        <Spacing space={{ height: "2.5rem" }}></Spacing>
         <SectionHeading
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."
           size="large"
-          />
+        />
         <Products />
 
         {/* BUTTONS OF TAGS */}

@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React, { FC } from "react";
 import useStyles from "./Heading.styles";
 
@@ -8,17 +8,20 @@ type Props = {
   children?: any;
   center?: boolean;
   size?: string;
+  uppercase?: boolean;
 };
 
 const SectionHeading: FC<Props> = (props) => {
-  const { title, color, children, center, size } = props;
+  const { title, color, children, center, size, uppercase } = props;
 
   const primaryColor: string = "#1B3F4E";
   const classes = useStyles();
   const whiteColor: string = "#FFFFFF";
 
   return (
-    <div
+    <Grid
+      container
+      spacing={2}
       className={classes.headingContainer}
       style={{
         flexDirection: center ? "column" : "row",
@@ -44,10 +47,11 @@ const SectionHeading: FC<Props> = (props) => {
       >
         <Typography
           className={classes.headingH1}
-          variant="h1"
+          variant="h2"
           style={{
             color: color === "white" ? whiteColor : primaryColor,
             textAlign: "center",
+            textTransform: `${uppercase ? "uppercase" : "inherit"}`,
           }}
         >
           {title}
@@ -55,7 +59,7 @@ const SectionHeading: FC<Props> = (props) => {
       </div>
 
       {children}
-    </div>
+    </Grid>
   );
 };
 
