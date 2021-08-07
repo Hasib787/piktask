@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "#F8F8F8",
-    // margin: 5,
     "&:hover": {
       "& $singlePageLink, $favouriteIcon": {
         opacity: 1,
@@ -87,6 +86,8 @@ export const useStyles = makeStyles((theme) => ({
     height: 37,
     borderRadius: "100%",
     marginRight: "0.8rem",
+    color: "#000",
+    cursor: "pointer",
     // border: "1px solid #1B3F4E",
   },
   profileName: {
@@ -94,6 +95,8 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     fontWeight: 500,
     color: "#1B3F4E",
+    cursor: "pointer",
+    textDecoration: "none",
   },
   buttonIcon: {
     fontSize: "1.6rem",
@@ -105,7 +108,7 @@ export const useStyles = makeStyles((theme) => ({
     width: "8.5rem",
     height: "3.5rem",
     fontSize: "1.2rem",
-    
+    transition: "all 0.3s linear",
   },
   buttonsWrapper: {
     right: "1rem",
