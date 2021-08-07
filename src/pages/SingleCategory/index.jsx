@@ -18,7 +18,8 @@ import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 // import HeroSection from "../../components/ui/Hero";
-import Products from "../../components/ui/Products";
+// import Products from "../../components/ui/Products";
+import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./SingleCategory.styles";
 
@@ -28,6 +29,8 @@ const SingleCategory = () => {
   const [imageDetails, setImageDetails] = useState({});
   const [follower, setFollower] = useState(false);
   const [allTags, setAllTags] = useState([]);
+  const [relatedImage, setRelatedImage] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
   const history = useHistory();
   useEffect(() => {
@@ -64,6 +67,22 @@ const SingleCategory = () => {
     } catch (error) {
       console.log(error.message);
     }
+
+    // related product API
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setRelatedImage(data.images);
+            setLoading(false);
+          }
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+
+
   }, [id, user.token]);
 
   const handleFollower = () => {
@@ -85,6 +104,12 @@ const SingleCategory = () => {
           }
         });
     }
+  };
+
+  const handleLikeUnlikeBtn = () => {
+    if (!user.token) {
+      history.push("/login");
+    } 
   };
 
   return (
@@ -186,22 +211,29 @@ const SingleCategory = () => {
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
-                    {imageDetails?.user?.avatar ? (
-                      <img
-                        className={classes.authorImg}
-                        src={imageDetails?.user?.avatar}
-                        alt={imageDetails?.user?.username}
-                      />
-                    ) : (
-                      <img
-                        className={classes.authorImg}
-                        src={authorPhoto}
-                        alt="AuthorPhoto"
-                      />
-                    )}
+                    <Link to={`/author/${imageDetails?.user_id}`}>
+                      {imageDetails?.user?.avatar ? (
+                        <img
+                          className={classes.authorImg}
+                          src={imageDetails?.user?.avatar}
+                          alt={imageDetails?.user?.username}
+                        />
+                      ) : (
+                        <img
+                          className={classes.authorImg}
+                          src={authorPhoto}
+                          alt="AuthorPhoto"
+                        />
+                      )}
+                    </Link>
 
                     <div>
-                      <Typography className={classes.profileName} variant="h3">
+                      <Typography 
+                        className={classes.profileName} 
+                        variant="h3"
+                        component={Link}
+                        to={`/author/${imageDetails?.user_id}`}
+                      >
                         {imageDetails?.user?.username}
                       </Typography>
                       <Typography
@@ -258,7 +290,10 @@ const SingleCategory = () => {
                   </Button>
                   <div className={classes.downloadedImage}>10K</div>
                 </div>
-                <Button className={classes.likeBtn}>
+                <Button 
+                  className={classes.likeBtn}
+                  onClick={handleLikeUnlikeBtn}
+                >
                   <img src={likeIcon} alt="Download" />
                 </Button>
               </div>
@@ -271,8 +306,28 @@ const SingleCategory = () => {
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."
           size="large"
-          />
-        <Products />
+        />
+        {}
+        {/* <Products /> */}
+
+      <Grid classes={{ container: classes.container }} container spacing={2}>
+        {isLoading ? (
+          <h2>Loading......</h2>
+        ) : (
+          relatedImage?.map((photo) => (
+            <Grid
+              key={photo.image_id}
+              item
+              xs={6}
+              sm={4}
+              md={3}
+              className={classes.productItem}
+            >
+              <Product photo={photo} />
+            </Grid>
+          ))
+        )}
+      </Grid>
 
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
