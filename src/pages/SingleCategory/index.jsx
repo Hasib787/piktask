@@ -26,15 +26,18 @@ import useStyles from "./SingleCategory.styles";
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [imageDetails, setImageDetails] = useState({});
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
   const [follower, setFollower] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [allTags, setAllTags] = useState([]);
   const [relatedImage, setRelatedImage] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
+  const [imageDetails, setImageDetails] = useState({});
+
+
   useEffect(() => {
     window.scrollTo(0, 150);
+
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
@@ -65,7 +68,7 @@ const SingleCategory = () => {
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
 
     // related product API
@@ -79,10 +82,8 @@ const SingleCategory = () => {
           }
         });
     } catch (error) {
-      console.log(error.message);
+      console.log("error", error);
     }
-
-
   }, [id, user.token]);
 
   const handleFollower = () => {
