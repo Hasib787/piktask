@@ -318,8 +318,8 @@ const SingleCategory = () => {
               <Grid
                 key={photo.image_id}
                 item
-                xs={6}
-                sm={4}
+                xs={12}
+                sm={6}
                 md={3}
                 className={classes.productItem}
               >
@@ -336,7 +336,10 @@ const SingleCategory = () => {
       <Blog />
 
       <Footer />
-      <SignUpModal openAuthModal={openAuthModal} setOpenAuthModal={setOpenAuthModal} />
+      <SignUpModal
+        openAuthModal={openAuthModal}
+        setOpenAuthModal={setOpenAuthModal}
+      />
     </>
   );
 };
