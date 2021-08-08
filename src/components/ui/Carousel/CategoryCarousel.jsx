@@ -1,4 +1,4 @@
-import { Container, Grid } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import axios from "axios";
@@ -100,21 +100,21 @@ export const CategoryCarousel = () => {
   return (
     <>
       <Container>
-        <Grid container spacing={2}>
-          {isLoading ? (
-            <h2>Loading...</h2>
-          ) : (
-            <>
-              {
-                <Slider {...settings} className={classes.carouselWrapper}>
-                  {popularCategories?.map((photo) => (
-                    <Category key={photo.id} photo={photo} />
-                  ))}
-                </Slider>
-              }
-            </>
-          )}
-        </Grid>
+        {/* <Grid container spacing={2}> */}
+        {isLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <>
+            {
+              <Slider {...settings} className={classes.carouselWrapper}>
+                {popularCategories?.map((photo) => (
+                  <Category key={photo.id} photo={photo} />
+                ))}
+              </Slider>
+            }
+          </>
+        )}
+        {/* </Grid> */}
       </Container>
     </>
   );
