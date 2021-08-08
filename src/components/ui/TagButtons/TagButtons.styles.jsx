@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2.8rem",
   },
   tagTitle: {
-    fontSize: "2.5rem",
+    fontSize: "2.2rem",
     marginRight: "2rem",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -18,12 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tagButton: {
     ...theme.typography.button,
-    fontSize: "1.5rem",
+    fontSize: "1.4rem",
     color: theme.palette.primary.main,
     backgroundColor: "#F8F8F8",
     border: "1px solid rgb(150 164 173 / 54%)",
-    paddingRight: "3rem",
-    paddingLeft: "3rem",
+    padding: "0.4rem 2.5rem",
     textDecoration: "none",
     "&:not(last-child)": {
       marginRight: "1.2rem",
