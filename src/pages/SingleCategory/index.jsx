@@ -168,7 +168,7 @@ const SingleCategory = () => {
                     </Typography>
                     <Typography>
                       <strong>Image Size </strong>
-                      {imageDetails?.height}*{imageDetails?.width}
+                      {imageDetails?.height} x {imageDetails?.width}
                     </Typography>
                   </div>
                   <div className={classes.singleItem}>
@@ -331,7 +331,9 @@ const SingleCategory = () => {
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
       </Container>
+
       <Blog />
+
       <Footer />
     </>
   );
