@@ -45,7 +45,7 @@ const Product = ({ photo }) => {
     <>
       <CardWrapper className={classes.container}>
         <div className={classes.buttonsWrapper}>
-          {photo?.item_for_sale && (
+          {photo?.item_for_sale === "sale" && (
             <IconButton
               disableRipple
               classes={{ root: classes.premiumIcon }}
