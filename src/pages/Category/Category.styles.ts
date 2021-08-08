@@ -1,33 +1,61 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    marginBottom: "4rem",
+  },
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
+  headingButton: {
+    ...theme.typography.button,
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    padding: "0.8rem 3rem",
+    fontSize: "1.7rem",
+    fontWeight: 500,
+    color: "#1B3F4E",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: "#117A00",
+      color: "#fff",
+    },
+  },
+
+  // Old
   tagWrapper: {
     backgroundColor: theme.palette.common.white,
     padding: "4rem 3rem",
     [theme.breakpoints.down(426)]: {
       display: "none",
-     },
+    },
   },
   root: {
     alignItems: "center",
     display: "flex",
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
   tagTitle: {
-    fontSize: "3.2rem",
-    width: "36rem",
+    fontSize: "2.2rem",
+    // width: "20rem",
+
     [theme.breakpoints.down("md")]: {
       display: "block",
       marginBottom: "2.5rem",
     },
   },
   tagContainer: {
-    width: "70%",
+    // width: "70%",
     [theme.breakpoints.down("md")]: {
       width: "100%",
     },
   },
   columnItem: {
+    display: "flex",
+
     [theme.breakpoints.down("md")]: {
       marginBottom: "2.5rem",
     },
@@ -39,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.palette.primary.main,
     textDecoration: "none",
-    fontSize: "2.1rem",
+    fontSize: "1.5rem",
     fontWeight: 400,
     "&:hover": {
       color: theme.palette.secondary.main,
@@ -49,31 +77,32 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#F8F8F8",
     [theme.breakpoints.down(426)]: {
       display: "none",
-     },
+    },
   },
   shortListTag: {
-    fontSize: "2.7rem",
+    fontSize: "1.8rem",
     width: "20rem",
-    marginTop:"7px",
+    fontWeight: 500,
     [theme.breakpoints.down("md")]: {
       display: "block",
       marginBottom: "2.2rem",
     },
   },
-  sortListMenu:{
+  sortListMenu: {
     paddingTop: ".4rem",
     paddingBottom: ".4rem",
-    [theme.breakpoints.down(769)]: {  
+    [theme.breakpoints.down(769)]: {
       paddingTop: "0",
       paddingBottom: "2rem",
     },
   },
-  sortListItem:{
+  sortListItem: {
     color: "#1B3F4E",
     opacity: 1,
     textDecoration: "none",
-    fontSize: "2rem",
+    fontSize: "1.5rem",
     fontWeight: 400,
+
     "&:hover": {
       color: theme.palette.secondary.main,
     },
@@ -84,28 +113,30 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "-4rem",
     },
   },
-  shortListWrapper:{
+  shortListWrapper: {
     display: "flex",
+    alignItems: "center",
     [theme.breakpoints.down(769)]: {
       display: "grid",
     },
   },
-  borderStyle:{
-    borderRight:"1px solid gray",
+  borderStyle: {
+    borderRight: "1px solid gray",
     [theme.breakpoints.down(1025)]: {
       marginLeft: "-15px",
       marginRight: "5px",
     },
     [theme.breakpoints.down(769)]: {
-     display: "none",
+      display: "none",
     },
   },
   totalResources: {
-    fontSize: "4rem",
+    fontSize: "2.2rem",
     padding: "3.5rem 0 6rem",
+
     [theme.breakpoints.down(426)]: {
       display: "none",
-     },
+    },
   },
 }));
 

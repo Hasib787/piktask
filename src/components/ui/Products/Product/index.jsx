@@ -9,7 +9,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
@@ -24,7 +24,7 @@ const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
   // const history = useHistory();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [likeUnlike, setLikeUnlike] = useState();
 
@@ -78,7 +78,10 @@ const Product = ({ photo }) => {
 
         <div className={classes.itemFooter}>
           <CardContent className={classes.productTitle}>
-            <Link className={classes.titleLink} to={`/photo/${photo?.image_id}`}>
+            <Link
+              className={classes.titleLink}
+              to={`/photo/${photo?.image_id}`}
+            >
               <Typography variant="h2" className={classes.title}>
                 {photo?.title}
               </Typography>
@@ -100,8 +103,8 @@ const Product = ({ photo }) => {
                 )}
               </Link>
 
-              <Typography 
-                paragraph 
+              <Typography
+                paragraph
                 className={classes.profileName}
                 component={Link}
                 to={`/author/${photo?.user_id}`}
@@ -133,7 +136,10 @@ const Product = ({ photo }) => {
           </CardContent>
         </div>
       </CardWrapper>
-      <SignUpModal openAuthModal={openAuthModal} setOpenAuthModal={setOpenAuthModal} />
+      <SignUpModal
+        openAuthModal={openAuthModal}
+        setOpenAuthModal={setOpenAuthModal}
+      />
     </>
   );
 };
