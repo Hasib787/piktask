@@ -144,6 +144,7 @@ const UploadFiles = () => {
   const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [categoryItems, setcategoryItems] = useState({});
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -160,29 +161,47 @@ const UploadFiles = () => {
   const [thumbHeight, setThumbHeight] = useState("");
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const [isImageDimensionOkay, setImageDimensionOkay] = useState(false);
 
   const { mobileView } = menuSate;
-
+  // 200 x 200
   useEffect(
     () => () => {
       let image = new Image();
       image.onload = () => {
-        setThumbWidth(image.width);
-        setThumbHeight(image.height);
+        if (image.width !== 850 || image.height !== 531) {
+          setImageDimensionOkay(true);
+        } else {
+          setImageDimensionOkay(false);
+        }
       };
       image.src = thumbImage.preview;
 
       // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
-    [files, thumbImage, thumbHeight, thumbWidth]
+    [files, thumbImage]
   );
+
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
+
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          console.log("data cats", data);
+          if (data?.status) {
+            setcategoryItems(data?.categories);
+          }
+        });
+    } catch (error) {
+      console.log("Categories loading error: ", error);
+    }
 
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
@@ -194,21 +213,13 @@ const UploadFiles = () => {
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
-      // if (
-      //   (thumbWidth > 360 || thumbWidth < 360) &&
-      //   (thumbHeight > 210 || thumbHeight < 210)
-      // ) {
-      //   toast.error("The thumbnail dimension should be 360x210");
-      //   return;
-      // }
-
-      // setFiles(
-      //   acceptedFiles.map((file) =>
-      //     Object.assign(file, {
-      //       preview: URL.createObjectURL(file),
-      //     })
-      //   )
-      // );
+      setFiles(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
     },
   });
 
@@ -295,38 +306,43 @@ const UploadFiles = () => {
       return;
     }
 
-    // if (thumbs.length === 0) {
-    //   setLoading(false);
-    //   toast.error("Please upload a thumbnail with the dimention of 360 x 210");
-    //   return;
-    // } else if (!title) {
-    //   setLoading(false);
-    //   toast.error("The Title field is required.");
-    //   return;
-    // } else if (title.length < 3 || title.length > 200) {
-    //   setLoading(false);
-    //   toast.error("Title must be between 3 and 200 characters");
-    //   return;
-    // } else if (tags.length === 0) {
-    //   setLoading(false);
-    //   toast.error("The tag field is required");
-    //   return;
-    // } else if (category === "0") {
-    //   toast.error("Please select your item category");
-    //   setLoading(false);
-    //   return;
-    // } else if (item_for_sale !== "free") {
+    if (thumbs.length === 0) {
+      setLoading(false);
+      toast.error(
+        "Please upload a thumbnail preview with the dimention of 850 x 531"
+      );
+      return;
+    } else if (!title) {
+      setLoading(false);
+      toast.error("The Title field is required.");
+      return;
+    } else if (title.length < 3 || title.length > 200) {
+      setLoading(false);
+      toast.error("Title must be between 3 and 200 characters");
+      return;
+    } else if (tags.length === 0) {
+      setLoading(false);
+      toast.error("The tag field is required");
+      return;
+    } else if (category === "0") {
+      toast.error("Please select your item category");
+      setLoading(false);
+      return;
+    }
+
+    // if (item_for_sale === ("free" || 'premium') ) {
     //   toast.error("Item for sale status must be Free or Sale");
     //   setLoading(false);
     //   return;
-    // } else if (price) {
+    // }
+    // else if (price) {
     //   toast.error("Item for sale status must be Free or Sale");
     //   setLoading(false);
     //   return;
     // }
 
     const formData = new FormData();
-    formData.append("title", "this is title");
+    formData.append("title", title);
     formData.append("tags", tags.toString());
     formData.append("category", category);
     formData.append("item_for_sale", item_for_sale);
@@ -449,13 +465,25 @@ const UploadFiles = () => {
                   >
                     Drag and drop or click to upload an photo
                   </Typography>
-                  <Typography className={classes.subtitle} variant="body1">
-                    The photo must be greater than or equal to: 1600x900 - 2MB{" "}
-                  </Typography>
+
+                  {isImageDimensionOkay ? (
+                    <Typography
+                      className={classes.subtitle}
+                      variant="body1"
+                      style={{ color: "red" }}
+                    >
+                      Your image dimension exceeds the limit. It should be
+                      850x531
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.subtitle} variant="body1">
+                      The photo must be equal to: 850x531
+                    </Typography>
+                  )}
                 </div>
               </label>
 
-              {thumbs}
+              {!isImageDimensionOkay && thumbs}
 
               <Heading className={classes.formHeadText} tag="h2">
                 What type of content are you going to upload?
@@ -519,11 +547,12 @@ const UploadFiles = () => {
                       native: true,
                     }}
                   >
-                    {categoryItem.map((option) => (
-                      <option key={option.id} value={option.id}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {categoryItems.length &&
+                      categoryItems?.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                   </TextField>
 
                   <h4 className={classes.titleText}>Item for sale?</h4>
@@ -545,6 +574,7 @@ const UploadFiles = () => {
                     ))}
                   </TextField>
                 </div>
+
                 {itemSale && (
                   <div>
                     <h4 className={classes.titleText}>($)Price</h4>

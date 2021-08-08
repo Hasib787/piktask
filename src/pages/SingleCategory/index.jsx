@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import authorPhoto from "../../assets/author.png";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -21,18 +21,19 @@ import HeroSection from "../../components/ui/Hero";
 // import Products from "../../components/ui/Products";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
+import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const history = useHistory();
   const user = useSelector((state) => state.user);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [follower, setFollower] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [allTags, setAllTags] = useState([]);
-  const [relatedImage, setRelatedImage] = useState([]);
   const [imageDetails, setImageDetails] = useState({});
+  const [relatedImage, setRelatedImage] = useState([]);
+  const [allTags, setAllTags] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 150);
@@ -87,7 +88,7 @@ const SingleCategory = () => {
 
   const handleFollower = () => {
     if (!user.token) {
-      history.push("/login");
+      setOpenAuthModal(true);
     } else {
       const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails.user_id}`;
       axios
@@ -99,7 +100,7 @@ const SingleCategory = () => {
           }
         )
         .then((response) => {
-          if (response.status === 200) {
+          if (response?.status === 200) {
             setFollower(!follower);
           }
         });
@@ -108,7 +109,7 @@ const SingleCategory = () => {
 
   const handleLikeUnlikeBtn = () => {
     if (!user.token) {
-      history.push("/login");
+      setOpenAuthModal(true);
     }
   };
 
@@ -126,7 +127,7 @@ const SingleCategory = () => {
             <div className={classes.imageWrapper}>
               <img
                 className={classes.image}
-                src={imageDetails?.thumbnail}
+                src={imageDetails?.preview}
                 alt={imageDetails?.original_name}
               />
             </div>
@@ -168,7 +169,7 @@ const SingleCategory = () => {
                     </Typography>
                     <Typography>
                       <strong>Image Size </strong>
-                      {imageDetails?.height}*{imageDetails?.width}
+                      {imageDetails?.height} x {imageDetails?.width}
                     </Typography>
                   </div>
                   <div className={classes.singleItem}>
@@ -331,8 +332,11 @@ const SingleCategory = () => {
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
       </Container>
+
       <Blog />
+
       <Footer />
+      <SignUpModal openAuthModal={openAuthModal} setOpenAuthModal={setOpenAuthModal} />
     </>
   );
 };
