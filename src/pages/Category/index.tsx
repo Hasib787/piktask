@@ -15,7 +15,7 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
 import Pagination from "../../components/ui/Pagination";
-import Products from "../../components/ui/Products";
+import Product from "../../components/ui/Products/Product";
 import useStyles from "./Category.styles";
 
 const Category = () => {
@@ -23,29 +23,59 @@ const Category = () => {
   const { catName }: { catName: string } = useParams();
 
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [totalImageCount, setTotalImageCount] = useState("");
+
   const [categories, setCategories] = useState([]);
-  // console.log("categories", categories);
+  const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  const categoryItem = categories.find(
+    (item: string) => item?.slug === catName
+  );
 
   useEffect(() => {
     getCategories();
     getCategoriesWithId();
-  }, []);
-
-  const categoryItem = categories.find((item: string) => item.slug === catName);
-  console.log("catId", categoryItem);
+    popularKeyWords();
+  }, [categoryItem?.id]);
 
   const getCategoriesWithId = () => {
+    if (categoryItem?.id !== undefined) {
+      try {
+        axios
+          .get(
+            `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`
+          )
+          .then(({ data }) => {
+            if (data?.status) {
+              setCategoryProducts(data?.category_image);
+              setTotalImageCount(data?.total_image_count?.total_image);
+              setLoading(false);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
+    }
+  };
+
+  const popularKeyWords = (limit = 10) => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
+        .get(
+          `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=${limit}}`
+        )
         .then(({ data }) => {
-          console.log("data", data);
           if (data?.status) {
-            setCategoryProducts(data.category_image);
+            setPopularSearchKeywords(data?.keywords);
           }
         });
     } catch (error) {
-      console.log(error);
+      console.log("Popular search keywords", error);
+      setLoading(false);
     }
   };
 
@@ -59,7 +89,8 @@ const Category = () => {
           }
         });
     } catch (error) {
-      console.log(error);
+      console.log("Categories error:", error);
+      setLoading(false);
     }
   };
 
@@ -76,105 +107,21 @@ const Category = () => {
       <div className={classes.tagWrapper}>
         <Container>
           <Grid container className={classes.root}>
-            <Typography className={classes.tagTitle} variant="h3">
-              Popular Search:
-            </Typography>
-            <Grid container className={classes.tagContainer}>
-              <Grid item lg={3} md={3} sm={4} className={classes.columnItem}>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    1. Republic day
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    2.Chinese new year
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    3.Background
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    4.India republic day
-                  </Link>
-                </ListItem>
-              </Grid>
+            <Grid item md={2} sm={12} className={classes.columnItem}>
+              <Typography className={classes.tagTitle} variant="h3">
+                Popular Search:
+              </Typography>
+            </Grid>
 
-              <Grid item lg={3} md={3} sm={4} className={classes.columnItem}>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    5.Banner
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    6.Business card
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    7.Mockup
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    8.Infographic
-                  </Link>
-                </ListItem>
-              </Grid>
-
-              <Grid item lg={3} md={3} sm={4} className={classes.columnItem}>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    9.Business card
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    10.Mockup
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    11.Infographic
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    12.Flyer
-                  </Link>
-                </ListItem>
-              </Grid>
-
-              <Grid item lg={3} md={3} sm={4} className={classes.columnItem}>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    13.Flower
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    14.Logo mockup
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link className={classes.link} to="#">
-                    15.Valentine
-                  </Link>
-                </ListItem>
-                <ListItem className={classes.linkItem}>
-                  <Link
-                    className={classes.link}
-                    to="#"
-                    style={{ color: "#117A00" }}
-                  >
-                    16.See more
-                  </Link>
-                </ListItem>
-              </Grid>
+            <Grid item md={10} sm={12} className={classes.columnItem}>
+              {popularSearchKeywords.length &&
+                popularSearchKeywords.map((keyword, index) => (
+                  <ListItem key={index} className={classes.linkItem}>
+                    <Link className={classes.link} to="#">
+                      {`${index + 1}: ${keyword}`}
+                    </Link>
+                  </ListItem>
+                ))}
             </Grid>
           </Grid>
         </Container>
@@ -233,12 +180,39 @@ const Category = () => {
           </div>
         </Container>
       </div>
+
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          456456 Resources
+          {totalImageCount && `${totalImageCount} Resources`}
         </Typography>
 
-        <Products catName={catName} />
+        <Grid classes={{ container: classes.container }} container spacing={2}>
+          {isLoading ? (
+            <h2>Loading now......</h2>
+          ) : (
+            <>
+              {categoryProducts.length ? (
+                categoryProducts?.map((photo) => (
+                  <Grid
+                    key={photo.image_id}
+                    item
+                    xs={6}
+                    sm={4}
+                    md={3}
+                    className={classes.productItem}
+                  >
+                    <Product photo={photo} />
+                  </Grid>
+                ))
+              ) : (
+                <Typography variant="body1">
+                  Sorry, no products found
+                </Typography>
+              )}
+            </>
+          )}
+        </Grid>
+
         <Pagination />
       </Container>
 

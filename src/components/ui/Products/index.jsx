@@ -75,8 +75,6 @@ const Products = (props) => {
     }
   }, [catName]);
 
-  console.log("loading", isLoading);
-
   return (
     <>
       {isLoading ? (
