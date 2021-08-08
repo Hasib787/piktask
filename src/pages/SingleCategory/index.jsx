@@ -126,7 +126,7 @@ const SingleCategory = () => {
             <div className={classes.imageWrapper}>
               <img
                 className={classes.image}
-                src={imageDetails?.thumbnail}
+                src={imageDetails?.preview}
                 alt={imageDetails?.original_name}
               />
             </div>
