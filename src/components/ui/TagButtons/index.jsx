@@ -5,24 +5,25 @@ import useStyles from "./TagButtons.styles";
 
 const TagButtons = ({ allTags }) => {
   const classes = useStyles();
-  
+
   return (
     <>
       <Grid container>
         <Grid item className={classes.tagsContainer}>
           <Typography className={classes.tagTitle} variant="h3">
-            Related Tags
+            Related tags
           </Typography>
-          {allTags?.map((tag, index) => 
-            <Button 
-              className={classes.tagButton} 
-              key={tag.index} 
-              tag={tag} 
-              component={Link} 
+          {allTags?.map((tag, index) => (
+            <Button
+              className={classes.tagButton}
+              key={tag.index}
+              tag={tag}
+              component={Link}
               to={`/tag/${tag}`}
             >
               {tag}
-            </Button>)}
+            </Button>
+          ))}
         </Grid>
       </Grid>
     </>
