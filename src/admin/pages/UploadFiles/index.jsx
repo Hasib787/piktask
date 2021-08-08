@@ -144,6 +144,7 @@ const UploadFiles = () => {
   const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [categoryItems, setcategoryItems] = useState({});
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -188,6 +189,19 @@ const UploadFiles = () => {
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
+
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          console.log("data cats", data);
+          if (data?.status) {
+            setcategoryItems(data?.categories);
+          }
+        });
+    } catch (error) {
+      console.log("Categories loading error: ", error);
+    }
 
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
@@ -297,7 +311,9 @@ const UploadFiles = () => {
 
     if (thumbs.length === 0) {
       setLoading(false);
-      toast.error("Please upload a thumbnail with the dimention of 360 x 210");
+      toast.error(
+        "Please upload a thumbnail preview with the dimention of 850 x 531"
+      );
       return;
     } else if (!title) {
       setLoading(false);
@@ -316,20 +332,20 @@ const UploadFiles = () => {
       setLoading(false);
       return;
     }
-    console.log("item_for_sale", item_for_sale);
 
-    // else if (item_for_sale !== "free") {
+    // if (item_for_sale === ("free" || 'premium') ) {
     //   toast.error("Item for sale status must be Free or Sale");
     //   setLoading(false);
     //   return;
-    // } else if (price) {
+    // }
+    // else if (price) {
     //   toast.error("Item for sale status must be Free or Sale");
     //   setLoading(false);
     //   return;
     // }
 
     const formData = new FormData();
-    formData.append("title", "this is title");
+    formData.append("title", title);
     formData.append("tags", tags.toString());
     formData.append("category", category);
     formData.append("item_for_sale", item_for_sale);
@@ -534,11 +550,12 @@ const UploadFiles = () => {
                       native: true,
                     }}
                   >
-                    {categoryItem.map((option) => (
-                      <option key={option.id} value={option.id}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {categoryItems.length &&
+                      categoryItems?.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                   </TextField>
 
                   <h4 className={classes.titleText}>Item for sale?</h4>

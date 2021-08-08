@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: "flex",
-    marginTop: "2.5rem",
+    marginTop: "1.5rem",
+    alignItems: "center",
     [theme.breakpoints.up(1279)]: {
       display: "flex",
     },
@@ -40,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     ...theme.typography.button,
-    fontSize: "1.5rem",
-    padding: ".6rem 3.5rem",
+    fontSize: "1.3rem",
+    padding: ".6rem 2.5rem",
     fontWeight: 500,
     border: "1px solid #D9DBE1",
     color: "#14323F",
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     paddingRight: "2rem",
-    fontSize: "3rem",
+    fontSize: "2.2rem",
     [theme.breakpoints.down("sm")]: {
       fontSize: "2.8rem",
       lineHeight: 1.3,
@@ -76,10 +77,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   creationDate: {
-    fontSize: "2rem",
+    fontSize: "1.5rem",
     marginRight: 10,
     [theme.breakpoints.down(480)]: {
-      fontSize: "1.5rem",
+      fontSize: "1.3rem",
     },
   },
   detailsContainer: {
@@ -93,9 +94,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   singleItem: {
-    marginBottom: "2rem",
+    marginBottom: "1.3rem",
+    paddingRight: "1.2rem",
+
     "& p": {
-      fontSize: 16,
+      fontSize: "1.4rem",
 
       [theme.breakpoints.down(480)]: {
         fontSize: "1.3rem",
@@ -126,12 +129,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authorImg: {
-    width: "6.5rem",
-    height: "6.5rem",
+    width: "4.5rem",
+    height: "4.5rem",
     borderRadius: "50%",
     marginRight: "1.4rem",
     objectFit: "cover",
     color: "#000",
+
     "@media (max-width: 768px)": {
       width: "5.8rem",
       height: "5.8rem",
@@ -143,25 +147,26 @@ const useStyles = makeStyles((theme) => ({
   },
   profileName: {
     color: theme.palette.secondary.main,
-    fontSize: "2.6rem",
+    fontSize: "1.6rem",
     fontWeight: 400,
     textDecoration: "none",
-    [theme.breakpoints.down(480)]: {
-      fontSize: "2rem",
-    },
+    // [theme.breakpoints.down(480)]: {
+    //   fontSize: "1rem",
+    // },
   },
   resourceInfo: {
-    fontSize: "1.7rem",
+    fontSize: "1.4rem",
     fontWeight: 400,
-    [theme.breakpoints.down(480)]: {
-      fontSize: "1.4rem",
-    },
+    // [theme.breakpoints.down(480)]: {
+    //   fontSize: "1.4rem",
+    // },
   },
   authorBtn: {
     ...theme.typography.button,
     marginRight: "2rem",
-    padding: "1rem 5.5rem",
-    fontSize: 17,
+    padding: "0.5rem 3.5rem",
+    fontSize: "1.5rem",
+
     [theme.breakpoints.down("sm")]: {
       padding: "0.7rem 5rem",
       marginBottom: "2rem",
@@ -193,17 +198,20 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "1rem",
     "& h4": {
       marginBottom: "1rem",
-      fontSize: "2rem",
+      fontSize: "1.8rem",
+      display: "flex",
+      alignItems: "center",
+
       [theme.breakpoints.down(480)]: {
         fontSize: "1.5rem",
       },
     },
     "& p": {
       marginBottom: ".6rem",
-      fontSize: "1.6rem",
-      [theme.breakpoints.down(480)]: {
-        fontSize: "1.4rem",
-      },
+      fontSize: "1.4rem",
+      // [theme.breakpoints.down(480)]: {
+      //   fontSize: "1.4rem",
+      // },
     },
     [theme.breakpoints.down(480)]: {
       width: "100%",
@@ -245,7 +253,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   downloadWrapper: {
-    position: "relative"
+    position: "relative",
   },
   downloadBtn: {
     color: "#fff",
@@ -265,7 +273,7 @@ const useStyles = makeStyles((theme) => ({
       padding: "0.8rem 9rem",
       marginRight: "2.5rem",
     },
-    [theme.breakpoints.down(480)]:{
+    [theme.breakpoints.down(480)]: {
       fontSize: 16,
       padding: "0.4rem 5.1rem",
       marginRight: "2.5rem",
@@ -281,7 +289,7 @@ const useStyles = makeStyles((theme) => ({
       width: "2.7rem",
     },
 
-    [theme.breakpoints.down(480)]:{
+    [theme.breakpoints.down(480)]: {
       padding: "0.4rem 1.5rem",
     },
   },
@@ -298,7 +306,7 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width: 768px)": {
       right: "12px",
     },
-    [theme.breakpoints.down(480)]:{
+    [theme.breakpoints.down(480)]: {
       padding: ".2rem 1rem",
       right: "12px",
     },
