@@ -1,6 +1,6 @@
 import { Button, Container } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Spacing from "../../components/Spacing";
@@ -16,9 +16,7 @@ import useStyles from "./Home.styles";
 
 export const Home = () => {
   const classes = useStyles();
-  const [categories, setCategories] = useState([]);
   const popularCats = useSelector((state) => state.popularCategories);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);

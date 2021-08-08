@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import axios from "axios";
@@ -30,6 +30,7 @@ export const CategoryCarousel = () => {
   const classes = useStyles();
 
   const [popularCategories, setPopularCategories] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
@@ -38,9 +39,11 @@ export const CategoryCarousel = () => {
         .then(({ data }) => {
           if (data?.status) {
             setPopularCategories(data?.categories);
+            setLoading(false);
           }
         });
     } catch (error) {
+      setLoading(false);
       console.log("Popular categories error: ", error);
     }
   }, []);
@@ -97,11 +100,25 @@ export const CategoryCarousel = () => {
   return (
     <>
       <Container>
-        <Slider {...settings} className={classes.carouselWrapper}>
-          {popularCategories?.map((photo) => (
-            <Category key={photo.id} photo={photo} />
-          ))}
-        </Slider>
+        <Grid container spacing={2}>
+          {isLoading ? (
+            <h2>Loading...</h2>
+          ) : (
+            <>
+              {popularCategories.length ? (
+                <Slider {...settings} className={classes.carouselWrapper}>
+                  {popularCategories?.map((photo) => (
+                    <Category key={photo.id} photo={photo} />
+                  ))}
+                </Slider>
+              ) : (
+                <Typography variant="body1" style={{ marginBottom: 30 }}>
+                  Sorry, no category found
+                </Typography>
+              )}
+            </>
+          )}
+        </Grid>
       </Container>
     </>
   );

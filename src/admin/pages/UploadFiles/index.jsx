@@ -5,7 +5,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Container,
   FormControl,
   FormControlLabel,
   Radio,
@@ -13,17 +12,12 @@ import {
   TextareaAutosize,
   TextField,
   Typography,
-  Drawer,
-  MenuItem,
-  MenuList,
-  Toolbar,
-  Button,
 } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
@@ -31,10 +25,6 @@ import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/styles";
-import logo from "../../../assets/piktaskLogo.svg";
 
 // const customStyles = makeStyles({
 //   menuWrapper: {
@@ -185,9 +175,7 @@ const UploadFiles = () => {
       // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
-
-    [files, thumbImage]
-    
+    [files, thumbImage, thumbHeight, thumbWidth]
   );
   useEffect(() => {
     const setResponsiveness = () => {
@@ -209,25 +197,21 @@ const UploadFiles = () => {
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
-      let image = new Image();
-      image.onchange = () => {
-        if (
-          (image.width > 360 || image.width < 360) &&
-          (image.height > 210 || image.height < 210)
-        ) {
-          toast.error("The thumbnail dimension should be 360x210 asdfa");
-          return;
-        }
-      };
-      image.src = thumbImage.preview;
+      // if (
+      //   (thumbWidth > 360 || thumbWidth < 360) &&
+      //   (thumbHeight > 210 || thumbHeight < 210)
+      // ) {
+      //   toast.error("The thumbnail dimension should be 360x210");
+      //   return;
+      // }
 
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
+      // setFiles(
+      //   acceptedFiles.map((file) =>
+      //     Object.assign(file, {
+      //       preview: URL.createObjectURL(file),
+      //     })
+      //   )
+      // );
     },
   });
 
@@ -240,21 +224,6 @@ const UploadFiles = () => {
   ));
 
   const isActive = isDragActive && "2px dashed #26AA10";
-
-  const thumbnailDimension = () => {
-    if (
-      (thumbWidth > 360 || thumbWidth < 360) &&
-      (thumbHeight > 210 || thumbHeight < 210)
-    ) {
-      toast.error("The thumbnail dimension should be 360x210");
-      return;
-    }
-  };
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setValues({ ...values, [name]: value });
-  // }
 
   const addTags = (event) => {
     event.preventDefault();
@@ -305,23 +274,6 @@ const UploadFiles = () => {
       return;
     }
     setPrice(e.target.value);
-  };
-
-  const handleImageChange = (e) => {
-    const imageFile = e.target.files[0];
-    setImage(imageFile);
-    if (!imageFile || imageFile === "") {
-      setImageError("Image is required");
-      toast.error("Image is required");
-      return false;
-    }
-
-    if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      setImageError("Select valid image.");
-      return false;
-    } else {
-      setImageError("");
-    }
   };
 
   const handleFileChange = (e) => {
@@ -376,7 +328,6 @@ const UploadFiles = () => {
     //   return;
     // }
 
-    console.log("thumbImage", thumbImage);
     const formData = new FormData();
     formData.append("title", "this is title");
     formData.append("tags", tags.toString());
@@ -388,8 +339,6 @@ const UploadFiles = () => {
     formData.append("description", description);
     formData.append("image", thumbImage);
     formData.append("additional_image", additional_image);
-
-    return;
 
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
@@ -435,14 +384,8 @@ const UploadFiles = () => {
     <>
       <AdminHeader />
       <div className={classes.adminRoot}>
-        {mobileView ? (
-         null
-        ):(
-        <Sidebar
-          className={classes.adminSidebar}
-        />
-        )}
- 
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
+
         <main className={classes.content}>
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.uploadContainer}>
@@ -728,7 +671,7 @@ const UploadFiles = () => {
                 <TextareaAutosize
                   className={classes.description}
                   aria-label="minimum height"
-                  rowsMin={5}
+                  minRows={5}
                   placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

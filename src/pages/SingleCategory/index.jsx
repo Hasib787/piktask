@@ -34,7 +34,6 @@ const SingleCategory = () => {
   const [relatedImage, setRelatedImage] = useState([]);
   const [imageDetails, setImageDetails] = useState({});
 
-
   useEffect(() => {
     window.scrollTo(0, 150);
 
@@ -110,16 +109,13 @@ const SingleCategory = () => {
   const handleLikeUnlikeBtn = () => {
     if (!user.token) {
       history.push("/login");
-    } 
+    }
   };
 
   return (
     <>
       <Header />
-      <HeroSection
-        background={bannerImg}
-        size="medium"
-      />
+      <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -142,7 +138,9 @@ const SingleCategory = () => {
               </Typography>
 
               <div className={classes.buttons}>
-                <Typography className={classes.creationDate}>{imageDetails?.creation_ago}</Typography>
+                <Typography className={classes.creationDate}>
+                  {imageDetails?.creation_ago}
+                </Typography>
                 <Button className={classes.button}>
                   <img
                     className={classes.buttonIcon}
@@ -194,7 +192,8 @@ const SingleCategory = () => {
                   </div>
                   <div className={classes.singleItem}>
                     <Typography>
-                      <strong>Scope of authorization: </strong>personal/enterprise
+                      <strong>Scope of authorization: </strong>
+                      personal/enterprise
                     </Typography>
                   </div>
                 </Grid>
@@ -208,7 +207,6 @@ const SingleCategory = () => {
                 Free for personal and commercial purpose with attribution
               </Typography> */}
 
-              
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
@@ -229,8 +227,8 @@ const SingleCategory = () => {
                     </Link>
 
                     <div>
-                      <Typography 
-                        className={classes.profileName} 
+                      <Typography
+                        className={classes.profileName}
                         variant="h3"
                         component={Link}
                         to={`/author/${imageDetails?.user_id}`}
@@ -265,22 +263,23 @@ const SingleCategory = () => {
 
               <div className={classes.premiumInfo}>
                 <Typography variant="h4">
-                  Premium User: 
+                  Premium User:
                   <Button className={classes.premiumViewBtn}>View Plans</Button>
                 </Typography>
+                <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
-                  - High-Speed Unlimited Download
+                  - For commercial use{" "}
+                  <Link to={"#"} className={classes.moreInfoBtn}>
+                    More info
+                  </Link>
                 </Typography>
                 <Typography>
-                  - For commercial use <Link to={"#"} className={classes.moreInfoBtn}>More info</Link>
+                  Images license agreement
+                  <Button className={classes.licenseBtn}>
+                    Download License
+                  </Button>
                 </Typography>
-                <Typography>
-                  Images license agreement 
-                  <Button className={classes.licenseBtn}>Download License</Button>
-                </Typography>
-                <Typography>
-                  @ Copyright : Freepik
-                </Typography>
+                <Typography>@ Copyright : Freepik</Typography>
               </div>
 
               <div className={classes.buttonGroup}>
@@ -291,7 +290,7 @@ const SingleCategory = () => {
                   </Button>
                   <div className={classes.downloadedImage}>10K</div>
                 </div>
-                <Button 
+                <Button
                   className={classes.likeBtn}
                   onClick={handleLikeUnlikeBtn}
                 >
@@ -302,33 +301,32 @@ const SingleCategory = () => {
           </Grid>
         </Grid>
 
-        <Spacing space={{height: "2.5rem"}}></Spacing>
+        <Spacing space={{ height: "2.5rem" }}></Spacing>
         <SectionHeading
           title="Related Products"
           subtitle="Top website templates with the highest sales volume."
           size="large"
         />
-        {}
-        {/* <Products /> */}
 
-      <Grid classes={{ container: classes.container }} container spacing={2}>
-        {isLoading ? (
-          <h2>Loading......</h2>
-        ) : (
-          relatedImage?.map((photo) => (
-            <Grid
-              key={photo.image_id}
-              item
-              xs={6}
-              sm={4}
-              md={3}
-              className={classes.productItem}
-            >
-              <Product photo={photo} />
-            </Grid>
-          ))
-        )}
-      </Grid>
+        {/* <Products /> */}
+        <Grid classes={{ container: classes.container }} container spacing={2}>
+          {isLoading ? (
+            <h2>Loading......</h2>
+          ) : (
+            relatedImage?.map((photo) => (
+              <Grid
+                key={photo.image_id}
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                className={classes.productItem}
+              >
+                <Product photo={photo} />
+              </Grid>
+            ))
+          )}
+        </Grid>
 
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
