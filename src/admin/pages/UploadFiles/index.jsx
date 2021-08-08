@@ -207,9 +207,6 @@ const UploadFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const handleMobileMenu = () => {
-    setOpenMobileMenu(true);
-  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
