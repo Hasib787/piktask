@@ -131,6 +131,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     marginRight: "1.4rem",
     objectFit: "cover",
+    color: "#000",
     "@media (max-width: 768px)": {
       width: "5.8rem",
       height: "5.8rem",
@@ -144,6 +145,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontSize: "2.6rem",
     fontWeight: 400,
+    textDecoration: "none",
     [theme.breakpoints.down(480)]: {
       fontSize: "2rem",
     },

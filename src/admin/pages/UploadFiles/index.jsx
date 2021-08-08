@@ -26,6 +26,28 @@ import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
 
+// const customStyles = makeStyles({
+//   menuWrapper: {
+//     top: "1.8rem",
+//     marginTop: 20,
+//     color: "#FFF",
+//     display: "flex",
+//     justifyContent: "space-between",
+
+//     "@media (max-width: 425px)": {
+//       marginTop: 10,
+//     },
+//   },
+//   closeIconWrapper: {
+//     backgroundColor: "#063B52",
+//     padding: "1rem",
+//     boxShadow: "0px 0px 50px 50px #042C3D",
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+// });
+
 const categoryItem = [
   { id: 0, value: "select_category", label: "Select Category" },
   { id: 1, value: "Animals", label: "Animals" },
@@ -106,6 +128,7 @@ const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const classes = useStyles();
+  // const iconClass = customStyles();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
@@ -135,6 +158,10 @@ const UploadFiles = () => {
   const [thumbImage, setThumbImage] = useState("");
   const [thumbWidth, setThumbWidth] = useState("");
   const [thumbHeight, setThumbHeight] = useState("");
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+
+  const { mobileView } = menuSate;
 
   useEffect(
     () => () => {
@@ -150,6 +177,20 @@ const UploadFiles = () => {
     },
     [files, thumbImage, thumbHeight, thumbWidth]
   );
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
+  const handleMobileMenu = () => {
+    setOpenMobileMenu(true);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
@@ -342,9 +383,8 @@ const UploadFiles = () => {
   return (
     <>
       <AdminHeader />
-
       <div className={classes.adminRoot}>
-        <Sidebar className={classes.adminSidebar} />
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
           <form autoComplete="off" onSubmit={handleSubmit}>
@@ -654,7 +694,6 @@ const UploadFiles = () => {
           </form>
         </main>
       </div>
-
       <Footer addminFooter />
     </>
   );

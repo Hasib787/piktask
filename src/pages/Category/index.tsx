@@ -31,13 +31,13 @@ const Category = () => {
     getCategoriesWithId();
   }, []);
 
-  const catId = categories.find((item: string) => item.slug === catName);
-  console.log("catId", catId);
+  const categoryItem = categories.find((item: string) => item.slug === catName);
+  console.log("catId", categoryItem);
 
   const getCategoriesWithId = () => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${catId?.id}`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
         .then(({ data }) => {
           console.log("data", data);
           if (data?.status) {

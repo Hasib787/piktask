@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .slick-prev": {
       left: 0,
-      transition: "all 0.6s linear",
       background:
-        "linear-gradient(90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+        "linear-gradient(90deg, rgba(0,0,0,0.7206232834930848) 0%, rgba(0,0,0,0) 100%)",
       "& .MuiSvgIcon-root": {
         left: "15%",
+        transition: "all 0.3s linear",
       },
       "&:hover .MuiSvgIcon-root": {
         backgroundColor: "#117A00",
@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
     },
     "& .slick-next": {
       right: "-2px",
-      transition: "all 0.6s linear",
       background:
-        "linear-gradient(-90deg, rgb(0 0 0) 30%, rgb(0 0 0 / 0%) 100%)",
+      "linear-gradient(-90deg, rgba(0,0,0,0.7206232834930848) 0%, rgba(0,0,0,0) 100%)",
       "& .MuiSvgIcon-root": {
         right: "15%",
+        transition: "all 0.3s linear",
       },
       "&:hover .MuiSvgIcon-root": {
         backgroundColor: "#117A00",

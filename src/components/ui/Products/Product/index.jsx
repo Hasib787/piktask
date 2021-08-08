@@ -7,8 +7,9 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import downloadIcon from "../../../../assets/download.svg";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import {
@@ -21,9 +22,16 @@ import {
 const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
+  const history = useHistory();
+  const user = useSelector(state => state.user);
+  const [likeUnlike, setLikeUnlike] = useState();
+
+  const handleLikeUnlike = () => {};
 
   const handleClick = () => {
-    if (!likeRef.current.className.includes("disabled")) {
+    if (!user.token) {
+      history.push("/login");
+    } else if (!likeRef.current.className.includes("disabled")) {
       likeRef.current.classList.add("disabled");
     } else if (likeRef.current.classList.value.includes("disabled")) {
       likeRef.current.classList.remove("disabled");
@@ -75,18 +83,25 @@ const Product = ({ photo }) => {
 
         <CardContent className={classes.cardFooter}>
           <CardFooter>
-            {photo?.avatar ? (
-              <CardMedia
-                component="img"
-                className={classes.authorImage}
-                image={photo?.avatar}
-                title={photo?.name}
-              />
-            ) : (
-              <AccountCircleIcon className={classes.authorImage} />
-            )}
+            <Link to={`/author/${photo?.user_id}`}>
+              {photo?.avatar ? (
+                <CardMedia
+                  component="img"
+                  className={classes.authorImage}
+                  image={photo?.avatar}
+                  title={photo?.name}
+                />
+              ) : (
+                <AccountCircleIcon className={classes.authorImage} />
+              )}
+            </Link>
 
-            <Typography paragraph className={classes.profileName}>
+            <Typography 
+              paragraph 
+              className={classes.profileName}
+              component={Link}
+              to={`/author/${photo?.user_id}`}
+            >
               {photo?.username}
             </Typography>
           </CardFooter>
