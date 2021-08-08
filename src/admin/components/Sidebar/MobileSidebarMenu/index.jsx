@@ -1,20 +1,28 @@
-import { Button, Collapse, Drawer, List, ListItem, ListItemText, MenuItem, MenuList, Toolbar } from "@material-ui/core";
+import {
+  Button,
+  Collapse,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Toolbar,
+} from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./MobileSidebarMenu.styles";
 import { useSelector } from "react-redux";
 
-
 const MobileSidebarMenu = () => {
-    const user = useSelector((state) => state.user);
-    const classes = useStyles();
-    const anchorRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  const classes = useStyles();
+  const anchorRef = useRef(null);
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(0);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-
 
   useEffect(() => {
     if (window.location.pathname === "/admin/dashboard" && value !== 0) {
@@ -54,9 +62,13 @@ const MobileSidebarMenu = () => {
   const handleClick = () => {
     setOpen(!open);
   };
-    return (
-        <>
-          <List component="nav" aria-labelledby="nested-sidebar-nav" className={classes.mobileSidebarMenu}>
+  return (
+    <>
+      <List
+        component="nav"
+        aria-labelledby="nested-sidebar-nav"
+        className={classes.mobileSidebarMenu}
+      >
         <ListItem
           classes={{
             gutters: classes.gutters,
@@ -161,8 +173,8 @@ const MobileSidebarMenu = () => {
           <ListItemText primary="Guidline" />
         </ListItem>
       </List>
-        </>
-    );
+    </>
+  );
 };
 
 export default MobileSidebarMenu;
