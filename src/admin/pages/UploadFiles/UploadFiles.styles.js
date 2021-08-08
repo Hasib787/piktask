@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "2rem",
     marginRight: "2rem",
     marginTop: "2rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+     },
   },
   adminSidebar: {
     [theme.breakpoints.down(769)]: {
@@ -300,6 +303,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     backgroundColor: "#00a65a",
     color: "white",
+    [theme.breakpoints.down(480)]: {
+      padding: "0.8rem 0.9rem",
+      fontSize: "14px",
+     },
   },
   uploadIcon: {
     marginRight: "7px",

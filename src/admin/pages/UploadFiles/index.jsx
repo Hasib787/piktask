@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  Container,
   FormControl,
   FormControlLabel,
   Radio,
@@ -12,12 +13,17 @@ import {
   TextareaAutosize,
   TextField,
   Typography,
+  Drawer,
+  MenuItem,
+  MenuList,
+  Toolbar,
+  Button,
 } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
@@ -25,6 +31,32 @@ import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@material-ui/styles";
+import logo from "../../../assets/piktaskLogo.svg";
+
+// const customStyles = makeStyles({
+//   menuWrapper: {
+//     top: "1.8rem",
+//     marginTop: 20,
+//     color: "#FFF",
+//     display: "flex",
+//     justifyContent: "space-between",
+
+//     "@media (max-width: 425px)": {
+//       marginTop: 10,
+//     },
+//   },
+//   closeIconWrapper: {
+//     backgroundColor: "#063B52",
+//     padding: "1rem",
+//     boxShadow: "0px 0px 50px 50px #042C3D",
+//     display: "flex",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+// });
 
 const categoryItem = [
   { id: 0, value: "select_category", label: "Select Category" },
@@ -106,6 +138,7 @@ const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const classes = useStyles();
+  // const iconClass = customStyles();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
@@ -135,6 +168,10 @@ const UploadFiles = () => {
   const [thumbImage, setThumbImage] = useState("");
   const [thumbWidth, setThumbWidth] = useState("");
   const [thumbHeight, setThumbHeight] = useState("");
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+
+  const { mobileView } = menuSate;
 
   useEffect(
     () => () => {
@@ -148,8 +185,24 @@ const UploadFiles = () => {
       // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
+
     [files, thumbImage]
+    
   );
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
+  const handleMobileMenu = () => {
+    setOpenMobileMenu(true);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
@@ -381,12 +434,15 @@ const UploadFiles = () => {
   return (
     <>
       <AdminHeader />
-
       <div className={classes.adminRoot}>
+        {mobileView ? (
+         null
+        ):(
         <Sidebar
           className={classes.adminSidebar}
         />
-
+        )}
+ 
         <main className={classes.content}>
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.uploadContainer}>
@@ -695,7 +751,6 @@ const UploadFiles = () => {
           </form>
         </main>
       </div>
-
       <Footer addminFooter />
     </>
   );

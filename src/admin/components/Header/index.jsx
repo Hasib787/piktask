@@ -22,6 +22,7 @@ import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
 import { useSelector } from "react-redux";
+import MobileSidebarMenu from "../Sidebar/MobileSidebarMenu";
 
 const customStyles = makeStyles({
   menuWrapper: {
@@ -43,11 +44,22 @@ const customStyles = makeStyles({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  menuIcon: {
+    fontSize: "4rem",
+    cursor: "pointer",
+    color: "#000",
+  },
+  closeMenuIcon:{
+    fontSize: "3rem",
+    cursor: "pointer",
+    color: "#FFF",
+  }
 });
 
 const AdminHeader = () => {
   const classes = useStyles();
   const iconClass = customStyles();
+
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
@@ -89,7 +101,8 @@ const AdminHeader = () => {
   return (
     <>
       <AppBar position="fixed" className={classes.appbarHeader}>
-        <div className={classes.fullwidth}>
+        {mobileView ? (
+          <div className={classes.fullwidth}>
           <Container classes={{ root: classes.root }}>
             <Grid
               container
@@ -97,34 +110,18 @@ const AdminHeader = () => {
               classes={{ container: classes.container }}
               alignItems="center"
             >
-              <MenuIcon
-                onClick={handleMobileMenu}
-                className={classes.menuIcon}
-              />
               <Grid item xs={2}>
                 <Link to="/" className={classes.adminLogoLink}>
-                  <img className={classes.adminLogo} src={logo} alt="Piktask" />
+                  <img
+                    className={classes.adminLogo}
+                    src={logo}
+                    alt="Piktask"
+                  />
                 </Link>
               </Grid>
-              
-              <Grid item xs={9} classes={{ item: classes.item }}>
-                <div className={classes.headerInfo}>
-                  <Typography className={classes.earningAmount} variant="h4">
-                    UnpaiD Earning : $0.20
-                  </Typography>
-                  <Button
-                    className={classes.uploadBtn}
-                    component={Link}
-                    to="/admin/upload"
-                  >
-                    <img
-                      className={classes.ButtoncrownIcon}
-                      src={crownIcon}
-                      alt="Upload"
-                    />
-                    Upload
-                  </Button>
 
+              <Grid item xs={10} classes={{ item: classes.item }}>
+                <div className={classes.headerInfo}>
                   <div
                     className={classes.userProfile}
                     onClick={handleToggle}
@@ -146,22 +143,88 @@ const AdminHeader = () => {
                     </Typography>
                     <ArrowDropDownIcon className={classes.arrowDown} />
                   </div>
+                  <MenuIcon
+                    onClick={handleMobileMenu}
+                    className={iconClass.menuIcon}
+                  />
                 </div>
               </Grid>
             </Grid>
           </Container>
         </div>
+        ) : (
+          <div className={classes.fullwidth}>
+            <Container classes={{ root: classes.root }}>
+              <Grid
+                container
+                spacing={2}
+                classes={{ container: classes.container }}
+                alignItems="center"
+              >
+                <Grid item xs={2}>
+                  <Link to="/" className={classes.adminLogoLink}>
+                    <img
+                      className={classes.adminLogo}
+                      src={logo}
+                      alt="Piktask"
+                    />
+                  </Link>
+                </Grid>
 
+                <Grid item xs={10} classes={{ item: classes.item }}>
+                  <div className={classes.headerInfo}>
+                    <Typography className={classes.earningAmount} variant="h4">
+                      UnpaiD Earning : $0.20
+                    </Typography>
+                    <Button
+                      className={classes.uploadBtn}
+                      component={Link}
+                      to="/admin/upload"
+                    >
+                      <img
+                        className={classes.ButtoncrownIcon}
+                        src={crownIcon}
+                        alt="Upload"
+                      />
+                      Upload
+                    </Button>
+                    <div
+                      className={classes.userProfile}
+                      onClick={handleToggle}
+                      aria-controls={open ? "menu-list-grow" : undefined}
+                      aria-haspopup="true"
+                      ref={anchorRef}
+                    >
+                      {user && user?.avatar ? (
+                        <img
+                          className={classes.adminPhoto}
+                          src={user?.avatar}
+                          alt="UserPhoto"
+                        />
+                      ) : (
+                        <AccountCircleIcon className={classes.avatar} />
+                      )}
+                      <Typography className={classes.userName} variant="h4">
+                        {user ? user.username : "Design Studio"}
+                      </Typography>
+                      <ArrowDropDownIcon className={classes.arrowDown} />
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Container>
+          </div>
+        )}
         <Drawer
-          anchor="left"
-          classes={{ paper: classes.paper }}
-          open={openMobileMenu}
-          onClose={() => setOpenMobileMenu(false)}
-        >
-          <div className={iconClass.closeIconWrapper}>
+        anchor="right"
+        classes={{ paper: classes.paper }}
+        open={openMobileMenu}
+        onClose={() => setOpenMobileMenu(false)}
+      >
+        <div className={iconClass.closeIconWrapper}>
             <CloseIcon
               onClick={() => setOpenMobileMenu(false)}
-              className={iconClass.menuIcon}
+              className={iconClass.closeMenuIcon}
             />
             {user && user?.token ? (
               <Button
@@ -170,7 +233,7 @@ const AdminHeader = () => {
                 className={classes.logoWrapper}
                 disableRipple
               >
-                <img src={logo} className={classes.logo} alt="Dev" />
+                <img src={logo} className={classes.logo} alt="piktask" />
               </Button>
             ) : (
               <div>
@@ -191,94 +254,9 @@ const AdminHeader = () => {
               </div>
             )}
           </div>
-          <Toolbar disableGutters className={classes.menuWrapper}>
-            <MenuList className={classes.navItems}>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/vector">Vectors</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/photos">Photos</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/psd">PSD</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/png image">PNG Image</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/illustration">Illustration</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/templates">Templates</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/background">Background</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/3d models">3d Models</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/sell your content">Sell your content</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/sell your content">Pricing</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/sell your content">Personal</Link>
-              </MenuItem>
-              <MenuItem
-                onClick={() => setOpenMobileMenu(false)}
-                classes={{ selected: classes.selected }}
-              >
-                <Link to="/sell your content">Team</Link>
-              </MenuItem>
-            </MenuList>
-
-            {/* <Button
-            component={Link}
-            disableRipple
-            to="/"
-            className={classes.mobileBtn}
-            onClick={() => setOpenMobileMenu(false)}
-          >
-            <img src={crownIcon} alt="Crown" />
-            Premium
-          </Button> */}
-          </Toolbar>
-        </Drawer>
+         <MobileSidebarMenu 
+         />
+       </Drawer>
         <CustomPopper
           open={open}
           handleToggle={handleToggle}
