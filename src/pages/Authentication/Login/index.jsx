@@ -22,7 +22,7 @@ import Header from "../../../components/ui/Header";
 import useStyles from "../Auth.styles";
 
 // const clientId =
-//   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
+//   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
