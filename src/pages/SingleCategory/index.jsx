@@ -30,6 +30,7 @@ const SingleCategory = () => {
   const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [follower, setFollower] = useState(false);
+  const [like, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
@@ -43,7 +44,6 @@ const SingleCategory = () => {
         .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
         .then(({ data }) => {
           if (data?.success) {
-            // const singleImage = data?.detail.find(item => item.id === Number(id));
             setImageDetails(data.detail);
             if (data?.detail.tags) {
               const words = data.detail.tags.split(",");
@@ -107,9 +107,25 @@ const SingleCategory = () => {
     }
   };
 
-  const handleLikeUnlikeBtn = () => {
+  const handleLikeUnlike = () => {
     if (!user.token) {
       setOpenAuthModal(true);
+    } else {
+      const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/like/${id}`;
+      axios
+        .get(
+          likeUnlikeAPI,
+          {},
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then((response) => {
+          console.log("response", response);
+          if (response?.success === 200) {
+            setLike(!like);
+          }
+        });
     }
   };
 
@@ -291,12 +307,21 @@ const SingleCategory = () => {
                   </Button>
                   <div className={classes.downloadedImage}>10K</div>
                 </div>
-                <Button
-                  className={classes.likeBtn}
-                  onClick={handleLikeUnlikeBtn}
-                >
-                  <img src={likeIcon} alt="Download" />
-                </Button>
+                {/* {!like ? ( */}
+                  <Button
+                    className={classes.likeBtn}
+                    onClick={handleLikeUnlike}
+                  >
+                    <img src={likeIcon} alt="Download" />
+                  </Button>
+                {/* ) : (
+                  <Button
+                    className={classes.likeBtn}
+                    onClick={handleLikeUnlike}
+                  >
+                    <img src={likeIcon} alt="Download" />
+                  </Button>
+                )} */}
               </div>
             </div>
           </Grid>
