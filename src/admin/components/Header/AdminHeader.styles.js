@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "100%",
     position: "relative",
     right: "-0.6rem",
-    color: "#FB5252",
+    color: "#000",
 }, 
   arrowDown: {
     fontSize: "3.5rem",
