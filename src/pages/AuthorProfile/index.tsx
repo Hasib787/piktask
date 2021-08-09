@@ -1,5 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import authorImg from "../../assets/author.png";
 import heroBanner from "../../assets/banner/banner.png";
 import facebook from "../../assets/icons/facebook-round.svg";
@@ -33,6 +35,22 @@ const socialMedias: SocialMedia[] = [
 
 const AuthorProfile = () => {
   const classes = useStyles();
+  const { id } = useParams();
+  const [profileInfo, setProfileInfo] = useState({});
+
+  useEffect(() => {
+    try {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setProfileInfo(data?.profile);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id])
 
   return (
     <>
@@ -44,24 +62,28 @@ const AuthorProfile = () => {
         <Container>
           <Grid container className={classes.profileWrapper}>
             <div className={classes.authorImg}>
-              <img src={authorImg} alt="Design Studio" />
+              {profileInfo?.avatar ? (
+                <img src={profileInfo?.avatar} alt="Design Studio" />
+              ) : (
+                <img src={authorImg} alt="Design Studio" />
+              )}
             </div>
             <div className={classes.authorInfo}>
               <Typography className={classes.authorName} variant="h3">
-                Design Studio
+                {profileInfo?.username}
               </Typography>
               <div className={classes.resourceDetails}>
                 <Typography className={classes.infoItem} variant="body2">
                   Resources
-                  <span>760</span>
+                  <span>{profileInfo?.total_images}</span>
                 </Typography>
                 <Typography className={classes.infoItem} variant="body2">
                   Followers
-                  <span>2K</span>
+                  <span>{profileInfo?.total_followers}</span>
                 </Typography>
                 <Typography className={classes.infoItem} variant="body2">
                   Downloads
-                  <span>560K.00</span>
+                  <span>{profileInfo?.total_downloads}</span>
                 </Typography>
               </div>
               <div className={classes.authorSocials}>
