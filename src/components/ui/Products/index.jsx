@@ -33,11 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type ProductProps = {
-  catName: string,
-  count: number,
-  showHeading: boolean,
-};
 const Products = (props) => {
   const classes = useStyles();
   const { catName, count, showHeading } = props;
