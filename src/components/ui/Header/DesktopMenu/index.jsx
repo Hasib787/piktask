@@ -156,9 +156,9 @@ const DesktopMenu = ({ history }) => {
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-          authData.userName = "";
-          authData.password = "";
-          setLoading(false);  
+        authData.userName = "";
+        authData.password = "";
+        setLoading(false);
       });
   };
 
@@ -221,7 +221,7 @@ const DesktopMenu = ({ history }) => {
             url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
             handleCodeInApp: true,
           });
-      
+
           // Show success message to the user
           toast.success(
             `An email has been sent to ${authData.email}. Please check and confirm your registration`
@@ -328,7 +328,6 @@ const DesktopMenu = ({ history }) => {
       setOpen(false);
     }
   };
-
 
   return (
     <>
@@ -535,7 +534,7 @@ const DesktopMenu = ({ history }) => {
 
                   <FacebookLogin
                     className={classes.facebookBtn}
-                    appId="168140328625744"
+                    appId="197392508648176"
                     autoLoad={false}
                     fields="name,email,picture"
                     onClick={handleFacebookLogin}
