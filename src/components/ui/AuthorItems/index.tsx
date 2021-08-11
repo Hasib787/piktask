@@ -1,5 +1,5 @@
 import { Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Product from "../Products/Product";
 import useStyles from "./AuthorItems.styles";
 import axios from "axios";
@@ -11,36 +11,10 @@ const AuthorItems = ({ imageSummery, id }) => {
   const [value, setValue] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [authorAllResource, setAuthorAllResource] = useState([0]);
-  const [firstLoad, setFirstLoad] = useState({});
-
-  const [isActive, setActive] = useState(false);
-
-  // const toggleClass = () => {
-  //   setActive(!isActive);
-  // };
-
-  useEffect(() => {
-    setFirstLoad(imageSummery[0])
-  }, [imageSummery])
-
-  console.log("firstLoad", firstLoad);
 
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
   };
-
-  const tabProps = (id: string) => {
-    return {
-      id,
-      "aria-controls": `simple-tabpanel-${id}`,
-    };
-  };
-
-
-  // useEffect(() => {
-   
-  // }, [])
-
 
   const handleAuthorResource = (e) => {
     const extension = e.currentTarget.dataset.extension;
@@ -52,7 +26,6 @@ const AuthorItems = ({ imageSummery, id }) => {
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
-            setActive(!isActive);
             history.push(`/author/${id}/${extension}`);
             setLoading(false);
           }
@@ -83,10 +56,7 @@ const AuthorItems = ({ imageSummery, id }) => {
               <Tab
                 key={index}
                 label={`${tag.extension} (${tag.images})`}
-                {...tabProps(tag.id)}
                 className={classes.tagButton}
-                // className={`${authorAllResource === [0] ? 'active' : ""} ${classes.tagButton}`}
-                // className={isActive ? 'your_className': null} 
                 classes={{ selected: classes.selected }}
                 onClick={handleAuthorResource}
                 data-extension={tag.extension}
