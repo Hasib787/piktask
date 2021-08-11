@@ -41,10 +41,9 @@ const useStyles = makeStyles((theme) => ({
   tagTitle: {
     fontSize: "2.2rem",
     // width: "20rem",
-
+    textAlign:"center",
     [theme.breakpoints.down("md")]: {
       display: "block",
-      marginBottom: "2.5rem",
     },
   },
   tagContainer: {
@@ -83,9 +82,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.8rem",
     width: "20rem",
     fontWeight: 500,
+    textAlign: "center",
     [theme.breakpoints.down("md")]: {
       display: "block",
-      marginBottom: "2.2rem",
     },
   },
   sortListMenu: {

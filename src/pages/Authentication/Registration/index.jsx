@@ -24,6 +24,8 @@ import useStyles from "../Auth.styles";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
+// const clientId =
+//   "461243390784-aphglbk47oqclmqljmek6328r1q6qb3p.apps.googleusercontent.com";
 
 export const Registration = ({ history }) => {
   const classes = useStyles();
@@ -50,7 +52,6 @@ export const Registration = ({ history }) => {
 
   useEffect(() => {
     if (user.token) history.push("/");
-
 
     return () => {
       document.body.style.backgroundColor = "";
@@ -139,22 +140,20 @@ export const Registration = ({ history }) => {
       });
   };
 
-
   //login with google
   const handleGoogleLogin = async (googleData) => {
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/auth/google_login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          token: googleData.tokenId,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    console.log("googleData", googleData);
+    const res = await fetch(`http://192.168.1.129:8000/api/auth/google_login`, {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const data = await res.json();
+    console.log("data", data);
     // store returned user somehow
     if (data.status) {
       const token = data.token;
@@ -209,10 +208,10 @@ export const Registration = ({ history }) => {
 
   return (
     <>
-     {isRedirectTo && <Redirect to="/confirm-signup" />}
-    <Header />
+      {isRedirectTo && <Redirect to="/confirm-signup" />}
+      <Header />
       <div className={classes.rootContainer}>
-      <Spacing space={{ height: "5rem" }} />
+        <Spacing space={{ height: "5rem" }} />
 
         <div className={classes.formPageContainer}>
           <img
@@ -242,7 +241,7 @@ export const Registration = ({ history }) => {
                     cookiePolicy={"single_host_origin"}
                   />
 
-                  <FacebookLogin
+                  <FacebookLogin 
                     className={classes.facebookBtn}
                     appId="168140328625744"
                     autoLoad={false}
@@ -330,9 +329,7 @@ export const Registration = ({ history }) => {
                       fullWidth
                       className={classes.formButton}
                       type="submit"
-                      disabled={
-                         !username || !email || !password 
-                      }
+                      disabled={!username || !email || !password}
                     >
                       Sign Up
                     </Button>

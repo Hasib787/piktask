@@ -5,7 +5,6 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
-import Pagination from "../../components/ui/Pagination";
 import Products from "../../components/ui/Products";
 import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./TagTemplate.styles";
@@ -32,7 +31,6 @@ const TagTemplate = () => {
           6,283 Resources
         </Typography>
         <Products />
-        <Pagination />
       </Container>
 
       <CallToAction

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./Category.styles";
 
-const Category = ({ photo }) => {
+const PopularCategory = ({ photo }) => {
   const classes = useStyles();
 
   return (
@@ -12,7 +12,7 @@ const Category = ({ photo }) => {
         <img
           className={classes.catImage}
           src={photo?.thumbnail}
-          alt={photo.name}
+          alt="Popular images"
         />
         <Button
           className={classes.catName}
@@ -26,4 +26,4 @@ const Category = ({ photo }) => {
   );
 };
 
-export default Category;
+export default PopularCategory;
