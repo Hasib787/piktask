@@ -241,7 +241,7 @@ export const Registration = ({ history }) => {
                     cookiePolicy={"single_host_origin"}
                   />
 
-                  <FacebookLogin
+                  <FacebookLogin 
                     className={classes.facebookBtn}
                     appId="168140328625744"
                     autoLoad={false}

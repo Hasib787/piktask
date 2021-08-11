@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
   facebookBtn: {
     backgroundColor: "#425993",
     padding: "1.2rem 2rem",
-    // fontSize: "26px !important",
+    fontSize: "26px !important",
     width: "49%",
     borderRadius: 0,
     "&:hover": {

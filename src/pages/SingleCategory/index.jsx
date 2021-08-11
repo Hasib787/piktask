@@ -296,7 +296,7 @@ const SingleCategory = () => {
                     Download License
                   </Button>
                 </Typography>
-                <Typography>@ Copyright : Freepik</Typography>
+                <Typography>@ Copyright : Piktask</Typography>
               </div>
 
               <div className={classes.buttonGroup}>
