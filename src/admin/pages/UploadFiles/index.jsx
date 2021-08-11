@@ -21,6 +21,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -394,7 +395,7 @@ const UploadFiles = () => {
   };
 
   return (
-    <>
+    <Layout>
       <AdminHeader />
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
@@ -722,7 +723,7 @@ const UploadFiles = () => {
         </main>
       </div>
       <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 
