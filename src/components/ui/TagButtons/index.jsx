@@ -16,7 +16,7 @@ const TagButtons = ({ allTags }) => {
           {allTags?.map((tag, index) => (
             <Button
               className={classes.tagButton}
-              key={tag.index}
+              key={index}
               tag={tag}
               component={Link}
               to={`/tag/${tag}`}
