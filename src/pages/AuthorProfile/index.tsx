@@ -37,6 +37,8 @@ const AuthorProfile = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [profileInfo, setProfileInfo] = useState({});
+  const [imageSummery, setImageSummery] = useState([]);
+  
 
   useEffect(() => {
     try {
@@ -45,12 +47,21 @@ const AuthorProfile = () => {
       .then(({ data }) => {
         if (data?.status) {
           setProfileInfo(data?.profile);
+          setImageSummery(data?.images_summary);
         }
       })
     } catch (error) {
       console.log(error);
     }
+
   }, [id])
+  console.log("imageSummery", imageSummery);
+
+// https://piktask.com/api/user/17/statistics
+// https://piktask.com/api/user/17/images/jpg
+
+
+  
 
   return (
     <>
@@ -96,7 +107,7 @@ const AuthorProfile = () => {
           </Grid>
         </Container>
       </div>
-      <AuthorItems />
+      <AuthorItems id={id} imageSummery={imageSummery} />
 
       <CallToAction
         title="Join Designhill designer team"

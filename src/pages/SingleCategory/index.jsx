@@ -113,7 +113,7 @@ const SingleCategory = () => {
     } else {
       const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/like/${id}`;
       axios
-        .get(
+        .post(
           likeUnlikeAPI,
           {},
           {

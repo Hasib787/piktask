@@ -1,46 +1,29 @@
-import { Container, Grid, Tab, Tabs } from "@material-ui/core";
-import React, { ChangeEvent, useState } from "react";
-import Pagination from "../Pagination";
-import Products from "../Products";
+import { Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
+import React, { ChangeEvent, useState, useEffect } from "react";
+import Product from "../Products/Product";
 import useStyles from "./AuthorItems.styles";
+import axios from "axios";
+import { useHistory } from "react-router";
 
-type ItemTags = {
-  id: string;
-  name: string;
-  amount: number;
-};
-
-const itemTags: ItemTags[] = [
-  {
-    id: "01",
-    name: "Png Images",
-    amount: 23,
-  },
-  {
-    id: "02",
-    name: "Templates",
-    amount: 29,
-  },
-  {
-    id: "03",
-    name: "Art Font",
-    amount: 204,
-  },
-  {
-    id: "04",
-    name: "Illustration",
-    amount: 30,
-  },
-  {
-    id: "05",
-    name: "Backgrounds",
-    amount: 354,
-  },
-];
-
-const AuthorItems = () => {
+const AuthorItems = ({ imageSummery, id }) => {
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = useState(0);
+  const [isLoading, setLoading] = useState(true);
+  const [authorAllResource, setAuthorAllResource] = useState([0]);
+  const [firstLoad, setFirstLoad] = useState({});
+
+  const [isActive, setActive] = useState(false);
+
+  // const toggleClass = () => {
+  //   setActive(!isActive);
+  // };
+
+  useEffect(() => {
+    setFirstLoad(imageSummery[0])
+  }, [imageSummery])
+
+  console.log("firstLoad", firstLoad);
 
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
@@ -51,6 +34,35 @@ const AuthorItems = () => {
       id,
       "aria-controls": `simple-tabpanel-${id}`,
     };
+  };
+
+
+  // useEffect(() => {
+   
+  // }, [])
+
+
+  const handleAuthorResource = (e) => {
+    const extension = e.currentTarget.dataset.extension;
+
+    if (extension !== undefined) {
+      try {
+        axios
+        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${extension}?limit=4`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setAuthorAllResource(data?.images);
+            setActive(!isActive);
+            history.push(`/author/${id}/${extension}`);
+            setLoading(false);
+          }
+        })
+      } catch (error) {
+        console.log("All author resources", error);
+      }
+    } else {
+      console.log("Sorry no extension found");
+    }
   };
 
   return (
@@ -66,21 +78,47 @@ const AuthorItems = () => {
             indicator: classes.indicator,
           }}
         >
-          {itemTags.length > 0 &&
-            itemTags.map((tag) => (
+          {imageSummery.length > 0 &&
+            imageSummery.map((tag, index) => (
               <Tab
-                key={tag.id}
-                label={`${tag.name} (${tag.amount})`}
+                key={index}
+                label={`${tag.extension} (${tag.images})`}
                 {...tabProps(tag.id)}
                 className={classes.tagButton}
+                // className={`${authorAllResource === [0] ? 'active' : ""} ${classes.tagButton}`}
+                // className={isActive ? 'your_className': null} 
                 classes={{ selected: classes.selected }}
+                onClick={handleAuthorResource}
+                data-extension={tag.extension}
               />
             ))}
         </Tabs>
       </Grid>
 
-      <Products />
-      <Pagination />
+      <Grid classes={{ container: classes.container }} container spacing={2}>
+        {isLoading ? (
+          <h2>Loading now......</h2>
+        ) : (
+          <>
+            {authorAllResource?.length ? (
+              authorAllResource?.map((photo) => (
+                <Grid
+                  key={photo.image_id}
+                  item
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <Product photo={photo} />
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="body1">Sorry, no products found</Typography>
+            )}
+          </>
+        )}
+      </Grid>
     </Container>
   );
 };
