@@ -1,6 +1,5 @@
 import { Container, Grid, Tab, Tabs } from "@material-ui/core";
 import React, { ChangeEvent, useState } from "react";
-import Pagination from "../Pagination";
 import Products from "../Products";
 import useStyles from "./AuthorItems.styles";
 
@@ -80,7 +79,6 @@ const AuthorItems = () => {
       </Grid>
 
       <Products />
-      <Pagination />
     </Container>
   );
 };
