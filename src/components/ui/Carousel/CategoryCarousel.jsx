@@ -5,7 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import Category from "../Category";
+import PopularCategory from "../PopularCategory";
 import useStyles from "./Carousel.styles";
 
 function NavigateNextArrow(props) {
@@ -108,7 +108,7 @@ export const CategoryCarousel = () => {
             {
               <Slider {...settings} className={classes.carouselWrapper}>
                 {popularCategories?.map((photo) => (
-                  <Category key={photo.id} photo={photo} />
+                  <PopularCategory key={photo.id} photo={photo} />
                 ))}
               </Slider>
             }
