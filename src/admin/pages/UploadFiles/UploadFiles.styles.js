@@ -4,6 +4,22 @@ const useStyles = makeStyles((theme) => ({
   adminRoot: {
     display: "flex",
     marginTop: "8rem",
+    [theme.breakpoints.up(1700)]: {
+      marginTop: "8rem",
+      margin:"0rem 10rem",
+     },
+     [theme.breakpoints.up(1900)]: {
+      marginTop: "8rem",
+      margin:"0rem 15rem",
+     },
+     [theme.breakpoints.up(2100)]: {
+      marginTop: "8rem",
+      margin:"0rem 30rem",
+     },
+     [theme.breakpoints.up(2560)]: {
+      marginTop: "8rem",
+      margin:"0rem 51rem",
+     },
   },
   content: {
     padding: 0,
