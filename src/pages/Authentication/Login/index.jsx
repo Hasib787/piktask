@@ -8,8 +8,6 @@ import {
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -50,7 +48,7 @@ export const Login = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username,
@@ -157,12 +155,12 @@ export const Login = ({ history }) => {
       <div className={classes.rootContainer}>
         <Spacing space={{ height: "5rem" }} />
         <div className={classes.formPageContainer}>
-        <img
+          <img
             src={formIconTop}
             alt="Background Icon"
             className={classes.backgroundIconTop}
           />
-           {/* <Spacing space={{ height: "2rem" }} /> */}
+          {/* <Spacing space={{ height: "2rem" }} /> */}
           <div className={classes.formWrapper}>
             <div className={classes.formWrapperInner}>
               <div className={classes.formHeading}>
@@ -272,7 +270,7 @@ export const Login = ({ history }) => {
         </div>
         <Spacing space={{ height: "5rem" }} />
       </div>
-    <Footer />
+      <Footer />
     </>
   );
 };

@@ -41,16 +41,16 @@ const AuthorProfile = () => {
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setProfileInfo(data?.profile);
-        }
-      })
+        .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setProfileInfo(data?.profile);
+          }
+        });
     } catch (error) {
       console.log(error);
     }
-  }, [id])
+  }, [id]);
 
   return (
     <>
