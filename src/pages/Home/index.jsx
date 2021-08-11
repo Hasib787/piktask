@@ -12,6 +12,7 @@ import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
+import Layout from "../../Layout";
 import useStyles from "./Home.styles";
 
 export const Home = () => {
@@ -23,7 +24,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <Layout>
       <Header />
       <HeroSection
         background={heroBanner}
@@ -89,6 +90,6 @@ export const Home = () => {
       <Blog />
 
       <Footer />
-    </>
+    </Layout>
   );
 };

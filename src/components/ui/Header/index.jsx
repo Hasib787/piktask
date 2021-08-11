@@ -46,6 +46,11 @@ const customStyles = makeStyles({
     cursor: "pointer",
     color: "#FFF",
   },
+  closeIcon: {
+    fontSize: "3rem",
+    cursor: "pointer",
+    color: "#FFF",
+  },
 });
 
 const Header = () => {
@@ -159,7 +164,6 @@ const Header = () => {
             <DesktopMenu />
           )}
         </AppBar>
-        
       </div>
       <Drawer
         anchor="right"
@@ -170,7 +174,7 @@ const Header = () => {
         <div className={iconClass.closeIconWrapper}>
           <CloseIcon
             onClick={() => setOpenMobileMenu(false)}
-            className={iconClass.menuIcon}
+            className={iconClass.closeIcon}
           />
           {user && user?.token ? (
             <Button
@@ -183,11 +187,7 @@ const Header = () => {
             </Button>
           ) : (
             <div>
-              <Button
-                className={classes.loginBtn}
-                component={Link}
-                to="/login"
-              >
+              <Button className={classes.loginBtn} component={Link} to="/login">
                 Login
               </Button>
               <Button

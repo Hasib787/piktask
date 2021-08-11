@@ -14,13 +14,13 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
-import Pagination from "../../components/ui/Pagination";
+import PopularCategory from "../../components/ui/PopularCategory";
 import Product from "../../components/ui/Products/Product";
 import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const { catName }: { catName: string } = useParams();
+  const { catName } = useParams();
 
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
@@ -30,11 +30,11 @@ const Category = () => {
   const [isLoading, setLoading] = useState(true);
 
   const categoryItem = categories.find(
-    (item: string) => item?.slug === catName
+    (item) => item?.slug === catName
   );
 
   useEffect(() => {
-    getCategories();
+    getPopularCategories();
     getCategoriesWithId();
     popularKeyWords();
   }, [categoryItem?.id]);
@@ -48,6 +48,7 @@ const Category = () => {
           )
           .then(({ data }) => {
             if (data?.status) {
+              console.log(data);
               setCategoryProducts(data?.category_image);
               setTotalImageCount(data?.total_image_count?.total_image);
               setLoading(false);
@@ -79,11 +80,12 @@ const Category = () => {
     }
   };
 
-  const getCategories = () => {
+  const getPopularCategories = () => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/`)
         .then(({ data }) => {
+          console.log("Popular categories", data);
           if (data?.status) {
             setCategories(data.categories);
           }
@@ -139,6 +141,7 @@ const Category = () => {
                 to="#"
                 label="Popular"
                 style={{ color: "#117A00" }}
+              
               />
               <Tab
                 className={classes.sortListItem}
@@ -201,7 +204,7 @@ const Category = () => {
                     md={3}
                     className={classes.productItem}
                   >
-                    <Product photo={photo} />
+                   <Product  photo={photo}/>
                   </Grid>
                 ))
               ) : (
@@ -213,7 +216,6 @@ const Category = () => {
           )}
         </Grid>
 
-        <Pagination />
       </Container>
 
       <CallToAction
