@@ -287,7 +287,8 @@ const DesktopMenu = ({ history }) => {
       {
         method: "POST",
         body: JSON.stringify({
-          token: facebookData.tokenId,
+          accessToken: facebookData.accessToken,
+          userID: facebookData.userID,
         }),
         headers: {
           "Content-Type": "application/json",
