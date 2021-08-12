@@ -12,7 +12,6 @@ import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import Spacing from "../../components/Spacing";
-import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
@@ -107,13 +106,13 @@ const SingleCategory = () => {
     }
   };
 
-  const handleLikeUnlike = () => {
+  const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else {
       const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/like/${id}`;
       axios
-        .get(
+        .post(
           likeUnlikeAPI,
           {},
           {
@@ -122,8 +121,10 @@ const SingleCategory = () => {
         )
         .then((response) => {
           console.log("response", response);
-          if (response?.success === 200) {
-            setLike(!like);
+          if (response?.status === 200) {
+            setLike(true);
+          } else {
+            setLike(false);
           }
         });
     }
@@ -305,23 +306,26 @@ const SingleCategory = () => {
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
                   </Button>
-                  <div className={classes.downloadedImage}>10K</div>
+                  <div className={classes.downloadedImage}>
+                    {imageDetails?.user?.images?.total_downloads}
+                  </div>
                 </div>
-                {/* {!like ? ( */}
+                {!like ? (
                   <Button
                     className={classes.likeBtn}
-                    onClick={handleLikeUnlike}
+                    onClick={handleLikeBtn}
                   >
                     <img src={likeIcon} alt="Download" />
                   </Button>
-                {/* ) : (
+                ) : (
                   <Button
-                    className={classes.likeBtn}
-                    onClick={handleLikeUnlike}
+                    className={classes.activeLikeBtn}
+                    onClick={handleLikeBtn}
                   >
-                    <img src={likeIcon} alt="Download" />
+                    unLike
+                    {/* <img src={likeIcon} alt="Download" /> */}
                   </Button>
-                )} */}
+                )}
               </div>
             </div>
           </Grid>
@@ -358,7 +362,6 @@ const SingleCategory = () => {
         <TagButtons allTags={allTags} />
       </Container>
 
-      <Blog />
 
       <Footer />
       <SignUpModal

@@ -7,6 +7,7 @@ import { CustomBtn, InputField } from "../../../components/InputField";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import HeroSection from "../../../components/ui/Hero";
 import useStyles from "./ResetPassword.styles";
 
 export const ResetPassword = () => {
@@ -133,6 +134,7 @@ export const ResetPassword = () => {
   return (
     <>
       <Header />
+      <HeroSection/>
       <Spacing space={{ height: "3.5rem" }} />
 
       <Container>

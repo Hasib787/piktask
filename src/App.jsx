@@ -127,7 +127,9 @@ const App = () => {
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
+        <Route exact path="/author/:id/:extension" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
+        <Route exact path="/categories/:id" component={Category} />
         <Route exact path="/:category/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
