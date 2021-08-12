@@ -287,7 +287,8 @@ const DesktopMenu = ({ history }) => {
       {
         method: "POST",
         body: JSON.stringify({
-          token: facebookData.tokenId,
+          accessToken: facebookData.accessToken,
+          userID: facebookData.userID,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -534,7 +535,7 @@ const DesktopMenu = ({ history }) => {
 
                   <FacebookLogin
                     className={classes.facebookBtn}
-                    appId="197392508648176"
+                    appId="168140328625744"
                     autoLoad={false}
                     fields="name,email,picture"
                     onClick={handleFacebookLogin}
