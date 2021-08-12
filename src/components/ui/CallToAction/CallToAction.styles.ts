@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.palette.common.white,
+    fontSize: "3rem",
     marginBottom: ".8rem",
     "@media (max-width: 768px)": {
       fontSize: "3rem",
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     color: theme.palette.common.white,
-    fontSize: "1.9rem",
+    fontSize: "1.5rem",
     fontWeight: 500,
     marginBottom: "3rem",
 
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   moreButton: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    padding: "0.8rem 3.5rem",
+    padding: "0.7rem 2.5rem",
     textDecoration: "none",
     border: "2px solid",
     borderColor: theme.palette.secondary.main,
