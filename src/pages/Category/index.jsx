@@ -1,7 +1,10 @@
 import {
   Container,
+  FormControl,
   Grid,
+  InputLabel,
   ListItem,
+  Select,
   Tab,
   Tabs,
   Typography,
@@ -22,8 +25,7 @@ const Category = () => {
   const classes = useStyles();
   const { id, catName } = useParams();
   // console.log(catName);
-  console.log("category id",id);
-
+  console.log("category id", id);
 
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [categoryProductBySorting, setCategoryProductBySorting] = useState([]);
@@ -32,10 +34,9 @@ const Category = () => {
   const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [sortItem, setSortItem] = useState("");
 
-  const categoryItem = categories.find(
-    (item) => item?.slug === catName
-  );
+  const categoryItem = categories.find((item) => item?.slug === catName);
 
   useEffect(() => {
     getCategories();
@@ -98,25 +99,33 @@ const Category = () => {
       console.log("Categories error:", error);
       setLoading(false);
     }
-  }
+  };
 
-  //Fetch api to get data for the category page by sorting by popularity 
+  //Fetch api to get data for the category page by sorting by popularity
   const getCategoryProducts = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/${id}`)
         .then(({ data }) => {
           if (data?.status) {
-            console.log("category product by sorted",data);
+            console.log("category product by sorted", data);
             setCategoryProductBySorting(data?.category_image);
           }
         });
-      } catch (error) {
-        console.log("Category products error:", error);
-        setLoading(false);
-      }
-    };
-  
+    } catch (error) {
+      console.log("Category products error:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    setSortItem({
+      ...sortItem,
+      [name]: event.target.value,
+    });
+  };
+
   return (
     <>
       <Header />
@@ -153,54 +162,24 @@ const Category = () => {
       <div className={classes.shortList}>
         <Container>
           <div className={classes.shortListWrapper}>
-            <Typography className={classes.shortListTag}>Sorted By:</Typography>
-            <Tabs className={classes.sortListMenu}>
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Popular"
-                style={{ color: "#117A00" }}
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to={`/categories/${id}`}
-                label="Top Download"
-                onClick={() => getCategoryProducts()}
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Brand New"
-              />
-              <p className={classes.borderStyle}></p>
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="All Product"
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Free"
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Premium"
-              />
-            </Tabs>
+            <Typography className={classes.shortListTag}>Sort by:</Typography>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <Select className={classes.selectSortItem}
+                native
+                value={sortItem.age}
+                onChange={handleChange}
+                inputProps={{
+                  id: "outlined-age-native-simple",
+                }}
+              >
+                <option>Popular</option>
+                <option>Top Download</option>
+                <option>Brand New</option>
+                <option>All Product</option>
+                <option>Free</option>
+                <option>Premium</option>
+              </Select>
+            </FormControl>{" "}
           </div>
         </Container>
       </div>
@@ -225,7 +204,7 @@ const Category = () => {
                     md={3}
                     className={classes.productItem}
                   >
-                   <Product  photo={photo}/>
+                    <Product photo={photo} />
                   </Grid>
                 ))
               ) : (
@@ -236,7 +215,6 @@ const Category = () => {
             </>
           )}
         </Grid>
-
       </Container>
 
       <CallToAction

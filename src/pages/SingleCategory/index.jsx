@@ -322,7 +322,7 @@ const SingleCategory = () => {
                     className={classes.activeLikeBtn}
                     onClick={handleLikeBtn}
                   >
-                    unLike
+                    Unlike
                     {/* <img src={likeIcon} alt="Download" /> */}
                   </Button>
                 )}
