@@ -12,7 +12,6 @@ import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import Spacing from "../../components/Spacing";
-import Blog from "../../components/ui/Blog";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
@@ -363,7 +362,6 @@ const SingleCategory = () => {
         <TagButtons allTags={allTags} />
       </Container>
 
-      <Blog />
 
       <Footer />
       <SignUpModal

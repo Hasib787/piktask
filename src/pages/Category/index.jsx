@@ -20,9 +20,13 @@ import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const { catName } = useParams();
+  const { id, catName } = useParams();
+  // console.log(catName);
+  console.log("category id",id);
+
 
   const [categoryProducts, setCategoryProducts] = useState([]);
+  const [categoryProductBySorting, setCategoryProductBySorting] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
 
   const [categories, setCategories] = useState([]);
@@ -34,7 +38,7 @@ const Category = () => {
   );
 
   useEffect(() => {
-    getPopularCategories();
+    getCategories();
     getCategoriesWithId();
     popularKeyWords();
   }, [categoryItem?.id]);
@@ -80,7 +84,7 @@ const Category = () => {
     }
   };
 
-  const getPopularCategories = () => {
+  const getCategories = () => {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/`)
@@ -94,8 +98,25 @@ const Category = () => {
       console.log("Categories error:", error);
       setLoading(false);
     }
-  };
+  }
 
+  //Fetch api to get data for the category page by sorting by popularity 
+  const getCategoryProducts = () => {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/${id}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            console.log("category product by sorted",data);
+            setCategoryProductBySorting(data?.category_image);
+          }
+        });
+      } catch (error) {
+        console.log("Category products error:", error);
+        setLoading(false);
+      }
+    };
+  
   return (
     <>
       <Header />
@@ -141,14 +162,14 @@ const Category = () => {
                 to="#"
                 label="Popular"
                 style={{ color: "#117A00" }}
-              
               />
               <Tab
                 className={classes.sortListItem}
                 disableRipple
                 component={Link}
-                to="#"
+                to={`/categories/${id}`}
                 label="Top Download"
+                onClick={() => getCategoryProducts()}
               />
               <Tab
                 className={classes.sortListItem}
