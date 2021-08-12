@@ -11,22 +11,25 @@ const AuthorItems = ({ imageSummery, id }) => {
   const [value, setValue] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [authorAllResource, setAuthorAllResource] = useState([0]);
+  // console.log("imageSummery", imageSummery[0].extension);
+
 
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
   };
 
-  const handleAuthorResource = (e) => {
-    const extension = e.currentTarget.dataset.extension;
 
-    if (extension !== undefined) {
+
+  const handleAuthorResource = (tag) => {
+
+    if (tag !== undefined) {
       try {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${extension}?limit=4`)
+        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${tag}?limit=4`)
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
-            history.push(`/author/${id}/${extension}`);
+            // history.push(`/author/${id}/${tag}`);
             setLoading(false);
           }
         })
@@ -58,8 +61,7 @@ const AuthorItems = ({ imageSummery, id }) => {
                 label={`${tag.extension} (${tag.images})`}
                 className={classes.tagButton}
                 classes={{ selected: classes.selected }}
-                onClick={handleAuthorResource}
-                data-extension={tag.extension}
+                onClick={() => handleAuthorResource(tag.extension)}
               />
             ))}
         </Tabs>
@@ -70,6 +72,7 @@ const AuthorItems = ({ imageSummery, id }) => {
           <h2>Loading now......</h2>
         ) : (
           <>
+            {/* {authorAllResource.filter((index) => authorAllResource === index.tag) && authorAllResource?.length ? ( */}
             {authorAllResource?.length ? (
               authorAllResource?.map((photo) => (
                 <Grid

@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
 
     "@media (max-width: 595px)": {
+      width: "auto",
       textAlign: "center",
       alignItems: "center",
       display: "flex",
@@ -61,12 +62,17 @@ const useStyles = makeStyles((theme) => ({
   authorName: {
     color: theme.palette.common.white,
     fontSize: "2.2rem",
-    marginBottom: "1.5rem",
+    marginBottom: ".8rem",
+    marginTop: "2rem",
+
+    [theme.breakpoints.down(480)]: {
+      marginTop: "0",
+    },
   },
   resourceDetails: {
     display: "flex",
     alignItems: "center",
-    marginBottom: "1.5rem",
+    marginBottom: ".4rem",
   },
   infoItem: {
     fontSize: "1.6rem",
@@ -100,7 +106,11 @@ const useStyles = makeStyles((theme) => ({
     "& img": {
       width: "4rem",
       height: "4rem",
-      borderRadius: "100%",
+      borderRadius: "100%",      
+    [theme.breakpoints.down(480)]: {
+      width: "2.5rem",
+      height: "2.5rem",
+    },
     },
   },
 }));
