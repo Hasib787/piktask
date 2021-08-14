@@ -55,7 +55,6 @@ const AuthorProfile = () => {
     }
 
   }, [id])
-  console.log("imageSummery", imageSummery);
 
 // https://piktask.com/api/user/17/statistics
 // https://piktask.com/api/user/17/images/jpg

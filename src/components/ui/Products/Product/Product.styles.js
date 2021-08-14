@@ -1,5 +1,6 @@
 import { Card, makeStyles } from "@material-ui/core";
 import styled from "styled-components";
+import photoBackground from "../../../../assets/transparent_bg.jpg";
 
 export const useStyles = makeStyles((theme) => ({
   container: {
@@ -16,6 +17,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   itemContainer: {
+    background: `url(${photoBackground})`,
     position: "relative",
     height: 210,
   },
