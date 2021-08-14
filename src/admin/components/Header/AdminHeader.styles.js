@@ -104,7 +104,32 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3.5rem",
     color: "#376579",
   },
-  
+  loginBtn: {
+    color: "#fff",
+    fontSize: "1.8rem",
+    fontWeight: 400,
+    marginRight: "16px",
+
+    [theme.breakpoints.down(425)]: {
+      fontSize: "13px",
+      marginRight: "8px",
+    },
+  },
+  signUpBtn: {
+    color: "#fff",
+    fontSize: "1.8rem",
+    fontWeight: 400,
+    border: ".2rem solid #fff",
+    marginRight: "16px",
+    padding: "0px 14px",
+
+    [theme.breakpoints.down(425)]: {
+      fontSize: "13px",
+      marginRight: "8px",
+      padding: "0px 8px",
+    },
+  },
+
 
 }));
 
