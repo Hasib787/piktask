@@ -32,7 +32,7 @@ import BecomeContributor from "./pages/BecomeContributor";
 import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
-import Subscription from "./pages/Subscription/Subscription";
+import Subscription from "./pages/Subscription";
 import TagTemplate from "./pages/TagTemplate";
 import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
@@ -125,6 +125,7 @@ const App = () => {
         <Route exact path="/confirm-signup" component={ConfirmSignup} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/reset-password" component={ResetPassword} />
+        <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
@@ -132,7 +133,6 @@ const App = () => {
         <Route exact path="/:catName" component={Category} />
         {/* <Route exact path="/categories/" component={Category} /> */}
         <Route exact path="/:category/:id" component={SingleCategory} />
-        <Route exact path="/subscription" component={Subscription} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ThemeProvider>
