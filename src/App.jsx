@@ -32,6 +32,7 @@ import BecomeContributor from "./pages/BecomeContributor";
 import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
+import Subscription from "./pages/Subscription/Subscription";
 import TagTemplate from "./pages/TagTemplate";
 import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
@@ -128,9 +129,10 @@ const App = () => {
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/author/:id" component={AuthorProfile} />
         <Route exact path="/author/:id/:extension" component={AuthorProfile} />
-        <Route exact path="/category/:catName" component={Category} />
-        <Route exact path="/categories/:id" component={Category} />
+        <Route exact path="/:catName" component={Category} />
+        {/* <Route exact path="/categories/" component={Category} /> */}
         <Route exact path="/:category/:id" component={SingleCategory} />
+        <Route exact path="/subscription" component={Subscription} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ThemeProvider>
