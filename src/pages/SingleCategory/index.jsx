@@ -315,7 +315,7 @@ const SingleCategory = () => {
                     className={classes.likeBtn}
                     onClick={handleLikeBtn}
                   >
-                    <img src={likeIcon} alt="Download" />
+                    <img src={likeIcon} alt="likeBtn" />
                   </Button>
                 ) : (
                   <Button
@@ -330,6 +330,12 @@ const SingleCategory = () => {
             </div>
           </Grid>
         </Grid>
+
+        {/* Sign up modal section*/}
+        <SignUpModal
+        openAuthModal={openAuthModal}
+        setOpenAuthModal={setOpenAuthModal}
+      />
 
         <Spacing space={{ height: "2.5rem" }}></Spacing>
         <SectionHeading
@@ -361,13 +367,7 @@ const SingleCategory = () => {
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
       </Container>
-
-
       <Footer />
-      <SignUpModal
-        openAuthModal={openAuthModal}
-        setOpenAuthModal={setOpenAuthModal}
-      />
     </>
   );
 };
