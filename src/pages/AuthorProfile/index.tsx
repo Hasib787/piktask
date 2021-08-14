@@ -1,6 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import authorImg from "../../assets/author.png";
 import heroBanner from "../../assets/banner/banner.png";
@@ -13,6 +14,7 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SocialShare from "../../components/ui/SocialShare";
 import { SocialMedia } from "../../types";
+import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./AuthorProfile.styles";
 
 const socialMedias: SocialMedia[] = [
@@ -36,11 +38,15 @@ const socialMedias: SocialMedia[] = [
 const AuthorProfile = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const user = useSelector((state) => state.user);
   const [profileInfo, setProfileInfo] = useState({});
   const [imageSummery, setImageSummery] = useState([]);
+  const [openAuthModal, setOpenAuthModal] = useState(false)
+
   
 
   useEffect(() => {
+    window.scroll(0,0);
     try {
       axios
       .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
@@ -59,6 +65,11 @@ const AuthorProfile = () => {
 // https://piktask.com/api/user/17/statistics
 // https://piktask.com/api/user/17/images/jpg
 
+  const handleJoinUsButton =()=>{
+    if (!user.token) {
+      setOpenAuthModal(true);
+    }
+  }
 
   
 
@@ -112,7 +123,14 @@ const AuthorProfile = () => {
         title="Join Designhill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
         buttonText="Join Us"
+        buttonClicked={()=>handleJoinUsButton()}
       />
+       {/* Sign up modal section*/}
+        <SignUpModal
+        openAuthModal={openAuthModal}
+        setOpenAuthModal={setOpenAuthModal}
+      />
+
 
       <Footer />
     </>
