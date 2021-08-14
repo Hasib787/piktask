@@ -14,7 +14,7 @@ export const TopSeller = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/sellers/top`)
+        .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
           console.log("top seller", data.sellers);
           if (data?.success) {
