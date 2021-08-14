@@ -2,11 +2,8 @@ import {
   Container,
   FormControl,
   Grid,
-  InputLabel,
   ListItem,
   Select,
-  Tab,
-  Tabs,
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
@@ -17,24 +14,19 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
-import PopularCategory from "../../components/ui/PopularCategory";
 import Product from "../../components/ui/Products/Product";
 import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const { id, catName } = useParams();
-  // console.log(catName);
-  console.log("category id", id);
+  const { catName } = useParams();
 
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const [categoryProductBySorting, setCategoryProductBySorting] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
 
   const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [sortItem, setSortItem] = useState("");
 
   const categoryItem = categories.find((item) => item?.slug === catName);
 
@@ -102,14 +94,16 @@ const Category = () => {
   };
 
   //Fetch api to get data for the category page by sorting by popularity
-  const getCategoryProducts = () => {
+  const getCategoryProducts = (e) => {
+    const product = e.target.value;
+
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${id}`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`)
         .then(({ data }) => {
           if (data?.status) {
             console.log("category product by sorted", data);
-            setCategoryProductBySorting(data?.category_image);
+            setCategoryProducts(data?.category_image);
           }
         });
     } catch (error) {
@@ -118,13 +112,6 @@ const Category = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setSortItem({
-      ...sortItem,
-      [name]: event.target.value,
-    });
-  };
 
   return (
     <>
@@ -166,18 +153,17 @@ const Category = () => {
             <FormControl variant="outlined" className={classes.formControl}>
               <Select className={classes.selectSortItem}
                 native
-                value={sortItem.age}
-                onChange={handleChange}
+                onChange={getCategoryProducts}
                 inputProps={{
                   id: "outlined-age-native-simple",
                 }}
               >
-                <option>Popular</option>
-                <option>Top Download</option>
-                <option>Brand New</option>
-                <option>All Product</option>
-                <option>Free</option>
-                <option>Premium</option>
+                <option value="all_product">All Product</option>
+                <option value="brand_new">Brand New</option>
+                <option value="popular">Popular</option>
+                <option value="top_download">Top Download</option>
+                <option value="free">Free</option>
+                <option value="premium">Premium</option>
               </Select>
             </FormControl>{" "}
           </div>
@@ -220,7 +206,6 @@ const Category = () => {
       <CallToAction
         title="Join Designhill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonLink="https://piktask.com/"
         buttonText="Join Us"
         uppercase
       />
