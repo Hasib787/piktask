@@ -9,6 +9,7 @@ interface Props {
   buttonLink?: any;
   buttonText?: string;
   uppercase?: boolean;
+  buttonClicked?: any;
 }
 
 const CallToAction: FC<Props> = ({
@@ -16,6 +17,7 @@ const CallToAction: FC<Props> = ({
   subtitle,
   buttonText,
   buttonLink,
+  buttonClicked,
   uppercase,
 }): JSX.Element => {
   const classes = useStyles();
@@ -34,6 +36,7 @@ const CallToAction: FC<Props> = ({
           to={`${buttonLink}`}
           className={classes.moreButton}
           style={{ textTransform: uppercase ? "uppercase" : "capitalize" }}
+          onClick={buttonClicked}
         >
           {buttonText}
         </Link>
