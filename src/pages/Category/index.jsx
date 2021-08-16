@@ -146,8 +146,8 @@ const Category = () => {
         </Container>
       </div>
 
+      <Container>
       <div className={classes.shortList}>
-        <Container>
           <div className={classes.shortListWrapper}>
             <Typography className={classes.shortListTag}>Sort by:</Typography>
             <FormControl variant="outlined" className={classes.formControl}>
@@ -167,8 +167,8 @@ const Category = () => {
               </Select>
             </FormControl>{" "}
           </div>
-        </Container>
       </div>
+        </Container>
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">

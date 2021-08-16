@@ -1,9 +1,10 @@
 import { Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Product from "../Products/Product";
 import useStyles from "./AuthorItems.styles";
 import axios from "axios";
 import { useHistory } from "react-router";
+import Layout from "../../../Layout";
 
 const AuthorItems = ({ imageSummery, id }) => {
   const classes = useStyles();
@@ -11,25 +12,42 @@ const AuthorItems = ({ imageSummery, id }) => {
   const [value, setValue] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [authorAllResource, setAuthorAllResource] = useState([0]);
-  // console.log("imageSummery", imageSummery[0].extension);
-
+  // const [imageExtension, setImageExtension] = useState();
+  console.log("imageSummary", imageSummery[0]?.extension);
 
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
   };
 
-
+  useEffect(() => {
+    if (imageSummery[0]?.extension !== undefined) {
+      try {
+        axios
+        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${imageSummery[0]?.extension}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setAuthorAllResource(data?.images);
+            setLoading(false);
+          }
+        })
+      } catch (error) {
+        console.log("All author resources", error);
+      }
+    } else {
+      console.log("Sorry no extension found");
+    }
+  }, [ id, imageSummery ])
 
   const handleAuthorResource = (tag) => {
 
     if (tag !== undefined) {
       try {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${tag}?limit=4`)
+        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${tag}`)
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
-            // history.push(`/author/${id}/${tag}`);
+            history.push(`/author/${id}/${tag}`);
             setLoading(false);
           }
         })
@@ -42,6 +60,7 @@ const AuthorItems = ({ imageSummery, id }) => {
   };
 
   return (
+    <Layout>
     <Container>
       <Grid container className={classes.authorItemTags}>
         <Tabs
@@ -93,6 +112,7 @@ const AuthorItems = ({ imageSummery, id }) => {
         )}
       </Grid>
     </Container>
+    </Layout>
   );
 };
 
