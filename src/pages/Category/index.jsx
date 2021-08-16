@@ -15,6 +15,7 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
 import Product from "../../components/ui/Products/Product";
+import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 
 const Category = () => {
@@ -45,7 +46,6 @@ const Category = () => {
           )
           .then(({ data }) => {
             if (data?.status) {
-              console.log(data);
               setCategoryProducts(data?.category_image);
               setTotalImageCount(data?.total_image_count?.total_image);
               setLoading(false);
@@ -82,7 +82,6 @@ const Category = () => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/`)
         .then(({ data }) => {
-          console.log("Popular categories", data);
           if (data?.status) {
             setCategories(data.categories);
           }
@@ -102,7 +101,6 @@ const Category = () => {
         .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`)
         .then(({ data }) => {
           if (data?.status) {
-            console.log("category product by sorted", data);
             setCategoryProducts(data?.category_image);
           }
         });
@@ -114,7 +112,7 @@ const Category = () => {
 
 
   return (
-    <>
+    <Layout>
       <Header />
       <HeroSection
         background={heroBanner}
@@ -211,7 +209,7 @@ const Category = () => {
       />
 
       <Footer />
-    </>
+    </Layout>
   );
 };
 
