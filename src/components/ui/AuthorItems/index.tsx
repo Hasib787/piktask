@@ -13,10 +13,6 @@ const AuthorItems = ({ imageSummery, id }) => {
   const [isLoading, setLoading] = useState(true);
   const [authorAllResource, setAuthorAllResource] = useState();
 
-  console.log("imageSummery", imageSummery[0]?.extension);
-  
-
-
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
   };
@@ -29,7 +25,6 @@ const AuthorItems = ({ imageSummery, id }) => {
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
-            // history.push(`/author/${id}/${tag}`);
             setLoading(false);
           }
         })
@@ -49,7 +44,7 @@ const AuthorItems = ({ imageSummery, id }) => {
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
-            // history.push(`/author/${id}/${tag}`);
+            history.push(`/author/${id}/${tag}`);
             setLoading(false);
           }
         })
