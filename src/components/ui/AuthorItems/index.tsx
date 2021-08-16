@@ -11,7 +11,7 @@ const AuthorItems = ({ imageSummery, id }) => {
   const history = useHistory();
   const [value, setValue] = useState(0);
   const [isLoading, setLoading] = useState(true);
-  const [authorAllResource, setAuthorAllResource] = useState([0]);
+  const [authorAllResource, setAuthorAllResource] = useState();
 
   const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
     setValue(index);
@@ -36,7 +36,7 @@ const AuthorItems = ({ imageSummery, id }) => {
     } else {
       console.log("Sorry no extension found");
     }
-  }, [id, imageSummery]);
+  }, [id, imageSummery])
 
   const handleAuthorResource = (tag) => {
     if (tag !== undefined) {

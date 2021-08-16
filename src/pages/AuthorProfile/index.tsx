@@ -13,6 +13,7 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SocialShare from "../../components/ui/SocialShare";
+import Layout from "../../Layout";
 import { SocialMedia } from "../../types";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./AuthorProfile.styles";
@@ -43,8 +44,6 @@ const AuthorProfile = () => {
   const [imageSummery, setImageSummery] = useState([]);
   const [openAuthModal, setOpenAuthModal] = useState(false)
 
-  
-
   useEffect(() => {
     window.scroll(0,0);
     try {
@@ -59,7 +58,6 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
   }, [id])
 
 // https://piktask.com/api/user/17/statistics
@@ -71,68 +69,68 @@ const AuthorProfile = () => {
     }
   }
 
-  
-
   return (
     <>
-      <Header />
-      <div
-        className={classes.authorHero}
-        style={{ backgroundImage: `url(${heroBanner})` }}
-      >
-        <Container>
-          <Grid container className={classes.profileWrapper}>
-            <div className={classes.authorImg}>
-              {profileInfo?.avatar ? (
-                <img src={profileInfo?.avatar} alt="Design Studio" />
-              ) : (
-                <img src={authorImg} alt="Design Studio" />
-              )}
-            </div>
-            <div className={classes.authorInfo}>
-              <Typography className={classes.authorName} variant="h3">
-                {profileInfo?.username}
-              </Typography>
-              <div className={classes.resourceDetails}>
-                <Typography className={classes.infoItem} variant="body2">
-                  Resources
-                  <span>{profileInfo?.total_images}</span>
-                </Typography>
-                <Typography className={classes.infoItem} variant="body2">
-                  Followers
-                  <span>{profileInfo?.total_followers}</span>
-                </Typography>
-                <Typography className={classes.infoItem} variant="body2">
-                  Downloads
-                  <span>{profileInfo?.total_downloads}</span>
-                </Typography>
+      <Layout>
+        <Header />
+        <div
+          className={classes.authorHero}
+          style={{ backgroundImage: `url(${heroBanner})` }}
+        >
+          <Container>
+            <Grid container className={classes.profileWrapper}>
+              <div className={classes.authorImg}>
+                {profileInfo?.avatar ? (
+                  <img src={profileInfo?.avatar} alt="Design Studio" />
+                ) : (
+                  <img src={authorImg} alt="Design Studio" />
+                )}
               </div>
-              <div className={classes.authorSocials}>
-                <SocialShare
-                  title="Share this page:"
-                  socialMedias={socialMedias}
-                />
+              <div className={classes.authorInfo}>
+                <Typography className={classes.authorName} variant="h3">
+                  {profileInfo?.username}
+                </Typography>
+                <div className={classes.resourceDetails}>
+                  <Typography className={classes.infoItem} variant="body2">
+                    Resources
+                    <span>{profileInfo?.total_images}</span>
+                  </Typography>
+                  <Typography className={classes.infoItem} variant="body2">
+                    Followers
+                    <span>{profileInfo?.total_followers}</span>
+                  </Typography>
+                  <Typography className={classes.infoItem} variant="body2">
+                    Downloads
+                    <span>{profileInfo?.total_downloads}</span>
+                  </Typography>
+                </div>
+                <div className={classes.authorSocials}>
+                  <SocialShare
+                    title="Share this page:"
+                    socialMedias={socialMedias}
+                  />
+                </div>
               </div>
-            </div>
-          </Grid>
-        </Container>
-      </div>
-      <AuthorItems id={id} imageSummery={imageSummery} />
+            </Grid>
+          </Container>
+        </div>
+        <AuthorItems id={id} imageSummery={imageSummery} />
 
-      <CallToAction
-        title="Join DesignHill designer team"
-        subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonText="Join Us"
-        buttonClicked={()=>handleJoinUsButton()}
-      />
-       {/* Sign up modal section*/}
-        <SignUpModal
-        openAuthModal={openAuthModal}
-        setOpenAuthModal={setOpenAuthModal}
-      />
+        <CallToAction
+          title="Join DesignHill designer team"
+          subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+          buttonText="Join Us"
+          buttonClicked={()=>handleJoinUsButton()}
+        />
+        {/* Sign up modal section*/}
+          <SignUpModal
+          openAuthModal={openAuthModal}
+          setOpenAuthModal={setOpenAuthModal}
+        />
 
 
-      <Footer />
+        <Footer />
+      </Layout>
     </>
   );
 };
