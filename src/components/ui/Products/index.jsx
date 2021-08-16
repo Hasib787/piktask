@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Layout from "../../../Layout";
 import SectionHeading from "../Heading";
 import Product from "./Product";
 
@@ -71,7 +72,7 @@ const Products = (props) => {
   }, [catName]);
 
   return (
-    <>
+    <Layout>
       {isLoading ? (
         <h2>Loading......</h2>
       ) : (
@@ -114,7 +115,7 @@ const Products = (props) => {
           </>
         )}
       </Grid>
-    </>
+    </Layout>
   );
 };
 
