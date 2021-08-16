@@ -1,13 +1,15 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
+import Layout from "../../../Layout";
 import useStyles from "./Category.styles";
 
 const PopularCategory = ({ photo }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.catItemWrapper}>
+    <Layout>
+      <div className={classes.catItemWrapper}>
       <div className={classes.catItem}>
         <img
           className={classes.catImage}
@@ -23,6 +25,7 @@ const PopularCategory = ({ photo }) => {
         </Button>
       </div>
     </div>
+    </Layout>
   );
 };
 

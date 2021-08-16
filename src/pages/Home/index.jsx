@@ -20,10 +20,6 @@ export const Home = () => {
   const classes = useStyles();
   const popularCats = useSelector((state) => state.popularCategories);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <Layout>
       <Header />

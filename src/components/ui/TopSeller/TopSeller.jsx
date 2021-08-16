@@ -16,7 +16,6 @@ export const TopSeller = () => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
-          console.log("top seller", data.sellers);
           if (data?.success) {
             setTopSeller(data.sellers);
             setIsLoading(false);

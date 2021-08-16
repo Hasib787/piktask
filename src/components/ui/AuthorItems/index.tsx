@@ -21,13 +21,15 @@ const AuthorItems = ({ imageSummery, id }) => {
     if (imageSummery[0]?.extension !== undefined) {
       try {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${imageSummery[0]?.extension}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setAuthorAllResource(data?.images);
-            setLoading(false);
-          }
-        })
+          .get(
+            `${process.env.REACT_APP_API_URL}/user/${id}/images/${imageSummery[0]?.extension}`
+          )
+          .then(({ data }) => {
+            if (data?.status) {
+              setAuthorAllResource(data?.images);
+              setLoading(false);
+            }
+          });
       } catch (error) {
         console.log("All author resources", error);
       }
@@ -40,14 +42,14 @@ const AuthorItems = ({ imageSummery, id }) => {
     if (tag !== undefined) {
       try {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${tag}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setAuthorAllResource(data?.images);
-            history.push(`/author/${id}/${tag}`);
-            setLoading(false);
-          }
-        })
+          .get(`${process.env.REACT_APP_API_URL}/user/${id}/images/${tag}`)
+          .then(({ data }) => {
+            if (data?.status) {
+              setAuthorAllResource(data?.images);
+              history.push(`/author/${id}/${tag}`);
+              setLoading(false);
+            }
+          });
       } catch (error) {
         console.log("All author resources", error);
       }
@@ -103,7 +105,9 @@ const AuthorItems = ({ imageSummery, id }) => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">Sorry, no products found</Typography>
+                <Typography variant="body1">
+                  Sorry, no products found
+                </Typography>
               )}
             </>
           )}
