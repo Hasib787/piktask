@@ -38,17 +38,32 @@ const socialMedias: SocialMedia[] = [
 
 const AuthorProfile = () => {
   const classes = useStyles();
-  const { id } = useParams();
+  const { userName } = useParams();
   const user = useSelector((state) => state.user);
   const [profileInfo, setProfileInfo] = useState({});
   const [imageSummery, setImageSummery] = useState([]);
-  const [openAuthModal, setOpenAuthModal] = useState(false)
+  const [userId, setUserId] = useState("");
+  const [openAuthModal, setOpenAuthModal] = useState(false);
 
   useEffect(() => {
-    window.scroll(0,0);
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
+      .get(`${process.env.REACT_APP_API_URL}/sellers/top`)
+      .then(({ data }) => {
+        if (data?.success) {
+          const productId = data?.sellers.find((item) => item.username === userName);
+          setUserId(productId?.id);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userName])
+
+  useEffect(() => {
+    try {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/${userId}/statistics`)
       .then(({ data }) => {
         if (data?.status) {
           setProfileInfo(data?.profile);
@@ -58,10 +73,7 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [id])
-
-// https://piktask.com/api/user/17/statistics
-// https://piktask.com/api/user/17/images/jpg
+  }, [userId])
 
   const handleJoinUsButton =()=>{
     if (!user.token) {
@@ -114,7 +126,7 @@ const AuthorProfile = () => {
             </Grid>
           </Container>
         </div>
-        <AuthorItems id={id} imageSummery={imageSummery} />
+        <AuthorItems userId={userId} imageSummery={imageSummery} />
 
         <CallToAction
           title="Join DesignHill designer team"
