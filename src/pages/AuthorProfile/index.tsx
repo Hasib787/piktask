@@ -120,7 +120,7 @@ const AuthorProfile = () => {
       <AuthorItems id={id} imageSummery={imageSummery} />
 
       <CallToAction
-        title="Join Designhill designer team"
+        title="Join DesignHill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
         buttonText="Join Us"
         buttonClicked={()=>handleJoinUsButton()}
