@@ -68,7 +68,7 @@ const Products = (props) => {
     } else {
       setLoading(false);
     }
-  }, [catName]);
+  }, [catName, dispatch]);
 
   return (
     <>
