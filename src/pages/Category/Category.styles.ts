@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   // Old
   tagWrapper: {
     backgroundColor: theme.palette.common.white,
-    padding: "4rem 3rem",
+    padding: "3rem 2rem",
     [theme.breakpoints.down(426)]: {
       display: "none",
     },
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   tagTitle: {
     fontSize: "2.2rem",
     // width: "20rem",
-    textAlign:"center",
+    textAlign: "center",
     [theme.breakpoints.down("md")]: {
       display: "block",
     },
@@ -55,9 +55,9 @@ const useStyles = makeStyles((theme) => ({
   columnItem: {
     display: "flex",
 
-    [theme.breakpoints.down("md")]: {
-      marginBottom: "2.5rem",
-    },
+    // [theme.breakpoints.down("md")]: {
+    //   marginBottom: "2.5rem",
+    // },
   },
   linkItem: {
     paddingTop: ".4rem",
@@ -73,50 +73,33 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   shortList: {
-    backgroundColor: "#F8F8F8",
+    float: "right",
     [theme.breakpoints.down(426)]: {
       display: "none",
     },
   },
+  shortListWrapper: {
+    marginTop: "32px",
+    display: "flex",
+    alignItems: "center",
+  },
   shortListTag: {
-    fontSize: "1.8rem",
-    width: "20rem",
-    fontWeight: 500,
+    width: "7rem",
+    fontSize: "14px",
     textAlign: "center",
+    color: "#5f7d95",
     [theme.breakpoints.down("md")]: {
       display: "block",
     },
   },
-  sortListMenu: {
-    paddingTop: ".4rem",
-    paddingBottom: ".4rem",
-    [theme.breakpoints.down(769)]: {
-      paddingTop: "0",
-      paddingBottom: "2rem",
+  selectSortItem: {
+    "& Select": {
+      padding: "7px 23px 7px 9px !important",
     },
-  },
-  sortListItem: {
-    color: "#1B3F4E",
-    opacity: 1,
-    textDecoration: "none",
-    fontSize: "1.5rem",
-    fontWeight: 400,
-
-    "&:hover": {
-      color: theme.palette.secondary.main,
-    },
-    [theme.breakpoints.down(1025)]: {
-      marginLeft: "-25px",
-    },
-    [theme.breakpoints.down(769)]: {
-      marginLeft: "-4rem",
-    },
-  },
-  shortListWrapper: {
-    display: "flex",
-    alignItems: "center",
-    [theme.breakpoints.down(769)]: {
-      display: "grid",
+    "& svg": {
+      marginRight: "-7px",
+      height: "21px",
+      width: "25px",
     },
   },
   borderStyle: {
@@ -132,9 +115,8 @@ const useStyles = makeStyles((theme) => ({
   totalResources: {
     fontSize: "2.2rem",
     padding: "3.5rem 0 6rem",
-
     [theme.breakpoints.down(426)]: {
-      display: "none",
+      padding: "2.5rem 0 3rem",
     },
   },
 }));

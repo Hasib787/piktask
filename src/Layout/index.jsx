@@ -21,7 +21,7 @@ const Layout = (props) => {
         description);
     keywords &&
       (document.querySelector('meta[name="keywords"]').content = keywords);
-  }, []);
+  }, [title, description, keywords, author]);
 
   return <main {...others}>{children}</main>;
 };

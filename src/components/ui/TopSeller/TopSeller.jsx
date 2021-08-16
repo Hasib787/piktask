@@ -1,6 +1,7 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Product from "../Products/Product";
 import useStyles from "./TopSeller.style";
 
@@ -13,11 +14,11 @@ export const TopSeller = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/seller/top`)
+        .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
-            console.log("top seller",data);
+          console.log("top seller", data.sellers);
           if (data?.success) {
-            setTopSeller(data.images);
+            setTopSeller(data.sellers);
             setIsLoading(false);
           }
         });
@@ -26,37 +27,49 @@ export const TopSeller = () => {
     }
   }, []);
 
-
   return (
-    <>
-      <Container>
-        <Grid spacing={2}>
-          {isLoading ? (
-            <h2>Loading now......</h2>
-          ) : (
-            <>
-              {topSeller.length ? (
-                topSeller?.map((photo) => (
-                  <Grid
-                    key={photo.image_id}
-                    item
-                    xs={6}
-                    sm={4}
-                    md={3}
-                    className={classes.productItem}
-                  >
-                    <Product photo={photo} />
-                  </Grid>
-                ))
-              ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
-              )}
-            </>
-          )}
-        </Grid>
-      </Container>
-    </>
+    <Container>
+      <Grid classes={{ container: classes.container }} container spacing={2}>
+        {isLoading ? (
+          <h2>Loading now......</h2>
+        ) : (
+          <>
+            {topSeller.length ? (
+              topSeller?.map((photo) => (
+                <Grid
+                  key={photo.id}
+                  item
+                  xs={12}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <div className={classes.catItemWrapper}>
+                    <div className={classes.catItem}>
+                      <Link to={`/author/${photo.id}`}>
+                        <img
+                        className={classes.catImage}
+                        src={photo?.avatar}
+                        alt="author images"
+                      />
+                      </Link>
+                      <Button
+                        className={classes.catName}
+                        component={Link}
+                        to={`/author/${photo.id}`}
+                      >
+                        {photo?.username}
+                      </Button>
+                    </div>
+                  </div>
+                </Grid>
+              ))
+            ) : (
+              <Typography variant="body1">Sorry, no products found</Typography>
+            )}
+          </>
+        )}
+      </Grid>
+    </Container>
   );
 };

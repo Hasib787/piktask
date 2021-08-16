@@ -36,7 +36,6 @@ const TagTemplate = () => {
       <CallToAction
         title="Join Designhill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonLink="https://getbootstrap.com/"
         buttonText="Join Us"
         uppercase
       />

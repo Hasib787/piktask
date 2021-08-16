@@ -69,7 +69,7 @@ export const Home = () => {
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
-        buttonLink="#"
+        buttonLink="/subscription"
         buttonText="Get Started"
       />
 

@@ -1,9 +1,9 @@
 import {
   Container,
+  FormControl,
   Grid,
   ListItem,
-  Tab,
-  Tabs,
+  Select,
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
@@ -14,28 +14,21 @@ import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
-import PopularCategory from "../../components/ui/PopularCategory";
 import Product from "../../components/ui/Products/Product";
 import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const { id, catName } = useParams();
-  // console.log(catName);
-  console.log("category id",id);
-
+  const { catName } = useParams();
 
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const [categoryProductBySorting, setCategoryProductBySorting] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
 
   const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const categoryItem = categories.find(
-    (item) => item?.slug === catName
-  );
+  const categoryItem = categories.find((item) => item?.slug === catName);
 
   useEffect(() => {
     getCategories();
@@ -98,25 +91,28 @@ const Category = () => {
       console.log("Categories error:", error);
       setLoading(false);
     }
-  }
+  };
 
-  //Fetch api to get data for the category page by sorting by popularity 
-  const getCategoryProducts = () => {
+  //Fetch api to get data for the category page by sorting by popularity
+  const getCategoryProducts = (e) => {
+    const product = e.target.value;
+
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${id}`)
+        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`)
         .then(({ data }) => {
           if (data?.status) {
-            console.log("category product by sorted",data);
-            setCategoryProductBySorting(data?.category_image);
+            console.log("category product by sorted", data);
+            setCategoryProducts(data?.category_image);
           }
         });
-      } catch (error) {
-        console.log("Category products error:", error);
-        setLoading(false);
-      }
-    };
-  
+    } catch (error) {
+      console.log("Category products error:", error);
+      setLoading(false);
+    }
+  };
+
+
   return (
     <>
       <Header />
@@ -153,54 +149,23 @@ const Category = () => {
       <div className={classes.shortList}>
         <Container>
           <div className={classes.shortListWrapper}>
-            <Typography className={classes.shortListTag}>Sorted By:</Typography>
-            <Tabs className={classes.sortListMenu}>
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Popular"
-                style={{ color: "#117A00" }}
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to={`/categories/${id}`}
-                label="Top Download"
-                onClick={() => getCategoryProducts()}
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Brand New"
-              />
-              <p className={classes.borderStyle}></p>
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="All Product"
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Free"
-              />
-              <Tab
-                className={classes.sortListItem}
-                disableRipple
-                component={Link}
-                to="#"
-                label="Premium"
-              />
-            </Tabs>
+            <Typography className={classes.shortListTag}>Sort by:</Typography>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <Select className={classes.selectSortItem}
+                native
+                onChange={getCategoryProducts}
+                inputProps={{
+                  id: "outlined-age-native-simple",
+                }}
+              >
+                <option value="all_product">All Product</option>
+                <option value="brand_new">Brand New</option>
+                <option value="popular">Popular</option>
+                <option value="top_download">Top Download</option>
+                <option value="free">Free</option>
+                <option value="premium">Premium</option>
+              </Select>
+            </FormControl>{" "}
           </div>
         </Container>
       </div>
@@ -225,7 +190,7 @@ const Category = () => {
                     md={3}
                     className={classes.productItem}
                   >
-                   <Product  photo={photo}/>
+                    <Product photo={photo} />
                   </Grid>
                 ))
               ) : (
@@ -236,13 +201,11 @@ const Category = () => {
             </>
           )}
         </Grid>
-
       </Container>
 
       <CallToAction
         title="Join Designhill designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonLink="https://piktask.com/"
         buttonText="Join Us"
         uppercase
       />
