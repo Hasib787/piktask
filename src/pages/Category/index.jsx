@@ -163,7 +163,7 @@ const Category = () => {
                 <option value="free">Free</option>
                 <option value="premium">Premium</option>
               </Select>
-            </FormControl>{" "}
+            </FormControl>
           </div>
       </div>
         </Container>

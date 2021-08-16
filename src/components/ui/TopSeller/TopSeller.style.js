@@ -8,16 +8,12 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
         width: "100%",
       },
-      catItem: {
-        margin: "0 5px",
-      },
       catImage: {
         cursor: "pointer",
         width: "100%",
         height: "240px",
         objectFit: "cover",
       },
-    
       catName: {
         marginTop: "-3px",
         zIndex: "99",
