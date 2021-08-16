@@ -81,7 +81,7 @@ const Products = (props) => {
               <Button
                 className={classes.headingButton}
                 component={Link}
-                to={`/category/${catName?.slug}`}
+                to={`/${catName?.slug}`}
               >
                 See More
               </Button>
