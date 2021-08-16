@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   menuItem: {
     opacity: 1,
     minWidth: "1rem",
-    fontSize: "16px",
+    fontSize: "13px",
     "&:last-child": {
       marginRight: "3rem",
     },

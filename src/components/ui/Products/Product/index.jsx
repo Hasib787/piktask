@@ -90,7 +90,7 @@ const Product = ({ photo }) => {
 
           <CardContent className={classes.cardFooter}>
             <CardFooter>
-              <Link to={`/author/${photo?.user_id}`}>
+              <Link to={`/${photo?.username}`}>
                 {photo?.avatar ? (
                   <CardMedia
                     component="img"
@@ -107,7 +107,7 @@ const Product = ({ photo }) => {
                 paragraph
                 className={classes.profileName}
                 component={Link}
-                to={`/author/${photo?.user_id}`}
+                to={`/${photo?.username}`}
               >
                 {photo?.username}
               </Typography>

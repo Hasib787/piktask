@@ -128,7 +128,7 @@ const App = () => {
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
-        <Route exact path="/author/:id" component={AuthorProfile} />
+        <Route exact path="/:userName" component={AuthorProfile} />
         <Route exact path="/author/:id/:extension" component={AuthorProfile} />
         <Route exact path="/:catName" component={Category} />
         {/* <Route exact path="/categories/" component={Category} /> */}
