@@ -42,13 +42,9 @@ const HeroSection: FC<PropTypes> = (props): JSX.Element => {
     >
       <Container>
         <div className={classes.contentWrapper}>
-          
-          {title && <SectionHeading
-            title={title}
-            color="white"
-            center
-            size={size}
-          />}
+          {title && (
+            <SectionHeading title={title} color="white" center size={size} />
+          )}
 
           <Search mobileView={mobileView} />
           <SearchKeyWords
