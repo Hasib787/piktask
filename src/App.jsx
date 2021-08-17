@@ -14,6 +14,8 @@ import Publish from "./admin/pages/Publish";
 import RejectFiles from "./admin/pages/RejectFiles";
 import Revision from "./admin/pages/Revision";
 import UploadFiles from "./admin/pages/UploadFiles";
+import Recent from "./components/ui/Recent";
+import Sellers from "./components/ui/Sellers";
 import theme from "./components/ui/Theme";
 import { auth } from "./database";
 import {
@@ -126,11 +128,12 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/subscription" component={Subscription} />
+        <Route exact path="/sellers" component={Sellers} />
+        <Route exact path="/images/recent_images" component={Recent} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/:userName" component={AuthorProfile} />
-        <Route exact path="/author/:id/:extension" component={AuthorProfile} />
-        <Route exact path="/:catName" component={Category} />
+        <Route exact path="/category/:catName" component={Category} />
         {/* <Route exact path="/categories/" component={Category} /> */}
         <Route exact path="/:category/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
