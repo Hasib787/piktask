@@ -87,7 +87,6 @@ const AuthorItems = ({ imageSummery, userId }) => {
             <h2>Loading now......</h2>
           ) : (
             <>
-              {/* {authorAllResource.filter((index) => authorAllResource === index.tag) && authorAllResource?.length ? ( */}
               {authorAllResource?.length ? (
                 authorAllResource?.map((photo) => (
                   <Grid

@@ -42,12 +42,30 @@ const AuthorProfile = () => {
   const user = useSelector((state) => state.user);
   const [profileInfo, setProfileInfo] = useState({});
   const [imageSummery, setImageSummery] = useState([]);
-  const [openAuthModal, setOpenAuthModal] = useState(false)
+  const [userId, setUserId] = useState("");
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    try {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/sellers/top`)
+      .then(({ data }) => {
+        if (data?.success) {
+          const productId = data?.sellers.find((item) => item.username === userName);
+          setUserId(productId?.id);
+          setLoading(false);
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userName])
 
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${id}/statistics`)
+      .get(`${process.env.REACT_APP_API_URL}/user/${userId}/statistics`)
       .then(({ data }) => {
         if (data?.status) {
           setProfileInfo(data?.profile);
@@ -68,64 +86,78 @@ const AuthorProfile = () => {
 
   
   return (
-    <Layout>
-      <Header />
-      <div
-        className={classes.authorHero}
-        style={{ backgroundImage: `url(${heroBanner})` }}
-      >
-        <Container>
-          <Grid container className={classes.profileWrapper}>
-            <div className={classes.authorImg}>
-              {profileInfo?.avatar ? (
-                <img src={profileInfo?.avatar} alt="Design Studio" />
-              ) : (
-                <img src={authorImg} alt="Design Studio" />
-              )}
-            </div>
-            <div className={classes.authorInfo}>
-              <Typography className={classes.authorName} variant="h3">
-                {profileInfo?.username}
-              </Typography>
-              <div className={classes.resourceDetails}>
-                <Typography className={classes.infoItem} variant="body2">
-                  Resources
-                  <span>{profileInfo?.total_images}</span>
-                </Typography>
-                <Typography className={classes.infoItem} variant="body2">
-                  Followers
-                  <span>{profileInfo?.total_followers}</span>
-                </Typography>
-                <Typography className={classes.infoItem} variant="body2">
-                  Downloads
-                  <span>{profileInfo?.total_downloads}</span>
-                </Typography>
-              </div>
-              <div className={classes.authorSocials}>
-                <SocialShare
-                  title="Share this page:"
-                  socialMedias={socialMedias}
-                />
-              </div>
-            </div>
-          </Grid>
-        </Container>
-      </div>
-      <AuthorItems id={id} imageSummery={imageSummery} />
+    <>
+      <Layout>
+        <Header />
+        <div
+          className={classes.authorHero}
+          style={{ backgroundImage: `url(${heroBanner})` }}
+        >
+          <Container>
+            {isLoading ? (
+              <h1>Loading...</h1>
+            ) : (
+              <>
+                {userId !== undefined ? (
+                  <Grid container className={classes.profileWrapper}>
+                    <div className={classes.authorImg}>
+                      {profileInfo?.avatar ? (
+                        <img src={profileInfo?.avatar} alt="Design Studio" />
+                      ) : (
+                        <img src={authorImg} alt="Design Studio" />
+                      )}
+                    </div>
+                    <div className={classes.authorInfo}>
+                      <Typography className={classes.authorName} variant="h3">
+                        {profileInfo?.username}
+                      </Typography>
+                      <div className={classes.resourceDetails}>
+                        <Typography className={classes.infoItem} variant="body2">
+                          Resources
+                          <span>{profileInfo?.total_images}</span>
+                        </Typography>
+                        <Typography className={classes.infoItem} variant="body2">
+                          Followers
+                          <span>{profileInfo?.total_followers}</span>
+                        </Typography>
+                        <Typography className={classes.infoItem} variant="body2">
+                          Downloads
+                          <span>{profileInfo?.total_downloads}</span>
+                        </Typography>
+                      </div>
+                      <div className={classes.authorSocials}>
+                        <SocialShare
+                          title="Share this page:"
+                          socialMedias={socialMedias}
+                        />
+                      </div>
+                    </div>
+                  </Grid>
+                  ) : (
+                    <h1>No resources found</h1>
+                  )
+                }
+              </>
+            )
+          }
+          </Container>
+        </div>
+        <AuthorItems userId={userId} imageSummery={imageSummery} />
 
-      <CallToAction
-        title="Join Designhill designer team"
-        subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonText="Join Us"
-        buttonClicked={()=>handleJoinUsButton()}
-      />
-       {/* Sign up modal section*/}
-        <SignUpModal
-        openAuthModal={openAuthModal}
-        setOpenAuthModal={setOpenAuthModal}
-      />
-      <Footer />
-    </Layout>
+        <CallToAction
+          title="Join DesignHill designer team"
+          subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+          buttonText="Join Us"
+          buttonClicked={()=>handleJoinUsButton()}
+        />
+        {/* Sign up modal section*/}
+          <SignUpModal
+          openAuthModal={openAuthModal}
+          setOpenAuthModal={setOpenAuthModal}
+        />
+        <Footer />
+      </Layout>
+    </>
   );
 };
 

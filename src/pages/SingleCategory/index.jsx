@@ -48,10 +48,11 @@ const SingleCategory = () => {
               const words = data.detail.tags.split(",");
               setAllTags(words.slice(1));
             }
+
             if (user?.token) {
               axios
                 .get(
-                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail?.user_id}`,
                   {
                     headers: { Authorization: user.token },
                   }
@@ -61,6 +62,23 @@ const SingleCategory = () => {
                     setFollower(true);
                   } else {
                     setFollower(false);
+                  }
+                });
+            }
+
+            if (user?.token) {
+              axios
+                .get(
+                  `${process.env.REACT_APP_API_URL}/images/${id}/like_status`,
+                  {
+                    headers: { Authorization: user.token },
+                  }
+                )
+                .then((response) => {
+                  if (response.data.status) {
+                    setLike(true);
+                  } else {
+                    setLike(false);
                   }
                 });
             }
@@ -89,7 +107,7 @@ const SingleCategory = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else {
-      const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails.user_id}`;
+      const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`;
       axios
         .post(
           followerAPI,
@@ -110,7 +128,7 @@ const SingleCategory = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else {
-      const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/like/${id}`;
+      const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/${id}/like`;
       axios
         .post(
           likeUnlikeAPI,
@@ -120,11 +138,8 @@ const SingleCategory = () => {
           }
         )
         .then((response) => {
-          console.log("response", response);
           if (response?.status === 200) {
-            setLike(true);
-          } else {
-            setLike(false);
+            setLike(like);
           }
         });
     }
@@ -228,7 +243,7 @@ const SingleCategory = () => {
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
-                    <Link to={`/${imageDetails?.username}`}>
+                    <Link to={`/${imageDetails?.user?.username}`}>
                       {imageDetails?.user?.avatar ? (
                         <img
                           className={classes.authorImg}
@@ -249,7 +264,7 @@ const SingleCategory = () => {
                         className={classes.profileName}
                         variant="h3"
                         component={Link}
-                        to={`/${imageDetails?.username}`}
+                        to={`/${imageDetails?.user?.username}`}
                       >
                         {imageDetails?.user?.username}
                       </Typography>
@@ -358,8 +373,8 @@ const SingleCategory = () => {
               <Grid
                 key={photo.image_id}
                 item
-                xs={12}
-                sm={6}
+                xs={6}
+                sm={4}
                 md={3}
                 className={classes.productItem}
               >
