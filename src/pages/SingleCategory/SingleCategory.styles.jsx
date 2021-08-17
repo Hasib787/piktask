@@ -322,6 +322,12 @@ const useStyles = makeStyles((theme) => ({
       right: "12px",
     },
   },
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
 }));
 
 export default useStyles;
