@@ -95,19 +95,23 @@ const Category = () => {
   //Fetch api to get data for the category page by sorting by popularity
   const getCategoryProducts = (e) => {
     const product = e.target.value;
-
+    if (categoryItem?.id !== undefined) {
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`)
         .then(({ data }) => {
           if (data?.status) {
             setCategoryProducts(data?.category_image);
+            setTotalImageCount(data?.total_image_count?.total_image);
           }
         });
     } catch (error) {
       console.log("Category products error:", error);
       setLoading(false);
     }
+  } else {
+    setLoading(false);
+  }
   };
 
 
