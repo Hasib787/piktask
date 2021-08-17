@@ -17,6 +17,7 @@ export const TopSeller = () => {
         .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
           if (data?.success) {
+            console.log(data);
             setTopSeller(data.sellers);
             setIsLoading(false);
           }
@@ -45,7 +46,7 @@ export const TopSeller = () => {
                 >
                   <div className={classes.catItemWrapper}>
                     <div className={classes.catItem}>
-                      <Link to={`/author/${photo.id}`}>
+                      <Link to={`/${photo.username}`}>
                         <img
                         className={classes.catImage}
                         src={photo?.avatar}
@@ -55,7 +56,7 @@ export const TopSeller = () => {
                       <Button
                         className={classes.catName}
                         component={Link}
-                        to={`/author/${photo.id}`}
+                        to={`/${photo.username}`}
                       >
                         {photo?.username}
                       </Button>

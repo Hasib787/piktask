@@ -12,7 +12,7 @@ import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
-import { TopSeller } from "../../components/ui/TopSeller/TopSeller";
+import { TopSeller } from "../../components/ui/TopSeller";
 import Layout from "../../Layout";
 import useStyles from "./Home.styles";
 
