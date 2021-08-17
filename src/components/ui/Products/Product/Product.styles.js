@@ -71,17 +71,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     paddingTop: 0,
     marginTop: "auto",
-    
     paddingBottom: "4px !important",
-
-    "@media (max-width: 1024px)": {
-      alignItems: "baseline",
-      flexDirection: "column",
-    },
-    "@media (max-width: 768px)": {
-      alignItems: "baseline",
-      flexDirection: "column",
-    },
   },
   authorImage: {
     width: 37,
@@ -208,14 +198,6 @@ export const CardFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  @media (max-width: 1024px) {
-    margin-bottom: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    margin-bottom: 1.5rem;
-  }
 `;
 
 export const ButtonWrapper = styled.div`

@@ -23,7 +23,6 @@ import {
 const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
-  // const history = useHistory();
   const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [likeUnlike, setLikeUnlike] = useState();
@@ -33,7 +32,6 @@ const Product = ({ photo }) => {
   const handleClick = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-      // history.push("/login");
     } else if (!likeRef.current.className.includes("disabled")) {
       likeRef.current.classList.add("disabled");
     } else if (likeRef.current.classList.value.includes("disabled")) {
@@ -51,6 +49,8 @@ const Product = ({ photo }) => {
               classes={{ root: classes.premiumIcon }}
               className={classes.iconBtn}
               title="Premium for Commercial Use"
+              component={Link}
+              to={`/subscription`}
             >
               <img src={crownIcon} alt="Premium" />
             </IconButton>
@@ -89,7 +89,7 @@ const Product = ({ photo }) => {
           </CardContent>
 
           <CardContent className={classes.cardFooter}>
-            <CardFooter>
+            <CardFooter className={classes.cardAuthorInfo}>
               <Link to={`/${photo?.username}`}>
                 {photo?.avatar ? (
                   <CardMedia
