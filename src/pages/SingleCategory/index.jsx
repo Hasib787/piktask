@@ -228,7 +228,7 @@ const SingleCategory = () => {
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
-                    <Link to={`/author/${imageDetails?.user_id}`}>
+                    <Link to={`/${imageDetails?.username}`}>
                       {imageDetails?.user?.avatar ? (
                         <img
                           className={classes.authorImg}
@@ -249,7 +249,7 @@ const SingleCategory = () => {
                         className={classes.profileName}
                         variant="h3"
                         component={Link}
-                        to={`/author/${imageDetails?.user_id}`}
+                        to={`/${imageDetails?.username}`}
                       >
                         {imageDetails?.user?.username}
                       </Typography>
