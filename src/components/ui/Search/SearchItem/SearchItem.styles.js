@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   thumbnail: {
-    width: 100,
+    width: 60,
     height: "100%",
     marginRight: "1.2rem",
 

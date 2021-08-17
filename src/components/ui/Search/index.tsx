@@ -39,7 +39,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const [parentRef, isClickedOutside] = useClickOutside();
 
   const [noSearchResults, setNoSearchResults] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const isEmpty = !searchResults || searchResults.length === 0;
@@ -63,7 +63,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   }, [isClickedOutside]);
 
   const prepareSearchQuery = (query: string) => {
-    const url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}`;
+    const url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&limit=12`;
 
     return encodeURI(url);
   };
