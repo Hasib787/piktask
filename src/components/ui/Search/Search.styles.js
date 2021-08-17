@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   searchWrapper: {
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 3rem",
     fontSize: 18,
     height: "5.2rem",
-    borderTopLeftRadius: ".2rem",
+    borderTopLeftRadius: ".3rem",
     borderBottomLeftRadius: ".2rem",
     [theme.breakpoints.down("sm")]: {
       height: "4.5rem",
@@ -77,24 +78,41 @@ const useStyles = makeStyles((theme) => ({
   searchResultWrapper: {
     backgroundColor: "#FFF",
     minHeight: 300,
-    boxShadow: "box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
+    maxHeight: 400,
+    overflowY: "auto",
+    overflowX: "hidden",
+    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
     position: "absolute",
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3,
     top: 59,
     width: "71.2%",
     left: 0,
   },
-  searchResults: {
-    backgroundColor: "#FFF",
-    minHeight: 300,
-    boxShadow: "box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
+  closeIcon: {
     position: "absolute",
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    top: 59,
-    width: "71.2%",
-    left: 0,
+    right: "29%",
+  },
+  searchContent: {
+    width: "auto",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  loadingWrapper: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    "& > p": {
+      color: "#a1a1a1",
+      fontSize: 14,
+      display: "flex",
+      alignSelf: "center",
+      justifySelf: "center",
+    },
   },
 }));
 
