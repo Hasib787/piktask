@@ -75,7 +75,6 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
   }, [userId])
 
   const handleJoinUsButton =()=>{
@@ -83,7 +82,6 @@ const AuthorProfile = () => {
       setOpenAuthModal(true);
     }
   }
-
   
   return (
     <Layout>

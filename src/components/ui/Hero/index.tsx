@@ -63,8 +63,10 @@ const HeroSection: FC<PropTypes> = (props): JSX.Element => {
           />
           {heroButton && (
             <div className={classes.heroButtonWrapper}>
-              <Button className={classes.popularButton} component={Link} to="/">
-                Popular
+              <Button 
+                className={classes.popularButton}  
+                component={Link} to="/">
+                  Popular
               </Button>
               <Button
                 className={classes.recButton}
