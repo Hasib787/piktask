@@ -1,5 +1,5 @@
 import { Button, Container } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
@@ -27,12 +27,20 @@ export const Home = () => {
         background={heroBanner}
         size="large"
         popularKeywords
+        heroButton
         title="Graphic Resource for Free Download"
       />
 
       <Container>
         <Spacing space={{ height: "3rem" }} />
-        <SectionHeading title="Popular Album Collection" large />
+        <SectionHeading title="Popular Album Collection" large>
+          <Button 
+              className={classes.headingButton} 
+              component={Link} 
+              to="/#">
+              See More
+            </Button>
+        </SectionHeading>
       </Container>
 
       {/* Carousel with Categories */}
@@ -73,7 +81,10 @@ export const Home = () => {
 
       <Container>
         <SectionHeading title="Top Selling Author" large>
-          <Button className={classes.headingButton} component={Link} to="#">
+          <Button 
+            className={classes.headingButton} 
+            component={Link} 
+            to="/sellers">
             See More
           </Button>
         </SectionHeading>

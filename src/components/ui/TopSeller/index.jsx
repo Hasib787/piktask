@@ -2,7 +2,6 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Product from "../Products/Product";
 import useStyles from "./TopSeller.style";
 
 export const TopSeller = () => {
@@ -17,7 +16,6 @@ export const TopSeller = () => {
         .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
           if (data?.success) {
-            console.log(data);
             setTopSeller(data.sellers);
             setIsLoading(false);
           }
