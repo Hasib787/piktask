@@ -4,6 +4,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import authorPhoto from "../../assets/author.png";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -44,6 +45,7 @@ const SingleCategory = () => {
         .then(({ data }) => {
           if (data?.success) {
             setImageDetails(data.detail);
+            
             if (data?.detail.tags) {
               const words = data.detail.tags.split(",");
               setAllTags(words.slice(1));
@@ -52,7 +54,7 @@ const SingleCategory = () => {
             if (user?.token) {
               axios
                 .get(
-                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail?.user_id}`,
+                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
                   {
                     headers: { Authorization: user.token },
                   }
@@ -106,11 +108,12 @@ const SingleCategory = () => {
   const handleFollower = () => {
     if (!user.token) {
       setOpenAuthModal(true);
+    } else if(user.id === imageDetails?.user_id) {
+      toast.error("You can't follow yourself");
     } else {
-      const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`;
       axios
         .post(
-          followerAPI,
+          `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
           {},
           {
             headers: { Authorization: user.token },
@@ -128,10 +131,9 @@ const SingleCategory = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else {
-      const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/${id}/like`;
       axios
         .post(
-          likeUnlikeAPI,
+          `${process.env.REACT_APP_API_URL}/images/${id}/like`,
           {},
           {
             headers: { Authorization: user.token },
