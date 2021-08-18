@@ -1,16 +1,10 @@
-import {
-  FormControl,
-  IconButton,
-  Input,
-  NativeSelect,
-} from "@material-ui/core";
+import { IconButton, Input, TextField } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "react-click-outside-hook";
 import searchIcon from "../../../assets/search.svg";
-import { categories } from "../../../data/demoData";
 import { useDebounce } from "../../../lib/hooks/debounceHook";
 import useStyles from "./Search.styles";
 import SearchItem from "./SearchItem";
@@ -35,6 +29,8 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const searchRef = useRef("");
 
   const [searchResults, setSearchResults] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [parentRef, isClickedOutside] = useClickOutside();
 
@@ -89,21 +85,23 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   useDebounce(searchQuery, 500, searchPhotos);
 
-  // useEffect(() => {
-  //   try {
-  //     axios
-  //       .get(
-  //         `${process.env.REACT_APP_API_URL}/client/search/?title=nature&category_id=22&limit=30&page=1`
-  //       )
-  //       .then(({ data }) => {
-  //         if (data?.status) {
-  //           setSearch(data);
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.error("Search api error", error);
-  //   }
-  // }, []);
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const loadCategories = () => {
+    if (categories.length === 0) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          if (data?.status) {
+            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+            setCategories(sortedData);
+          }
+        })
+        .catch((error) => console.log("Categories loading error: ", error));
+    }
+  };
 
   const borderStyles = {
     WebkitBorderBottomLeftRadius: isExpanded ? 0 : ".3rem",
@@ -150,17 +148,59 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         </AnimatePresence>
 
         {!mobileView && (
-          <FormControl>
-            <NativeSelect className={classes.selectContainer} disableUnderline>
-              <option value="">All Resources</option>
-              {categories.length > 0 &&
-                categories.map((category, index) => (
-                  <option key={index} value={index}>
-                    {category}
+          <div>
+            <TextField
+              onClick={loadCategories}
+              className={classes.selectContainer}
+              variant="outlined"
+              select
+              onChange={handleCategory}
+              SelectProps={{
+                native: true,
+              }}
+            >
+              {/* <option>Se</option> */}
+              {categories.length ? (
+                categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
-                ))}
-            </NativeSelect>
-          </FormControl>
+                ))
+              ) : (
+                <option>All Resources</option>
+              )}
+            </TextField>
+          </div>
+          // // <FormControl>
+          // //   <Select
+          // //     className={classes.selectContainer}
+          // //     labelId="demo-simple-select-outlined-label"
+          // //     id="demo-simple-select-outlined"
+          // //     label="Age"
+          // //   >
+          // //     {categories.length !== 0 ? (
+          // //       categories.map((category, index) => (
+          // //         <MenuItem key={index} value={index}>
+          // //           {category}
+          // //         </MenuItem>
+          // //       ))
+          // //     ) : (
+          // //       <MenuItem value="">All Resources</MenuItem>
+          // //     )}
+          // //   </Select>
+          //   {/* <NativeSelect className={classes.selectContainer} disableUnderline>
+          //     <option value="">All Resources</option>
+          //     {categories.length !== 0 ? (
+          //       categories.map((category, index) => (
+          //         <option key={index} value={index}>
+          //           {category}
+          //         </option>
+          //       ))
+          //     ) : (
+          //       <option value="">All Resources</option>
+          //     )}
+          //   // </NativeSelect> */}
+          // // </FormControl>
         )}
 
         <div className={classes.searchIconWrapper}>
