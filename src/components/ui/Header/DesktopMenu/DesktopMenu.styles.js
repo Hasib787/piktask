@@ -79,9 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   enterprise: {
     color: "#FDAF01",
-    paddingLeft: "2.4rem",
-    paddingRight: "2.4rem",
-    fontSize: "16px",
+    fontSize: "14px",
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
       paddingLeft: "1rem",
@@ -91,12 +89,12 @@ const useStyles = makeStyles((theme) => ({
   premium: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    fontSize: "16px",
-    paddingLeft: "2.4rem",
-    paddingRight: "2.4rem",
-    border: ".2rem solid",
-    marginLeft: "1rem",
+    fontSize: "14px",
+    paddingLeft: "1.2rem",
+    paddingRight: "1.2rem",
+    marginLeft: "0.5rem",
     marginRight: "1rem",
+    border: ".2rem solid",
     borderColor: "transparent",
     "&:hover": {
       borderColor: `${theme.palette.common.white}`,
@@ -108,8 +106,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   crownIcon: {
-    marginRight: ".8rem",
-    height: "20px",
+    marginRight: ".5rem",
+    height: "1.4rem",
   },
   sellContentBtn: {
     ...theme.typography.button,
@@ -132,8 +130,7 @@ const useStyles = makeStyles((theme) => ({
   signInBtn: {
     ...theme.typography.button,
     ...theme.typography.darkButton,
-    marginLeft: "1rem",
-    fontSize: "16px",
+    fontSize: "14px",
     padding: ".8rem 2.4rem",
 
     "@media (max-width: 480px)": {

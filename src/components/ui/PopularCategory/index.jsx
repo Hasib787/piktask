@@ -19,7 +19,7 @@ const PopularCategory = ({ photo }) => {
         <Button
           className={classes.catName}
           component={Link}
-          to={`/${photo.slug}`}
+          to={`category/${photo.slug}`}
         >
           {photo?.name}
         </Button>
