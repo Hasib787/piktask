@@ -11,10 +11,10 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import authorPhoto from "../../assets/author.png";
 import bannerImg from "../../assets/banner/banner.png";
 import copyIcon from "../../assets/icons/copy.svg";
-// import downArrow from "../../assets/icons/downArrow.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
@@ -23,22 +23,23 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
-// import HeroSection from "../../components/ui/Hero";
-// import Products from "../../components/ui/Products";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+
   const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [follower, setFollower] = useState(false);
-  const [like, setLike] = useState(false);
+  const [isFollowing, setFollowing] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
+
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -57,7 +58,6 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
-    try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
         .then(({ data }) => {
@@ -68,68 +68,68 @@ const SingleCategory = () => {
               setAllTags(words.slice(1));
             }
 
-            if (user?.token) {
-              axios
-                .get(
-                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail?.user_id}`,
-                  {
-                    headers: { Authorization: user.token },
-                  }
-                )
-                .then((response) => {
-                  if (response.data.status) {
-                    setFollower(true);
-                  } else {
-                    setFollower(false);
-                  }
-                });
-            }
-
-            if (user?.token) {
-              axios
-                .get(
-                  `${process.env.REACT_APP_API_URL}/images/${id}/like_status`,
-                  {
-                    headers: { Authorization: user.token },
-                  }
-                )
-                .then((response) => {
-                  if (response.data.status) {
-                    setLike(true);
-                  } else {
-                    setLike(false);
-                  }
-                });
-            }
+          if (data?.detail.tags) {
+            const words = data.detail.tags.split(",");
+            setAllTags(words.slice(1));
           }
-        });
-    } catch (error) {
-      console.log(error);
+
+          if (user?.token) {
+            axios
+              .get(
+                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                {
+                  headers: { Authorization: user.token },
+                }
+              )
+              .then((response) => {
+                if (response.data.status) {
+                  setFollowing(true);
+                } else {
+                  setFollowing(false);
+                }
+              });
+          }
+        }
+      })
+      .catch((error) => console.log(error));
+
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          console.log("data", data);
+          if (!data?.status) {
+            setLike(false);
+          } else if (data?.status) {
+            setLike(true);
+          } else {
+            console.log("Image like error");
+          }
+        })
+        .catch((error) => console.log("Like status error: ", error));
     }
 
     // related product API
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setRelatedImage(data.images);
-            setLoading(false);
-          }
-        });
-    } catch (error) {
-      console.log("error", error);
-    }
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setRelatedImage(data.images);
+          setLoading(false);
+        }
+      })
+      .catch((error) => console.log("Related image error: ", error));
   }, [id, user.token]);
 
   const handleFollower = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else {
-      const followerAPI = `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`;
+    } else if((user.id !== imageDetails?.user_id) && user.token) {
       axios
         .post(
-          followerAPI,
+          `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
           {},
           {
             headers: { Authorization: user.token },
@@ -137,30 +137,40 @@ const SingleCategory = () => {
         )
         .then((response) => {
           if (response?.status === 200) {
-            setFollower(!follower);
+            setFollowing(!isFollowing);
           }
         });
+    } else {
+      toast.error("You can't follow yourself");
     }
   };
 
   const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else {
-      const likeUnlikeAPI = `${process.env.REACT_APP_API_URL}/images/${id}/like`;
+    } else if((user.id !== imageDetails?.user_id) && user.token) {
       axios
         .post(
-          likeUnlikeAPI,
+          `${process.env.REACT_APP_API_URL}/images/${id}/like`,
           {},
           {
             headers: { Authorization: user.token },
           }
         )
-        .then((response) => {
-          if (response?.status === 200) {
-            setLike(like);
+        .then(({ data }) => {
+          console.log("data status", data);
+          if (data?.status) {
+            setLike(true);
+          } else if (!data?.status) {
+            toast.error(data.message);
+            setLike(true);
+          } else {
+            console.log("Something wrong with the like");
           }
-        });
+        })
+        .catch((err) => console.log("Like error: ", err));
+    } else {
+      toast.error("You can't like yourself");
     }
   };
 
@@ -193,7 +203,9 @@ const SingleCategory = () => {
                 <Typography className={classes.creationDate}>
                   {imageDetails?.creation_ago}
                 </Typography>
-                <Button className={classes.button}>
+                <Button 
+                  className={classes.button}
+                >
                   <img
                     className={classes.buttonIcon}
                     src={shareIcon}
@@ -316,21 +328,15 @@ const SingleCategory = () => {
                       </Typography>
                     </div>
                   </div>
-                  {!follower ? (
+                  {user.id !== imageDetails?.user_id && (
                     <Button
                       className={`${classes.authorBtn} ${classes.followBtn}`}
                       onClick={handleFollower}
                     >
-                      Follow
-                    </Button>
-                  ) : (
-                    <Button
-                      className={`${classes.authorBtn} ${classes.unFollowBtn}`}
-                      onClick={handleFollower}
-                    >
-                      Unfollow
+                      {!isFollowing ? ( <>Follow</> ) : ( <>Following</> ) }
                     </Button>
                   )}
+                  
                 </Grid>
               </Grid>
 
@@ -371,19 +377,25 @@ const SingleCategory = () => {
                     {imageDetails?.user?.images?.total_downloads}
                   </div>
                 </div>
-                {!like ? (
-                  <Button className={classes.likeBtn} onClick={handleLikeBtn}>
-                    <img src={likeIcon} alt="likeBtn" />
-                  </Button>
-                ) : (
-                  <Button
-                    className={classes.activeLikeBtn}
-                    onClick={handleLikeBtn}
-                  >
-                    Unlike
-                    {/* <img src={likeIcon} alt="Download" /> */}
-                  </Button>
+                {user.id !== imageDetails?.user_id && (
+                  <>
+                    {!isLike ? (
+                      <Button className={classes.likeBtn} onClick={handleLikeBtn}>
+                        <img src={likeIcon} alt="like Button" />
+                      </Button>
+                    ) : (
+                      <Tooltip title="You already like the image." placement="top" arrow>
+                        <Button
+                          className={classes.likedBtn}
+                          onClick={handleLikeBtn}
+                        >
+                          <FavoriteIcon />
+                        </Button>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
+                
               </div>
             </div>
           </Grid>

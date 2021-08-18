@@ -4,15 +4,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { TextareaAutosize, TextField, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -137,7 +129,6 @@ const UploadFiles = () => {
   const [price, setPrice] = useState("0");
   const [image, setImage] = useState("");
   const [additional_image, setAdditional_image] = useState("");
-  const [attribution, setAttribution] = useState("yes");
   const [usages, setUsages] = useState("free");
   const [typeOfImage, setTypeOfImage] = useState("");
   const [description, setDescription] = useState("");
@@ -195,9 +186,9 @@ const UploadFiles = () => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories`)
         .then(({ data }) => {
-          console.log("data cats", data);
           if (data?.status) {
-            setcategoryItems(data?.categories);
+            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+            setcategoryItems(sortedData);
           }
         });
     } catch (error) {
@@ -207,7 +198,6 @@ const UploadFiles = () => {
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
-
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*",
@@ -349,7 +339,6 @@ const UploadFiles = () => {
     formData.append("item_for_sale", item_for_sale);
     formData.append("price", price);
     formData.append("usages", usages);
-    formData.append("attribution", attribution);
     formData.append("description", description);
     formData.append("image", thumbImage);
     formData.append("additional_image", additional_image);
@@ -365,7 +354,6 @@ const UploadFiles = () => {
       },
     })
       .then((res) => {
-        console.log("res", res);
         if (res?.status === 200) {
           toast.success(res.data.message);
           setLoading(false);
@@ -377,7 +365,6 @@ const UploadFiles = () => {
           setCategory("");
           setPrice("");
           setUsages("");
-          setAttribution("");
           setItem_for_sale("");
         }
         if (res?.status === 401) {
@@ -667,31 +654,6 @@ const UploadFiles = () => {
                         Select a file (AI,EPS,PSD,SVG)
                       </p>
                     </div>
-                  </div>
-                )}
-
-                {!itemSale && (
-                  <div>
-                    <h4 className={classes.titleText}>Attribution required</h4>
-                    <FormControl component="fieldset">
-                      <RadioGroup
-                        aria-label="Attribution required"
-                        name="Attribution required"
-                        value={attribution}
-                        onChange={(e) => setAttribution(e.target.value)}
-                      >
-                        <FormControlLabel
-                          value="yes"
-                          control={<Radio />}
-                          label="Yes"
-                        />
-                        <FormControlLabel
-                          value="no"
-                          control={<Radio />}
-                          label="No"
-                        />
-                      </RadioGroup>
-                    </FormControl>
                   </div>
                 )}
 

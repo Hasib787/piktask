@@ -84,78 +84,76 @@ const AuthorProfile = () => {
   }
   
   return (
-    <>
-      <Layout>
-        <Header />
-        <div
-          className={classes.authorHero}
-          style={{ backgroundImage: `url(${heroBanner})` }}
-        >
-          <Container>
-            {isLoading ? (
-              <h1>Loading...</h1>
-            ) : (
-              <>
-                {userId !== undefined ? (
-                  <Grid container className={classes.profileWrapper}>
-                    <div className={classes.authorImg}>
-                      {profileInfo?.avatar ? (
-                        <img src={profileInfo?.avatar} alt={profileInfo?.username} />
-                      ) : (
-                        <img src={authorImg} alt={profileInfo?.username} />
-                      )}
-                    </div>
-                    <div className={classes.authorInfo}>
-                      <Typography className={classes.authorName} variant="h3">
-                        {profileInfo?.username}
+    <Layout>
+      <Header />
+      <div
+        className={classes.authorHero}
+        style={{ backgroundImage: `url(${heroBanner})` }}
+      >
+        <Container>
+          {isLoading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <>
+              {userId !== undefined ? (
+                <Grid container className={classes.profileWrapper}>
+                  <div className={classes.authorImg}>
+                    {profileInfo?.avatar ? (
+                      <img src={profileInfo?.avatar} alt={profileInfo?.username} />
+                    ) : (
+                      <img src={authorImg} alt={profileInfo?.username} />
+                    )}
+                  </div>
+                  <div className={classes.authorInfo}>
+                    <Typography className={classes.authorName} variant="h3">
+                      {profileInfo?.username}
+                    </Typography>
+                    <div className={classes.resourceDetails}>
+                      <Typography className={classes.infoItem} variant="body2">
+                        Resources
+                        <span>{profileInfo?.total_images}</span>
                       </Typography>
-                      <div className={classes.resourceDetails}>
-                        <Typography className={classes.infoItem} variant="body2">
-                          Resources
-                          <span>{profileInfo?.total_images}</span>
-                        </Typography>
-                        <Typography className={classes.infoItem} variant="body2">
-                          Followers
-                          <span>{profileInfo?.total_followers}</span>
-                        </Typography>
-                        <Typography className={classes.infoItem} variant="body2">
-                          Downloads
-                          <span>{profileInfo?.total_downloads}</span>
-                        </Typography>
-                      </div>
-                      <div className={classes.authorSocials}>
-                        <SocialShare
-                          title="Share this page:"
-                          socialMedias={socialMedias}
-                        />
-                      </div>
+                      <Typography className={classes.infoItem} variant="body2">
+                        Followers
+                        <span>{profileInfo?.total_followers}</span>
+                      </Typography>
+                      <Typography className={classes.infoItem} variant="body2">
+                        Downloads
+                        <span>{profileInfo?.total_downloads}</span>
+                      </Typography>
                     </div>
-                  </Grid>
-                  ) : (
-                    <h1>No resources found</h1>
-                  )
-                }
-              </>
-            )
-          }
-          </Container>
-        </div>
-        <AuthorItems userId={userId} imageSummery={imageSummery} />
+                    <div className={classes.authorSocials}>
+                      <SocialShare
+                        title="Follow this author:"
+                        socialMedias={socialMedias}
+                      />
+                    </div>
+                  </div>
+                </Grid>
+                ) : (
+                  <h1>No resources found</h1>
+                )
+              }
+            </>
+          )
+        }
+        </Container>
+      </div>
+      <AuthorItems userId={userId} imageSummery={imageSummery} />
 
-        <CallToAction
-          title="Join DesignHill designer team"
-          subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-          buttonText="Join Us"
-          buttonClicked={()=>handleJoinUsButton()}
-        />
-        {/* Sign up modal section*/}
-          <SignUpModal
-          openAuthModal={openAuthModal}
-          setOpenAuthModal={setOpenAuthModal}
-        />
-        <Footer />
-      </Layout>
-    </>
+      <CallToAction
+        title="Join DesignHill designer team"
+        subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+        buttonText="Join Us"
+        buttonClicked={()=>handleJoinUsButton()}
+      />
+      {/* Sign up modal section*/}
+        <SignUpModal
+        openAuthModal={openAuthModal}
+        setOpenAuthModal={setOpenAuthModal}
+      />
+      <Footer />
+    </Layout>
   );
 };
 
