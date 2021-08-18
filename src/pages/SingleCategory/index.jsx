@@ -326,10 +326,7 @@ const SingleCategory = () => {
                   </div>
                 </div>
                 {!like ? (
-                  <Button
-                    className={classes.likeBtn}
-                    onClick={handleLikeBtn}
-                  >
+                  <Button className={classes.likeBtn} onClick={handleLikeBtn}>
                     <img src={likeIcon} alt="likeBtn" />
                   </Button>
                 ) : (
@@ -348,9 +345,9 @@ const SingleCategory = () => {
 
         {/* Sign up modal section*/}
         <SignUpModal
-        openAuthModal={openAuthModal}
-        setOpenAuthModal={setOpenAuthModal}
-      />
+          openAuthModal={openAuthModal}
+          setOpenAuthModal={setOpenAuthModal}
+        />
 
         <Spacing space={{ height: "2.5rem" }}></Spacing>
         <SectionHeading
