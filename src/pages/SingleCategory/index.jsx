@@ -1,5 +1,11 @@
-import { Button, Container, Grid, Typography } from "@material-ui/core";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import {
+  Button,
+  ClickAwayListener,
+  Container,
+  Grid,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -19,6 +25,7 @@ import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
+import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
 
@@ -26,22 +33,38 @@ const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+
   const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [follower, setFollower] = useState(false);
-  const [like, setLike] = useState(false);
+  const [isFollowing, setFollowing] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
+
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const [copySuccess, setCopySuccess] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleCopyUrl = (e) => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopySuccess("Copied successfully!");
+    setOpen(true);
+  };
 
   useEffect(() => {
-    window.scrollTo(0, 150);
-
     axios
       .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
       .then(({ data }) => {
         if (data?.success) {
           setImageDetails(data.detail);
+          if (data?.detail.tags) {
+            const words = data.detail.tags.split(",");
+            setAllTags(words.slice(1));
+          }
 
           if (data?.detail.tags) {
             const words = data.detail.tags.split(",");
@@ -58,9 +81,9 @@ const SingleCategory = () => {
               )
               .then((response) => {
                 if (response.data.status) {
-                  setFollower(true);
+                  setFollowing(true);
                 } else {
-                  setFollower(false);
+                  setFollowing(false);
                 }
               });
           }
@@ -74,6 +97,7 @@ const SingleCategory = () => {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
+          console.log("data", data);
           if (!data?.status) {
             setLike(false);
           } else if (data?.status) {
@@ -111,7 +135,7 @@ const SingleCategory = () => {
         )
         .then((response) => {
           if (response?.status === 200) {
-            setFollower(!follower);
+            setFollowing(!isFollowing);
           }
         });
     } else {
@@ -122,7 +146,7 @@ const SingleCategory = () => {
   const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else {
+    } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/images/${id}/like`,
@@ -131,20 +155,24 @@ const SingleCategory = () => {
             headers: { Authorization: user.token },
           }
         )
-        .then((response) => {
-          console.log(response);
-          if (response?.suceess) {
+        .then(({ data }) => {
+          if (data?.status) {
             setLike(true);
+          } else if (!data?.status) {
+            toast.error(data.message);
+            setLike(true);
+          } else {
+            console.log("Something wrong with the like");
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((err) => console.log("Like error: ", err));
+    } else {
+      toast.error("You can't like yourself");
     }
   };
 
   return (
-    <>
+    <Layout>
       <Header />
       <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>
@@ -180,14 +208,35 @@ const SingleCategory = () => {
                   />
                   Share
                 </Button>
-                <Button className={classes.button}>
-                  <img
-                    className={classes.buttonIcon}
-                    src={copyIcon}
-                    alt="Copy Link"
-                  />
-                  Copy Link
-                </Button>
+                <ClickAwayListener onClickAway={handleTooltipClose}>
+                  <div>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true,
+                      }}
+                      onClose={handleTooltipClose}
+                      open={open}
+                      placement="top"
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="Copied successfully!"
+                      className={classes.tooltip}
+                    >
+                      <Button
+                        className={classes.button}
+                        onClick={() => handleCopyUrl()}
+                      >
+                        <img
+                          className={classes.buttonIcon}
+                          src={copyIcon}
+                          alt="Copy Link"
+                        />
+                        Copy Link
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </ClickAwayListener>
               </div>
 
               <Grid container className={classes.detailsContainer}>
@@ -274,12 +323,14 @@ const SingleCategory = () => {
                       </Typography>
                     </div>
                   </div>
-                  <Button
-                    className={`${classes.authorBtn} ${classes.followBtn}`}
-                    onClick={handleFollower}
-                  >
-                    {!follower ? <>Follow</> : <>Following</>}
-                  </Button>
+                  {user.id !== imageDetails?.user_id && (
+                    <Button
+                      className={`${classes.authorBtn} ${classes.followBtn}`}
+                      onClick={handleFollower}
+                    >
+                      {!isFollowing ? <>Follow</> : <>Following</>}
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
 
@@ -307,7 +358,7 @@ const SingleCategory = () => {
                     Download License
                   </Button>
                 </Typography>
-                <Typography>@ Copyright : Piktask</Typography>
+                <Typography>&copy; Copyright : Piktask</Typography>
               </div>
 
               <div className={classes.buttonGroup}>
@@ -320,18 +371,30 @@ const SingleCategory = () => {
                     {imageDetails?.user?.images?.total_downloads}
                   </div>
                 </div>
-                {!like ? (
-                  <Button className={classes.likeBtn} onClick={handleLikeBtn}>
-                    <img src={likeIcon} alt="like Button" />
-                  </Button>
-                ) : (
-                  <Button
-                    className={classes.likedBtn}
-                    onClick={handleLikeBtn}
-                    title="You already like the image."
-                  >
-                    <FavoriteIcon />
-                  </Button>
+                {user.id !== imageDetails?.user_id && (
+                  <>
+                    {!isLike ? (
+                      <Button
+                        className={classes.likeBtn}
+                        onClick={handleLikeBtn}
+                      >
+                        <img src={likeIcon} alt="like Button" />
+                      </Button>
+                    ) : (
+                      <Tooltip
+                        title="You already like the image."
+                        placement="top"
+                        arrow
+                      >
+                        <Button
+                          className={classes.likedBtn}
+                          onClick={handleLikeBtn}
+                        >
+                          <FavoriteIcon />
+                        </Button>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -375,7 +438,7 @@ const SingleCategory = () => {
         <TagButtons allTags={allTags} />
       </Container>
       <Footer />
-    </>
+    </Layout>
   );
 };
 

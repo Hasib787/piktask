@@ -75,7 +75,6 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
   }, [userId])
 
   const handleJoinUsButton =()=>{
@@ -83,7 +82,6 @@ const AuthorProfile = () => {
       setOpenAuthModal(true);
     }
   }
-
   
   return (
     <Layout>
@@ -126,7 +124,7 @@ const AuthorProfile = () => {
                     </div>
                     <div className={classes.authorSocials}>
                       <SocialShare
-                        title="Share this page:"
+                        title="Follow this author:"
                         socialMedias={socialMedias}
                       />
                     </div>
