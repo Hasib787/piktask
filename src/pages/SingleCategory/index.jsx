@@ -1,7 +1,14 @@
-import { Button, Container, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  ClickAwayListener,
+  Container,
+  Grid,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import authorPhoto from "../../assets/author.png";
@@ -20,6 +27,7 @@ import HeroSection from "../../components/ui/Hero";
 // import Products from "../../components/ui/Products";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
+import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
 
@@ -34,10 +42,21 @@ const SingleCategory = () => {
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const [copySuccess, setCopySuccess] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+
+  const handleCopyUrl = (e) => {
+    navigator.clipboard.writeText(window.location.href);
+    setCopySuccess("Copied successfully!");
+    setOpen(true);
+  };
 
   useEffect(() => {
-    window.scrollTo(0, 150);
-
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
@@ -146,7 +165,7 @@ const SingleCategory = () => {
   };
 
   return (
-    <>
+    <Layout>
       <Header />
       <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>
@@ -182,14 +201,35 @@ const SingleCategory = () => {
                   />
                   Share
                 </Button>
-                <Button className={classes.button}>
-                  <img
-                    className={classes.buttonIcon}
-                    src={copyIcon}
-                    alt="Copy Link"
-                  />
-                  Copy Link
-                </Button>
+                <ClickAwayListener onClickAway={handleTooltipClose}>
+                  <div>
+                    <Tooltip
+                      PopperProps={{
+                        disablePortal: true,
+                      }}
+                      onClose={handleTooltipClose}
+                      open={open}
+                      placement="top"
+                      disableFocusListener
+                      disableHoverListener
+                      disableTouchListener
+                      title="Copied successfully!"
+                      className={classes.tooltip}
+                    >
+                      <Button
+                        className={classes.button}
+                        onClick={() => handleCopyUrl()}
+                      >
+                        <img
+                          className={classes.buttonIcon}
+                          src={copyIcon}
+                          alt="Copy Link"
+                        />
+                        Copy Link
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </ClickAwayListener>
               </div>
 
               <Grid container className={classes.detailsContainer}>
@@ -297,12 +337,13 @@ const SingleCategory = () => {
               <div className={classes.premiumInfo}>
                 <Typography variant="h4">
                   Premium User:
-                  <Button 
+                  <Button
                     className={classes.premiumViewBtn}
                     component={Link}
                     to={`/subscription`}
                   >
-                    View Plans</Button>
+                    View Plans
+                  </Button>
                 </Typography>
                 <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
@@ -317,7 +358,7 @@ const SingleCategory = () => {
                     Download License
                   </Button>
                 </Typography>
-                <Typography>@ Copyright : Piktask</Typography>
+                <Typography>&copy; Copyright : Piktask</Typography>
               </div>
 
               <div className={classes.buttonGroup}>
@@ -331,10 +372,7 @@ const SingleCategory = () => {
                   </div>
                 </div>
                 {!like ? (
-                  <Button
-                    className={classes.likeBtn}
-                    onClick={handleLikeBtn}
-                  >
+                  <Button className={classes.likeBtn} onClick={handleLikeBtn}>
                     <img src={likeIcon} alt="likeBtn" />
                   </Button>
                 ) : (
@@ -353,9 +391,9 @@ const SingleCategory = () => {
 
         {/* Sign up modal section*/}
         <SignUpModal
-        openAuthModal={openAuthModal}
-        setOpenAuthModal={setOpenAuthModal}
-      />
+          openAuthModal={openAuthModal}
+          setOpenAuthModal={setOpenAuthModal}
+        />
 
         <Spacing space={{ height: "2.5rem" }}></Spacing>
         <SectionHeading
@@ -388,7 +426,7 @@ const SingleCategory = () => {
         <TagButtons allTags={allTags} />
       </Container>
       <Footer />
-    </>
+    </Layout>
   );
 };
 

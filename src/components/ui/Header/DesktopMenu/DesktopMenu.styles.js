@@ -113,9 +113,10 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     border: `.2rem solid`,
     borderColor: theme.palette.secondary.main,
-    paddingRight: "2.4rem",
-    paddingLeft: "2.4rem",
+    paddingRight: "1.2rem",
+    paddingLeft: "1.2rem",
     marginRight: "1.5rem",
+    fontSize: "12px",
     textTransform: "uppercase",
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,

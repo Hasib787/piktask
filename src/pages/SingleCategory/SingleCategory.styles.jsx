@@ -328,6 +328,15 @@ const useStyles = makeStyles((theme) => ({
       flexBasis: "100%",
     },
   },
+  textarea:{
+   display:"none",
+  },
+  tooltip:{
+   "&& .MuiTooltip-popper":{
+     fontSize: "1.2rem",
+   },
+
+  },
 }));
 
 export default useStyles;

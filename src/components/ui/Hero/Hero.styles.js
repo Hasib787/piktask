@@ -87,6 +87,10 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
+  selected: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white,
+  },
 }));
 
 export default useStyles;

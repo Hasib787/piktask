@@ -38,7 +38,7 @@ const socialMedias: SocialMedia[] = [
 
 const AuthorProfile = () => {
   const classes = useStyles();
-  const { id } = useParams();
+  const { userName } = useParams();
   const user = useSelector((state) => state.user);
   const [profileInfo, setProfileInfo] = useState({});
   const [imageSummery, setImageSummery] = useState([]);
@@ -75,15 +75,13 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
-  }, [id])
+  }, [userId])
 
   const handleJoinUsButton =()=>{
     if (!user.token) {
       setOpenAuthModal(true);
     }
   }
-
   
   return (
     <>
@@ -102,9 +100,9 @@ const AuthorProfile = () => {
                   <Grid container className={classes.profileWrapper}>
                     <div className={classes.authorImg}>
                       {profileInfo?.avatar ? (
-                        <img src={profileInfo?.avatar} alt="Design Studio" />
+                        <img src={profileInfo?.avatar} alt={profileInfo?.username} />
                       ) : (
-                        <img src={authorImg} alt="Design Studio" />
+                        <img src={authorImg} alt={profileInfo?.username} />
                       )}
                     </div>
                     <div className={classes.authorInfo}>
