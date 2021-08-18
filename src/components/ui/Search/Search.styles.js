@@ -59,15 +59,33 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "4.5rem",
     },
-    "& > select": {
-      width: 200,
+    "& .MuiInputBase-formControl": {
+      height: "5.2rem",
+    },
+    "& .MuiInputBase-formControl:hover fieldset": {
+      borderColor: "transparent",
+    },
+    "& .MuiInputBase-formControl:focus-visible": {
+      outline: 0,
+    },
+    "&:focus-visible": {
+      outline: 0,
+    },
+    "& select": {
+      width: 152,
       paddingLeft: "1rem",
-      borderLeft: "1px solid #BEBEBE",
+      borderLeft: "0px solid #BEBEBE",
       fontSize: "1.8rem",
       height: "3.2rem",
       "&:focus": {
         backgroundColor: "transparent",
+        outline: "none",
       },
+    },
+    "& fieldset": {
+      borderColor: "transparent",
+      outline: "none",
+      "&:focus-visible": {},
     },
     "& .MuiNativeSelect-icon": {
       right: 22,
@@ -88,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
     top: 59,
     width: "71.2%",
     left: 0,
+    zIndex: 99,
   },
   closeIcon: {
     position: "absolute",

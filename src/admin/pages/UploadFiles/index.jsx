@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TextareaAutosize, TextField, Typography } from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -18,56 +18,6 @@ import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./UploadFiles.styles";
-
-// const customStyles = makeStyles({
-//   menuWrapper: {
-//     top: "1.8rem",
-//     marginTop: 20,
-//     color: "#FFF",
-//     display: "flex",
-//     justifyContent: "space-between",
-
-//     "@media (max-width: 425px)": {
-//       marginTop: 10,
-//     },
-//   },
-//   closeIconWrapper: {
-//     backgroundColor: "#063B52",
-//     padding: "1rem",
-//     boxShadow: "0px 0px 50px 50px #042C3D",
-//     display: "flex",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//   },
-// });
-
-const categoryItem = [
-  { id: 0, value: "select_category", label: "Select Category" },
-  { id: 1, value: "Animals", label: "Animals" },
-  { id: 2, value: "Architecture", label: "Architecture" },
-  { id: 3, value: "Backgrounds / Textures", label: "Backgrounds / Textures" },
-  { id: 4, value: "Business / Finance", label: "Business / Finance" },
-  {
-    id: 5,
-    value: "Computer / Communication",
-    label: "Computer / Communication",
-  },
-  { id: 6, value: "Education", label: "Education" },
-  { id: 7, value: "Fashion", label: "Fashion" },
-  { id: 8, value: "Foods & Drinks", label: "Foods & Drinks" },
-  { id: 9, value: "Health / Medical", label: "Health / Medical" },
-  { id: 10, value: "Industry / Craft", label: "Industry / Craft" },
-  { id: 11, value: "Music", label: "Music" },
-  { id: 12, value: "Nature / Landscapes", label: "Nature / Landscapes" },
-  { id: 13, value: "People", label: "People" },
-  { id: 14, value: "Places", label: "Places" },
-  { id: 15, value: "Religion", label: "Religion" },
-  { id: 16, value: "Science / Technology", label: "Science / Technology" },
-  { id: 17, value: "Sports", label: "Sports" },
-  { id: 18, value: "Transportation / Cars", label: "Transportation / Cars" },
-  { id: 19, value: "Travel", label: "Travel" },
-  { id: 20, value: "Uncategorized", label: "Uncategorized" },
-];
 
 const ItemForSale = [
   { value: "free", label: "Free" },
@@ -121,6 +71,7 @@ const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const classes = useStyles();
+  const categoryRef = useRef();
   // const iconClass = customStyles();
 
   const [title, setTitle] = useState("");
@@ -136,7 +87,7 @@ const UploadFiles = () => {
   const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [categoryItems, setcategoryItems] = useState({});
+  const [categoryItems, setcategoryItems] = useState([]);
 
   //item for sale
   const [itemSale, setItemSale] = useState(false);
@@ -181,19 +132,6 @@ const UploadFiles = () => {
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
-
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
-        .then(({ data }) => {
-          if (data?.status) {
-            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-            setcategoryItems(sortedData);
-          }
-        });
-    } catch (error) {
-      console.log("Categories loading error: ", error);
-    }
 
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
@@ -252,6 +190,20 @@ const UploadFiles = () => {
     setCategory(e.target.value);
   };
 
+  const loadCategories = (e) => {
+    if (categoryItems.length === 0) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          if (data?.status) {
+            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+            setcategoryItems(sortedData);
+          }
+        })
+        .catch((error) => console.log("Categories loading error: ", error));
+    }
+  };
+
   const handleSaleChange = (e) => {
     setItem_for_sale(e.target.value);
     setItemSale(!itemSale);
@@ -265,14 +217,6 @@ const UploadFiles = () => {
   const handleTypeOfImage = (e) => {
     setTypeOfImage(e.target.value);
     setImageType(!imageType);
-  };
-
-  const handlePrice = (e) => {
-    if (e.target.value < 5) {
-      toast.error("Minimum price should be 5");
-      return;
-    }
-    setPrice(e.target.value);
   };
 
   const handleFileChange = (e) => {
@@ -522,7 +466,7 @@ const UploadFiles = () => {
                   * Press Space or comma to add tag (Maximum 10 tags)
                 </p>
 
-                <div>
+                <div onClick={loadCategories}>
                   <h4 className={classes.titleText}>Category</h4>
                   <TextField
                     id="standard-select-currency-native"
@@ -535,14 +479,19 @@ const UploadFiles = () => {
                       native: true,
                     }}
                   >
-                    {categoryItems.length &&
+                    {categoryItems.length ? (
                       categoryItems?.map((category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}
                         </option>
-                      ))}
+                      ))
+                    ) : (
+                      <option>Uncategorized</option>
+                    )}
                   </TextField>
+                </div>
 
+                <div>
                   <h4 className={classes.titleText}>Item for sale?</h4>
                   <TextField
                     id="standard-select-currency-native"
@@ -563,35 +512,6 @@ const UploadFiles = () => {
                   </TextField>
                 </div>
 
-                {itemSale && (
-                  <div>
-                    <h4 className={classes.titleText}>($)Price</h4>
-                    <TextField
-                      className={classes.inputField}
-                      variant="outlined"
-                      placeholder="Price"
-                      type="number"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={price}
-                      onChange={handlePrice}
-                      helperText="* You will receive 95% for each sale"
-                    />
-                    <div className={classes.priceFormats}>
-                      <h3>Price Formats:</h3>
-                      <ul className={classes.listStyle}>
-                        <li>Small photo price:$0</li>
-                        <li>Medium photo price:$0</li>
-                        <li>Large photo price:$0</li>
-                        <li>
-                          Vector price:$0 <span>(If included)</span>
-                        </li>
-                      </ul>
-                      <small>Price minimum:$5 | Price maximum:$100</small>
-                    </div>
-                  </div>
-                )}
                 <div>
                   <h4 className={classes.titleText}>
                     How they can use this photo

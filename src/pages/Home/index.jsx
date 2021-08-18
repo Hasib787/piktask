@@ -28,18 +28,15 @@ export const Home = () => {
         size="large"
         popularKeywords
         heroButton
-        title="Graphic Resource for Free Download"
+        title="Graphic Resources for Free Download"
       />
 
       <Container>
         <Spacing space={{ height: "3rem" }} />
         <SectionHeading title="Popular Album Collection" large>
-          <Button 
-              className={classes.headingButton} 
-              component={Link} 
-              to="/#">
-              See More
-            </Button>
+          <Button className={classes.headingButton} component={Link} to="/#">
+            See More
+          </Button>
         </SectionHeading>
       </Container>
 
@@ -81,10 +78,11 @@ export const Home = () => {
 
       <Container>
         <SectionHeading title="Top Selling Author" large>
-          <Button 
-            className={classes.headingButton} 
-            component={Link} 
-            to="/sellers">
+          <Button
+            className={classes.headingButton}
+            component={Link}
+            to="/sellers"
+          >
             See More
           </Button>
         </SectionHeading>
