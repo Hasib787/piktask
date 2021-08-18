@@ -150,21 +150,15 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.6rem",
     fontWeight: 400,
     textDecoration: "none",
-    // [theme.breakpoints.down(480)]: {
-    //   fontSize: "1rem",
-    // },
   },
   resourceInfo: {
     fontSize: "1.4rem",
     fontWeight: 400,
-    // [theme.breakpoints.down(480)]: {
-    //   fontSize: "1.4rem",
-    // },
   },
   authorBtn: {
     ...theme.typography.button,
     marginRight: "2rem",
-    padding: "0.5rem 3.5rem",
+    padding: "0.5rem 2.5rem",
     fontSize: "1.5rem",
 
     [theme.breakpoints.down("sm")]: {
@@ -182,12 +176,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
-    },
-  },
-  unFollowBtn: {
-    backgroundColor: "red",
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
     },
   },
   premiumInfo: {
@@ -209,9 +197,6 @@ const useStyles = makeStyles((theme) => ({
     "& p": {
       marginBottom: ".6rem",
       fontSize: "1.4rem",
-      // [theme.breakpoints.down(480)]: {
-      //   fontSize: "1.4rem",
-      // },
     },
     [theme.breakpoints.down(480)]: {
       width: "100%",
@@ -293,11 +278,17 @@ const useStyles = makeStyles((theme) => ({
       padding: "0.4rem 1.5rem",
     },
   },
-  activeLikeBtn: {
+  // likedBtn: {
+  //   color: "#ff0000",
+  //   fontSize: "2.9rem",
+  // },
+  likedBtn: {
     padding: "1rem 1.5rem",
-    backgroundColor: theme.palette.secondary.main,
-    "& img": {
-      width: "2.7rem",
+    backgroundColor: "#E1E3EB",
+    "& svg": {
+      // color: "#ff0000",
+      color: "#117A00",
+      fontSize: "2.9rem",
     },
 
     [theme.breakpoints.down(480)]: {
