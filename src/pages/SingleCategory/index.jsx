@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Typography } from "@material-ui/core";
+import { Button, Container, Grid, Tooltip, Typography } from "@material-ui/core";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -26,10 +26,12 @@ const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+
   const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [follower, setFollower] = useState(false);
-  const [like, setLike] = useState(false);
+  const [isFollowing, setFollowing] = useState(false);
+  const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
+
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -58,9 +60,9 @@ const SingleCategory = () => {
               )
               .then((response) => {
                 if (response.data.status) {
-                  setFollower(true);
+                  setFollowing(true);
                 } else {
-                  setFollower(false);
+                  setFollowing(false);
                 }
               });
           }
@@ -74,6 +76,7 @@ const SingleCategory = () => {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
+          console.log("data", data);
           if (!data?.status) {
             setLike(false);
           } else if (data?.status) {
@@ -111,19 +114,18 @@ const SingleCategory = () => {
         )
         .then((response) => {
           if (response?.status === 200) {
-            setFollower(!follower);
+            setFollowing(!isFollowing);
           }
         });
     } else {
       toast.error("You can't follow yourself");
-      
     }
   };
 
   const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else {
+    } else if((user.id !== imageDetails?.user_id) && user.token) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/images/${id}/like`,
@@ -132,14 +134,20 @@ const SingleCategory = () => {
             headers: { Authorization: user.token },
           }
         )
-        .then((response) => {
-          if (response?.status) {
+        .then(({ data }) => {
+          console.log("data status", data);
+          if (data?.status) {
             setLike(true);
+          } else if (!data?.status) {
+            toast.error(data.message);
+            setLike(true);
+          } else {
+            console.log("Something wrong with the like");
           }
         })
-        .catch((error) => {
-          console.log("error", error);
-        });
+        .catch((err) => console.log("Like error: ", err));
+    } else {
+      toast.error("You can't like yourself");
     }
   };
 
@@ -276,12 +284,15 @@ const SingleCategory = () => {
                       </Typography>
                     </div>
                   </div>
-                  <Button
-                    className={`${classes.authorBtn} ${classes.followBtn}`}
-                    onClick={handleFollower}
-                  >
-                    {!follower ? ( <>Follow</> ) : ( <>Following</> ) }
-                  </Button>
+                  {user.id !== imageDetails?.user_id && (
+                    <Button
+                      className={`${classes.authorBtn} ${classes.followBtn}`}
+                      onClick={handleFollower}
+                    >
+                      {!isFollowing ? ( <>Follow</> ) : ( <>Following</> ) }
+                    </Button>
+                  )}
+                  
                 </Grid>
               </Grid>
 
@@ -322,19 +333,25 @@ const SingleCategory = () => {
                     {imageDetails?.user?.images?.total_downloads}
                   </div>
                 </div>
-                {!like ? (
-                  <Button className={classes.likeBtn} onClick={handleLikeBtn}>
-                    <img src={likeIcon} alt="like Button" />
-                  </Button>
-                ) : (
-                  <Button
-                    className={classes.likedBtn}
-                    onClick={handleLikeBtn}
-                    title="You already like the image."
-                  >
-                    <FavoriteIcon />
-                  </Button>
+                {user.id !== imageDetails?.user_id && (
+                  <>
+                    {!isLike ? (
+                      <Button className={classes.likeBtn} onClick={handleLikeBtn}>
+                        <img src={likeIcon} alt="like Button" />
+                      </Button>
+                    ) : (
+                      <Tooltip title="You already like the image." placement="top" arrow>
+                        <Button
+                          className={classes.likedBtn}
+                          onClick={handleLikeBtn}
+                        >
+                          <FavoriteIcon />
+                        </Button>
+                      </Tooltip>
+                    )}
+                  </>
                 )}
+                
               </div>
             </div>
           </Grid>
