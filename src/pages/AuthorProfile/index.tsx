@@ -126,7 +126,7 @@ const AuthorProfile = () => {
                     </div>
                     <div className={classes.authorSocials}>
                       <SocialShare
-                        title="Share this page:"
+                        title="Follow this author:"
                         socialMedias={socialMedias}
                       />
                     </div>
