@@ -6,6 +6,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -97,13 +98,12 @@ const SingleCategory = () => {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
-          console.log("data", data);
           if (!data?.status) {
             setLike(false);
           } else if (data?.status) {
             setLike(true);
           } else {
-            console.log("Image like error");
+            console.log("Image like status error");
           }
         })
         .catch((error) => console.log("Like status error: ", error));
@@ -221,7 +221,7 @@ const SingleCategory = () => {
                       disableHoverListener
                       disableTouchListener
                       title="Copied successfully!"
-                      className={classes.tooltip}
+                      classes={{ tooltip: classes.tooltip }}
                     >
                       <Button
                         className={classes.button}
@@ -382,9 +382,10 @@ const SingleCategory = () => {
                       </Button>
                     ) : (
                       <Tooltip
-                        title="You already like the image."
+                        title="You already liked the image."
                         placement="top"
                         arrow
+                        classes={{ tooltip: classes.tooltip }}
                       >
                         <Button
                           className={classes.likedBtn}

@@ -148,29 +148,26 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         </AnimatePresence>
 
         {!mobileView && (
-          <div>
-            <TextField
-              onClick={loadCategories}
-              className={classes.selectContainer}
-              variant="outlined"
-              select
-              onChange={handleCategory}
-              SelectProps={{
-                native: true,
-              }}
-            >
-              {/* <option>Se</option> */}
-              {categories.length ? (
-                categories?.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))
-              ) : (
-                <option>All Resources</option>
-              )}
-            </TextField>
-          </div>
+          <TextField
+            onClick={loadCategories}
+            className={classes.selectContainer}
+            variant="outlined"
+            select
+            onChange={handleCategory}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            {categories.length ? (
+              categories?.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))
+            ) : (
+              <option>Uncategorized</option>
+            )}
+          </TextField>
           // // <FormControl>
           // //   <Select
           // //     className={classes.selectContainer}
