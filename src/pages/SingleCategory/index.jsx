@@ -1,4 +1,5 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -20,7 +21,6 @@ import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
-import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const SingleCategory = () => {
   const classes = useStyles();
@@ -100,7 +100,7 @@ const SingleCategory = () => {
   const handleFollower = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else if((user.id !== imageDetails?.user_id) && user.token) {
+    } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
@@ -116,7 +116,6 @@ const SingleCategory = () => {
         });
     } else {
       toast.error("You can't follow yourself");
-      
     }
   };
 
@@ -133,7 +132,8 @@ const SingleCategory = () => {
           }
         )
         .then((response) => {
-          if (response?.status) {
+          console.log(response);
+          if (response?.suceess) {
             setLike(true);
           }
         })
@@ -172,9 +172,7 @@ const SingleCategory = () => {
                 <Typography className={classes.creationDate}>
                   {imageDetails?.creation_ago}
                 </Typography>
-                <Button 
-                  className={classes.button}
-                >
+                <Button className={classes.button}>
                   <img
                     className={classes.buttonIcon}
                     src={shareIcon}
@@ -280,7 +278,7 @@ const SingleCategory = () => {
                     className={`${classes.authorBtn} ${classes.followBtn}`}
                     onClick={handleFollower}
                   >
-                    {!follower ? ( <>Follow</> ) : ( <>Following</> ) }
+                    {!follower ? <>Follow</> : <>Following</>}
                   </Button>
                 </Grid>
               </Grid>
