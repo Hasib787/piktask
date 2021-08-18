@@ -38,7 +38,7 @@ const socialMedias: SocialMedia[] = [
 
 const AuthorProfile = () => {
   const classes = useStyles();
-  const { userName } = useParams();
+  const { id } = useParams();
   const user = useSelector((state) => state.user);
   const [profileInfo, setProfileInfo] = useState({});
   const [imageSummery, setImageSummery] = useState([]);
@@ -75,7 +75,8 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [userId])
+
+  }, [id])
 
   const handleJoinUsButton =()=>{
     if (!user.token) {
@@ -83,6 +84,7 @@ const AuthorProfile = () => {
     }
   }
 
+  
   return (
     <>
       <Layout>

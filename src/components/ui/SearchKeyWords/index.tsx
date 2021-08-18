@@ -1,10 +1,9 @@
-import { Typography } from '@material-ui/core';
-import React, { FC, useEffect, useState } from 'react';
+import {  Typography } from "@material-ui/core";
+import React, { FC, useEffect, useState } from "react";
 import useStyles from "./SearchKeyWords.styles";
-import {PropTypes} from "../Hero";
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import { PropTypes } from "../Hero";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
   const classes = useStyles();
@@ -14,37 +13,37 @@ const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword`)
-      .then(({data}) => {
-        if (data?.status) {
-          setPopularSearchKeywords(data.keywords);
-        }
-      })
-    } catch (error) {
-      
-    }
-  }, [])
+        .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setPopularSearchKeywords(data.keywords);
+          }
+        });
+    } catch (error) {}
+  }, []);
 
   return (
     <>
-      {popularKeywords && 
+      {popularKeywords && (
         <div className={classes.popularSearch}>
           <Typography variant="h5" className={classes.searchTitle}>
-            Example :  
+            Example :
           </Typography>
           {popularSearchKeywords?.map((keyWord, index) => (
             <Link key={index} to={`/tag/${keyWord}`}>
               <Typography variant="h5" className={classes.searchTitle}>
                 {keyWord},
               </Typography>
-            </Link>))}
+            </Link>
+          ))}
         </div>
-      }
-      
+      )}
+
       {creativeWorksDone && (
         <div className={classes.popularSearch}>
           <Typography variant="h5" className={classes.searchTitle}>
-            Over 500,000 creative templates help you get your work done in minutes!
+            Over 500,000 creative templates help you get your work done in
+            minutes!
           </Typography>
         </div>
       )}

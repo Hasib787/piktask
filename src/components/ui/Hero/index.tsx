@@ -1,5 +1,6 @@
-import { Container } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 import React, { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import heroBG from "../../../assets/490cdcd7579.svg";
 import SectionHeading from "../Heading";
 import Search from "../Search";
@@ -11,12 +12,20 @@ export type PropTypes = {
   size?: string | undefined;
   popularKeywords?: boolean;
   creativeWorksDone?: boolean;
+  heroButton?: boolean;
   title?: string | undefined;
 };
 
 const HeroSection: FC<PropTypes> = (props): JSX.Element => {
   const classes = useStyles();
-  const { size, popularKeywords, creativeWorksDone, title, background } = props;
+  const {
+    size,
+    popularKeywords,
+    creativeWorksDone,
+    title,
+    heroButton,
+    background,
+  } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -49,8 +58,23 @@ const HeroSection: FC<PropTypes> = (props): JSX.Element => {
           <Search mobileView={mobileView} />
           <SearchKeyWords
             popularKeywords={popularKeywords}
+            heroButton={heroButton}
             creativeWorksDone={creativeWorksDone}
           />
+          {heroButton && (
+            <div className={classes.heroButtonWrapper}>
+              <Button className={classes.popularButton} component={Link} to="/">
+                Popular
+              </Button>
+              <Button
+                className={classes.recButton}
+                component={Link}
+                to="/images/recent_images"
+              >
+                Recent
+              </Button>
+            </div>
+          )}
         </div>
       </Container>
     </div>

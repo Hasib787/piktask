@@ -297,7 +297,12 @@ const SingleCategory = () => {
               <div className={classes.premiumInfo}>
                 <Typography variant="h4">
                   Premium User:
-                  <Button className={classes.premiumViewBtn}>View Plans</Button>
+                  <Button 
+                    className={classes.premiumViewBtn}
+                    component={Link}
+                    to={`/subscription`}
+                  >
+                    View Plans</Button>
                 </Typography>
                 <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
