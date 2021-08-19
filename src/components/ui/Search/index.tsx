@@ -1,4 +1,14 @@
-import { IconButton, Input, TextField } from "@material-ui/core";
+import {
+  Button,
+  ClickAwayListener,
+  Grow,
+  IconButton,
+  Input,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +37,8 @@ const containerTransition = {
 const Search = ({ mobileView }: { mobileView: boolean }) => {
   const classes = useStyles();
   const searchRef = useRef("");
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
 
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -43,6 +55,27 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const expandContainer = () => {
     setIsExpanded(true);
   };
+
+  const handleToggle = () => {
+    console.log("anchorRef", anchorRef);
+
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
 
   const collapseContainer = () => {
     setIsExpanded(false);
@@ -96,6 +129,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         .then(({ data }) => {
           if (data?.status) {
             const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+
             setCategories(sortedData);
           }
         })
@@ -148,26 +182,59 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         </AnimatePresence>
 
         {!mobileView && (
-          <TextField
-            onClick={loadCategories}
-            className={classes.selectContainer}
-            variant="outlined"
-            select
-            onChange={handleCategory}
-            SelectProps={{
-              native: true,
-            }}
-          >
-            {categories.length ? (
-              categories?.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))
-            ) : (
-              <option>All Resources</option>
-            )}
-          </TextField>
+          <>
+            <Button
+              ref={anchorRef}
+              onClick={() => {
+                handleToggle();
+                loadCategories();
+              }}
+              className={classes.searchCats}
+            >
+              All Resources
+              <div className={classes.searchBorder} />
+            </Button>
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper className={classes.categoryPaper}>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="search-category-lists"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        {categories.length !== 0 ? (
+                          categories.map((category) => (
+                            <MenuItem key={category.id} data-id={category.id}>
+                              {category.name}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">All Resources</MenuItem>
+                        )}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </>
           // // <FormControl>
           // //   <Select
           // //     className={classes.selectContainer}

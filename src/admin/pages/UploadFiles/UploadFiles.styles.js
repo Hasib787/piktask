@@ -281,7 +281,6 @@ const useStyles = makeStyles((theme) => ({
     border: "2px dashed",
     borderColor: "#aeb5b9c2",
     marginBottom: "2.5rem",
-    marginTop: "1.5rem",
 
     "&:focus": {
       border: "2px dashed",

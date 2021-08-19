@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  Button,
   FormControl,
   FormHelperText,
   TextareaAutosize,
@@ -12,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -38,16 +39,9 @@ const usePhoto = [
 ];
 
 const typeOfImageItem = [
-  { label: "Image (JPG, PNG, GIF)" },
-  { label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
+  { value: "image", label: "Image (JPG, PNG, GIF)" },
+  { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
-
-const thumbsContainer = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  marginTop: 16,
-};
 
 const thumb = {
   display: "inline-flex",
@@ -77,38 +71,29 @@ const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const classes = useStyles();
-  const categoryRef = useRef();
-  // const iconClass = customStyles();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
   const [item_for_sale, setItem_for_sale] = useState("free");
   const [price, setPrice] = useState("0");
-  const [image, setImage] = useState("");
-  const [additional_image, setAdditional_image] = useState("");
+  const [imageFileSrc, setImageFileSrc] = useState("");
+  const [archivedFileSrc, setArchivedFileSrc] = useState("");
   const [usages, setUsages] = useState("free");
-  const [typeOfImage, setTypeOfImage] = useState("");
+  const [typeOfImage, setTypeOfImage] = useState("image");
   const [description, setDescription] = useState("");
-  const [titleError, setTitleError] = useState(false);
-  const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
-  const [isLoading, setLoading] = useState(false);
   const [categoryItems, setcategoryItems] = useState([]);
 
-  //item for sale
+  const [isLoading, setLoading] = useState(false);
+  const [titleError, setTitleError] = useState(false);
   const [itemSale, setItemSale] = useState(false);
-
-  //Type of Image
-  const [imageType, setImageType] = useState(false);
+  const [isImageFile, setImageFile] = useState(true);
+  const [isArchivedFile, setArchivedFile] = useState(true);
 
   //for tag element
   const [tags, setTags] = useState([]);
-
   const [files, setFiles] = useState([]);
   const [thumbImage, setThumbImage] = useState("");
-  const [thumbWidth, setThumbWidth] = useState("");
-  const [thumbHeight, setThumbHeight] = useState("");
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const [isImageDimensionOkay, setImageDimensionOkay] = useState(false);
 
@@ -222,18 +207,31 @@ const UploadFiles = () => {
 
   const handleTypeOfImage = (e) => {
     setTypeOfImage(e.target.value);
-    setImageType(!imageType);
   };
 
-  const handleFileChange = (e) => {
-    const additionalFile = e.target.files[0];
-    setAdditional_image(additionalFile);
+  const handleImageFiles = (e) => {
+    const file = e.target.files[0];
 
-    if (!additionalFile.name.match(/\.(psd|svg|eps|ai)$/)) {
-      setImageError("Select valid file.");
-      return false;
+    if (!file?.name?.match(/\.(jpg|jpeg|png|gif)$/) && file !== undefined) {
+      toast.error("You can only upload .jpg, .jpeg, .png, .gif etc");
+      setImageFile(false);
+      return;
     } else {
-      setImageError("");
+      setImageFile(true);
+      setImageFileSrc(file);
+    }
+  };
+
+  const handleArchivedFile = (e) => {
+    const archivedFile = e.target.files[0];
+
+    if (!archivedFile?.name?.match(/\.(zip|rar)$/)) {
+      toast.error("You can only upload .zip, .rar etc");
+      setArchivedFile(false);
+      return;
+    } else {
+      setArchivedFile(true);
+      setArchivedFileSrc(archivedFile);
     }
   };
 
@@ -269,7 +267,18 @@ const UploadFiles = () => {
       toast.error("Please select your item category");
       setLoading(false);
       return;
+    } else if (!isImageFile) {
+      toast.error("Please upload an image file.");
+      setLoading(false);
+      return;
+    } else if (!isArchivedFile) {
+      toast.error("The file format should be .zip or .rar etc");
+      setLoading(false);
+      return;
     }
+
+    //     isImageFile
+    // isArchivedFile
 
     // if (item_for_sale === ("free" || 'premium') ) {
     //   toast.error("Item for sale status must be Free or Sale");
@@ -291,7 +300,7 @@ const UploadFiles = () => {
     formData.append("usages", usages);
     formData.append("description", description);
     formData.append("image", thumbImage);
-    formData.append("additional_image", additional_image);
+    formData.append("additional_image", imageFileSrc);
 
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
@@ -304,13 +313,12 @@ const UploadFiles = () => {
       },
     })
       .then((res) => {
+        console.log("res", res);
         if (res?.status === 200) {
           toast.success(res.data.message);
           setLoading(false);
           setTitle("");
           setDescription("");
-          setImage("");
-          setAdditional_image("");
           setTags([]);
           setCategory("");
           setPrice("");
@@ -325,8 +333,8 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        console.log("error", error.response);
-        toast.error(error.response.data.errors.image);
+        console.log("File uploading error", error.response);
+        toast.error(error?.response?.data?.errors?.image);
         setLoading(false);
       });
   };
@@ -581,25 +589,60 @@ const UploadFiles = () => {
                   </TextField>
                 </FormControl>
 
-                {imageType && (
-                  <div className={classes.imageFileUploadBox}>
+                {typeOfImage === "image" && (
+                  <label
+                    htmlFor="image"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isImageFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
                     <div className={classes.uploadIconImage}>
                       <input
-                        id="additionalImageUpload"
-                        name="additionalImageUpload"
-                        // style={{ display: "none" }}
+                        id="image"
+                        name="image"
                         type="file"
-                        files={additional_image}
-                        onChange={handleFileChange}
+                        accept="image/*"
+                        onChange={handleImageFiles}
                       />
-                      <label htmlFor="additionalImageUpload">
-                        <FontAwesomeIcon icon={faCloudUploadAlt} />
-                      </label>
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
+                      <p className={classes.selectFileText}>
+                        Select a file (jpg, png, gif etc.)
+                      </p>
+                    </div>
+                  </label>
+                )}
+
+                {typeOfImage === "zip" && (
+                  <label
+                    htmlFor="zipFolder"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isArchivedFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
+                    <div className={classes.uploadIconImage}>
+                      <input
+                        id="zipFolder"
+                        name="zipFolder"
+                        type="file"
+                        accept=".zip, .rar"
+                        onChange={handleArchivedFile}
+                      />
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
                       <p className={classes.selectFileText}>
                         Select a file (AI,EPS,PSD,SVG)
                       </p>
                     </div>
-                  </div>
+                  </label>
                 )}
 
                 <FormControl fullWidth className={classes.fieldWrapper}>
@@ -616,7 +659,7 @@ const UploadFiles = () => {
                 </FormControl>
 
                 <div className={classes.singleBorder}></div>
-                <button
+                <Button
                   variant="contained"
                   className={classes.uploadBtn}
                   type="submit"
@@ -626,8 +669,8 @@ const UploadFiles = () => {
                     icon={faCloudUploadAlt}
                     className={classes.uploadIcon}
                   />
-                  Upload
-                </button>
+                  {isLoading ? "Submitting..." : "Submit"}
+                </Button>
               </div>
             </div>
           </form>

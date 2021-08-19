@@ -27,10 +27,10 @@ const SectionHeading: FC<Props> = (props) => {
         flexDirection: center ? "column" : "row",
         padding:
           size === "large"
-            ? "0 0 3rem"
+            ? "0 0.8rem 3rem"
             : size === "medium"
-            ? ".5rem 0"
-            : "0 0 3rem",
+            ? ".5rem 0.8rem"
+            : "0 0.8rem 1.2rem",
       }}
     >
       <div

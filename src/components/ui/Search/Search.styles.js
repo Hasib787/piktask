@@ -92,6 +92,50 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  searchCats: {
+    background: theme.palette.common.white,
+    borderRadius: 0,
+    height: "5.2rem",
+    width: 218,
+    position: "relative",
+    justifyContent: "flex-start",
+
+    "&:hover": {
+      background: theme.palette.common.white,
+      color: "#666",
+    },
+  },
+  searchBorder: {
+    background: "rgb(0 0 0 / 12%)",
+    height: 36,
+    width: 1,
+    position: "absolute",
+    left: -3,
+  },
+
+  categoryPaper: {
+    height: 500,
+    overflowY: "auto",
+    overflowX: "hidden",
+
+    "&::-webkit-scrollbar": {
+      width: 8,
+      borderRadius: 20,
+    },
+
+    "&::-webkit-scrollbar-track": {
+      background: "#ddd",
+      borderRadius: 20,
+    },
+
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#999",
+      borderRadius: 20,
+      width: 6,
+      // border: "3px solid orange",
+    },
+  },
+
   // Search results
   searchResultWrapper: {
     backgroundColor: "#FFF",
