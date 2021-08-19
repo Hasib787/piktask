@@ -37,23 +37,23 @@ const theme = createTheme({
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     h1: {
-      fontWeight: 500,
-      fontSize: "5rem",
+      fontWeight: 700,
+      fontSize: "3.5rem",
       color: dark,
     },
     h2: {
       fontWeight: 500,
-      fontSize: "4rem",
+      fontSize: "2.2rem",
       lineHeight: 1.5,
       color: dark,
     },
     h3: {
       fontWeight: 500,
-      fontSize: "2.5rem",
+      fontSize: "1.8rem",
       color: dark,
     },
     body1: {
-      fontSize: "1.5rem",
+      fontSize: "1.4rem",
       color: dark,
       fontWeight: 400,
     },

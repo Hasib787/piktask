@@ -1,15 +1,12 @@
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import useStyles from './Heading.styles';
+import { Typography } from "@material-ui/core";
+import React from "react";
 
-const Heading = ({tag, children}) => {
-    const classes = useStyles();
-    
-    return (
-        <Typography variant={tag} className={classes.heading}>
-            {children}
-        </Typography>
-    )
-}
+const Heading = ({ tag, children, ...rest }) => {
+  return (
+    <Typography variant={tag} {...rest}>
+      {children}
+    </Typography>
+  );
+};
 
 export default Heading;

@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
       outline: 0,
     },
     "& select": {
-      width: 152,
+      width: 240,
       paddingLeft: "1rem",
       borderLeft: "0px solid #BEBEBE",
       fontSize: "1.8rem",

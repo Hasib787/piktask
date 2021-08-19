@@ -4,7 +4,13 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TextareaAutosize, TextField, Typography } from "@material-ui/core";
+import {
+  FormControl,
+  FormHelperText,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -368,9 +374,7 @@ const UploadFiles = () => {
                 </ul>
               </div>
 
-              <Heading className={classes.headingTop} tag="h2">
-                Upload Your Content
-              </Heading>
+              <Heading tag="h2">Upload Your Content</Heading>
 
               <label
                 htmlFor="btn-upload"
@@ -417,59 +421,75 @@ const UploadFiles = () => {
 
               {!isImageDimensionOkay && thumbs}
 
-              <Heading className={classes.formHeadText} tag="h2">
+              <Heading tag="h2">
                 What type of content are you going to upload?
               </Heading>
 
               <Spacing space={{ height: "2.5rem" }} />
 
               <div className={classes.uploadForm}>
-                <h4 className={classes.titleText}>Title</h4>
-                <TextField
-                  InputLabelProps={{ shrink: true }}
-                  className={classes.inputField}
-                  placeholder="Title"
-                  variant="outlined"
-                  fullWidth
-                  error={titleError}
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <h4 className={classes.titleText}>Tag</h4>
-                <div className={classes.tagsInput}>
-                  <ul className={classes.tags}>
-                    {tags.map((tag, index) => (
-                      <li key={index} className={classes.tag}>
-                        <span className={classes.tagTitle}>{tag}</span>
-                        <span
-                          className={classes.tagCloseIcon}
-                          onClick={() => removeTags(index)}
-                        >
-                          x
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <input
-                    className={classes.input}
-                    type="text"
-                    onKeyUp={(event) =>
-                      event.code === "Space" || event.key === ","
-                        ? addTags(event)
-                        : null
-                    }
-                    placeholder="Add Tag"
-                  />
-                </div>
-                <p className={classes.helperText}>
-                  * Press Space or comma to add tag (Maximum 10 tags)
-                </p>
-
-                <div onClick={loadCategories}>
-                  <h4 className={classes.titleText}>Category</h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="title">
+                    Title <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="title"
+                    InputLabelProps={{ shrink: true }}
+                    className={classes.inputField}
+                    placeholder="Title"
+                    variant="outlined"
+                    fullWidth
+                    error={titleError}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="tags">
+                    Tag <span>*</span>
+                  </label>
+                  <div className={classes.tagsInput}>
+                    <ul className={classes.tags}>
+                      {tags.map((tag, index) => (
+                        <li key={index} className={classes.tag}>
+                          <span className={classes.tagTitle}>{tag}</span>
+                          <span
+                            className={classes.tagCloseIcon}
+                            onClick={() => removeTags(index)}
+                          >
+                            x
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <input
+                      id="tags"
+                      className={classes.input}
+                      type="text"
+                      onKeyUp={(event) =>
+                        event.code === "Space" || event.key === ","
+                          ? addTags(event)
+                          : null
+                      }
+                      placeholder="Add Tag"
+                    />
+                  </div>
+                  <FormHelperText className={classes.helperText}>
+                    Press space or comma to add tags (maximum 10 tags)
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl
+                  fullWidth
+                  className={classes.fieldWrapper}
+                  onClick={loadCategories}
+                >
+                  <label htmlFor="category">
+                    Category <span>*</span>
+                  </label>
+                  <TextField
+                    id="category"
                     className={classes.categoryInput}
                     variant="outlined"
                     select
@@ -489,12 +509,14 @@ const UploadFiles = () => {
                       <option>Uncategorized</option>
                     )}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <div>
-                  <h4 className={classes.titleText}>Item for sale?</h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="itemStatus">
+                    Item for sale? <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="itemStatus"
                     className={classes.itemSaleInput}
                     variant="outlined"
                     select
@@ -510,14 +532,14 @@ const UploadFiles = () => {
                       </option>
                     ))}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <div>
-                  <h4 className={classes.titleText}>
-                    How they can use this photo
-                  </h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="license">
+                    How they can use this photo <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="license"
                     className={classes.usagesInput}
                     select
                     label=""
@@ -534,27 +556,30 @@ const UploadFiles = () => {
                       </option>
                     ))}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <h4 className={classes.titleText}>Type of Image?</h4>
-                <TextField
-                  id="standard-select-currency-native"
-                  className={classes.typeOfImageInput}
-                  select
-                  label=""
-                  variant="outlined"
-                  value={typeOfImage}
-                  onChange={handleTypeOfImage}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {typeOfImageItem.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="typeOfImage">
+                    Type of Image? <span>*</span>
+                  </label>
+                  <TextField
+                    id="typeOfImage"
+                    className={classes.typeOfImageInput}
+                    select
+                    variant="outlined"
+                    value={typeOfImage}
+                    onChange={handleTypeOfImage}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {typeOfImageItem.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
 
                 {imageType && (
                   <div className={classes.imageFileUploadBox}>
@@ -577,15 +602,19 @@ const UploadFiles = () => {
                   </div>
                 )}
 
-                <h4 className={classes.titleText}>Description (Optional)</h4>
-                <TextareaAutosize
-                  className={classes.description}
-                  aria-label="minimum height"
-                  minRows={5}
-                  placeholder="Description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="description">Description (Optional)</label>
+                  <TextareaAutosize
+                    id="description"
+                    className={classes.description}
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+
                 <div className={classes.singleBorder}></div>
                 <button
                   variant="contained"

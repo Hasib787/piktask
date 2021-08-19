@@ -6,20 +6,20 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "8rem",
     [theme.breakpoints.up(1700)]: {
       marginTop: "8rem",
-      margin:"0rem 10rem",
-     },
-     [theme.breakpoints.up(1900)]: {
+      margin: "0rem 10rem",
+    },
+    [theme.breakpoints.up(1900)]: {
       marginTop: "8rem",
-      margin:"0rem 15rem",
-     },
-     [theme.breakpoints.up(2100)]: {
+      margin: "0rem 15rem",
+    },
+    [theme.breakpoints.up(2100)]: {
       marginTop: "8rem",
-      margin:"0rem 30rem",
-     },
-     [theme.breakpoints.up(2560)]: {
+      margin: "0rem 30rem",
+    },
+    [theme.breakpoints.up(2560)]: {
       marginTop: "8rem",
-      margin:"0rem 51rem",
-     },
+      margin: "0rem 51rem",
+    },
   },
   content: {
     padding: 0,
@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
-     },
+    },
   },
   adminSidebar: {
     [theme.breakpoints.down(769)]: {
-     display: "none",
+      display: "none",
     },
   },
   uploadContainer: {
@@ -115,8 +115,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "15px 0px 5px 0px",
   },
   inputField: {
-    width: "100%",
-    maxWidth: "100%",
     "& input": {
       padding: "1.28rem 1.5rem",
     },
@@ -124,6 +122,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "14px",
     },
   },
+
   //category
   categoryInput: {
     width: "100%",
@@ -177,6 +176,17 @@ const useStyles = makeStyles((theme) => ({
       width: "3rem",
     },
   },
+
+  fieldWrapper: {
+    marginBottom: "1.4rem",
+    "& label": {
+      marginBottom: "0.5rem",
+    },
+    "& label > span": {
+      color: "red",
+    },
+  },
+
   //tag
   tagsInput: {
     display: "flex",
@@ -222,9 +232,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 8px 8px 0",
     background: "#00a65a",
   },
-  tagTitle: {
-    marginTop: "3px",
-  },
   tagCloseIcon: {
     display: "block",
     width: "16px",
@@ -239,9 +246,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   helperText: {
-    marginLeft: "14px",
-    fontSize: "15px",
-    color: "rgba(0, 0, 0, 0.54)",
+    fontSize: "1.2rem",
   },
   priceFormats: {
     width: "100%",
@@ -322,7 +327,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(480)]: {
       padding: "0.8rem 0.9rem",
       fontSize: "14px",
-     },
+    },
   },
   uploadIcon: {
     marginRight: "7px",

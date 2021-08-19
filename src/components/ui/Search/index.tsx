@@ -165,7 +165,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
                 </option>
               ))
             ) : (
-              <option>Uncategorized</option>
+              <option>All Resources</option>
             )}
           </TextField>
           // // <FormControl>
