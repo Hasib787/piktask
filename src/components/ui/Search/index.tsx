@@ -9,6 +9,8 @@ import {
   Paper,
   Popper,
 } from "@material-ui/core";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
@@ -37,7 +39,7 @@ const containerTransition = {
 const Search = ({ mobileView }: { mobileView: boolean }) => {
   const classes = useStyles();
   const searchRef = useRef("");
-  const [open, setOpen] = useState(false);
+  const [openSearchCategory, SearchCategory] = useState(false);
   const anchorRef = useRef(null);
 
   const [searchResults, setSearchResults] = useState([]);
@@ -56,24 +58,22 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     setIsExpanded(true);
   };
 
-  const handleToggle = () => {
-    console.log("anchorRef", anchorRef);
-
-    setOpen((prevOpen) => !prevOpen);
+  const handleSearchToggle = () => {
+    SearchCategory((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (e) => {
+    if (anchorRef.current && anchorRef?.current.contains(e.target)) {
       return;
     }
 
-    setOpen(false);
+    SearchCategory(false);
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
+  function handleListKeyDown(e) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      SearchCategory(false);
     }
   }
 
@@ -118,8 +118,13 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   useDebounce(searchQuery, 500, searchPhotos);
 
-  const handleCategory = (e) => {
-    setCategory(e.target.value);
+  const handleCategoryItem = (e) => {
+    const categoryID = e.target.getAttribute("data-id");
+    const value = e.target.textContent;
+
+    anchorRef.current.firstElementChild.textContent = value;
+
+    setCategory(value);
   };
 
   const loadCategories = () => {
@@ -183,19 +188,24 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
         {!mobileView && (
           <>
+            <div className={classes.searchBorder} />
             <Button
               ref={anchorRef}
               onClick={() => {
-                handleToggle();
+                handleSearchToggle();
                 loadCategories();
               }}
               className={classes.searchCats}
             >
               All Resources
-              <div className={classes.searchBorder} />
+              {openSearchCategory ? (
+                <ArrowDropUpIcon fontSize="large" />
+              ) : (
+                <ArrowDropDownIcon fontSize="large" />
+              )}
             </Button>
             <Popper
-              open={open}
+              open={openSearchCategory}
               anchorEl={anchorRef.current}
               role={undefined}
               transition
@@ -212,17 +222,20 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
                   <Paper className={classes.categoryPaper}>
                     <ClickAwayListener onClickAway={handleClose}>
                       <MenuList
-                        autoFocusItem={open}
+                        autoFocusItem={openSearchCategory}
                         id="search-category-lists"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
                         {categories.length !== 0 ? (
                           categories.map((category) => (
-                            <MenuItem key={category.id} data-id={category.id}>
-                              {category.name}
+                            <MenuItem
+                              key={category?.id}
+                              data-id={category?.id}
+                              onClick={(e) => {
+                                handleCategoryItem(e);
+                              }}
+                            >
+                              {category?.name}
                             </MenuItem>
                           ))
                         ) : (

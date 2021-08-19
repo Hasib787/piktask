@@ -104,6 +104,10 @@ const useStyles = makeStyles((theme) => ({
       background: theme.palette.common.white,
       color: "#666",
     },
+    "& svg": {
+      position: "absolute",
+      right: 5,
+    },
   },
   searchBorder: {
     background: "rgb(0 0 0 / 12%)",
