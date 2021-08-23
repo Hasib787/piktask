@@ -5,46 +5,26 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import authorImg from "../../assets/author.png";
 import heroBanner from "../../assets/banner/banner.png";
-import facebook from "../../assets/icons/facebook-round.svg";
-import instagram from "../../assets/icons/instagram-round.svg";
-import twitter from "../../assets/icons/twitter-round.svg";
 import AuthorItems from "../../components/ui/AuthorItems";
 import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SocialShare from "../../components/ui/SocialShare";
 import Layout from "../../Layout";
-import { SocialMedia } from "../../types";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./AuthorProfile.styles";
 
-const socialMedias: SocialMedia[] = [
-  {
-    name: "Instagram",
-    url: "https://www.instagram.com/",
-    image: instagram,
-  },
-  {
-    name: "Twitter",
-    url: "https://twitter.com/",
-    image: twitter,
-  },
-  {
-    name: "Facebook",
-    url: "https://www.facebook.com/",
-    image: facebook,
-  },
-];
 
 const AuthorProfile = () => {
   const classes = useStyles();
   const { userName } = useParams();
   const user = useSelector((state) => state.user);
-  const [profileInfo, setProfileInfo] = useState({});
-  const [imageSummery, setImageSummery] = useState([]);
-  const [userId, setUserId] = useState("");
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [imageSummery, setImageSummery] = useState([]);
+  const [profileInfo, setProfileInfo] = useState({});
+  const [userId, setUserId] = useState("");
+
   
   useEffect(() => {
     try {
@@ -77,7 +57,7 @@ const AuthorProfile = () => {
     }
   }, [userId])
 
-  const handleJoinUsButton =()=>{
+  const handleJoinUsButton = () =>{
     if (!user.token) {
       setOpenAuthModal(true);
     }
@@ -123,10 +103,14 @@ const AuthorProfile = () => {
                       </Typography>
                     </div>
                     <div className={classes.authorSocials}>
-                      <SocialShare
-                        title="Follow this author:"
-                        socialMedias={socialMedias}
-                      />
+                      {profileInfo.facebook || profileInfo.instagram || profileInfo.twitter ? (
+                        <>
+                          <SocialShare
+                            title="Follow this author:"
+                            profileInfo={profileInfo}
+                          />
+                        </>
+                      ) : ( null )}
                     </div>
                   </div>
                 </Grid>
