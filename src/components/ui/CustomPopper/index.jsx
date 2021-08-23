@@ -43,7 +43,7 @@ const CustomPopper = ({
         .catch((error) => {
           console.log("Signout error", error.message);
         });
-        localStorage.clear();
+      localStorage.clear();
     }
   };
 
@@ -74,17 +74,19 @@ const CustomPopper = ({
               >
                 <Grid container className={classes.gridUserInfo}>
                   <Grid item xs={6} className={classes.userInDropdown}>
-                    {
-                      user && user?.avatar ? (
+                    <div className={classes.avatarCircle}>
+                      {user && user?.avatar ? (
                         <img
                           className={classes.dropdownUserAvatar}
                           src={user?.avatar}
                           alt="UserPhoto"
                         />
                       ) : (
-                        <AccountCircleIcon className={classes.dropdownUserAvatar} />
-                      )
-                    }
+                        <AccountCircleIcon
+                          className={classes.dropdownUserAvatar}
+                        />
+                      )}
+                    </div>
                     <div>
                       <Typography
                         variant="h3"
@@ -143,7 +145,7 @@ const CustomPopper = ({
                   component={Link}
                   to="/admin/upload"
                 >
-                  <span >Go Upload</span>
+                  <span>Go Upload</span>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
