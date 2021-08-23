@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     textAlign: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("480")]: {
+      paddingBottom: "3rem",
+    }
   },
   popularButton: {
     ...theme.typography.button,
