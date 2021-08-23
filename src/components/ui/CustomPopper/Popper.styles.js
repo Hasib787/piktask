@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
+  avatarCircle: {
+
+  },
   dropdownUserAvatar: {
     width: "5rem",
     height: "5rem",

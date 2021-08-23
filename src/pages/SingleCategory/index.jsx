@@ -2,6 +2,11 @@ import {
   Button,
   ClickAwayListener,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   Tooltip,
   Typography,
@@ -44,16 +49,25 @@ const SingleCategory = () => {
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
-  const [open, setOpen] = useState(false);
+  const [openCopyLink, setOpenCopyLink] = useState(false);
 
+  const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+
+  const handleDialogOpen = () => {
+    setDownloadLicenseDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setDownloadLicenseDialog(false);
+  };
   const handleTooltipClose = () => {
-    setOpen(false);
+    setOpenCopyLink(false);
   };
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
     setCopySuccess("Copied successfully!");
-    setOpen(true);
+    setOpenCopyLink(true);
   };
 
   useEffect(() => {
@@ -215,11 +229,10 @@ const SingleCategory = () => {
                         disablePortal: true,
                       }}
                       onClose={handleTooltipClose}
-                      open={open}
+                      open={openCopyLink}
                       placement="top"
-                      disableFocusListener
-                      disableHoverListener
-                      disableTouchListener
+                      arrow
+                      leaveDelay={1500}
                       title="Copied successfully!"
                       classes={{ tooltip: classes.tooltip }}
                     >
@@ -354,9 +367,41 @@ const SingleCategory = () => {
                 </Typography>
                 <Typography>
                   Images license agreement
-                  <Button className={classes.licenseBtn}>
+                  <Button
+                    className={classes.licenseBtn}
+                    onClick={handleDialogOpen}
+                  >
                     Download License
                   </Button>
+                  <Dialog
+                    open={downloadLicenseDialog}
+                    onClose={handleDialogClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    className={classes.licenseDialog}
+                  >
+                    <DialogTitle
+                      className={classes.licenseTitle }
+                    >
+                      {"Piktast License"}
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        Let Google help apps determine location. This means
+                        sending anonymous location data to Google, even when no
+                        apps are running.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        onClick={handleDialogClose}
+                        color="primary"
+                        autoFocus
+                      >
+                        Download
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </Typography>
                 <Typography>&copy; Copyright : Piktask</Typography>
               </div>
