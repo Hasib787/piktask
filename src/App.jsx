@@ -118,9 +118,11 @@ const App = () => {
         <Route exact path="/email/verify" component={CompleteRegistration} />
         <Route exact path="/vector" component={Category} />
         <Route exact path="/psd" component={Category} />
+        <Route exact path="/photos" component={Category} />
         <Route exact path="/background" component={Category} />
         <Route exact path="/template" component={Category} />
-        <Route exact path="/png-images" component={Category} />
+        <Route exact path="/png" component={Category} />
+        <Route exact path="/category" component={Category} />
         <Route exact path="/pricing" component={Pricing} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/registration" component={Registration} />
