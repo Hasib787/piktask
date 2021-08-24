@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
   moreButton: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    padding: "0.7rem 2.5rem",
+    padding: "0.5rem 1.5rem",
+    fontSize: "1.3rem",
     textDecoration: "none",
     border: "2px solid",
     borderColor: theme.palette.secondary.main,

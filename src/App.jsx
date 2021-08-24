@@ -31,6 +31,7 @@ import {
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import AuthorProfile from "./pages/AuthorProfile";
 import BecomeContributor from "./pages/BecomeContributor";
+import Categories from "./pages/Categories";
 import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
@@ -99,6 +100,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
+        {/* <Route exact path="/popular" component={Home} /> */}
         {/* Admin */}
         <PrivateRoute
           exact
@@ -113,7 +115,7 @@ const App = () => {
         <Route exact path="/admin/earnings" component={EarningManagement} />
         <Route exact path="/admin/settings" component={AccountSettings} />
 
-        <Route exact path="/categories" component={Home} />
+        {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />
         <Route exact path="/vector" component={Category} />
@@ -131,12 +133,12 @@ const App = () => {
         <Route exact path="/reset-password" component={ResetPassword} />
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/sellers" component={Sellers} />
+        <Route exact path="/categories" component={Categories} />
         <Route exact path="/images/recent_images" component={Recent} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:id" component={TagTemplate} />
         <Route exact path="/:userName" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
-        {/* <Route exact path="/categories/" component={Category} /> */}
         <Route exact path="/:category/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
       </Switch>

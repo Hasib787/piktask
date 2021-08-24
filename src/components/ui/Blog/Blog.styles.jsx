@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
   moreButton: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    width: "16rem",
-    height: "5rem",
+    width: "9rem",
+    height: "4rem",
     margin: "auto",
+    fontSize: "1.3rem",
     display: "block",
+    transition: "all 0.3s linear",
     "&:hover": {
       border: `0.2rem solid ${theme.palette.secondary.main}`,
     },
