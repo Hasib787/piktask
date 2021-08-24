@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "#F8F8F8",
     "&:hover": {
-      "& $singlePageLink, $favouriteIcon": {
+      "& $singlePageLink, $favouriteIcon, $favouriteIconBtn": {
         opacity: 1,
         visibility: "visible",
       },
@@ -136,6 +136,23 @@ export const useStyles = makeStyles((theme) => ({
       color: "#fff",
       borderColor: "#469439",
       opacity: "0.5 !important",
+    },
+  },
+  favouriteIconBtn: {
+    backgroundColor: "#469439",
+    fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    visibility: "hidden",
+    opacity: 0,
+    borderColor: "#469439",
+    color: "#ffffff",
+
+    "&:hover": {
+      backgroundColor: "#469439",
+      borderColor: "#469439",
     },
   },
   premiumIcon: {
