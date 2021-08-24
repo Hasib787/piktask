@@ -7,9 +7,11 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import downloadIcon from "../../../../assets/download.svg";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
@@ -25,19 +27,40 @@ const Product = ({ photo }) => {
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [likeUnlike, setLikeUnlike] = useState();
+  const [likeUnlike, setLikeUnlike] = useState(false);
 
-  const handleLikeUnlike = () => {};
+  // const handleLikeUnlike = () => {};
 
   const handleClick = () => {
     if (!user.token) {
       setOpenAuthModal(true);
+    } else if (user.id !== photo?.user_id && user.token) {
+      axios 
+        .post(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
+          {},
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then(({data}) => {
+          console.log("data", data);
+          if (data?.status) {
+            setLikeUnlike(true);
+          } else if (!data?.status) {
+            toast.error(data.message);
+            setLikeUnlike(true);
+          } else {
+            console.log("Something wrong with the like");
+          }
+        })
     } else if (!likeRef.current.className.includes("disabled")) {
       likeRef.current.classList.add("disabled");
     } else if (likeRef.current.classList.value.includes("disabled")) {
       likeRef.current.classList.remove("disabled");
     }
   };
+
+  // console.log("photo_ID", photo?.image_id);
 
   return (
     <>
@@ -56,14 +79,16 @@ const Product = ({ photo }) => {
             </IconButton>
           )}
 
-          <IconButton
-            ref={likeRef}
-            classes={{ root: classes.favouriteIcon }}
-            className={classes.iconBtn}
-            onClick={handleClick}
-          >
-            <FavoriteBorderIcon fontSize={"large"} />
-          </IconButton>
+          {!likeUnlike && (
+            <IconButton
+              ref={likeRef}
+              classes={{ root: classes.favouriteIcon }}
+              className={classes.iconBtn}
+              onClick={handleClick}
+            >
+              <FavoriteBorderIcon fontSize={"large"} />
+            </IconButton>
+          )}
         </div>
 
         <div className={classes.itemContainer}>
