@@ -50,9 +50,9 @@ const useStyles = makeStyles((theme) => ({
   uploadBtn: {
     ...theme.typography.button,
     backgroundColor: "#117A00",
-    paddingRight: "2.5rem",
-    paddingLeft: "2.5rem",
+    padding: "0.5rem 1.4rem",
     marginRight: "2rem",
+    fontSize: "1.4rem",
     border: "2px solid",
     borderColor: "transparent",
 
@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
      },
   },
   ButtoncrownIcon: {
+    width: "1.7rem",
     marginRight: ".8rem",
   },
   userProfile: {
