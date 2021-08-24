@@ -322,8 +322,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#00a65a",
     color: "white",
     [theme.breakpoints.down(480)]: {
-      padding: "0.8rem 0.9rem",
+      width: "100%",
+      marginLeft: "0%",
       fontSize: "14px",
+      padding: "1rem 0.9rem",
+      transform: "translateX(0%)",
      },
   },
   uploadIcon: {

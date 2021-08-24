@@ -424,11 +424,12 @@ const UploadFiles = () => {
               <Spacing space={{ height: "2.5rem" }} />
 
               <div className={classes.uploadForm}>
-                <h4 className={classes.titleText}>Title</h4>
+                {/* <h4 className={classes.titleText}>Title</h4> */}
                 <TextField
                   InputLabelProps={{ shrink: true }}
                   className={classes.inputField}
                   placeholder="Title"
+                  label="Title"
                   variant="outlined"
                   fullWidth
                   error={titleError}
