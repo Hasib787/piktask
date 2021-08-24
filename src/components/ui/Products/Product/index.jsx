@@ -7,9 +7,11 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import React, { useRef, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import downloadIcon from "../../../../assets/download.svg";
 import crownIcon from "../../../../assets/icons/crown.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
@@ -25,19 +27,57 @@ const Product = ({ photo }) => {
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [likeUnlike, setLikeUnlike] = useState();
+  const [isLike, setLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(photo?.total_likes);
 
-  const handleLikeUnlike = () => {};
+  useEffect(() => {
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (!data?.status) {
+            setLike(false);
+          } else if (data?.status) {
+            setLike(true);
+          } else {
+            console.log("Image like status error");
+          }
+        })
+        .catch((error) => console.log("Like status error: ", error));
+    }
+
+    
+  }, [photo?.image_id, user.token]);
+
 
   const handleClick = () => {
     if (!user.token) {
       setOpenAuthModal(true);
-    } else if (!likeRef.current.className.includes("disabled")) {
-      likeRef.current.classList.add("disabled");
-    } else if (likeRef.current.classList.value.includes("disabled")) {
-      likeRef.current.classList.remove("disabled");
-    }
+    } else if (user.id !== photo?.user_id && user.token) {
+      axios 
+        .post(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
+          {},
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then(({data}) => {
+          if (data?.status) {
+            console.log("status", data);
+            setLike(true);
+            setLikeCount(prevState => prevState + 1);
+          } else if (!data?.status) {
+            toast.error(data.message);
+            setLike(true);
+          } else {
+            console.log("Something wrong with the like");
+          }
+        })
+    } 
   };
+
 
   return (
     <>
@@ -56,14 +96,25 @@ const Product = ({ photo }) => {
             </IconButton>
           )}
 
-          <IconButton
-            ref={likeRef}
-            classes={{ root: classes.favouriteIcon }}
-            className={classes.iconBtn}
-            onClick={handleClick}
-          >
-            <FavoriteBorderIcon fontSize={"large"} />
-          </IconButton>
+          {!isLike ? (
+            <IconButton
+              ref={likeRef}
+              classes={{ root: classes.favouriteIcon }}
+              className={classes.iconBtn}
+              onClick={handleClick}
+            >
+              <FavoriteBorderIcon fontSize={"large"} />
+            </IconButton>
+          ) : (
+            <IconButton
+              ref={likeRef}
+              classes={{ root: classes.favouriteIconBtn }}
+              className={classes.iconBtn}
+              onClick={handleClick}
+            >
+              <FavoriteBorderIcon fontSize={"large"} />
+            </IconButton>
+          )}
         </div>
 
         <div className={classes.itemContainer}>
@@ -121,7 +172,8 @@ const Product = ({ photo }) => {
               />
               {photo?.total_download}
               <FavoriteBorderIcon className={classes.heartIcon} />{" "}
-              {photo?.total_likes}
+              {/* {photo?.total_likes} */}
+              {likeCount}
             </Typography>
 
             <ButtonWrapper>

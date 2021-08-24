@@ -35,6 +35,29 @@ import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
 
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  
+  EmailShareButton, 
+  EmailIcon,
+
+  FacebookMessengerShareButton,
+  FacebookMessengerIcon,
+
+  TwitterShareButton,
+  TwitterIcon,
+  
+  LinkedinShareButton,
+  LinkedinIcon,
+  
+  TelegramShareButton,
+  TelegramIcon,
+  
+} from "react-share";
+
+
+
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
@@ -76,11 +99,6 @@ const SingleCategory = () => {
       .then(({ data }) => {
         if (data?.success) {
           setImageDetails(data.detail);
-          if (data?.detail.tags) {
-            const words = data.detail.tags.split(",");
-            setAllTags(words.slice(1));
-          }
-
           if (data?.detail.tags) {
             const words = data.detail.tags.split(",");
             setAllTags(words.slice(1));
@@ -185,6 +203,17 @@ const SingleCategory = () => {
     }
   };
 
+  const [open, setOpen] = useState(false);
+  const shareUrl = window.location.href;
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Layout>
       <Header />
@@ -214,7 +243,7 @@ const SingleCategory = () => {
                 <Typography className={classes.creationDate}>
                   {imageDetails?.creation_ago}
                 </Typography>
-                <Button className={classes.button}>
+                <Button className={classes.button} onClick={handleClickOpen}>
                   <img
                     className={classes.buttonIcon}
                     src={shareIcon}
@@ -291,14 +320,6 @@ const SingleCategory = () => {
                   </div>
                 </Grid>
               </Grid>
-
-              {/* <Typography className={classes.description} variant="body1">
-                {imageDetails?.description}
-              </Typography> */}
-              {/* <Typography className={classes.subHeading} variant="subtitle1">
-                <span>bdtask License</span>
-                Free for personal and commercial purpose with attribution
-              </Typography> */}
 
               <Grid container>
                 <Grid item className={classes.authorArea}>
@@ -482,6 +503,47 @@ const SingleCategory = () => {
 
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Use image social link"}</DialogTitle>
+          <div style={{padding: "2rem", minWidth: "300px", display: "flex", justifyContent: "space-between"}}>
+            <EmailShareButton url={shareUrl}>
+              <EmailIcon size={40} round={true} />
+            </EmailShareButton>
+            
+            <FacebookShareButton url={shareUrl}>
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+
+            <FacebookMessengerShareButton url={shareUrl}>
+              <FacebookMessengerIcon size={40} round={true} />
+            </FacebookMessengerShareButton>
+
+            {/* <br />
+            <Spacing space={{ height: "1.5rem" }}></Spacing> */}
+
+            <TwitterShareButton url={shareUrl}>
+              <TwitterIcon size={40} round={true} />
+            </TwitterShareButton>
+
+            <LinkedinShareButton url={shareUrl}>
+              <LinkedinIcon size={40} round={true} />
+            </LinkedinShareButton>
+
+            <TelegramShareButton url={shareUrl}>
+              <TelegramIcon size={40} round={true} />
+            </TelegramShareButton>
+          </div>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container>
       <Footer />
     </Layout>
