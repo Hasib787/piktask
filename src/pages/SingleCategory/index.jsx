@@ -8,6 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  IconButton,
   Tooltip,
   Typography,
 } from "@material-ui/core";
@@ -34,7 +35,6 @@ import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
-
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -55,13 +55,14 @@ import {
   TelegramIcon,
   
 } from "react-share";
-
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const user = useSelector((state) => state.user);
+  const shareUrl = window.location.href;
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
@@ -73,8 +74,8 @@ const SingleCategory = () => {
   const [allTags, setAllTags] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
   const [openCopyLink, setOpenCopyLink] = useState(false);
-
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDialogOpen = () => {
     setDownloadLicenseDialog(true);
@@ -203,9 +204,6 @@ const SingleCategory = () => {
     }
   };
 
-  const [open, setOpen] = useState(false);
-  const shareUrl = window.location.href;
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -213,6 +211,7 @@ const SingleCategory = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  
 
   return (
     <Layout>
@@ -386,14 +385,18 @@ const SingleCategory = () => {
                     More info
                   </Link>
                 </Typography>
-                <Typography>
-                  Images license agreement
-                  <Button
-                    className={classes.licenseBtn}
-                    onClick={handleDialogOpen}
-                  >
-                    Download License
-                  </Button>
+                <div>
+                  <div className={classes.licenseButton}>
+                    <Typography>
+                      Images license agreement
+                    </Typography>
+                    <Button
+                      className={classes.licenseBtn}
+                      onClick={handleDialogOpen}
+                    >
+                      Download License
+                    </Button>
+                  </div>
                   <Dialog
                     open={downloadLicenseDialog}
                     onClose={handleDialogClose}
@@ -423,7 +426,7 @@ const SingleCategory = () => {
                       </Button>
                     </DialogActions>
                   </Dialog>
-                </Typography>
+                </div>
                 <Typography>&copy; Copyright : Piktask</Typography>
               </div>
 
@@ -503,13 +506,26 @@ const SingleCategory = () => {
 
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
-        <Dialog
+
+        
+        <Dialog 
+          onClose={handleClose} 
+          aria-labelledby="customized-dialog-title" 
           open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Use image social link"}</DialogTitle>
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+          <DialogTitle id="customized-dialog-title">
+            Use image social link
+          </DialogTitle>
+          <IconButton 
+            aria-label="close" 
+            className={classes.closeButton} 
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <DialogContent dividers>
           <div style={{padding: "2rem", minWidth: "300px", display: "flex", justifyContent: "space-between"}}>
             <EmailShareButton url={shareUrl}>
               <EmailIcon size={40} round={true} />
@@ -538,12 +554,8 @@ const SingleCategory = () => {
               <TelegramIcon size={40} round={true} />
             </TelegramShareButton>
           </div>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+        </DialogContent>
+      </Dialog>
       </Container>
       <Footer />
     </Layout>
