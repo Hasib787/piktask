@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     position: "relative",
-    minHeight: "35.5rem",
+    minHeight: "20rem",
     "&::before": {
       content: '""',
       position: "absolute",
@@ -31,13 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
   authorImg: {
     marginRight: "3rem",
-    height: "16rem",
-    width: "16rem",
+    height: "10rem",
+    width: "10rem",
 
     "& img": {
       width: "100%",
       borderRadius: "100%",
-      padding: "1rem",
+      padding: "0.6rem",
       backgroundColor: "#707070",
     },
     "@media (max-width: 595px)": {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
   authorName: {
     color: theme.palette.common.white,
-    fontSize: "2.2rem",
+    fontSize: "2rem",
     marginBottom: ".8rem",
     marginTop: "2rem",
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: ".4rem",
   },
   infoItem: {
-    fontSize: "1.6rem",
+    fontSize: "1.4rem",
     marginRight: "2.5rem",
     paddingRight: "2.5rem",
     position: "relative",
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
       width: 0,
     },
     "& span": {
-      fontSize: "2.2rem",
+      fontSize: "1.8rem",
       display: "block",
       fontWeight: 700,
     },
@@ -104,12 +104,12 @@ const useStyles = makeStyles((theme) => ({
   },
   authorSocials: {
     "& img": {
-      width: "4rem",
-      height: "4rem",
+      width: "2.6rem",
+      height: "2.6rem",
       borderRadius: "100%",      
     [theme.breakpoints.down(480)]: {
-      width: "2.5rem",
-      height: "2.5rem",
+      width: "2rem",
+      height: "2rem",
     },
     },
   },

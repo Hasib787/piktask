@@ -124,13 +124,23 @@ const AuthorProfile = () => {
         </Container>
       </div>
       <AuthorItems userId={userId} imageSummery={imageSummery} />
-
-      <CallToAction
-        title="Join DesignHill designer team"
-        subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
-        buttonText="Join Us"
-        buttonClicked={()=>handleJoinUsButton()}
-      />
+      
+      {!user.token ? (
+        <CallToAction
+          title="Join Piktask team"
+          subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+          buttonText="Join Us"
+          buttonClicked={()=>handleJoinUsButton()}
+        />
+      ) : (
+        <CallToAction
+          title="Join Piktask team"
+          subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
+          buttonLink="/subscription"
+          buttonText="Premium View"
+        />
+      )}
+      
       {/* Sign up modal section*/}
         <SignUpModal
         openAuthModal={openAuthModal}

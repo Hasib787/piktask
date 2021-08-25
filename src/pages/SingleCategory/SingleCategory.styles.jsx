@@ -68,12 +68,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     paddingRight: "2rem",
     fontSize: "2.2rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "2.8rem",
-      lineHeight: 1.3,
-    },
     [theme.breakpoints.down(480)]: {
-      fontSize: "2.4rem",
+      fontSize: "2rem",
     },
   },
   creationDate: {
@@ -101,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.4rem",
 
       [theme.breakpoints.down(480)]: {
-        fontSize: "1.3rem",
+        fontSize: "1.2rem",
       },
     },
   },
@@ -125,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: "2rem",
     },
     [theme.breakpoints.down(480)]: {
-      marginRight: "4rem",
+      marginRight: "6rem",
     },
   },
   authorImg: {
@@ -154,6 +150,10 @@ const useStyles = makeStyles((theme) => ({
   resourceInfo: {
     fontSize: "1.4rem",
     fontWeight: 400,
+
+    [theme.breakpoints.down(480)]: {
+      fontSize: "1.3rem",
+    },
   },
   authorBtn: {
     ...theme.typography.button,
@@ -166,7 +166,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: "2rem",
     },
     [theme.breakpoints.down(480)]: {
-      padding: ".6rem 3.5rem",
+      padding: ".4rem 1.8rem",
       fontSize: "1.4rem",
       marginBottom: "2rem",
       marginRight: "0rem",
@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
     },
     "& p": {
       marginBottom: ".6rem",
-      fontSize: "1.4rem",
+      fontSize: "1.3rem",
     },
     [theme.breakpoints.down(480)]: {
       width: "100%",
@@ -217,15 +217,20 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "2rem",
     },
   },
+  licenseButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   licenseBtn: {
     background: "#CAD3D2",
     color: "#117A00",
     padding: ".5rem 2rem",
-    marginLeft: "16rem",
     transition: "all 0.3s linear",
     [theme.breakpoints.down(480)]: {
-      padding: "0.3rem 1rem",
-      marginLeft: ".8rem",
+      padding: "0.2rem .6rem",
+      // marginLeft: ".8rem",
+      fontSize: "1.2rem",
     },
   },
   moreInfoBtn: {
@@ -278,15 +283,10 @@ const useStyles = makeStyles((theme) => ({
       padding: "0.4rem 1.5rem",
     },
   },
-  // likedBtn: {
-  //   color: "#ff0000",
-  //   fontSize: "2.9rem",
-  // },
   likedBtn: {
     padding: "1rem 1.5rem",
     backgroundColor: "#E1E3EB",
     "& svg": {
-      // color: "#ff0000",
       color: "#117A00",
       fontSize: "2.9rem",
     },
@@ -331,6 +331,13 @@ const useStyles = makeStyles((theme) => ({
    "& div div":{
     width: "50rem",
    },
+  },
+  closeButton: {
+    float: "right",
+
+    "& span svg": {
+      fontSize: "2.5rem",
+    }
   },
 }));
 

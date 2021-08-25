@@ -33,7 +33,7 @@ const CallToAction: FC<Props> = ({
         </Typography>
 
         <Link
-          to={`${buttonLink}`}
+          to={buttonLink && (`${buttonLink}`)}
           className={classes.moreButton}
           style={{ textTransform: uppercase ? "uppercase" : "capitalize" }}
           onClick={buttonClicked}
