@@ -37,7 +37,7 @@ export const TopSeller = () => {
                 <Grid
                   key={photo.id}
                   item
-                  xs={12}
+                  xs={6}
                   sm={4}
                   md={3}
                   className={classes.productItem}

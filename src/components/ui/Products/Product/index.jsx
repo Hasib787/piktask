@@ -65,7 +65,6 @@ const Product = ({ photo }) => {
         )
         .then(({data}) => {
           if (data?.status) {
-            console.log("status", data);
             setLike(true);
             setLikeCount(prevState => prevState + 1);
           } else if (!data?.status) {

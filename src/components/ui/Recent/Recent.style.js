@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   headingButton: {
     ...theme.typography.button,
     backgroundColor: "rgba(0, 0, 0, 0.04)",

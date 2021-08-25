@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: theme.palette.common.white,
-    fontSize: "1.6rem",
+    fontSize: "1.4rem",
     fontWeight: 500,
     marginRight: "2.3rem",
   },
