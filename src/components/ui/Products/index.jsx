@@ -4,13 +4,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Layout from "../../../Layout";
 import SectionHeading from "../Heading";
 import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginBottom: "4rem",
+    marginBottom: "2.2rem",
   },
   productItem: {
     "@media (max-width: 576px)": {
@@ -20,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   headingButton: {
     ...theme.typography.button,
-    backgroundColor: "rgba(0, 0, 0, 0.04)",
     padding: "0.7rem 1.5rem",
-    fontSize: "14px",
+    fontSize: "1.4rem",
     fontWeight: 500,
     color: "#1B3F4E",
     transition: "all 0.3s linear",
@@ -72,7 +70,7 @@ const Products = (props) => {
   }, [catName, dispatch]);
 
   return (
-    <Layout>
+    <>
       {isLoading ? (
         <h2>Loading......</h2>
       ) : (
@@ -115,7 +113,7 @@ const Products = (props) => {
           </>
         )}
       </Grid>
-    </Layout>
+    </>
   );
 };
 

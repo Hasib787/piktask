@@ -21,7 +21,10 @@ export const Home = () => {
   const popularCats = useSelector((state) => state.popularCategories);
 
   return (
-    <Layout>
+    <Layout
+      title="Graphic Resources for Free Download | Piktask"
+      description="Graphic Resources for Free Download"
+    >
       <Header />
       <HeroSection
         background={heroBanner}
@@ -39,6 +42,7 @@ export const Home = () => {
           </Button>
         </SectionHeading>
       </Container>
+      <Spacing space={{ height: "1.2rem" }} />
 
       {/* Carousel with Categories */}
       <CategoryCarousel />
@@ -90,6 +94,7 @@ export const Home = () => {
 
       {/* Top selling author */}
       <TopSeller />
+
       {/* BLOG SECTION */}
       <Blog />
 

@@ -4,9 +4,16 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TextareaAutosize, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -32,16 +39,9 @@ const usePhoto = [
 ];
 
 const typeOfImageItem = [
-  { label: "Image (JPG, PNG, GIF)" },
-  { label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
+  { value: "image", label: "Image (JPG, PNG, GIF)" },
+  { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
-
-const thumbsContainer = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  marginTop: 16,
-};
 
 const thumb = {
   display: "inline-flex",
@@ -71,38 +71,29 @@ const UploadFiles = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
   const classes = useStyles();
-  const categoryRef = useRef();
-  // const iconClass = customStyles();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState(1);
   const [item_for_sale, setItem_for_sale] = useState("free");
   const [price, setPrice] = useState("0");
-  const [image, setImage] = useState("");
-  const [additional_image, setAdditional_image] = useState("");
+  const [imageFileSrc, setImageFileSrc] = useState("");
+  const [archivedFileSrc, setArchivedFileSrc] = useState("");
   const [usages, setUsages] = useState("free");
-  const [typeOfImage, setTypeOfImage] = useState("");
+  const [typeOfImage, setTypeOfImage] = useState("image");
   const [description, setDescription] = useState("");
-  const [titleError, setTitleError] = useState(false);
-  const [itemForSaleError, setItemForSaleError] = useState(false);
   const [imageError, setImageError] = useState("");
-  const [isLoading, setLoading] = useState(false);
   const [categoryItems, setcategoryItems] = useState([]);
 
-  //item for sale
+  const [isLoading, setLoading] = useState(false);
+  const [titleError, setTitleError] = useState(false);
   const [itemSale, setItemSale] = useState(false);
-
-  //Type of Image
-  const [imageType, setImageType] = useState(false);
+  const [isImageFile, setImageFile] = useState(true);
+  const [isArchivedFile, setArchivedFile] = useState(true);
 
   //for tag element
   const [tags, setTags] = useState([]);
-
   const [files, setFiles] = useState([]);
   const [thumbImage, setThumbImage] = useState("");
-  const [thumbWidth, setThumbWidth] = useState("");
-  const [thumbHeight, setThumbHeight] = useState("");
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const [isImageDimensionOkay, setImageDimensionOkay] = useState(false);
 
@@ -216,18 +207,31 @@ const UploadFiles = () => {
 
   const handleTypeOfImage = (e) => {
     setTypeOfImage(e.target.value);
-    setImageType(!imageType);
   };
 
-  const handleFileChange = (e) => {
-    const additionalFile = e.target.files[0];
-    setAdditional_image(additionalFile);
+  const handleImageFiles = (e) => {
+    const file = e.target.files[0];
 
-    if (!additionalFile.name.match(/\.(psd|svg|eps|ai)$/)) {
-      setImageError("Select valid file.");
-      return false;
+    if (!file?.name?.match(/\.(jpg|jpeg|png|gif)$/) && file !== undefined) {
+      toast.error("You can only upload .jpg, .jpeg, .png, .gif etc");
+      setImageFile(false);
+      return;
     } else {
-      setImageError("");
+      setImageFile(true);
+      setImageFileSrc(file);
+    }
+  };
+
+  const handleArchivedFile = (e) => {
+    const archivedFile = e.target.files[0];
+
+    if (!archivedFile?.name?.match(/\.(zip|rar)$/)) {
+      toast.error("You can only upload .zip, .rar etc");
+      setArchivedFile(false);
+      return;
+    } else {
+      setArchivedFile(true);
+      setArchivedFileSrc(archivedFile);
     }
   };
 
@@ -263,7 +267,18 @@ const UploadFiles = () => {
       toast.error("Please select your item category");
       setLoading(false);
       return;
+    } else if (!isImageFile) {
+      toast.error("Please upload an image file.");
+      setLoading(false);
+      return;
+    } else if (!isArchivedFile) {
+      toast.error("The file format should be .zip or .rar etc");
+      setLoading(false);
+      return;
     }
+
+    //     isImageFile
+    // isArchivedFile
 
     // if (item_for_sale === ("free" || 'premium') ) {
     //   toast.error("Item for sale status must be Free or Sale");
@@ -285,7 +300,7 @@ const UploadFiles = () => {
     formData.append("usages", usages);
     formData.append("description", description);
     formData.append("image", thumbImage);
-    formData.append("additional_image", additional_image);
+    formData.append("additional_image", imageFileSrc);
 
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
@@ -298,13 +313,12 @@ const UploadFiles = () => {
       },
     })
       .then((res) => {
+        console.log("res", res);
         if (res?.status === 200) {
           toast.success(res.data.message);
           setLoading(false);
           setTitle("");
           setDescription("");
-          setImage("");
-          setAdditional_image("");
           setTags([]);
           setCategory("");
           setPrice("");
@@ -319,8 +333,8 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        console.log("error", error.response);
-        toast.error(error.response.data.errors.image);
+        console.log("File uploading error", error.response);
+        toast.error(error?.response?.data?.errors?.image);
         setLoading(false);
       });
   };
@@ -368,9 +382,7 @@ const UploadFiles = () => {
                 </ul>
               </div>
 
-              <Heading className={classes.headingTop} tag="h2">
-                Upload Your Content
-              </Heading>
+              <Heading tag="h2">Upload Your Content</Heading>
 
               <label
                 htmlFor="btn-upload"
@@ -417,59 +429,75 @@ const UploadFiles = () => {
 
               {!isImageDimensionOkay && thumbs}
 
-              <Heading className={classes.formHeadText} tag="h2">
+              <Heading tag="h2">
                 What type of content are you going to upload?
               </Heading>
 
               <Spacing space={{ height: "2.5rem" }} />
 
               <div className={classes.uploadForm}>
-                <h4 className={classes.titleText}>Title</h4>
-                <TextField
-                  InputLabelProps={{ shrink: true }}
-                  className={classes.inputField}
-                  placeholder="Title"
-                  variant="outlined"
-                  fullWidth
-                  error={titleError}
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <h4 className={classes.titleText}>Tag</h4>
-                <div className={classes.tagsInput}>
-                  <ul className={classes.tags}>
-                    {tags.map((tag, index) => (
-                      <li key={index} className={classes.tag}>
-                        <span className={classes.tagTitle}>{tag}</span>
-                        <span
-                          className={classes.tagCloseIcon}
-                          onClick={() => removeTags(index)}
-                        >
-                          x
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <input
-                    className={classes.input}
-                    type="text"
-                    onKeyUp={(event) =>
-                      event.code === "Space" || event.key === ","
-                        ? addTags(event)
-                        : null
-                    }
-                    placeholder="Add Tag"
-                  />
-                </div>
-                <p className={classes.helperText}>
-                  * Press Space or comma to add tag (Maximum 10 tags)
-                </p>
-
-                <div onClick={loadCategories}>
-                  <h4 className={classes.titleText}>Category</h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="title">
+                    Title <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="title"
+                    InputLabelProps={{ shrink: true }}
+                    className={classes.inputField}
+                    placeholder="Title"
+                    variant="outlined"
+                    fullWidth
+                    error={titleError}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="tags">
+                    Tag <span>*</span>
+                  </label>
+                  <div className={classes.tagsInput}>
+                    <ul className={classes.tags}>
+                      {tags.map((tag, index) => (
+                        <li key={index} className={classes.tag}>
+                          <span className={classes.tagTitle}>{tag}</span>
+                          <span
+                            className={classes.tagCloseIcon}
+                            onClick={() => removeTags(index)}
+                          >
+                            x
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <input
+                      id="tags"
+                      className={classes.input}
+                      type="text"
+                      onKeyUp={(event) =>
+                        event.code === "Space" || event.key === ","
+                          ? addTags(event)
+                          : null
+                      }
+                      placeholder="Add Tag"
+                    />
+                  </div>
+                  <FormHelperText className={classes.helperText}>
+                    Press space or comma to add tags (maximum 10 tags)
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl
+                  fullWidth
+                  className={classes.fieldWrapper}
+                  onClick={loadCategories}
+                >
+                  <label htmlFor="category">
+                    Category <span>*</span>
+                  </label>
+                  <TextField
+                    id="category"
                     className={classes.categoryInput}
                     variant="outlined"
                     select
@@ -489,12 +517,14 @@ const UploadFiles = () => {
                       <option>Uncategorized</option>
                     )}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <div>
-                  <h4 className={classes.titleText}>Item for sale?</h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="itemStatus">
+                    Item for sale? <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="itemStatus"
                     className={classes.itemSaleInput}
                     variant="outlined"
                     select
@@ -510,14 +540,14 @@ const UploadFiles = () => {
                       </option>
                     ))}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <div>
-                  <h4 className={classes.titleText}>
-                    How they can use this photo
-                  </h4>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="license">
+                    How they can use this photo <span>*</span>
+                  </label>
                   <TextField
-                    id="standard-select-currency-native"
+                    id="license"
                     className={classes.usagesInput}
                     select
                     label=""
@@ -534,60 +564,102 @@ const UploadFiles = () => {
                       </option>
                     ))}
                   </TextField>
-                </div>
+                </FormControl>
 
-                <h4 className={classes.titleText}>Type of Image?</h4>
-                <TextField
-                  id="standard-select-currency-native"
-                  className={classes.typeOfImageInput}
-                  select
-                  label=""
-                  variant="outlined"
-                  value={typeOfImage}
-                  onChange={handleTypeOfImage}
-                  SelectProps={{
-                    native: true,
-                  }}
-                >
-                  {typeOfImageItem.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="typeOfImage">
+                    Type of Image? <span>*</span>
+                  </label>
+                  <TextField
+                    id="typeOfImage"
+                    className={classes.typeOfImageInput}
+                    select
+                    variant="outlined"
+                    value={typeOfImage}
+                    onChange={handleTypeOfImage}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {typeOfImageItem.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
 
-                {imageType && (
-                  <div className={classes.imageFileUploadBox}>
+                {typeOfImage === "image" && (
+                  <label
+                    htmlFor="image"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isImageFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
                     <div className={classes.uploadIconImage}>
                       <input
-                        id="additionalImageUpload"
-                        name="additionalImageUpload"
-                        // style={{ display: "none" }}
+                        id="image"
+                        name="image"
                         type="file"
-                        files={additional_image}
-                        onChange={handleFileChange}
+                        accept="image/*"
+                        onChange={handleImageFiles}
                       />
-                      <label htmlFor="additionalImageUpload">
-                        <FontAwesomeIcon icon={faCloudUploadAlt} />
-                      </label>
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
+                      <p className={classes.selectFileText}>
+                        Select a file (jpg, png, gif etc.)
+                      </p>
+                    </div>
+                  </label>
+                )}
+
+                {typeOfImage === "zip" && (
+                  <label
+                    htmlFor="zipFolder"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isArchivedFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
+                    <div className={classes.uploadIconImage}>
+                      <input
+                        id="zipFolder"
+                        name="zipFolder"
+                        type="file"
+                        accept=".zip, .rar"
+                        onChange={handleArchivedFile}
+                      />
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
                       <p className={classes.selectFileText}>
                         Select a file (AI,EPS,PSD,SVG)
                       </p>
                     </div>
-                  </div>
+                  </label>
                 )}
 
-                <h4 className={classes.titleText}>Description (Optional)</h4>
-                <TextareaAutosize
-                  className={classes.description}
-                  aria-label="minimum height"
-                  minRows={5}
-                  placeholder="Description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="description">Description (Optional)</label>
+                  <TextareaAutosize
+                    id="description"
+                    className={classes.description}
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+
                 <div className={classes.singleBorder}></div>
-                <button
+                <Button
                   variant="contained"
                   className={classes.uploadBtn}
                   type="submit"
@@ -597,8 +669,8 @@ const UploadFiles = () => {
                     icon={faCloudUploadAlt}
                     className={classes.uploadIcon}
                   />
-                  Upload
-                </button>
+                  {isLoading ? "Submitting..." : "Submit"}
+                </Button>
               </div>
             </div>
           </form>

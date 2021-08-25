@@ -1,4 +1,16 @@
-import { IconButton, Input, TextField } from "@material-ui/core";
+import {
+  Button,
+  ClickAwayListener,
+  Grow,
+  IconButton,
+  Input,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+} from "@material-ui/core";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +39,8 @@ const containerTransition = {
 const Search = ({ mobileView }: { mobileView: boolean }) => {
   const classes = useStyles();
   const searchRef = useRef("");
+  const [openSearchCategory, SearchCategory] = useState(false);
+  const anchorRef = useRef(null);
 
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -43,6 +57,25 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const expandContainer = () => {
     setIsExpanded(true);
   };
+
+  const handleSearchToggle = () => {
+    SearchCategory((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (e) => {
+    if (anchorRef.current && anchorRef?.current.contains(e.target)) {
+      return;
+    }
+
+    SearchCategory(false);
+  };
+
+  function handleListKeyDown(e) {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      SearchCategory(false);
+    }
+  }
 
   const collapseContainer = () => {
     setIsExpanded(false);
@@ -85,8 +118,13 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   useDebounce(searchQuery, 500, searchPhotos);
 
-  const handleCategory = (e) => {
-    setCategory(e.target.value);
+  const handleCategoryItem = (e) => {
+    const categoryID = e.target.getAttribute("data-id");
+    const value = e.target.textContent;
+
+    anchorRef.current.firstElementChild.textContent = value;
+
+    setCategory(value);
   };
 
   const loadCategories = () => {
@@ -96,6 +134,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         .then(({ data }) => {
           if (data?.status) {
             const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+
             setCategories(sortedData);
           }
         })
@@ -148,26 +187,67 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         </AnimatePresence>
 
         {!mobileView && (
-          <TextField
-            onClick={loadCategories}
-            className={classes.selectContainer}
-            variant="outlined"
-            select
-            onChange={handleCategory}
-            SelectProps={{
-              native: true,
-            }}
-          >
-            {categories.length ? (
-              categories?.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))
-            ) : (
-              <option>Uncategorized</option>
-            )}
-          </TextField>
+          <>
+            <div className={classes.searchBorder} />
+            <Button
+              ref={anchorRef}
+              onClick={() => {
+                handleSearchToggle();
+                loadCategories();
+              }}
+              className={classes.searchCats}
+            >
+              All Resources
+              {openSearchCategory ? (
+                <ArrowDropUpIcon fontSize="large" />
+              ) : (
+                <ArrowDropDownIcon fontSize="large" />
+              )}
+            </Button>
+            <Popper
+              open={openSearchCategory}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper className={classes.categoryPaper}>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={openSearchCategory}
+                        id="search-category-lists"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        {categories.length !== 0 ? (
+                          categories.map((category) => (
+                            <MenuItem
+                              key={category?.id}
+                              data-id={category?.id}
+                              onClick={(e) => {
+                                handleCategoryItem(e);
+                              }}
+                            >
+                              {category?.name}
+                            </MenuItem>
+                          ))
+                        ) : (
+                          <MenuItem value="">All Resources</MenuItem>
+                        )}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </>
           // // <FormControl>
           // //   <Select
           // //     className={classes.selectContainer}
