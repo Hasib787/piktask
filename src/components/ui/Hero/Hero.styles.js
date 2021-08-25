@@ -57,24 +57,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     textAlign: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("480")]: {
+      paddingBottom: "3rem",
+    }
   },
   popularButton: {
-    ...theme.typography.button,
-    backgroundColor: "#117A00",
-    border: "2px solid #117A00",
     marginRight: "1rem",
-    padding: "0.4rem 2.5rem",
-    fontSize: "14px",
-    fontWeight: 500,
-    color: "#fff",
-    transition: "all 0.3s linear",
-
-    "&:hover": {
-      backgroundColor: "#106403",
-      color: "#fff",
-    },
-  },
-  recButton:{
     border: "2px solid white",
     padding: "0.4rem 2.5rem",
     fontSize: "14px",
@@ -82,11 +70,33 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     borderRadius: 30,
     transition: "all 0.3s linear",
+    "&.active":{
+      backgroundColor: "#117A00",
+      border: "2px solid #117A00",
+    },
     "&:hover": {
       backgroundColor: "#117A00",
       color: "#fff",
     },
   },
+  recentButton:{
+    border: "2px solid white",
+    padding: "0.4rem 2.5rem",
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "#fff",
+    borderRadius: 30,
+    transition: "all 0.3s linear",
+    "&.active":{
+      backgroundColor: "#117A00",
+      border: "2px solid #117A00",
+    },
+    "&:hover": {
+      backgroundColor: "#117A00",
+      color: "#fff",
+    },
+  },
+
   selected: {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white,

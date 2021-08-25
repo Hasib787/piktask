@@ -36,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  uploadContainer: {
-    marginBottom: "3rem",
-  },
   basicInfo: {
     minWidth: "100%",
     borderColor: "#e08e0b",
@@ -90,7 +87,12 @@ const useStyles = makeStyles((theme) => ({
   photoUploadText: {
     fontSize: "2.5rem",
     color: "#97A1A8",
+    [theme.breakpoints.down(480)]: {
+      padding: "1rem",
+      textAlign: "center",
+    },
   },
+
   subtitle: {
     fontSize: "1.8rem",
     color: "#97A1A8",
@@ -324,8 +326,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#00a65a",
     color: "white",
     [theme.breakpoints.down(480)]: {
-      padding: "0.8rem 0.9rem",
+      width: "100%",
+      marginLeft: "0%",
       fontSize: "14px",
+      padding: "1rem 0.9rem",
+      transform: "translateX(0%)",
     },
   },
   uploadIcon: {

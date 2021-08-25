@@ -197,7 +197,7 @@ const Category = () => {
                 ))
               ) : (
                 <Typography variant="body1">
-                  Sorry, no products found
+                  No resources found
                 </Typography>
               )}
             </>

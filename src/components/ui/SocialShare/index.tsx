@@ -1,22 +1,19 @@
 import { List, Typography } from "@material-ui/core";
 import React from "react";
-import { Link } from "react-router-dom";
 import useStyles from "./SocialShare.styles";
+import facebookLogo from '../../../assets/icons/facebook-round.svg';
+import instagramLogo from '../../../assets/icons/instagram-round.svg';
+import twitterLogo from '../../../assets/icons/twitter-round.svg';
 
-type Media = {
-  name: string;
-  url: string;
-  image: string;
-};
 
 type Props = {
   title: string;
-  socialMedias: Media[];
   position?: string;
   textCase?: string;
+  profileInfo?: string;
 };
 
-const SocialShare = ({ title, socialMedias, textCase, position }: Props) => {
+const SocialShare = ({ title, textCase, position, profileInfo }: Props) => {
   const classes = useStyles();
 
   return (
@@ -37,6 +34,38 @@ const SocialShare = ({ title, socialMedias, textCase, position }: Props) => {
       </Typography>
 
       <List>
+        {profileInfo?.facebook && (
+          <a href={profileInfo?.facebook} target="_blank">
+            <img
+              className={classes.socialIcon}
+              src={facebookLogo}
+              alt={facebookLogo}
+            />
+          </a>
+        )}
+
+        {profileInfo?.instagram && (
+          <a href={profileInfo?.instagram} target="_blank">
+            <img
+              className={classes.socialIcon}
+              src={instagramLogo}
+              alt={instagramLogo}
+            />
+          </a>
+        )}
+
+        {profileInfo?.twitter && (
+          <a href={profileInfo?.twitter} target="_blank">
+            <img
+              className={classes.socialIcon}
+              src={twitterLogo}
+              alt={twitterLogo}
+            />
+          </a>
+        )}
+      </List>
+
+      {/* <List>
         {socialMedias.map((media: Media, index: number) => (
           <Link key={index} to={media.url} target="_blank">
             <img
@@ -46,7 +75,7 @@ const SocialShare = ({ title, socialMedias, textCase, position }: Props) => {
             />
           </Link>
         ))}
-      </List>
+      </List> */}
     </div>
   );
 };

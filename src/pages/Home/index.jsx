@@ -37,7 +37,7 @@ export const Home = () => {
       <Container>
         <Spacing space={{ height: "3rem" }} />
         <SectionHeading title="Popular Album Collection" large>
-          <Button className={classes.headingButton} component={Link} to="/#">
+          <Button className={classes.headingButton} component={Link} to="/categories">
             See More
           </Button>
         </SectionHeading>

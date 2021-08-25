@@ -319,11 +319,18 @@ const useStyles = makeStyles((theme) => ({
       flexBasis: "100%",
     },
   },
-  textarea: {
-    display: "none",
-  },
   tooltip: {
     fontSize: "1.3rem",
+  },
+  licenseTitle: {
+    "& h2":{
+      fontSize: "1.8rem !important",
+    },
+  },
+  licenseDialog: {
+   "& div div":{
+    width: "50rem",
+   },
   },
 }));
 

@@ -33,19 +33,18 @@ export const CategoryCarousel = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setPopularCategories(data?.categories);
-            setLoading(false);
-          }
-        });
-    } catch (error) {
-      setLoading(false);
-      console.log("Popular categories error: ", error);
-    }
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setPopularCategories(data?.categories);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log("Popular categories error: ", error);
+      });
   }, []);
 
   const settings = {
