@@ -1,11 +1,9 @@
 import {
-  Button,
   ClickAwayListener,
   Grow,
   IconButton,
   Input,
   MenuItem,
-  MenuList,
   Paper,
   Popper,
 } from "@material-ui/core";
@@ -40,13 +38,14 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const classes = useStyles();
   const searchRef = useRef("");
   const [openSearchCategory, SearchCategory] = useState(false);
-  const anchorRef = useRef(null);
+  const anchorRef = useRef("");
 
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [parentRef, isClickedOutside] = useClickOutside();
+  const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
+  const [searchCategoryID, setSearchCategoryID] = useState("");
 
   const [noSearchResults, setNoSearchResults] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -92,8 +91,19 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   }, [isClickedOutside]);
 
   const prepareSearchQuery = (query: string) => {
-    const url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&limit=12`;
+    let url;
 
+    console.log("searchCategoryID", searchCategoryID);
+
+    if (searchCategoryID) {
+      url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&category_id=${searchCategoryID}&limit=12`;
+    } else {
+      url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&limit=12`;
+    }
+
+    console.log("search url", url);
+
+    // search/?title=nature&category_id=22&limit=30&page=1
     return encodeURI(url);
   };
 
@@ -120,15 +130,10 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const handleCategoryItem = (e) => {
     const categoryID = e.target.getAttribute("data-id");
-    const value = e.target.textContent;
-
-    anchorRef.current.textContent = value;
-    
-    console.log("anchorRef anchorRef", anchorRef);
-    
-    setCategory(value);
+    const textValue = e.target.textContent;
+    setSearchCategoryName(textValue);
+    setSearchCategoryID(categoryID);
   };
-  console.log("anchorRef", anchorRef);
 
   const loadCategories = () => {
     if (categories.length === 0) {
@@ -152,6 +157,8 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+
+    console.log(e.target);
   };
 
   return (
@@ -205,7 +212,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
                 }}
                 className={classes.searchCats}
               >
-                All Resources
+                <span>{searchCategoryName}</span>
                 {openSearchCategory ? (
                   <ArrowDropUpIcon fontSize="large" />
                 ) : (
@@ -218,6 +225,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
                 role={undefined}
                 transition
                 disablePortal
+                style={{ zIndex: 9999 }}
               >
                 {({ TransitionProps, placement }) => (
                   <Grow
@@ -257,9 +265,9 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
             </>
           )}
 
-          <div className={classes.searchIconWrapper}>
+          <button type="submit" className={classes.searchIconWrapper}>
             <img className={classes.searchIcon} src={searchIcon} alt="Search" />
-          </div>
+          </button>
 
           {isExpanded && (
             <div className={classes.searchResultWrapper}>

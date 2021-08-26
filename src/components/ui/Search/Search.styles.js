@@ -96,9 +96,16 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.white,
     borderRadius: 0,
     height: "5.2rem",
-    width: 218,
+    minWidth: 140,
     position: "relative",
-    justifyContent: "flex-start",
+    display: "flex",
+    alignItems: "center",
+
+    "& > span": {
+      display: "block",
+      marginRight: "0.5rem",
+      minWidth: 140,
+    },
 
     "&:hover": {
       background: theme.palette.common.white,
