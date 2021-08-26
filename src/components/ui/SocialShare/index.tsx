@@ -4,6 +4,7 @@ import useStyles from "./SocialShare.styles";
 import facebookLogo from '../../../assets/icons/facebook-round.svg';
 import instagramLogo from '../../../assets/icons/instagram-round.svg';
 import twitterLogo from '../../../assets/icons/twitter-round.svg';
+import { Link } from "react-router-dom";
 
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
   profileInfo?: string;
 };
 
-const SocialShare = ({ title, textCase, position, profileInfo }: Props) => {
+const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }: Props) => {
   const classes = useStyles();
 
   return (
@@ -65,8 +66,8 @@ const SocialShare = ({ title, textCase, position, profileInfo }: Props) => {
         )}
       </List>
 
-      {/* <List>
-        {socialMedias.map((media: Media, index: number) => (
+      <List>
+        {socialMedias && socialMedias.map((media: Media, index: number) => (
           <Link key={index} to={media.url} target="_blank">
             <img
               className={classes.socialIcon}
@@ -75,7 +76,7 @@ const SocialShare = ({ title, textCase, position, profileInfo }: Props) => {
             />
           </Link>
         ))}
-      </List> */}
+      </List>
     </div>
   );
 };

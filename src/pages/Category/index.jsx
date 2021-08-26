@@ -125,7 +125,7 @@ const Category = () => {
         title="Graphic Resource for Free Download"
       />
 
-      <div className={classes.tagWrapper}>
+<div className={classes.tagWrapper}>
         <Container>
           <Grid container className={classes.root}>
             <Grid item md={2} sm={12} className={classes.columnItem}>
@@ -149,28 +149,28 @@ const Category = () => {
       </div>
 
       <Container>
-      <div className={classes.shortList}>
-          <div className={classes.shortListWrapper}>
-            <Typography className={classes.shortListTag}>Sort by:</Typography>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <Select className={classes.selectSortItem}
-                native
-                onChange={getCategoryProducts}
-                inputProps={{
-                  id: "outlined-age-native-simple",
-                }}
-              >
-                <option value="all_product">All Product</option>
-                <option value="brand_new">Brand New</option>
-                <option value="popular">Popular</option>
-                <option value="top_download">Top Download</option>
-                <option value="free">Free</option>
-                <option value="premium">Premium</option>
-              </Select>
-            </FormControl>
-          </div>
-      </div>
-        </Container>
+        <div className={classes.shortList}>
+            <div className={classes.shortListWrapper}>
+              <Typography className={classes.shortListTag}>Sort by:</Typography>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <Select className={classes.selectSortItem}
+                  native
+                  onChange={getCategoryProducts}
+                  inputProps={{
+                    id: "outlined-age-native-simple",
+                  }}
+                >
+                  <option value="all_product">All Product</option>
+                  <option value="brand_new">Brand New</option>
+                  <option value="popular">Popular</option>
+                  <option value="top_download">Top Download</option>
+                  <option value="free">Free</option>
+                  <option value="premium">Premium</option>
+                </Select>
+              </FormControl>
+            </div>
+        </div>
+      </Container>
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
@@ -204,6 +204,7 @@ const Category = () => {
           )}
         </Grid>
       </Container>
+
 
       <CallToAction
         title="Join Designhill designer team"

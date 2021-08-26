@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 3rem",
     fontSize: 18,
     height: "5.2rem",
+    // width: "50rem",
     borderTopLeftRadius: ".3rem",
     borderBottomLeftRadius: ".2rem",
     [theme.breakpoints.down("sm")]: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: 122,
     height: "5.2rem",
     cursor: "pointer",
+    border: "none",
     textAlign: "center",
     borderTopRightRadius: ".2rem",
     borderBottomRightRadius: ".2rem",
@@ -96,9 +98,16 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.common.white,
     borderRadius: 0,
     height: "5.2rem",
-    width: 218,
+    minWidth: 140,
     position: "relative",
-    justifyContent: "flex-start",
+    display: "flex",
+    alignItems: "center",
+
+    "& > span": {
+      display: "block",
+      marginRight: "0.5rem",
+      minWidth: 140,
+    },
 
     "&:hover": {
       background: theme.palette.common.white,
@@ -107,6 +116,23 @@ const useStyles = makeStyles((theme) => ({
     "& svg": {
       position: "absolute",
       right: 5,
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      height: "4.5rem",
+    },
+  },
+  searchCatItem: {
+    padding: "1rem 0rem",
+  },
+  categoryList: {
+    listStyle: "none",
+    cursor: "pointer",
+    padding: "0.8rem 2rem",
+    transition: "all 0.3s linear",
+    
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
     },
   },
   searchBorder: {
@@ -118,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   categoryPaper: {
-    height: 500,
+    height: 450,
     overflowY: "auto",
     overflowX: "hidden",
 
@@ -152,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
     top: 59,
-    width: "71.2%",
+    width: "100%",
     left: 0,
     zIndex: 99,
   },

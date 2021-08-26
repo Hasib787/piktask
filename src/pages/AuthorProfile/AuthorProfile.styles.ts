@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     position: "relative",
-    minHeight: "20rem",
+    minHeight: "18rem",
     "&::before": {
       content: '""',
       position: "absolute",
@@ -31,20 +31,25 @@ const useStyles = makeStyles((theme) => ({
   },
   authorImg: {
     marginRight: "3rem",
-    height: "10rem",
-    width: "10rem",
+    height: "9rem",
+    width: "9rem",
 
     "& img": {
       width: "100%",
       borderRadius: "100%",
-      padding: "0.6rem",
+      padding: "0.4rem",
       backgroundColor: "#707070",
     },
     "@media (max-width: 595px)": {
-      width: "12rem",
-      height: "12rem",
+      width: "7rem",
+      height: "7rem",
+      marginTop: "2rem",
       marginBottom: "2rem",
       marginRight: 0,
+
+      "& img": {
+        padding: "0.4rem",
+      },
     },
   },
   authorInfo: {

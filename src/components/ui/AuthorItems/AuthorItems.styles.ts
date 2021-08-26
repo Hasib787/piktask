@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
+  container: {
+    marginBottom: "4rem",
+  },
   flexContainer: {
     backgroundColor: theme.palette.common.white,
     display: "flex",
