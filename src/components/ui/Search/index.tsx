@@ -122,10 +122,13 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     const categoryID = e.target.getAttribute("data-id");
     const value = e.target.textContent;
 
-    anchorRef.current.firstElementChild.textContent = value;
-
+    anchorRef.current.textContent = value;
+    
+    console.log("anchorRef anchorRef", anchorRef);
+    
     setCategory(value);
   };
+  console.log("anchorRef", anchorRef);
 
   const loadCategories = () => {
     if (categories.length === 0) {
@@ -147,176 +150,151 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     MozBorderRadiusBottomleft: isExpanded ? 0 : ".3rem",
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-      <motion.div
-        className={classes.searchWrapper}
-        variants={containerVariants}
-        transition={containerTransition}
-        ref={parentRef}
-      >
-        <Input
-          fullWidth
-          className={classes.inputField}
-          id="search"
-          aria-describedby="search-resources"
-          placeholder="Search All Resources"
-          disableUnderline
-          ref={searchRef}
-          onFocus={expandContainer}
-          style={borderStyles}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              className={classes.closeIcon}
-              key="close-icon"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={collapseContainer}
-            >
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </motion.div>
+      <form action="" autoComplete="off" onSubmit={handleSearch}>
+        <motion.div
+          className={classes.searchWrapper}
+          variants={containerVariants}
+          transition={containerTransition}
+          ref={parentRef}
+        >
+          <Input
+            fullWidth
+            className={classes.inputField}
+            id="search"
+            aria-describedby="search-resources"
+            placeholder="Search All Resources"
+            disableUnderline
+            ref={searchRef}
+            onFocus={expandContainer}
+            style={borderStyles}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                className={classes.closeIcon}
+                key="close-icon"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={collapseContainer}
+              >
+                <IconButton>
+                  <CloseIcon />
+                </IconButton>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {!mobileView && (
+            <>
+              <div className={classes.searchBorder} />
+              <div
+                ref={anchorRef}
+                onClick={() => {
+                  handleSearchToggle();
+                  loadCategories();
+                }}
+                className={classes.searchCats}
+              >
+                All Resources
+                {openSearchCategory ? (
+                  <ArrowDropUpIcon fontSize="large" />
+                ) : (
+                  <ArrowDropDownIcon fontSize="large" />
+                )}
+              </div>
+              <Popper
+                open={openSearchCategory}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === "bottom" ? "center top" : "center bottom",
+                    }}
+                  >
+                    <Paper className={classes.categoryPaper}>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <ul
+                          id="search-category-lists"
+                          onKeyDown={handleListKeyDown}
+                        >
+                          {categories.length !== 0 ? (
+                            categories.map((category) => (
+                              <li
+                                key={category?.id}
+                                data-id={category?.id}
+                                onClick={(e) => {
+                                  handleCategoryItem(e);
+                                }}
+                              >
+                                {category?.name}
+                              </li>
+                            ))
+                          ) : (
+                            <MenuItem value="">All Resources</MenuItem>
+                          )}
+                        </ul>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </>
           )}
-        </AnimatePresence>
 
-        {!mobileView && (
-          <>
-            <div className={classes.searchBorder} />
-            <Button
-              ref={anchorRef}
-              onClick={() => {
-                handleSearchToggle();
-                loadCategories();
-              }}
-              className={classes.searchCats}
-            >
-              All Resources
-              {openSearchCategory ? (
-                <ArrowDropUpIcon fontSize="large" />
-              ) : (
-                <ArrowDropDownIcon fontSize="large" />
-              )}
-            </Button>
-            <Popper
-              open={openSearchCategory}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper className={classes.categoryPaper}>
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
-                        autoFocusItem={openSearchCategory}
-                        id="search-category-lists"
-                        onKeyDown={handleListKeyDown}
-                      >
-                        {categories.length !== 0 ? (
-                          categories.map((category) => (
-                            <MenuItem
-                              key={category?.id}
-                              data-id={category?.id}
-                              onClick={(e) => {
-                                handleCategoryItem(e);
-                              }}
-                            >
-                              {category?.name}
-                            </MenuItem>
-                          ))
-                        ) : (
-                          <MenuItem value="">All Resources</MenuItem>
-                        )}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </>
-          // // <FormControl>
-          // //   <Select
-          // //     className={classes.selectContainer}
-          // //     labelId="demo-simple-select-outlined-label"
-          // //     id="demo-simple-select-outlined"
-          // //     label="Age"
-          // //   >
-          // //     {categories.length !== 0 ? (
-          // //       categories.map((category, index) => (
-          // //         <MenuItem key={index} value={index}>
-          // //           {category}
-          // //         </MenuItem>
-          // //       ))
-          // //     ) : (
-          // //       <MenuItem value="">All Resources</MenuItem>
-          // //     )}
-          // //   </Select>
-          //   {/* <NativeSelect className={classes.selectContainer} disableUnderline>
-          //     <option value="">All Resources</option>
-          //     {categories.length !== 0 ? (
-          //       categories.map((category, index) => (
-          //         <option key={index} value={index}>
-          //           {category}
-          //         </option>
-          //       ))
-          //     ) : (
-          //       <option value="">All Resources</option>
-          //     )}
-          //   // </NativeSelect> */}
-          // // </FormControl>
-        )}
-
-        <div className={classes.searchIconWrapper}>
-          <img className={classes.searchIcon} src={searchIcon} alt="Search" />
-        </div>
-
-        {isExpanded && (
-          <div className={classes.searchResultWrapper}>
-            <div className={classes.searchContent}>
-              {/* Show this while typing */}
-              {isLoading && (
-                <div className={classes.loadingWrapper}>
-                  <p>Loading...</p>
-                </div>
-              )}
-
-              {!isLoading && isEmpty && !noSearchResults && (
-                <div className={classes.loadingWrapper}>
-                  <p>Start typing to search</p>
-                </div>
-              )}
-
-              {!isLoading && noSearchResults && (
-                <div className={classes.loadingWrapper}>
-                  <p>No resources found</p>
-                </div>
-              )}
-
-              {!isLoading && !isEmpty && (
-                <>
-                  {searchResults.map((item, index) => (
-                    <SearchItem key={index} item={item} />
-                  ))}
-                </>
-              )}
-            </div>
+          <div className={classes.searchIconWrapper}>
+            <img className={classes.searchIcon} src={searchIcon} alt="Search" />
           </div>
-        )}
-      </motion.div>
+
+          {isExpanded && (
+            <div className={classes.searchResultWrapper}>
+              <div className={classes.searchContent}>
+                {/* Show this while typing */}
+                {isLoading && (
+                  <div className={classes.loadingWrapper}>
+                    <p>Loading...</p>
+                  </div>
+                )}
+
+                {!isLoading && isEmpty && !noSearchResults && (
+                  <div className={classes.loadingWrapper}>
+                    <p>Start typing to search</p>
+                  </div>
+                )}
+
+                {!isLoading && noSearchResults && (
+                  <div className={classes.loadingWrapper}>
+                    <p>No resources found</p>
+                  </div>
+                )}
+
+                {!isLoading && !isEmpty && (
+                  <>
+                    {searchResults.map((item, index) => (
+                      <SearchItem key={index} item={item} />
+                    ))}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </form>
     </>
   );
 };
