@@ -108,6 +108,10 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       right: 5,
     },
+
+    [theme.breakpoints.down("sm")]: {
+      height: "4.5rem",
+    },
   },
   searchBorder: {
     background: "rgb(0 0 0 / 12%)",
@@ -152,7 +156,7 @@ const useStyles = makeStyles((theme) => ({
     borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
     top: 59,
-    width: "71.2%",
+    width: "100%",
     left: 0,
     zIndex: 99,
   },
