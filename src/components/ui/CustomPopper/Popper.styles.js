@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
     width: "5rem",
     height: "5rem",
     borderRadius: "100%",
+    padding: "0.2rem",
+    backgroundColor: "#1B3F4E",
     marginRight: "1rem",
     "@media (max-width: 576px)": {
       width: "4rem",

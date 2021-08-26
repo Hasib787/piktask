@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: "13.5rem",
+    width: "12rem",
     display: "block",
   },
   menuUnderline: {
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   enterprise: {
     color: "#FDAF01",
-    fontSize: "14px",
+    fontSize: "1.4rem",
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
       paddingLeft: "1rem",
@@ -89,9 +89,8 @@ const useStyles = makeStyles((theme) => ({
   premium: {
     ...theme.typography.button,
     backgroundColor: theme.palette.secondary.main,
-    fontSize: "14px",
-    paddingLeft: "1.2rem",
-    paddingRight: "1.2rem",
+    fontSize: "1.4rem",
+    padding: "0.3rem 1rem",
     marginLeft: "0.5rem",
     marginRight: "1rem",
     border: ".2rem solid",
@@ -113,26 +112,27 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     border: `.2rem solid`,
     borderColor: theme.palette.secondary.main,
-    paddingRight: "1.2rem",
-    paddingLeft: "1.2rem",
+    padding: "0.3rem 1rem",
     marginRight: "1.5rem",
-    fontSize: "12px",
-    textTransform: "uppercase",
+    fontSize: "1.3rem",
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
     },
-    "@media (max-width: 1024px)": {
-      marginRight: "1rem",
-      paddingRight: "1rem",
-      paddingLeft: "1rem",
-      fontSize: "1.4rem",
+    [theme.breakpoints.down(1100)]: {
+      width: "11rem",
+      fontSize: "1.1rem",
+      marginRight: "0",
+      paddingLeft: "0.7rem",
+      paddingRight: "0.7rem",
     },
   },
+
   signInBtn: {
     ...theme.typography.button,
     ...theme.typography.darkButton,
-    fontSize: "14px",
-    padding: ".8rem 2.4rem",
+    border:".2rem solid transparent",
+    fontSize: "1.4rem",
+    padding: "0.3rem 1rem",
 
     "@media (max-width: 480px)": {
       padding: ".8rem 1.5rem !important",
@@ -174,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up(1441)]: {
       padding: "2.5rem 2.5rem 7rem 2.5rem",
-     },
+    },
   },
   authLogo: {
     maxWidth: 120,
@@ -250,10 +250,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(1025)]: {
       fontSize: "17px !important",
       padding: "20px !important",
-     },
+    },
     [theme.breakpoints.up(2039)]: {
       padding: "20px !important",
-     },
+    },
   },
   // socialLoginBtns: {
   //   display: "flex",

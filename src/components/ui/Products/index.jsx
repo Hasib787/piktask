@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   headingButton: {
     ...theme.typography.button,
-    padding: "0.7rem 1.5rem",
-    fontSize: "1.4rem",
+    padding: "0.4rem 1rem",
+    fontSize: "1.3rem",
     fontWeight: 500,
     color: "#1B3F4E",
     transition: "all 0.3s linear",

@@ -140,7 +140,7 @@ const Product = ({ photo }) => {
 
           <CardContent className={classes.cardFooter}>
             <CardFooter className={classes.cardAuthorInfo}>
-              <Link to={`/${photo?.username}`}>
+              <Link to={`/${photo?.username}`} className={classes.avatar}>
                 {photo?.avatar ? (
                   <CardMedia
                     component="img"
