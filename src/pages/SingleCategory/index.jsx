@@ -100,9 +100,9 @@ const SingleCategory = () => {
       .then(({ data }) => {
         if (data?.success) {
           setImageDetails(data.detail);
-          if (data?.detail.tags) {
-            const words = data.detail.tags.split(",");
-            setAllTags(words.slice(1));
+          if (data?.related_tags) {
+            const tags = data.related_tags;
+            setAllTags(tags.filter(e =>  e));
           }
 
           if (user?.token) {

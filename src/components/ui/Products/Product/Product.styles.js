@@ -73,14 +73,20 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     paddingBottom: "4px !important",
   },
-  authorImage: {
+  avatar:{
     width: 37,
     height: 37,
     borderRadius: "100%",
+    padding: "0.2rem",
+    backgroundColor: "#1B3F4E",
     marginRight: "0.8rem",
-    color: "#000",
+  },
+  authorImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "100%",
+    color: "white",
     cursor: "pointer",
-    // border: "1px solid #1B3F4E",
   },
   profileName: {
     marginBottom: 0,

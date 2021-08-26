@@ -7,6 +7,7 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
 import Products from "../../components/ui/Products";
+import TagButtons from "../../components/ui/TagButtons/index";
 // import TagButtons from "../../components/ui/TagButtons";
 import useStyles from "./TagTemplate.styles";
 
@@ -22,15 +23,15 @@ const TagTemplate = () => {
         title="Republicday images"
       />
 
-      {/* <div className={classes.tagWrapper}>
+      <div className={classes.tagWrapper}>
         <Container>
           <TagButtons />
         </Container>
-      </div> */}
+      </div>
       <Container>
-        {/* <Typography className={classes.totalResources} variant="h3">
-          6,283 Resources
-        </Typography> */}
+        <Typography className={classes.totalResources} variant="h4">
+           Resources
+        </Typography>
         <Spacing space={{height: "5rem"}}></Spacing>
         <Products />
       </Container>
