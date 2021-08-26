@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   // Old
   tagWrapper: {
     backgroundColor: theme.palette.common.white,
-    padding: "3rem 2rem",
+    padding: "3rem 0rem",
     [theme.breakpoints.down(426)]: {
       display: "none",
     },
@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   },
   totalResources: {
     fontSize: "2.2rem",
-    padding: "3.5rem 0 6rem",
+    padding: "3rem 0rem",
     [theme.breakpoints.down(426)]: {
       padding: "2.5rem 0 3rem",
     },

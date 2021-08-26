@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    marginTop: "8rem",
+    // marginTop: "8rem",
     position: "relative",
     textAlign: "center",
 
