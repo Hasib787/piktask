@@ -240,12 +240,14 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
                         <ul
                           id="search-category-lists"
                           onKeyDown={handleListKeyDown}
+                          className={classes.searchCatItem}
                         >
                           {categories.length !== 0 ? (
                             categories.map((category) => (
                               <li
                                 key={category?.id}
                                 data-id={category?.id}
+                                className={classes.categoryList}
                                 onClick={(e) => {
                                   handleCategoryItem(e);
                                 }}

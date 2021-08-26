@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 3rem",
     fontSize: 18,
     height: "5.2rem",
+    // width: "50rem",
     borderTopLeftRadius: ".3rem",
     borderBottomLeftRadius: ".2rem",
     [theme.breakpoints.down("sm")]: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: 122,
     height: "5.2rem",
     cursor: "pointer",
+    border: "none",
     textAlign: "center",
     borderTopRightRadius: ".2rem",
     borderBottomRightRadius: ".2rem",
@@ -120,6 +122,19 @@ const useStyles = makeStyles((theme) => ({
       height: "4.5rem",
     },
   },
+  searchCatItem: {
+    padding: "1rem 0rem",
+  },
+  categoryList: {
+    listStyle: "none",
+    cursor: "pointer",
+    padding: "0.8rem 2rem",
+    transition: "all 0.3s linear",
+    
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+    },
+  },
   searchBorder: {
     background: "rgb(0 0 0 / 12%)",
     height: 36,
@@ -129,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   categoryPaper: {
-    height: 500,
+    height: 450,
     overflowY: "auto",
     overflowX: "hidden",
 
