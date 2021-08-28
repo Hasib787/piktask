@@ -89,7 +89,6 @@ const Categories = () => {
             )}
           </Grid>
         </Container>
-
       <CallToAction
         title="Join Piktask Designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"

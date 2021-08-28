@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "transparent",
 
     "&:hover": {
-      borderColor: "white",
+      backgroundColor:"#2b5d21",
     },
     [theme.breakpoints.down(769)]: {
       display: "none",

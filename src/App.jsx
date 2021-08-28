@@ -36,7 +36,7 @@ import Category from "./pages/Category";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
 import Subscription from "./pages/Subscription";
-import TagTemplate from "./pages/TagTemplate";
+import TagRelatedProducts from "./pages/TagRelatedProducts";
 import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
 const App = () => {
@@ -136,7 +136,7 @@ const App = () => {
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/images/recent_images" component={Recent} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
-        <Route exact path="/tag/:id" component={TagTemplate} />
+        <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/:userName" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
         <Route exact path="/:category/:id" component={SingleCategory} />

@@ -6,8 +6,11 @@ const useStyles = makeStyles((theme) => ({
     padding: "4rem 3rem",
   },
   totalResources: {
-    fontSize: "4rem",
+    fontSize: "2.2rem",
     padding: "3.5rem 0 6rem",
+    [theme.breakpoints.down(426)]: {
+      padding: "2.5rem 0 3rem",
+    },
   },
 }));
 
