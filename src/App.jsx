@@ -15,6 +15,7 @@ import RejectFiles from "./admin/pages/RejectFiles";
 import Revision from "./admin/pages/Revision";
 import UploadFiles from "./admin/pages/UploadFiles";
 import Recent from "./components/ui/Recent";
+import SearchResults from "./components/ui/SearchResults";
 import Sellers from "./components/ui/Sellers";
 import theme from "./components/ui/Theme";
 import { auth } from "./database";
@@ -135,6 +136,7 @@ const App = () => {
         <Route exact path="/sellers" component={Sellers} />
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/images/recent_images" component={Recent} />
+        <Route exact path="/search/:queryParams" component={SearchResults} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/:userName" component={AuthorProfile} />
