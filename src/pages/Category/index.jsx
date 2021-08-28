@@ -125,7 +125,7 @@ const Category = () => {
         title="Graphic Resource for Free Download"
       />
 
-<div className={classes.tagWrapper}>
+      <div className={classes.tagWrapper}>
         <Container>
           <Grid container className={classes.root}>
             <Grid item md={2} sm={12} className={classes.columnItem}>
