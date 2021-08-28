@@ -19,7 +19,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, NavLink, Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import authImage from "../../../../assets/auth.png";
 // import facebookLogo from "../../../../assets/facebook.png";
@@ -62,7 +62,7 @@ function a11yProps(index) {
   };
 }
 
-const DesktopMenu = ({ history }) => {
+const DesktopMenu = ({ history, photo }) => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -129,6 +129,12 @@ const DesktopMenu = ({ history }) => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    if (!authData.userName || !authData.password) {
+      toast.error("Please fill all the fields");
+      setLoading(false);
+      return;
+    }
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -354,37 +360,37 @@ const DesktopMenu = ({ history }) => {
             <Tab
               className={classes.menuItem}
               disableRipple
-              component={Link}
-              to="/vector"
-              label="Vector"
+              component={NavLink}
+              to={`/category/sports`}
+              label="Sports"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
-              component={Link}
-              to="/photos"
-              label="Photos"
+              component={NavLink}
+              to="/category/travel"
+              label="Travel"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
-              component={Link}
-              to="/psd"
-              label="PSD"
+              component={NavLink}
+              to="/category/education"
+              label="Education"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
-              component={Link}
-              to="/png"
-              label="PNG"
+              component={NavLink}
+              to="/category/music"
+              label="Music"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
-              component={Link}
-              to="/category"
-              label="Category"
+              component={NavLink}
+              to="/category/animal"
+              label="Animal"
             />
             {/* <ArrowDropDownIcon /> */}
           </Tabs>

@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   headerBottom: {
     "& > .MuiAppBar-colorPrimary": {
       background: "#143340",
-      height: 80,
+      height: 70,
     },
 
     [theme.breakpoints.down(425)]: {

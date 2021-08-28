@@ -54,23 +54,21 @@ const HeroSection = (props) => {
           />
           {heroButton && (
             <div className={classes.heroButtonWrapper}>
-        
-                <Button
+             
+              <Button
                   className={classes.popularButton}
                   component={NavLink}
                   to="/"
                 >
                   Popular
                 </Button>
-             
-                <Button
-                  className={classes.recentButton}
-                  component={NavLink}
-                  to="/images/recent_images"
-                >
-                  Recent
-                </Button>
-         
+              <Button
+                className={classes.recentButton}
+                component={NavLink}
+                to="/images/recent_images"
+              >
+                Recent
+              </Button>
             </div>
           )}
         </div>

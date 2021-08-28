@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
     popularSearch: {
-      marginTop: "2.2rem",
+      padding: "2rem 0rem",
       textAlign: "center",
       width: "100%",
       display: "flex",
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 16,
       margin: "0px 5px",
       fontWeight: 400,
-      marginBottom: "3.5rem",
 
       "@media (max-width: 1024px)": {
         marginBottom: "1.5rem",

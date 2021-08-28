@@ -38,8 +38,15 @@ const useStyles = makeStyles((theme) => ({
     opacity: 1,
     minWidth: "1rem",
     fontSize: "13px",
+    transition: "all 0.3s ease",
+    "&.active": {
+      color: "#76c71a",
+    },
     "&:last-child": {
       marginRight: "3rem",
+    },
+    "&:hover": {
+      color: "#76c71a",
     },
 
     "@media (max-width: 1024px)": {

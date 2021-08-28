@@ -23,7 +23,7 @@ const TagTemplate = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/client/search/?title=${tagName}`)
+      .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
       .then(({ data }) => {
         if (data?.status) {
           setTagRelatedProducts(data.results);
@@ -39,19 +39,17 @@ const TagTemplate = () => {
       <HeroSection
         background={heroBanner}
         size="medium"
-        title="Republicday images"
       />
-
-      <div className={classes.tagWrapper}>
+        
+      {/* <div className={classes.tagWrapper}>
         <Container>
           <TagButtons />
         </Container>
-      </div>
+      </div> */}
       <Container>
         <Typography className={classes.totalResources} variant="h4">
-        {tagRelatedProducts.length} Resources 
+        {tagRelatedProducts.length} Resources for {`"${tagName}"`}  
         </Typography>
-        {/* <Spacing space={{ height: "5rem" }}></Spacing> */}
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
             <h2>Loading now......</h2>
@@ -62,7 +60,7 @@ const TagTemplate = () => {
                   <Grid
                     key={photo.image_id}
                     item
-                    xs={6}
+                    xs={12}
                     sm={4}
                     md={3}
                     className={classes.productItem}
