@@ -15,18 +15,21 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
 import Product from "../../components/ui/Products/Product";
+import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 
 const Category = () => {
   const classes = useStyles();
-  const { catName } = useParams();
+  const { catName, id } = useParams();
+
 
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
 
   const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
+  const [allTags, setAllTags] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const categoryItem = categories.find((item) => item?.slug === catName);
@@ -35,85 +38,93 @@ const Category = () => {
     getCategories();
     getCategoriesWithId();
     popularKeyWords();
+    getRelatedTags();
   }, [categoryItem?.id]);
 
+  const getRelatedTags =()=>{
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+    .then(({ data }) => {
+        if (data?.related_tags) {
+          const tags = data.related_tags;
+          setAllTags(tags.filter(e =>  e));
+        }
+  }).catch((error) => {
+    console.log(error);
+  });
+};
   const getCategoriesWithId = () => {
     if (categoryItem?.id !== undefined) {
-      try {
-        axios
-          .get(
-            `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`
-          )
-          .then(({ data }) => {
-            if (data?.status) {
-              setCategoryProducts(data?.category_image);
-              setTotalImageCount(data?.total_image_count?.total_image);
-              setLoading(false);
-            }
-          });
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategoryProducts(data?.category_image);
+            setTotalImageCount(data?.total_image_count?.total_image);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
     } else {
       setLoading(false);
     }
   };
 
   const popularKeyWords = (limit = 10) => {
-    try {
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=${limit}}`
-        )
-        .then(({ data }) => {
-          if (data?.status) {
-            setPopularSearchKeywords(data?.keywords);
-          }
-        });
-    } catch (error) {
-      console.log("Popular search keywords", error);
-      setLoading(false);
-    }
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=${limit}}`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setPopularSearchKeywords(data?.keywords);
+        }
+      })
+      .catch((error) => {
+        console.log("Popular search keywords", error);
+        setLoading(false);
+      });
   };
 
   const getCategories = () => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data.categories);
-          }
-        });
-    } catch (error) {
-      console.log("Categories error:", error);
-      setLoading(false);
-    }
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/categories/`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategories(data.categories);
+        }
+      })
+      .catch((error) => {
+        console.log("Categories error:", error);
+        setLoading(false);
+      });
   };
 
   //Fetch api to get data for the category page by sorting by popularity
   const getCategoryProducts = (e) => {
     const product = e.target.value;
     if (categoryItem?.id !== undefined) {
-    try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`)
+        .get(
+          `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
+        )
         .then(({ data }) => {
           if (data?.status) {
             setCategoryProducts(data?.category_image);
             setTotalImageCount(data?.total_image_count?.total_image);
           }
+        })
+        .catch((error) => {
+          console.log("Category products error:", error);
+          setLoading(false);
         });
-    } catch (error) {
-      console.log("Category products error:", error);
+    } else {
       setLoading(false);
     }
-  } else {
-    setLoading(false);
-  }
   };
-
 
   return (
     <Layout>
@@ -125,9 +136,11 @@ const Category = () => {
         title="Graphic Resource for Free Download"
       />
 
-<div className={classes.tagWrapper}>
+      <div className={classes.tagWrapper}>
         <Container>
-          <Grid container className={classes.root}>
+            {/* BUTTONS OF TAGS */}
+            <TagButtons allTags={allTags} />
+          {/* <Grid container className={classes.root}>
             <Grid item md={2} sm={12} className={classes.columnItem}>
               <Typography className={classes.tagTitle} variant="h3">
                 Popular Search:
@@ -144,31 +157,32 @@ const Category = () => {
                   </ListItem>
                 ))}
             </Grid>
-          </Grid>
+          </Grid> */}
         </Container>
       </div>
 
       <Container>
         <div className={classes.shortList}>
-            <div className={classes.shortListWrapper}>
-              <Typography className={classes.shortListTag}>Sort by:</Typography>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <Select className={classes.selectSortItem}
-                  native
-                  onChange={getCategoryProducts}
-                  inputProps={{
-                    id: "outlined-age-native-simple",
-                  }}
-                >
-                  <option value="all_product">All Product</option>
-                  <option value="brand_new">Brand New</option>
-                  <option value="popular">Popular</option>
-                  <option value="top_download">Top Download</option>
-                  <option value="free">Free</option>
-                  <option value="premium">Premium</option>
-                </Select>
-              </FormControl>
-            </div>
+          <div className={classes.shortListWrapper}>
+            <Typography className={classes.shortListTag}>Sort by:</Typography>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <Select
+                className={classes.selectSortItem}
+                native
+                onChange={getCategoryProducts}
+                inputProps={{
+                  id: "outlined-age-native-simple",
+                }}
+              >
+                <option value="all_product">All Product</option>
+                <option value="brand_new">Brand New</option>
+                <option value="popular">Popular</option>
+                <option value="top_download">Top Download</option>
+                <option value="free">Free</option>
+                <option value="premium">Premium</option>
+              </Select>
+            </FormControl>
+          </div>
         </div>
       </Container>
 
@@ -196,15 +210,12 @@ const Category = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  No resources found
-                </Typography>
+                <Typography variant="body1">No resources found</Typography>
               )}
             </>
           )}
         </Grid>
       </Container>
-
 
       <CallToAction
         title="Join Designhill designer team"
