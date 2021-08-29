@@ -51,7 +51,7 @@ const TagTemplate = () => {
       </div> */}
       <Container>
         <Typography className={classes.totalResources} variant="h4">
-        {tagRelatedProducts.length} Resources for {`"${tagName}"`}  
+          {`${tagRelatedProducts.length} Resources for "${tagName}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (

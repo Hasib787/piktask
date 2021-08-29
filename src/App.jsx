@@ -14,8 +14,6 @@ import Publish from "./admin/pages/Publish";
 import RejectFiles from "./admin/pages/RejectFiles";
 import Revision from "./admin/pages/Revision";
 import UploadFiles from "./admin/pages/UploadFiles";
-import Recent from "./pages/Recent";
-import SearchResults from "./components/ui/SearchResults";
 import Sellers from "./components/ui/Sellers";
 import theme from "./components/ui/Theme";
 import { auth } from "./database";
@@ -34,6 +32,8 @@ import AuthorProfile from "./pages/AuthorProfile";
 import BecomeContributor from "./pages/BecomeContributor";
 import Categories from "./pages/Categories";
 import Category from "./pages/Category";
+import Recent from "./pages/Recent";
+import SearchResults from "./pages/SearchResults";
 import SingleCategory from "./pages/SingleCategory";
 import SingleBlogPost from "./pages/SinglePost";
 import Subscription from "./pages/Subscription";
@@ -136,12 +136,12 @@ const App = () => {
         <Route exact path="/sellers" component={Sellers} />
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/images/recent_images" component={Recent} />
-        <Route exact path="/search/:queryParams" component={SearchResults} />
+        <Route exact path="/search/:keywords" component={SearchResults} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/:userName" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
-        <Route exact path="/:category/:id" component={SingleCategory} />
+        <Route exact path="/photo/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ThemeProvider>
