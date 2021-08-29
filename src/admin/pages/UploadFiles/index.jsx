@@ -225,8 +225,8 @@ const UploadFiles = () => {
   const handleArchivedFile = (e) => {
     const archivedFile = e.target.files[0];
 
-    if (!archivedFile?.name?.match(/\.(zip|rar)$/)) {
-      toast.error("You can only upload .zip, .rar etc");
+    if (!archivedFile?.name?.match(/\.(zip)$/)) {
+      toast.error("You can only upload .zip");
       setArchivedFile(false);
       return;
     } else {
@@ -272,7 +272,7 @@ const UploadFiles = () => {
       setLoading(false);
       return;
     } else if (!isArchivedFile) {
-      toast.error("The file format should be .zip or .rar etc");
+      toast.error("The file format should be .zip");
       setLoading(false);
       return;
     }
@@ -300,8 +300,12 @@ const UploadFiles = () => {
     formData.append("usages", usages);
     formData.append("description", description);
     formData.append("preview", thumbImage);
+    if(typeOfImage === "image") {
     formData.append("original_file", imageFileSrc);
-
+    }else if (typeOfImage === "zip") {
+      formData.append("isZip", true);
+      formData.append("zip_folder", archivedFileSrc);
+    }
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",
@@ -313,7 +317,6 @@ const UploadFiles = () => {
       },
     })
       .then((res) => {
-        console.log("res", res);
         if (res?.status === 200) {
           toast.success(res.data.message);
           setLoading(false);
@@ -325,7 +328,7 @@ const UploadFiles = () => {
           setUsages("");
           setItem_for_sale("");
           setFiles([]);
-          setImageFileSrc("");
+          setTypeOfImage("");
 
         }
         if (res?.status === 401) {
@@ -336,8 +339,11 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        console.log("File uploading error", error.response);
-        toast.error(error?.response?.data?.errors?.image);
+        const { errors } = error.response.data;
+        for (let key in errors) {
+          toast.error(errors[key]);
+        }
+       
         setLoading(false);
       });
   };
