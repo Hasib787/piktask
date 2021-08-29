@@ -14,7 +14,7 @@ import Publish from "./admin/pages/Publish";
 import RejectFiles from "./admin/pages/RejectFiles";
 import Revision from "./admin/pages/Revision";
 import UploadFiles from "./admin/pages/UploadFiles";
-import Recent from "./components/ui/Recent";
+import Recent from "./pages/Recent";
 import SearchResults from "./components/ui/SearchResults";
 import Sellers from "./components/ui/Sellers";
 import theme from "./components/ui/Theme";
@@ -101,7 +101,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/popular" component={Home} />
+        {/* <Route exact path="/popular" component={Home} /> */}
         {/* Admin */}
         <PrivateRoute
           exact

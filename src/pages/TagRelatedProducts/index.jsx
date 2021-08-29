@@ -34,7 +34,10 @@ const TagTemplate = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout 
+      title={`${tagName}-Piktask`}
+      description={`${tagName}-Piktask`}
+    >
       <Header />
       <HeroSection
         background={heroBanner}
