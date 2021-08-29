@@ -155,13 +155,10 @@ const UploadFiles = () => {
 
   const addTags = (event) => {
     event.preventDefault();
-    if (
-      event.target.value !== " " &&
-      tags.length < 10 &&
-      event.target.value !== "  " &&
-      event.target.value !== ","
-    ) {
-      setTags([...tags, event.target.value]);
+    let tag = event.target.value;
+    tag = tag.split(",")[0].trim();
+    if (tag.length && tags.length < 10 ) {
+      setTags([...tags, tag]);
       event.target.value = "";
     }
     if (tags.length > 9) {
@@ -300,9 +297,9 @@ const UploadFiles = () => {
     formData.append("usages", usages);
     formData.append("description", description);
     formData.append("preview", thumbImage);
-    if(typeOfImage === "image") {
-    formData.append("original_file", imageFileSrc);
-    }else if (typeOfImage === "zip") {
+    if (typeOfImage === "image") {
+      formData.append("original_file", imageFileSrc);
+    } else if (typeOfImage === "zip") {
       formData.append("isZip", true);
       formData.append("zip_folder", archivedFileSrc);
     }
@@ -329,7 +326,6 @@ const UploadFiles = () => {
           setItem_for_sale("");
           setFiles([]);
           setTypeOfImage("");
-
         }
         if (res?.status === 401) {
           localStorage.removeItem("token");
@@ -343,7 +339,6 @@ const UploadFiles = () => {
         for (let key in errors) {
           toast.error(errors[key]);
         }
-       
         setLoading(false);
       });
   };
@@ -484,11 +479,11 @@ const UploadFiles = () => {
                       id="tags"
                       className={classes.input}
                       type="text"
-                      onKeyUp={(event) =>
-                        event.code === "Space" || event.key === ","
-                          ? addTags(event)
-                          : null
-                      }
+                      onKeyDown={(event) => {
+                          if (event.code === "Space" || event.key === ",") {
+                            addTags(event);
+                          }
+                      }}
                       placeholder="Add Tag"
                     />
                   </div>
