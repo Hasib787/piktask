@@ -292,15 +292,15 @@ const UploadFiles = () => {
     // }
 
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("title", title.toString());
     formData.append("tags", tags.toString());
     formData.append("category", category);
     formData.append("item_for_sale", item_for_sale);
     formData.append("price", price);
     formData.append("usages", usages);
     formData.append("description", description);
-    formData.append("image", thumbImage);
-    formData.append("additional_image", imageFileSrc);
+    formData.append("preview", thumbImage);
+    formData.append("original_file", imageFileSrc);
 
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
@@ -324,6 +324,9 @@ const UploadFiles = () => {
           setPrice("");
           setUsages("");
           setItem_for_sale("");
+          setFiles([]);
+          setImageFileSrc("");
+
         }
         if (res?.status === 401) {
           localStorage.removeItem("token");
