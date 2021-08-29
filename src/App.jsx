@@ -101,7 +101,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/popular" component={Home} /> */}
+        <Route exact path="/popular" component={Home} />
         {/* Admin */}
         <PrivateRoute
           exact
