@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "react-click-outside-hook";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import searchIcon from "../../../assets/search.svg";
 import { useDebounce } from "../../../lib/hooks/debounceHook";
 import useStyles from "./Search.styles";
@@ -160,10 +161,11 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const handleSearch = (e) => {
     e.preventDefault();
 
+    if(!searchQuery) return;
+    console.log("searchQuery", searchQuery);
+  
     searchPhotos();
-    history.push("/search/:queryParams");
-
-    console.log(e.target);
+    history.push(`/search/${searchQuery}`);
   };
 
   return (
