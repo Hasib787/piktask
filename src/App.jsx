@@ -14,7 +14,7 @@ import Publish from "./admin/pages/Publish";
 import RejectFiles from "./admin/pages/RejectFiles";
 import Revision from "./admin/pages/Revision";
 import UploadFiles from "./admin/pages/UploadFiles";
-import Recent from "./components/ui/Recent";
+import Recent from "./pages/Recent";
 import SearchResults from "./pages/SearchResults";
 import Sellers from "./components/ui/Sellers";
 import theme from "./components/ui/Theme";
