@@ -212,9 +212,12 @@ const SingleCategory = () => {
     setOpen(false);
   };
   
-
+console.log("Image Title",imageDetails);
   return (
-    <Layout>
+    <Layout
+      title={`${imageDetails?.title} | Piktask`}
+      description={`${imageDetails?.description} | Piktask`}
+    >
       <Header />
       <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>
