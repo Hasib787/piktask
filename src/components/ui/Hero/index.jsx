@@ -1,6 +1,6 @@
 import { Button, Container } from "@material-ui/core";
-import React, { FC, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import heroBG from "../../../assets/490cdcd7579.svg";
 import SectionHeading from "../Heading";
 import Search from "../Search";
@@ -9,6 +9,8 @@ import useStyles from "./Hero.styles";
 
 const HeroSection = (props) => {
   const classes = useStyles();
+  const popularButtonRef = useRef();
+  const recentButtonRef = useRef();
   const {
     size,
     popularKeywords,
@@ -22,6 +24,13 @@ const HeroSection = (props) => {
   const { mobileView } = menuSate;
 
   useEffect(() => {
+    const recentImage = recentButtonRef?.current?.baseURI.split("/").pop();
+    if (recentImage === "recent_images") {
+      recentButtonRef?.current?.classList?.add("active");
+    } else {
+      popularButtonRef?.current?.classList?.add("active");
+    }
+
     const setResponsiveness = () => {
       return window.innerWidth < 576
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
@@ -54,17 +63,18 @@ const HeroSection = (props) => {
           />
           {heroButton && (
             <div className={classes.heroButtonWrapper}>
-             
               <Button
-                  className={classes.popularButton}
-                  component={NavLink}
-                  to="/"
-                >
-                  Popular
-                </Button>
+                ref={popularButtonRef}
+                className={classes.popularButton}
+                component={Link}
+                to="/"
+              >
+                Popular
+              </Button>
               <Button
+                ref={recentButtonRef}
                 className={classes.recentButton}
-                component={NavLink}
+                component={Link}
                 to="/images/recent_images"
               >
                 Recent
