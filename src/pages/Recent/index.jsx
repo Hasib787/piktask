@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Container, Button, Grid, Typography } from "@material-ui/core";
-import CallToAction from "../../ui/CallToAction";
+import CallToAction from "../../components/ui/CallToAction";
 import { Link } from "react-router-dom";
-import heroBanner from "../../../assets/banner/banner-single-page.png";
-import Layout from "../../../Layout";
-import Spacing from "../../Spacing";
-import Blog from "../Blog";
-import Footer from "../Footer";
-import Header from "../Header";
-import SectionHeading from "../Heading";
-import HeroSection from "../Hero";
-import { TopSeller } from "../TopSeller";
+import heroBanner from "../../assets/banner/banner-single-page.png";
+import Layout from "../../Layout";
+import Spacing from "../../components/Spacing";
+import Blog from "../../components/ui/Blog";
+import Header from "../../components/ui/Header";
+import SectionHeading from "../../components/ui/Heading";
+import HeroSection from "../../components/ui/Hero";
+import { TopSeller } from "../../components/ui/TopSeller";
 import useStyles from "./Recent.style";
-import Product from "../Products/Product";
+import Product from "../../components/ui/Products/Product";
 import axios from "axios";
+import Footer from "../../components/ui/Footer";
 
 const Recent = () => {
   const classes = useStyles();
@@ -38,7 +38,10 @@ const Recent = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      title="Recent Images-Piktask"
+      description="Recent Images"
+    >
       <Header />
       <HeroSection
         background={heroBanner}

@@ -31,7 +31,10 @@ const Categories = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout
+      title="All Categories-Piktask"
+      description="All Categories-Piktask"
+    >
       <Header />
       <HeroSection
         background={heroBanner}

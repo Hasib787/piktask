@@ -208,7 +208,10 @@ const SingleCategory = () => {
   };
 
   return (
-    <Layout>
+    <Layout
+      title={`${imageDetails?.title} | Piktask`}
+      description={`${imageDetails?.description} | Piktask`}
+    >
       <Header />
       <HeroSection background={bannerImg} size="medium" />
       <Container className={classes.containerWrapper}>

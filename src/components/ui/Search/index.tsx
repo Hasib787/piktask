@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "react-click-outside-hook";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import searchIcon from "../../../assets/search.svg";
 import { useDebounce } from "../../../lib/hooks/debounceHook";
 import useStyles from "./Search.styles";
@@ -38,17 +39,17 @@ const containerTransition = {
 const Search = ({ mobileView }: { mobileView: boolean }) => {
   const classes = useStyles();
   const searchRef = useRef("");
-  const [openSearchCategory, SearchCategory] = useState(false);
   const anchorRef = useRef("");
   const history = useHistory();
-
+  
+  const [parentRef, isClickedOutside] = useClickOutside();
+  const [searchCategoryID, setSearchCategoryID] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [parentRef, isClickedOutside] = useClickOutside();
-  const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
-  const [searchCategoryID, setSearchCategoryID] = useState("");
-
+  
+  const [openSearchCategory, SearchCategory] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -67,7 +68,6 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     if (anchorRef.current && anchorRef?.current.contains(e.target)) {
       return;
     }
-
     SearchCategory(false);
   };
 
@@ -84,7 +84,6 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     setSearchQuery("");
     setSearchResults([]);
     setNoSearchResults(false);
-
     if (searchRef.current) searchRef.current.value = "";
   };
 
@@ -95,15 +94,11 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const prepareSearchQuery = (query: string) => {
     let url;
 
-    console.log("searchCategoryID", searchCategoryID);
-
     if (searchCategoryID) {
       url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&category_id=${searchCategoryID}&limit=12`;
     } else {
       url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&limit=12`;
     }
-
-    console.log("search url", url);
 
     // search/?title=nature&category_id=22&limit=30&page=1
     return encodeURI(url);
@@ -111,18 +106,15 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const searchPhotos = async () => {
     if (!searchQuery || searchQuery.trim() === "") return;
-
     setLoading(true);
 
     const URL = prepareSearchQuery(searchQuery);
-
     const response = await axios.get(URL).catch((err) => {
       console.log("Error", err);
     });
 
     if (response) {
       if (response.data && response.data.length === 0) setNoSearchResults(true);
-
       setSearchResults(response.data.results);
     }
     setLoading(false);
@@ -144,7 +136,6 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
         .then(({ data }) => {
           if (data?.status) {
             const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-
             setCategories(sortedData);
           }
         })
@@ -159,11 +150,12 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
+    if(!searchQuery) return;
+  
     searchPhotos();
-    history.push("/search/:queryParams");
-
-    console.log(e.target);
+    // window.location.reload(history.push(`/search/${searchQuery}`));
+    history.push(`/search/title=${searchQuery}`);
+    // http://localhost:8000/api/client/search/?title=nature&category_id=22&limit=30&page=1 
   };
 
   return (

@@ -44,26 +44,21 @@ const Products = (props) => {
     window.scrollTo(0, 0);
 
     if (catName !== undefined) {
-      try {
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
-          .then(({ data }) => {
-            if (data?.status) {
-              setCategories(data?.category_image);
-              setLoading(false);
-              dispatch({
-                type: "CATEGORY_BASED_ITEMS",
-                payload: {
-                  totalImages: data.total_image_count.total_image,
-                  categories: data.category_image,
-                },
-              });
-            }
-          });
-      } catch (error) {
-        console.log("Category based items", error);
-        setLoading(false);
-      }
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategories(data?.category_image);
+            setLoading(false);
+            dispatch({
+              type: "CATEGORY_BASED_ITEMS",
+              payload: {
+                totalImages: data.total_image_count.total_image,
+                categories: data.category_image,
+              },
+            });
+          }
+        });
     } else {
       setLoading(false);
     }
