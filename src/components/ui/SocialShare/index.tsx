@@ -12,6 +12,7 @@ type Props = {
   position?: string;
   textCase?: string;
   profileInfo?: string;
+  socialMedias?: string;
 };
 
 const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }: Props) => {

@@ -134,10 +134,10 @@ const AuthorProfile = () => {
         />
       ) : (
         <CallToAction
-          title="Join Piktask team"
+          title="Go Premium"
           subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
           buttonLink="/subscription"
-          buttonText="Premium View"
+          buttonText="See Plans"
         />
       )}
       
