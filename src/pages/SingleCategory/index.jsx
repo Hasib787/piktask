@@ -12,12 +12,27 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import {
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from "react-share";
 import { toast } from "react-toastify";
 import authorPhoto from "../../assets/author.png";
 import bannerImg from "../../assets/banner/banner.png";
@@ -35,28 +50,6 @@ import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  
-  EmailShareButton, 
-  EmailIcon,
-
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
-
-  TwitterShareButton,
-  TwitterIcon,
-  
-  LinkedinShareButton,
-  LinkedinIcon,
-  
-  TelegramShareButton,
-  TelegramIcon,
-  
-} from "react-share";
-import CloseIcon from '@material-ui/icons/Close';
-
 
 const SingleCategory = () => {
   const classes = useStyles();
@@ -95,6 +88,8 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     axios
       .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
       .then(({ data }) => {
@@ -102,7 +97,7 @@ const SingleCategory = () => {
           setImageDetails(data.detail);
           if (data?.related_tags) {
             const tags = data.related_tags;
-            setAllTags(tags.filter(e =>  e));
+            setAllTags(tags.filter((e) => e));
           }
 
           if (user?.token) {
@@ -211,7 +206,6 @@ const SingleCategory = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  
 
   return (
     <Layout>
@@ -387,9 +381,7 @@ const SingleCategory = () => {
                 </Typography>
                 <div>
                   <div className={classes.licenseButton}>
-                    <Typography>
-                      Images license agreement
-                    </Typography>
+                    <Typography>Images license agreement</Typography>
                     <Button
                       className={classes.licenseBtn}
                       onClick={handleDialogOpen}
@@ -404,9 +396,7 @@ const SingleCategory = () => {
                     aria-describedby="alert-dialog-description"
                     className={classes.licenseDialog}
                   >
-                    <DialogTitle
-                      className={classes.licenseTitle }
-                    >
+                    <DialogTitle className={classes.licenseTitle}>
                       {"Piktast License"}
                     </DialogTitle>
                     <DialogContent>
@@ -507,55 +497,61 @@ const SingleCategory = () => {
         {/* BUTTONS OF TAGS */}
         <TagButtons allTags={allTags} />
 
-        
-        <Dialog 
-          onClose={handleClose} 
-          aria-labelledby="customized-dialog-title" 
+        <Dialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
           open={open}
         >
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-          <DialogTitle id="customized-dialog-title">
-            Use image social link
-          </DialogTitle>
-          <IconButton 
-            aria-label="close" 
-            className={classes.closeButton} 
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
-        <DialogContent dividers>
-          <div style={{padding: "2rem", minWidth: "300px", display: "flex", justifyContent: "space-between"}}>
-            <EmailShareButton url={shareUrl}>
-              <EmailIcon size={40} round={true} />
-            </EmailShareButton>
-            
-            <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={40} round={true} />
-            </FacebookShareButton>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <DialogTitle id="customized-dialog-title">
+              Use image social link
+            </DialogTitle>
+            <IconButton
+              aria-label="close"
+              className={classes.closeButton}
+              onClick={handleClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+          <DialogContent dividers>
+            <div
+              style={{
+                padding: "2rem",
+                minWidth: "300px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <EmailShareButton url={shareUrl}>
+                <EmailIcon size={40} round={true} />
+              </EmailShareButton>
 
-            <FacebookMessengerShareButton url={shareUrl}>
-              <FacebookMessengerIcon size={40} round={true} />
-            </FacebookMessengerShareButton>
+              <FacebookShareButton url={shareUrl}>
+                <FacebookIcon size={40} round={true} />
+              </FacebookShareButton>
 
-            {/* <br />
+              <FacebookMessengerShareButton url={shareUrl}>
+                <FacebookMessengerIcon size={40} round={true} />
+              </FacebookMessengerShareButton>
+
+              {/* <br />
             <Spacing space={{ height: "1.5rem" }}></Spacing> */}
 
-            <TwitterShareButton url={shareUrl}>
-              <TwitterIcon size={40} round={true} />
-            </TwitterShareButton>
+              <TwitterShareButton url={shareUrl}>
+                <TwitterIcon size={40} round={true} />
+              </TwitterShareButton>
 
-            <LinkedinShareButton url={shareUrl}>
-              <LinkedinIcon size={40} round={true} />
-            </LinkedinShareButton>
+              <LinkedinShareButton url={shareUrl}>
+                <LinkedinIcon size={40} round={true} />
+              </LinkedinShareButton>
 
-            <TelegramShareButton url={shareUrl}>
-              <TelegramIcon size={40} round={true} />
-            </TelegramShareButton>
-          </div>
-        </DialogContent>
-      </Dialog>
+              <TelegramShareButton url={shareUrl}>
+                <TelegramIcon size={40} round={true} />
+              </TelegramShareButton>
+            </div>
+          </DialogContent>
+        </Dialog>
       </Container>
       <Footer />
     </Layout>
