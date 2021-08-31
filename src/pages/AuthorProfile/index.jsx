@@ -17,45 +17,31 @@ import useStyles from "./AuthorProfile.styles";
 
 const AuthorProfile = () => {
   const classes = useStyles();
-  const { userName } = useParams();
+  const { username } = useParams();
   const user = useSelector((state) => state.user);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [imageSummery, setImageSummery] = useState([]);
   const [profileInfo, setProfileInfo] = useState({});
-  const [userId, setUserId] = useState("");
 
-  
+
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/sellers/top`)
+      .get(`${process.env.REACT_APP_API_URL}/user/${username}/statistics`)
       .then(({ data }) => {
-        if (data?.success) {
-          const productId = data?.sellers.find((item) => item.username === userName);
-          setUserId(productId?.id);
+        console.log('data',data.profile.avatar);
+        
+        if (data?.status) {
+          setProfileInfo(data?.profile);
+          setImageSummery(data?.images_summary);
           setLoading(false);
         }
       })
     } catch (error) {
       console.log(error);
     }
-  }, [userName])
-
-  useEffect(() => {
-    try {
-      axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${userId}/statistics`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setProfileInfo(data?.profile);
-          setImageSummery(data?.images_summary);
-        }
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }, [userId])
+  }, [username])
 
   const handleJoinUsButton = () =>{
     if (!user.token) {
@@ -75,7 +61,7 @@ const AuthorProfile = () => {
             <h1>Loading...</h1>
           ) : (
             <>
-              {userId !== undefined ? (
+              {profileInfo !== undefined ? (
                 <Grid container className={classes.profileWrapper}>
                   <div className={classes.authorImg}>
                     {profileInfo?.avatar ? (
@@ -115,7 +101,7 @@ const AuthorProfile = () => {
                   </div>
                 </Grid>
                 ) : (
-                  <h1>No resources found</h1>
+                  <h1>No information found</h1>
                 )
               }
             </>
@@ -123,7 +109,7 @@ const AuthorProfile = () => {
         }
         </Container>
       </div>
-      <AuthorItems userId={userId} imageSummery={imageSummery} />
+      <AuthorItems username={profileInfo.id} imageSummery={imageSummery} />
       
       {!user.token ? (
         <CallToAction

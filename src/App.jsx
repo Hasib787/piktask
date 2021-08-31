@@ -139,7 +139,7 @@ const App = () => {
         <Route exact path="/search/:keywords" component={SearchResults} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
-        <Route exact path="/:userName" component={AuthorProfile} />
+        <Route exact path="/:username" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
         <Route exact path="/photo/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
