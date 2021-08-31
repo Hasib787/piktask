@@ -2,7 +2,7 @@ import { Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Footer from "../../components/ui/Footer";
@@ -15,16 +15,16 @@ import useStyles from "./SearchResults.styles";
 
 const SearchResults = () => {
   const { pathname } = useLocation();
-  const history = useHistory();
   const classes = useStyles();
   const user = useSelector((state) => state.user);
 
   const [isLoading, setLoading] = useState(false);
-  const [searchCategoryID, setSearchCategoryID] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [openAuthModal, setOpenAuthModal] = useState(false);
 
-  const keywords = pathname.split("=").pop();
+  const searchQuery = pathname.split("=");
+  const keywords = searchQuery[1];
+  const searchCategoryID = searchQuery[3];
 
   const prepareSearchQuery = () => {
     let url;
@@ -70,8 +70,7 @@ const SearchResults = () => {
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          {searchResults.length &&
-            `${searchResults.length} Resources for "${keywords}"`}
+          {searchResults.length && `${searchResults.length} Resources for "${keywords}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
