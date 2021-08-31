@@ -35,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Products = (props) => {
   const classes = useStyles();
   const { catName, count, showHeading } = props;
-  console.log(catName);
   const [categories, setCategories] = useState([]);
-
   const [isLoading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
