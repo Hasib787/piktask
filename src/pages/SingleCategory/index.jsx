@@ -207,6 +207,26 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
+  const handleDownloadImage = () => {
+    if(!user.token){
+      setOpenAuthModal(true);
+    } else {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+        {},
+        {
+          headers: { Authorization: user.token },
+        }
+      )
+      .then((data) => {
+        console.log("data", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+  };
+
   return (
     <Layout
       title={`${imageDetails?.title} | Piktask`}
@@ -425,7 +445,10 @@ const SingleCategory = () => {
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button className={classes.downloadBtn}>
+                  <Button 
+                    className={classes.downloadBtn}
+                    onClick={handleDownloadImage}
+                    >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
                   </Button>
