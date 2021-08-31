@@ -218,7 +218,7 @@ const Category = () => {
       </Container>
 
       <CallToAction
-        title="Join Designhill designer team"
+        title="Join Piktask team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
         buttonText="Join Us"
         uppercase
