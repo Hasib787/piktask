@@ -11,6 +11,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  Link
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -18,7 +19,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   EmailIcon,
   EmailShareButton,
@@ -69,6 +70,7 @@ const SingleCategory = () => {
   const [openCopyLink, setOpenCopyLink] = useState(false);
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [open, setOpen] = useState(false);
+  const [downloadFile, setDownloadFile] = useState("");
 
   const handleDialogOpen = () => {
     setDownloadLicenseDialog(true);
@@ -207,48 +209,54 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
-  const handleDownloadImage = (e) => {
+  const handleDownload = (e) => {
     e.preventDefault();
 
-    if (!user.token) {
-      setOpenAuthModal(true);
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`, {
-          headers: { Authorization: user.token },
-          responseType: "blob",
-        })
-        .then(( data ) => {
-          const url = window.URL.createObjectURL(new Blob([data.url]));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute("download", "file.jpg");
-          document.body.appendChild(link);
-          link.click();
-        })
-        .catch((error) => {
-          console.log("catch", error);
-        });
-    }
+    const imageLink = "https://image.freepik.com/free-vector/floral-watercolor-wedding-invitation_52683-70403.jpg"
+    axios 
+    .get(imageLink, {
+      responseType: 'blob',
+    })
+    .then((response) => {
+      console.log("response", response);
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute(
+            "download", 
+            'file.jpg',
+        );
+        document.body.appendChild(link);
+        link.click();
+    })
+    .catch((error) => {
+      console.log("error", error);
+    })
+
+    // if(!user.token){
+    //   setOpenAuthModal(true);
+    // } else {
+    //   axios
+    //   // .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+    //   .get("https://sgp1.digitaloceanspaces.com/piktask/images/JUnnc8lITLipqj8i0dl40649/preview/4K footage in slow motion basketball player.jpg",
+    //     {
+    //       headers: { Authorization: user.token},
+    //       // responseType: "blob"
+    //     }
+    //   )
+    //   .then(({ data }) => {
+    //     console.log("data", data);
+    //     console.log("data", data.url);
+        
+    //       // setDownloadFile(data.url);
+    //   })
+    //   .catch((error) => {
+    //     console.log("catch",error.response);
+    //     toast.error(error.response.data.message);
+    //   })
+    // }
   };
 
-
-  // axios({
-  //   url: `https://piktask.sgp1.digitaloceanspaces.com/images/RRmCDg6IrOQ2tcMU9yxM6974/large/Badminton%20images-p9H5wXR7YQk4TeYcGIlMSPFpMVIcSL1628415666974.jpg?AWSAccessKeyId=RPEV4ZBU2OTDZWSV3PTA&Expires=1630408793&Signature=870a%2FIuhObxld5J%2Fqe9ilWOk%2FX0%3D`,
-  //   method: "GET",
-  //   responseType: "blob",
-  // })
-  //   .then((response) => {
-  //     const url = window.URL.createObjectURL(new Blob([response.data]));
-  //     const link = document.createElement("a");
-  //     link.href = url;
-  //     link.setAttribute("download", "file.jpg");
-  //     document.body.appendChild(link);
-  //     link.click();
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
 
   return (
     <Layout
@@ -470,7 +478,10 @@ const SingleCategory = () => {
                 <div className={classes.downloadWrapper}>
                   <Button
                     className={classes.downloadBtn}
-                    onClick={handleDownloadImage}
+                    onClick={handleDownload}
+                    // component={Link}
+                    // href={downloadFile}
+                    // download
                   >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
