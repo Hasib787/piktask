@@ -11,6 +11,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
+  Link
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -18,7 +19,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   EmailIcon,
   EmailShareButton,
@@ -69,6 +70,7 @@ const SingleCategory = () => {
   const [openCopyLink, setOpenCopyLink] = useState(false);
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [open, setOpen] = useState(false);
+  const [downloadFile, setDownloadFile] = useState("");
 
   const handleDialogOpen = () => {
     setDownloadLicenseDialog(true);
@@ -207,7 +209,7 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
-  const handleDownloadImage = (e) => {
+  const handleDownload = (e) => {
     e.preventDefault();
 
     if (!user.token) {
@@ -469,7 +471,10 @@ const SingleCategory = () => {
                 <div className={classes.downloadWrapper}>
                   <Button
                     className={classes.downloadBtn}
-                    onClick={handleDownloadImage}
+                    onClick={handleDownload}
+                    // component={Link}
+                    // href={downloadFile}
+                    // download
                   >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
