@@ -61,7 +61,7 @@ const SingleCategory = () => {
   const [isFollowing, setFollowing] = useState(false);
   const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
+  const [downloadImage, setDownloadImage] = useState("");
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -207,25 +207,48 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
-  const handleDownloadImage = () => {
-    if(!user.token){
+  const handleDownloadImage = (e) => {
+    e.preventDefault();
+
+    if (!user.token) {
       setOpenAuthModal(true);
     } else {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`,
-        {},
-        {
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`, {
           headers: { Authorization: user.token },
-        }
-      )
-      .then((data) => {
-        console.log("data", data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+          responseType: "blob",
+        })
+        .then(( data ) => {
+          const url = window.URL.createObjectURL(new Blob([data.url]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "file.jpg");
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch((error) => {
+          console.log("catch", error);
+        });
     }
   };
+
+
+  // axios({
+  //   url: `https://piktask.sgp1.digitaloceanspaces.com/images/RRmCDg6IrOQ2tcMU9yxM6974/large/Badminton%20images-p9H5wXR7YQk4TeYcGIlMSPFpMVIcSL1628415666974.jpg?AWSAccessKeyId=RPEV4ZBU2OTDZWSV3PTA&Expires=1630408793&Signature=870a%2FIuhObxld5J%2Fqe9ilWOk%2FX0%3D`,
+  //   method: "GET",
+  //   responseType: "blob",
+  // })
+  //   .then((response) => {
+  //     const url = window.URL.createObjectURL(new Blob([response.data]));
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "file.jpg");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 
   return (
     <Layout
@@ -445,10 +468,10 @@ const SingleCategory = () => {
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button 
+                  <Button
                     className={classes.downloadBtn}
                     onClick={handleDownloadImage}
-                    >
+                  >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
                   </Button>
