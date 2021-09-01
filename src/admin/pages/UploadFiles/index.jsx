@@ -605,6 +605,7 @@ const UploadFiles = () => {
                   >
                     <div className={classes.uploadIconImage}>
                       <input
+                        className={classes.inputFile}
                         id="image"
                         name="image"
                         type="file"
@@ -633,6 +634,7 @@ const UploadFiles = () => {
                   >
                     <div className={classes.uploadIconImage}>
                       <input
+                        className={classes.inputFile}
                         id="zipFolder"
                         name="zipFolder"
                         type="file"

@@ -16,7 +16,8 @@ const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
         .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword`)
         .then(({ data }) => {
           if (data?.status) {
-            setPopularSearchKeywords(data.keywords);
+            const popularKeyword = data.keywords;
+            setPopularSearchKeywords(popularKeyword.filter((e) => e));
           }
         });
     } catch (error) {}

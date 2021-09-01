@@ -5,13 +5,13 @@ import useStyles from "./AuthorItems.styles";
 import axios from "axios";
 import Layout from "../../../Layout";
 
-const AuthorItems = ({ imageSummery, userId }) => {
+const AuthorItems = ({ imageSummery, username }) => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [authorAllResource, setAuthorAllResource] = useState();
 
-  const handleActiveButton = (e: ChangeEvent<{}>, index: number) => {
+  const handleActiveButton = (index) => {
     setValue(index);
   };
 
@@ -20,7 +20,7 @@ const AuthorItems = ({ imageSummery, userId }) => {
       try {
         axios
           .get(
-            `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
+            `${process.env.REACT_APP_API_URL}/user/${username}/images/${imageSummery[0]?.extension}`
           )
           .then(({ data }) => {
             if (data?.status) {
@@ -34,13 +34,13 @@ const AuthorItems = ({ imageSummery, userId }) => {
     } else {
       console.log("Sorry no extension found");
     }
-  }, [userId, imageSummery])
+  }, [username, imageSummery])
 
   const handleAuthorResource = (tag) => {
     if (tag !== undefined) {
       try {
         axios
-          .get(`${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`)
+          .get(`${process.env.REACT_APP_API_URL}/user/${username}/images/${tag}`)
           .then(({ data }) => {
             if (data?.status) {
               setAuthorAllResource(data?.images);

@@ -13,8 +13,6 @@ const Layout = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    console.log("layout");
-
     // Before passing any props for the Layout component please check the relavant meta tags are available in the index.html file that is located in the public folder.
     title && (document.title = title);
     author && (document.querySelector('meta[name="author"]').content = author);
