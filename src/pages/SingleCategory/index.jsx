@@ -212,51 +212,44 @@ const SingleCategory = () => {
   const handleDownload = (e) => {
     e.preventDefault();
 
-    const imageLink = "https://image.freepik.com/free-vector/floral-watercolor-wedding-invitation_52683-70403.jpg"
-    axios 
-    .get(imageLink, {
-      responseType: 'blob',
-    })
-    .then((response) => {
-      console.log("response", response);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute(
-            "download", 
-            'file.jpg',
-        );
-        document.body.appendChild(link);
-        link.click();
-    })
-    .catch((error) => {
-      console.log("error", error);
-    })
-
-    // if(!user.token){
-    //   setOpenAuthModal(true);
-    // } else {
-    //   axios
-    //   // .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`,
-    //   .get("https://sgp1.digitaloceanspaces.com/piktask/images/JUnnc8lITLipqj8i0dl40649/preview/4K footage in slow motion basketball player.jpg",
-    //     {
-    //       headers: { Authorization: user.token},
-    //       // responseType: "blob"
-    //     }
-    //   )
-    //   .then(({ data }) => {
-    //     console.log("data", data);
-    //     console.log("data", data.url);
-        
-    //       // setDownloadFile(data.url);
-    //   })
-    //   .catch((error) => {
-    //     console.log("catch",error.response);
-    //     toast.error(error.response.data.message);
-    //   })
-    // }
+    if (!user.token) {
+      setOpenAuthModal(true);
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (data.url) {
+            axios
+              .get(data.url, {
+                responseType: "blob",
+              })
+              .then((response) => {
+                console.log(response.data);
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute(
+                  "download",
+                  `${imageDetails?.title}.${data.extension}`
+                );
+                document.body.appendChild(link);
+                link.click();
+              })
+              .catch((error) => {
+                console.log("error", error);
+              });
+          }
+        })
+        .catch((error) => {
+          console.log("catch", error.response);
+          toast.error(error.response.data.message);
+        });
+    }
   };
-
 
   return (
     <Layout
@@ -444,11 +437,11 @@ const SingleCategory = () => {
                     </Button>
                   </div>
                   <Dialog
+                    className={classes.licenseDialog}
                     open={downloadLicenseDialog}
                     onClose={handleDialogClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-                    className={classes.licenseDialog}
                   >
                     <DialogTitle className={classes.licenseTitle}>
                       {"Piktast License"}
