@@ -55,33 +55,25 @@ import useStyles from "./SingleCategory.styles";
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const user = useSelector((state) => state.user);
   const shareUrl = window.location.href;
+  const user = useSelector((state) => state.user);
 
-  const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [isFollowing, setFollowing] = useState(false);
-  const [isLike, setLike] = useState(false);
-  const [isLoading, setLoading] = useState(true);
-  const [downloadImage, setDownloadImage] = useState("");
-  const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
-  const [allTags, setAllTags] = useState([]);
+  const [imageDetails, setImageDetails] = useState({});
   const [copySuccess, setCopySuccess] = useState("");
-  const [openCopyLink, setOpenCopyLink] = useState(false);
+  const [allTags, setAllTags] = useState([]);
+
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [openCopyLink, setOpenCopyLink] = useState(false);
+  const [isFollowing, setFollowing] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [isLike, setLike] = useState(false);
   const [open, setOpen] = useState(false);
-  const [downloadFile, setDownloadFile] = useState("");
 
-  const handleDialogOpen = () => {
-    setDownloadLicenseDialog(true);
-  };
-
-  const handleDialogClose = () => {
-    setDownloadLicenseDialog(false);
-  };
-  const handleTooltipClose = () => {
-    setOpenCopyLink(false);
-  };
+  const handleDialogOpen = () => {setDownloadLicenseDialog(true);};
+  const handleDialogClose = () => {setDownloadLicenseDialog(false);};
+  const handleTooltipClose = () => {setOpenCopyLink(false);};
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
@@ -90,65 +82,64 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
-      .then(({ data }) => {
-        if (data?.success) {
-          setImageDetails(data.detail);
-          if (data?.related_tags) {
-            const tags = data.related_tags;
-            setAllTags(tags.filter((e) => e));
-          }
-
-          if (user?.token) {
-            axios
-              .get(
-                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
-                {
-                  headers: { Authorization: user.token },
-                }
-              )
-              .then((response) => {
-                if (response.data.status) {
-                  setFollowing(true);
-                } else {
-                  setFollowing(false);
-                }
-              });
-          }
+    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+    .then(({ data }) => {
+      if (data?.success) {
+        setImageDetails(data.detail);
+        if (data?.related_tags) {
+          const tags = data.related_tags;
+          setAllTags(tags.filter((e) => e));
         }
-      })
-      .catch((error) => console.log(error));
+
+        if (user?.token) {
+          axios
+            .get(
+              `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+              {
+                headers: { Authorization: user.token },
+              }
+            )
+            .then((response) => {
+              if (response.data.status) {
+                setFollowing(true);
+              } else {
+                setFollowing(false);
+              }
+            });
+        }
+      }
+    })
+    .catch((error) => console.log(error));
 
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
-          headers: { Authorization: user.token },
-        })
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
+        headers: { Authorization: user.token },
+      })
+      .then(({ data }) => {
+        if (!data?.status) {
+          setLike(false);
+        } else if (data?.status) {
+          setLike(true);
+        } else {
+          console.log("Image like status error");
+        }
+      })
+      .catch((error) => console.log("Like status error: ", error));
     }
 
     // related product API
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setRelatedImage(data.images);
-          setLoading(false);
-        }
-      })
-      .catch((error) => console.log("Related image error: ", error));
+    .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+    .then(({ data }) => {
+      if (data?.status) {
+        setRelatedImage(data.images);
+        setLoading(false);
+      }
+    })
+    .catch((error) => console.log("Related image error: ", error));
+
   }, [id, user.token]);
 
   const handleFollower = () => {
@@ -212,51 +203,51 @@ const SingleCategory = () => {
   const handleDownload = (e) => {
     e.preventDefault();
 
-    const imageLink = "https://image.freepik.com/free-vector/floral-watercolor-wedding-invitation_52683-70403.jpg"
-    axios 
-    .get(imageLink, {
-      responseType: 'blob',
-    })
-    .then((response) => {
-      console.log("response", response);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute(
-            "download", 
-            'file.jpg',
-        );
-        document.body.appendChild(link);
-        link.click();
-    })
-    .catch((error) => {
-      console.log("error", error);
-    })
+    const options = {
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+    };
 
-    // if(!user.token){
-    //   setOpenAuthModal(true);
-    // } else {
-    //   axios
-    //   // .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`,
-    //   .get("https://sgp1.digitaloceanspaces.com/piktask/images/JUnnc8lITLipqj8i0dl40649/preview/4K footage in slow motion basketball player.jpg",
-    //     {
-    //       headers: { Authorization: user.token},
-    //       // responseType: "blob"
-    //     }
-    //   )
-    //   .then(({ data }) => {
-    //     console.log("data", data);
-    //     console.log("data", data.url);
+    if(user.token){
+      // setOpenAuthModal(true);
+      options.headers= {
+        Authorization: user.token
+      }
+    }
+
+      axios(options)
+      .then(({ data }) => {
         
-    //       // setDownloadFile(data.url);
-    //   })
-    //   .catch((error) => {
-    //     console.log("catch",error.response);
-    //     toast.error(error.response.data.message);
-    //   })
-    // }
-  };
+        if(data?.url) {
+          axios 
+          .get(data?.url, {
+            responseType: 'blob',
+          })
+          .then((response) => {
+          
+            console.log("response", response);
+            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'octet/stream' }));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download", 
+              `${imageDetails?.title.replace(/ /g,"_")}.${data.extension}`,
+            );
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch((error) => {
+            console.log("error", error);
+          })
+        }
+      })
+      .catch((error) => {
+        setOpenAuthModal(true);
+        console.log("catch",error.response);
+        toast.error(error.response.data.message);
+      })
 
+  };
 
   return (
     <Layout
@@ -429,7 +420,7 @@ const SingleCategory = () => {
                 <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
                   - For commercial use{" "}
-                  <Link to={"#"} className={classes.moreInfoBtn}>
+                  <Link to="!#" className={classes.moreInfoBtn}>
                     More info
                   </Link>
                 </Typography>
@@ -479,9 +470,6 @@ const SingleCategory = () => {
                   <Button
                     className={classes.downloadBtn}
                     onClick={handleDownload}
-                    // component={Link}
-                    // href={downloadFile}
-                    // download
                   >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download
