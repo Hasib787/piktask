@@ -36,7 +36,6 @@ const Products = (props) => {
   const classes = useStyles();
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
-
   const [isLoading, setLoading] = useState(true);
   const dispatch = useDispatch();
 

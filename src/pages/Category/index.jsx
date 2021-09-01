@@ -1,8 +1,8 @@
 import {
+  Button,
   Container,
   FormControl,
   Grid,
-  ListItem,
   Select,
   Typography,
 } from "@material-ui/core";
@@ -15,7 +15,6 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
 import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 
@@ -23,13 +22,11 @@ const Category = () => {
   const classes = useStyles();
   const { catName, id } = useParams();
 
-
+  
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const [totalImageCount, setTotalImageCount] = useState("");
-
   const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
-  const [allTags, setAllTags] = useState([]);
+  const [totalImageCount, setTotalImageCount] = useState("");
   const [isLoading, setLoading] = useState(true);
 
   const categoryItem = categories.find((item) => item?.slug === catName);
@@ -38,21 +35,9 @@ const Category = () => {
     getCategories();
     getCategoriesWithId();
     popularKeyWords();
-    getRelatedTags();
   }, [categoryItem?.id]);
 
-  const getRelatedTags =()=>{
-    axios
-    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
-    .then(({ data }) => {
-        if (data?.related_tags) {
-          const tags = data.related_tags;
-          setAllTags(tags.filter(e =>  e));
-        }
-  }).catch((error) => {
-    console.log(error);
-  });
-};
+
   const getCategoriesWithId = () => {
     if (categoryItem?.id !== undefined) {
       axios
@@ -73,14 +58,16 @@ const Category = () => {
     }
   };
 
-  const popularKeyWords = (limit = 10) => {
+  const popularKeyWords = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=${limit}}`
+        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`
       )
       .then(({ data }) => {
         if (data?.status) {
-          setPopularSearchKeywords(data?.keywords);
+          const popularSearch = (data?.keywords);
+          setPopularSearchKeywords(popularSearch.filter((e) => e));
+
         }
       })
       .catch((error) => {
@@ -91,7 +78,7 @@ const Category = () => {
 
   const getCategories = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/`)
+      .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
       .then(({ data }) => {
         if (data?.status) {
           setCategories(data.categories);
@@ -135,31 +122,6 @@ const Category = () => {
         creativeWorksDone
         title="Graphic Resource for Free Download"
       />
-
-      <div className={classes.tagWrapper}>
-        <Container>
-            {/* BUTTONS OF TAGS */}
-            <TagButtons allTags={allTags} />
-          {/* <Grid container className={classes.root}>
-            <Grid item md={2} sm={12} className={classes.columnItem}>
-              <Typography className={classes.tagTitle} variant="h3">
-                Popular Search:
-              </Typography>
-            </Grid>
-
-            <Grid item md={10} sm={12} className={classes.columnItem}>
-              {popularSearchKeywords.length &&
-                popularSearchKeywords.map((keyword, index) => (
-                  <ListItem key={index} className={classes.linkItem}>
-                    <Link className={classes.link} to="#">
-                      {`${index + 1}: ${keyword}`}
-                    </Link>
-                  </ListItem>
-                ))}
-            </Grid>
-          </Grid> */}
-        </Container>
-      </div>
 
       <Container>
         <div className={classes.shortList}>
@@ -216,6 +178,29 @@ const Category = () => {
           )}
         </Grid>
       </Container>
+
+      <div className={classes.tagWrapper}>
+        <Container>
+          <Grid container>
+            <Grid item className={classes.tagsContainer}>
+              <Typography className={classes.tagTitle} variant="h3">
+                Popular Search:
+              </Typography>
+              {popularSearchKeywords?.map((tag, index) => (
+                <Button
+                  className={classes.tagButton}
+                  key={index}
+                  tag={tag}
+                  component={Link}
+                  to={`/tag/${tag}`}
+                >
+                  {tag}
+                </Button>
+              ))}
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
 
       <CallToAction
         title="Join Piktask team"
