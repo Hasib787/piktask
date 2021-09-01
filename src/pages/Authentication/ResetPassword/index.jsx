@@ -139,8 +139,8 @@ export const ResetPassword = () => {
 
       <Container>
         <Grid container spacing={0} justify="center">
-          <Grid item sm={12} md={6}>
-            <div className={classes.cardWrapper} style={{ padding: "4rem" }}>
+          <Grid >
+            <div className={classes.cardWrapper} style={{ padding: "2.5rem" }}>
               <div className={classes.cardHeadingWrapper}>
                 <Typography className={classes.cardHeading} variant="h2">
                   Reset Password

@@ -18,14 +18,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   rootContainer: {
-    width: "65rem",
+    width: "53rem",
     left: "50%",
     position: "relative",
     transform: "translate(-50%, 0%)",
 
     "@media (max-width: 768px)": {
-      width: "100%",
+      width: "70%",
       padding: "0 2rem",
+    },
+    [theme.breakpoints.down("480")]: {
+      width: "100%",
     },
   },
   formPageContainer: {
@@ -48,9 +51,12 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "-.5rem",
     left: 0,
-    width: "20rem",
+    width: "16rem",
 
     "@media (max-width: 768px)": {
+      width: "15rem",
+    },
+    [theme.breakpoints.down("480")]: {
       width: "13rem",
     },
   },
@@ -60,11 +66,14 @@ const useStyles = makeStyles((theme) => ({
     right: "-.1rem",
     width: "16rem",
     "@media (max-width: 768px)": {
-      width: "10rem",
+      width: "15rem",
+    },
+    [theme.breakpoints.down("480")]:{
+      width: "11rem"
     },
   },
   formWrapperInner: {
-    width: "53rem",
+    width: "46rem",
     margin: "0 auto 3rem",
     "@media (max-width: 768px)": {
       width: "100%",
