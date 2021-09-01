@@ -62,7 +62,7 @@ const SingleCategory = () => {
   const [isFollowing, setFollowing] = useState(false);
   const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
+  const [downloadImage, setDownloadImage] = useState("");
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -476,7 +476,7 @@ const SingleCategory = () => {
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button 
+                  <Button
                     className={classes.downloadBtn}
                     onClick={handleDownload}
                     // component={Link}
