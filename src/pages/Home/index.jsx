@@ -71,9 +71,9 @@ export const Home = () => {
         <Products catName={popularCats[4]} showHeading count={8} />
       </Container>
 
-      {/* <Container>
+      <Container>
         <Products catName={popularCats[5]} showHeading count={8} />
-      </Container> */}
+      </Container>
 
       <CallToAction
         title="Daily 10 image/photos Download"

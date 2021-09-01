@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.common.white,
     },
+    "&:focus": {
+      boxShadow: "none",
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.common.white,
+    },
     [theme.breakpoints.down("xs")]: {
       flex: "auto",
     },

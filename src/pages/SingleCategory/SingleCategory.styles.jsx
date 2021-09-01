@@ -133,6 +133,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1.4rem",
     objectFit: "cover",
     color: "#000",
+    cursor: "pointer",
 
     "@media (max-width: 768px)": {
       width: "5.8rem",
@@ -147,7 +148,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     fontSize: "1.6rem",
     fontWeight: 400,
-    textDecoration: "none",
+    textDecoration: "none !important",
+    cursor: "pointer"
   },
   resourceInfo: {
     fontSize: "1.4rem",
