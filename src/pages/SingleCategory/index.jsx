@@ -11,7 +11,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Link
+  // Link
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -19,7 +19,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
   EmailIcon,
   EmailShareButton,
@@ -51,10 +51,12 @@ import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
+import { Link } from "react-router-dom";
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const history = useHistory();
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
@@ -94,19 +96,19 @@ const SingleCategory = () => {
 
         if (user?.token) {
           axios
-            .get(
-              `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
-              {
-                headers: { Authorization: user.token },
-              }
-            )
-            .then((response) => {
-              if (response.data.status) {
-                setFollowing(true);
-              } else {
-                setFollowing(false);
-              }
-            });
+          .get(
+            `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+            {
+              headers: { Authorization: user.token },
+            }
+          )
+          .then((response) => {
+            if (response.data.status) {
+              setFollowing(true);
+            } else {
+              setFollowing(false);
+            }
+          });
         }
       }
     })
@@ -143,8 +145,10 @@ const SingleCategory = () => {
   }, [id, user.token]);
 
   const handleFollower = () => {
-    if (!user.token) {
+    if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    }else if(!user.token && window.innerWidth < 900){
+      history.push("/login");
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
@@ -165,8 +169,10 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token) {
+    if (!user.token  && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    } else if (!user.token  && window.innerWidth < 900){
+      history.push("/login");
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
@@ -203,51 +209,53 @@ const SingleCategory = () => {
   const handleDownload = (e) => {
     e.preventDefault();
 
-    const options = {
+    const downloadAPI = {
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
     };
 
     if(user.token){
-      // setOpenAuthModal(true);
-      options.headers= {
+      downloadAPI.headers= {
         Authorization: user.token
       }
     }
 
-      axios(options)
-      .then(({ data }) => {
-        
-        if(data?.url) {
-          axios 
-          .get(data?.url, {
-            responseType: 'blob',
-          })
-          .then((response) => {
-          
-            console.log("response", response);
-            const url = window.URL.createObjectURL(new Blob([response.data], { type: 'octet/stream' }));
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute(
-              "download", 
-              `${imageDetails?.title.replace(/ /g,"_")}.${data.extension}`,
-            );
-            document.body.appendChild(link);
-            link.click();
-          })
-          .catch((error) => {
-            console.log("error", error);
-          })
-        }
-      })
-      .catch((error) => {
+    axios(downloadAPI)
+    .then(({ data }) => {
+      
+      if(data?.url) {
+        axios 
+        .get(data?.url, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          console.log("response", response);
+          const url = window.URL.createObjectURL(new Blob([response.data], { type: 'octet/stream' }));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute(
+            "download", 
+            `${imageDetails?.title.replace(/ /g,"_")}.${data.extension}`,
+          );
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch((error) => {
+          console.log("error", error);
+        })
+      }
+    })
+    .catch((error) => {
+      if(window.innerWidth > 900){
         setOpenAuthModal(true);
-        console.log("catch",error.response);
-        toast.error(error.response.data.message);
-      })
-
+      } else if (window.innerWidth < 900){
+        history.push("/login");
+      }
+      console.log("catch",error.response);
+      toast.error(error.response.data.message);
+    })
   };
+
 
   return (
     <Layout

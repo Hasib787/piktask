@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 25,
     paddingRight: 30,
     paddingBottom: 30,
-    minWidth: 531,
+    // minWidth: 531,
     height: "100%",
   },
   tabsWrapper: {
