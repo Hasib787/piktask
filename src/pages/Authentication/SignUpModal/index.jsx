@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { 
+  Tab, 
+  Tabs, 
+  Grid, 
+  Dialog, 
+  Checkbox, 
+  Typography,
+  DialogContent, 
+  FormControlLabel, 
+} from '@material-ui/core';
+import { CustomBtn, InputField } from '../../../components/InputField';
 import { Redirect, useHistory, useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import Spacing from '../../../components/Spacing';
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from 'react-google-login';
 import useStyles from "./SignUpModal.styles";
+import { useDispatch } from 'react-redux';
+import { auth } from '../../../database';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { auth } from '../../../database';
-import { Checkbox, Dialog, DialogContent, FormControlLabel, Grid, Tab, Tabs, Typography } from '@material-ui/core';
-import Spacing from '../../../components/Spacing';
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from "react-facebook-login";
-import { CustomBtn, InputField } from '../../../components/InputField';
-import { Link } from 'react-router-dom';
 import lockIcon from "../../../assets/password.png";
 import logoWhite from "../../../assets/logo-white.png";
 import authImage from "../../../assets/auth.png";
@@ -43,16 +52,14 @@ function a11yProps(index) {
 }
 
 const SignUpModal = (props) => {
-    const classes = useStyles();
-    const { openAuthModal, setOpenAuthModal } = props;
-
+  const classes = useStyles();
   const dispatch = useDispatch();
-  const [tabIndex, setTabIndex] = useState(0);
-
+  const { openAuthModal, setOpenAuthModal } = props;
+  
   const [passwordValue, setPasswordValue] = useState(false);
-  // const [openAuthModal, setOpenAuthModal] = useState(false);
-  const [isLoading, setLoading] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [authData, setAuthData] = useState({
     userName: "",
@@ -62,9 +69,7 @@ const SignUpModal = (props) => {
   });
 
   //Handle the password show and hide
-  const handleShowHidePassword = () => {
-    setPasswordValue((value) => !value);
-  };
+  const handleShowHidePassword = () => { setPasswordValue((value) => !value); };
 
   //Redirect to home page when user logs in
   const pathHistory = useHistory();
@@ -72,7 +77,6 @@ const SignUpModal = (props) => {
   const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
-    // if (user.token) history.push("/");
     return () => {
       document.body.style.backgroundColor = "";
     };
@@ -80,13 +84,10 @@ const SignUpModal = (props) => {
 
   const handleAuthData = (e) => {
     const { name, value } = e.target;
-
     setAuthData({ ...authData, [name]: value });
   };
 
-  const handleCloseAuthModal = () => {
-    setOpenAuthModal(false);
-  };
+  const handleCloseAuthModal = () => { setOpenAuthModal(false); };
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
@@ -226,6 +227,7 @@ const SignUpModal = (props) => {
         },
       }
     );
+
     const data = await res.json();
     // store user data in localStorage
     if (data.status) {
@@ -261,6 +263,7 @@ const SignUpModal = (props) => {
         },
       }
     );
+
     const data = await res.json();
     // store user data in localStorage
     if (data.status) {
@@ -285,7 +288,7 @@ const SignUpModal = (props) => {
   return (
     <>
       {isRedirectTo && <Redirect to="/confirm-signup" />}
-        <Dialog
+      <Dialog
         open={openAuthModal}
         onClose={handleCloseAuthModal}
         aria-labelledby="authentication-dialog"
@@ -305,9 +308,7 @@ const SignUpModal = (props) => {
                 <Typography>Enjoy Free Download Now!</Typography>
                 <Typography>*Get 50% OFF Discount for Premium Plan</Typography>
                 <Typography>*Download 6 Images for Free Everyday</Typography>
-                <Typography>
-                  *2,600,000+ Images to energize your Design
-                </Typography>
+                <Typography>*2,600,000+ Images to energize your Design</Typography>
 
                 <Spacing space={{ height: 30 }} />
 

@@ -107,7 +107,7 @@ const AuthorProfile = () => {
         }
         </Container>
       </div>
-      <AuthorItems username={profileInfo.id} imageSummery={imageSummery} />
+      <AuthorItems userId={profileInfo.id} imageSummery={imageSummery} />
       
       {!user.token ? (
         <CallToAction
