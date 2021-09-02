@@ -11,7 +11,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Link
+  Link,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -62,7 +62,6 @@ const SingleCategory = () => {
   const [isFollowing, setFollowing] = useState(false);
   const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [downloadImage, setDownloadImage] = useState("");
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -70,7 +69,6 @@ const SingleCategory = () => {
   const [openCopyLink, setOpenCopyLink] = useState(false);
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [open, setOpen] = useState(false);
-  const [downloadFile, setDownloadFile] = useState("");
 
   const handleDialogOpen = () => {
     setDownloadLicenseDialog(true);
@@ -90,8 +88,6 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     axios
       .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
       .then(({ data }) => {
@@ -209,6 +205,7 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
+  //Handle download image
   const handleDownload = (e) => {
     e.preventDefault();
 
@@ -226,7 +223,6 @@ const SingleCategory = () => {
                 responseType: "blob",
               })
               .then((response) => {
-                console.log(response.data);
                 const url = window.URL.createObjectURL(
                   new Blob([response.data])
                 );
@@ -234,7 +230,7 @@ const SingleCategory = () => {
                 link.href = url;
                 link.setAttribute(
                   "download",
-                  `${imageDetails?.title}.${data.extension}`
+                  `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
                 );
                 document.body.appendChild(link);
                 link.click();
