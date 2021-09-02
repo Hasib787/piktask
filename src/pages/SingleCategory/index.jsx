@@ -209,13 +209,17 @@ const SingleCategory = () => {
   const handleDownload = (e) => {
     e.preventDefault();
 
-    if (!user.token) {
-      setOpenAuthModal(true);
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/download/`, {
-          headers: { Authorization: user.token },
-        })
+    const downloadAPI = {
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+    };
+
+    if(user.token){
+      downloadAPI.headers= {
+        Authorization: user.token
+      }
+    }
+      axios(downloadAPI)
         .then(({ data }) => {
           if (data.url) {
             axios
@@ -243,8 +247,8 @@ const SingleCategory = () => {
         .catch((error) => {
           console.log("catch", error.response);
           toast.error(error.response.data.message);
+          setOpenAuthModal(true);
         });
-    }
   };
 
   return (
