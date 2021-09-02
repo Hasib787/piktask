@@ -148,6 +148,7 @@ const SingleCategory = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
     }else if(!user.token && window.innerWidth < 900){
+      // history.push(`/login?url=${shareUrl}`);
       history.push("/login");
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
