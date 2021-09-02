@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
       padding: "2.5rem 0 3rem",
     },
   },
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
 }));
 
 export default useStyles;

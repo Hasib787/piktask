@@ -6,14 +6,15 @@ import useStyles from "./SearchItem.styles";
 
 const SearchItem = ({ item }) => {
   const classes = useStyles();
+  
 
   return (
-    <Link to={`photo/${item.image_id}`} className={classes.searchItemWrapper}>
+    <Link to={`/photo/${item?.image_id}`} className={classes.searchItemWrapper}>
       <div className={classes.searchLeft}>
         <div className={classes.thumbnail}>
-          <img src={item.thumbnail} alt={item.title} />
+          <img src={item?.thumbnail} alt={item?.title} />
         </div>
-        <h2>{item.title}</h2>
+        <h2>{item?.title}</h2>
       </div>
       {/* <div className={classes.itemIcons}>
         <div>

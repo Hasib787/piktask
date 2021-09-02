@@ -20,6 +20,7 @@ import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
 import { auth } from "../../../database";
+import Layout from "../../../Layout";
 import useStyles from "../Auth.styles";
 
 const clientId =
@@ -207,7 +208,7 @@ export const Registration = ({ history }) => {
   };
 
   return (
-    <>
+    <Layout title={"Signup | Piktast"}>
       {isRedirectTo && <Redirect to="/confirm-signup" />}
       <Header />
       <div className={classes.rootContainer}>
@@ -356,6 +357,6 @@ export const Registration = ({ history }) => {
         <Spacing space={{ height: "5rem" }} />
       </div>
       <Footer />
-    </>
+    </Layout>
   );
 };

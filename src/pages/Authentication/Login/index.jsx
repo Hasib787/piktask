@@ -9,7 +9,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
@@ -17,22 +17,36 @@ import lockIcon from "../../../assets/password.png";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import Layout from "../../../Layout";
 import useStyles from "../Auth.styles";
 
 // const clientId =
 //   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
+  console.log("history", history);
+  const pathHistory = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  console.log("location", location);
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
+
+  // const previousLocation = location.search;
+  // const params = new URLSearchParams(previousLocation);
+  // const previousURL = params.get('url');
+  // console.log("previousURL", previousURL);
+
+  const { from } = location.state || { from: { pathname: ("/") } };
+
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const pathHistory = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
+
+
+  
+
 
   useEffect(() => {
     if (user && user.token) history.replace(from);
@@ -69,7 +83,11 @@ export const Login = ({ history }) => {
               },
             });
           }
-          pathHistory.replace(from);
+          // if(previousURL) {
+          //   pathHistory.push(previousURL);
+          // } else {
+            pathHistory.push(from);
+          // }
         }
       })
       .catch((error) => {
@@ -150,7 +168,7 @@ export const Login = ({ history }) => {
   // };
 
   return (
-    <>
+    <Layout title={"Login | Piktask"}>
       <Header />
       <div className={classes.rootContainer}>
         <Spacing space={{ height: "5rem" }} />
@@ -271,6 +289,6 @@ export const Login = ({ history }) => {
         <Spacing space={{ height: "5rem" }} />
       </div>
       <Footer />
-    </>
+    </Layout>
   );
 };

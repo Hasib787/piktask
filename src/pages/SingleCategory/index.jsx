@@ -11,7 +11,7 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Link,
+  // Link
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -19,7 +19,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
   EmailIcon,
   EmailShareButton,
@@ -51,12 +51,14 @@ import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
+import { Link } from "react-router-dom";
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const user = useSelector((state) => state.user);
+  const history = useHistory();
   const shareUrl = window.location.href;
+  const user = useSelector((state) => state.user);
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
@@ -64,22 +66,15 @@ const SingleCategory = () => {
   const [isLoading, setLoading] = useState(true);
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
-  const [allTags, setAllTags] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
-  const [openCopyLink, setOpenCopyLink] = useState(false);
+  const [allTags, setAllTags] = useState([]);
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+  const [openCopyLink, setOpenCopyLink] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const handleDialogOpen = () => {
-    setDownloadLicenseDialog(true);
-  };
-
-  const handleDialogClose = () => {
-    setDownloadLicenseDialog(false);
-  };
-  const handleTooltipClose = () => {
-    setOpenCopyLink(false);
-  };
+  const handleDialogOpen = () => {setDownloadLicenseDialog(true);};
+  const handleDialogClose = () => {setDownloadLicenseDialog(false);};
+  const handleTooltipClose = () => {setOpenCopyLink(false);};
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
@@ -89,67 +84,71 @@ const SingleCategory = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
-      .then(({ data }) => {
-        if (data?.success) {
-          setImageDetails(data.detail);
-          if (data?.related_tags) {
-            const tags = data.related_tags;
-            setAllTags(tags.filter((e) => e));
-          }
-
-          if (user?.token) {
-            axios
-              .get(
-                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
-                {
-                  headers: { Authorization: user.token },
-                }
-              )
-              .then((response) => {
-                if (response.data.status) {
-                  setFollowing(true);
-                } else {
-                  setFollowing(false);
-                }
-              });
-          }
+    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+    .then(({ data }) => {
+      if (data?.success) {
+        setImageDetails(data.detail);
+        if (data?.related_tags) {
+          const tags = data.related_tags;
+          setAllTags(tags.filter((e) => e));
         }
-      })
-      .catch((error) => console.log(error));
+
+        if (user?.token) {
+          axios
+          .get(
+            `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+            {
+              headers: { Authorization: user.token },
+            }
+          )
+          .then((response) => {
+            if (response.data.status) {
+              setFollowing(true);
+            } else {
+              setFollowing(false);
+            }
+          });
+        }
+      }
+    })
+    .catch((error) => console.log(error));
 
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
-          headers: { Authorization: user.token },
-        })
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
+        headers: { Authorization: user.token },
+      })
+      .then(({ data }) => {
+        if (!data?.status) {
+          setLike(false);
+        } else if (data?.status) {
+          setLike(true);
+        } else {
+          console.log("Image like status error");
+        }
+      })
+      .catch((error) => console.log("Like status error: ", error));
     }
 
     // related product API
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setRelatedImage(data.images);
-          setLoading(false);
-        }
-      })
-      .catch((error) => console.log("Related image error: ", error));
+    .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+    .then(({ data }) => {
+      if (data?.status) {
+        setRelatedImage(data.images);
+        setLoading(false);
+      }
+    })
+    .catch((error) => console.log("Related image error: ", error));
+
   }, [id, user.token]);
 
   const handleFollower = () => {
-    if (!user.token) {
+    if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    }else if(!user.token && window.innerWidth < 900){
+      // history.push(`/login?url=${shareUrl}`);
+      history.push("/login");
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
@@ -170,8 +169,10 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token) {
+    if (!user.token  && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    } else if (!user.token  && window.innerWidth < 900){
+      history.push("/login");
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
@@ -250,6 +251,7 @@ const SingleCategory = () => {
           setOpenAuthModal(true);
         });
   };
+
 
   return (
     <Layout
@@ -422,7 +424,7 @@ const SingleCategory = () => {
                 <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
                   - For commercial use{" "}
-                  <Link to={"#"} className={classes.moreInfoBtn}>
+                  <Link to="!#" className={classes.moreInfoBtn}>
                     More info
                   </Link>
                 </Typography>
@@ -472,9 +474,6 @@ const SingleCategory = () => {
                   <Button
                     className={classes.downloadBtn}
                     onClick={handleDownload}
-                    // component={Link}
-                    // href={downloadFile}
-                    // download
                   >
                     <img src={downArrowIconWhite} alt="Download" />
                     Download

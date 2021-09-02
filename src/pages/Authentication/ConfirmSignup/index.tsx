@@ -7,6 +7,7 @@ import { CustomBtn, InputField } from "../../../components/InputField";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import Layout from "../../../Layout";
 import useStyles from "../ResetPassword/ResetPassword.styles";
 
 export const ConfirmSignup = () => {
@@ -77,7 +78,7 @@ export const ConfirmSignup = () => {
   };
 
   return (
-    <>
+    <Layout title={"Confirm Signup | Piktask"}>
       {/* if confirm redirect to login */}
       {isRedirectTo && <Redirect to="/login" />}
 
@@ -122,6 +123,6 @@ export const ConfirmSignup = () => {
       <Spacing space={{ height: "5rem" }} />
 
       <Footer />
-    </>
+    </Layout>
   );
 };
