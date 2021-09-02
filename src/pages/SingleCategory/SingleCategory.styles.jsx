@@ -334,6 +334,9 @@ const useStyles = makeStyles((theme) => ({
   licenseDialog: {
    "& div div":{
     width: "50rem",
+    [theme.breakpoints.down(480)] :{
+      width: "100%",
+    },
    },
   },
   closeButton: {

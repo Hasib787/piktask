@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
+import Loader from "../Loader";
 import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,10 +66,6 @@ const Products = (props) => {
 
   return (
     <>
-      {isLoading ? (
-        <h2>Loading......</h2>
-      ) : (
-        <>
           {categories.length !== 0 && showHeading && (
             <SectionHeading title={catName?.name} large>
               <Button
@@ -80,12 +77,10 @@ const Products = (props) => {
               </Button>
             </SectionHeading>
           )}
-        </>
-      )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <h2>Loading now......</h2>
+          <Loader/>
         ) : (
           <>
             {categories.length ? (

@@ -30,8 +30,6 @@ const AuthorProfile = () => {
       axios
       .get(`${process.env.REACT_APP_API_URL}/user/${username}/statistics`)
       .then(({ data }) => {
-        console.log('data',data.profile.avatar);
-        
         if (data?.status) {
           setProfileInfo(data?.profile);
           setImageSummery(data?.images_summary);

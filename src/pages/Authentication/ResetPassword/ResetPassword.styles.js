@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   cardWrapper: {
     backgroundColor: theme.palette.common.white,
     borderRadius: 4,
+    flexBasis: "40%",
   },
   cardHeadingWrapper: {
     textAlign: "center",

@@ -435,11 +435,11 @@ const SingleCategory = () => {
                     </Button>
                   </div>
                   <Dialog
+                    className={classes.licenseDialog}
                     open={downloadLicenseDialog}
                     onClose={handleDialogClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-                    className={classes.licenseDialog}
                   >
                     <DialogTitle className={classes.licenseTitle}>
                       {"Piktast License"}
