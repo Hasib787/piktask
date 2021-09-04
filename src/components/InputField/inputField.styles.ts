@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme) => ({
       transform: "translate(14px, 13px) scale(1)",
       pointerEvents: "none",
     },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(14px, -6px) scale(0.75)",
+    },
     "& .MuiOutlinedInput-input": {
       padding: "11px 14px",
     },

@@ -60,16 +60,16 @@ const SingleCategory = () => {
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
+  const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [openCopyLink, setOpenCopyLink] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
-  const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [isLike, setLike] = useState(false);
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
   const [allTags, setAllTags] = useState([]);
-  const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
-  const [openCopyLink, setOpenCopyLink] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleDialogOpen = () => {setDownloadLicenseDialog(true);};

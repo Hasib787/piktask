@@ -5,29 +5,30 @@ import HeroSection from "../../components/ui/Hero";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import Layout from "../../Layout";
 import useStyles from "./Categories.style";
-import CallToAction from "../../components/ui/CallToAction";
-import axios from "axios";
-import Spacing from "../../components/Spacing";
 import { Button, Container, Grid, Typography } from "@material-ui/core";
+import CallToAction from "../../components/ui/CallToAction";
+import Spacing from "../../components/Spacing";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 const Categories = () => {
   const classes = useStyles();
-  const [popularCategories, setPopularCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [popularCategories, setPopularCategories] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setPopularCategories(data?.categories);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
+    .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+    .then(({ data }) => {
+      if (data?.status) {
+        setPopularCategories(data?.categories);
         setLoading(false);
-        console.log("Popular categories error: ", error);
-      });
+      }
+    })
+    .catch((error) => {
+      setLoading(false);
+      console.log("Popular categories error: ", error);
+    });
   }, []);
 
   return (

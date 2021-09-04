@@ -6,27 +6,27 @@ import {
   Select,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-category-page.png";
 import CallToAction from "../../components/ui/CallToAction";
+import Product from "../../components/ui/Products/Product";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import HeroSection from "../../components/ui/Hero";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
-import Product from "../../components/ui/Products/Product";
-import Layout from "../../Layout";
 import useStyles from "./Category.styles";
+import Layout from "../../Layout";
+import axios from "axios";
 
 const Category = () => {
   const classes = useStyles();
-  const { catName, id } = useParams();
+  const { catName } = useParams();
 
   
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
+  const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const categoryItem = categories.find((item) => item?.slug === catName);
@@ -41,18 +41,18 @@ const Category = () => {
   const getCategoriesWithId = () => {
     if (categoryItem?.id !== undefined) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategoryProducts(data?.category_image);
-            setTotalImageCount(data?.total_image_count?.total_image);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
+      .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategoryProducts(data?.category_image);
+          setTotalImageCount(data?.total_image_count?.total_image);
           setLoading(false);
-        });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
     } else {
       setLoading(false);
     }
@@ -60,34 +60,32 @@ const Category = () => {
 
   const popularKeyWords = () => {
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`
-      )
-      .then(({ data }) => {
-        if (data?.status) {
-          const popularSearch = (data?.keywords);
-          setPopularSearchKeywords(popularSearch.filter((e) => e));
+    .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`)
+    .then(({ data }) => {
+      if (data?.status) {
+        const popularSearch = (data?.keywords);
+        setPopularSearchKeywords(popularSearch.filter((e) => e));
 
-        }
-      })
-      .catch((error) => {
-        console.log("Popular search keywords", error);
-        setLoading(false);
-      });
+      }
+    })
+    .catch((error) => {
+      console.log("Popular search keywords", error);
+      setLoading(false);
+    });
   };
 
   const getCategories = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setCategories(data.categories);
-        }
-      })
-      .catch((error) => {
-        console.log("Categories error:", error);
-        setLoading(false);
-      });
+    .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
+    .then(({ data }) => {
+      if (data?.status) {
+        setCategories(data.categories);
+      }
+    })
+    .catch((error) => {
+      console.log("Categories error:", error);
+      setLoading(false);
+    });
   };
 
   //Fetch api to get data for the category page by sorting by popularity
@@ -95,26 +93,26 @@ const Category = () => {
     const product = e.target.value;
     if (categoryItem?.id !== undefined) {
       axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
-        )
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategoryProducts(data?.category_image);
-            setTotalImageCount(data?.total_image_count?.total_image);
-          }
-        })
-        .catch((error) => {
-          console.log("Category products error:", error);
-          setLoading(false);
-        });
+      .get(
+        `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategoryProducts(data?.category_image);
+          setTotalImageCount(data?.total_image_count?.total_image);
+        }
+      })
+      .catch((error) => {
+        console.log("Category products error:", error);
+        setLoading(false);
+      });
     } else {
       setLoading(false);
     }
   };
 
   return (
-    <Layout>
+    <Layout title={`${catName} | Piktask`}>
       <Header />
       <HeroSection
         background={heroBanner}
