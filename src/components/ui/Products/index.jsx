@@ -1,12 +1,12 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
-import Loader from "../Loader";
 import Product from "./Product";
+import Loader from "../Loader";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,31 +34,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Products = (props) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { catName, count, showHeading } = props;
+
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     if (catName !== undefined) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data?.category_image);
-            setLoading(false);
-            dispatch({
-              type: "CATEGORY_BASED_ITEMS",
-              payload: {
-                totalImages: data.total_image_count.total_image,
-                categories: data.category_image,
-              },
-            });
-          }
-        });
+      .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategories(data?.category_image);
+          setLoading(false);
+          dispatch({
+            type: "CATEGORY_BASED_ITEMS",
+            payload: {
+              totalImages: data.total_image_count.total_image,
+              categories: data.category_image,
+            },
+          });
+        }
+      });
     } else {
       setLoading(false);
     }
@@ -66,17 +65,17 @@ const Products = (props) => {
 
   return (
     <>
-          {categories.length !== 0 && showHeading && (
-            <SectionHeading title={catName?.name} large>
-              <Button
-                className={classes.headingButton}
-                component={Link}
-                to={`category/${catName?.slug}`}
-              >
-                See More
-              </Button>
-            </SectionHeading>
-          )}
+      {categories.length !== 0 && showHeading && (
+        <SectionHeading title={catName?.name} large>
+          <Button
+            className={classes.headingButton}
+            component={Link}
+            to={`category/${catName?.slug}`}
+          >
+            See More
+          </Button>
+        </SectionHeading>
+      )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (

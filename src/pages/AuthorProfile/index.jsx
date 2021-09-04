@@ -1,24 +1,25 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import authorImg from "../../assets/author.png";
-import heroBanner from "../../assets/banner/banner.png";
-import AuthorItems from "../../components/ui/AuthorItems";
 import CallToAction from "../../components/ui/CallToAction";
+import AuthorItems from "../../components/ui/AuthorItems";
+import SocialShare from "../../components/ui/SocialShare";
+import heroBanner from "../../assets/banner/banner.png";
+import SignUpModal from "../Authentication/SignUpModal";
+import React, { useEffect, useState } from "react";
+import authorImg from "../../assets/author.png";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import SocialShare from "../../components/ui/SocialShare";
-import Layout from "../../Layout";
-import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./AuthorProfile.styles";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import Layout from "../../Layout";
+import axios from "axios";
 
 
 const AuthorProfile = () => {
   const classes = useStyles();
   const { username } = useParams();
   const user = useSelector((state) => state.user);
+
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [imageSummery, setImageSummery] = useState([]);
@@ -48,7 +49,7 @@ const AuthorProfile = () => {
   }
   
   return (
-    <Layout>
+    <Layout title={`${profileInfo?.username} | Piktask`}>
       <Header />
       <div
         className={classes.authorHero}
