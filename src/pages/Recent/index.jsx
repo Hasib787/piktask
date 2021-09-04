@@ -14,6 +14,7 @@ import useStyles from "./Recent.style";
 import Product from "../../components/ui/Products/Product";
 import axios from "axios";
 import Footer from "../../components/ui/Footer";
+import Loader from "../../components/ui/Loader";
 
 const Recent = () => {
   const classes = useStyles();
@@ -22,6 +23,7 @@ const Recent = () => {
 
   //data load
   useEffect(() => {
+    setLoading(true);
     try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
@@ -55,7 +57,7 @@ const Recent = () => {
         <SectionHeading title="Recent Images" large />
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader/>
           ) : (
             <>
               {recentProduct?.length ? (

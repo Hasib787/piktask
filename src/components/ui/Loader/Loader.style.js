@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     rootWrapper:{
         display:"flex",
     },
+    boxRoot:{
+        margin:"2rem 1.5rem 0rem 0rem",
+    },
     userNameLoader:{
         marginLeft: "5rem",
     },
@@ -32,10 +35,9 @@ const useStyles = makeStyles((theme) => ({
           width:"30rem",
       },
       downloadBtn: {
-        marginRight: "-14rem",
-        borderRadius: "2.1rem",
-        width: "10.5rem",
-        height: "4.5rem",
+          width: "10.5rem",
+          height: "4.5rem",
+          borderRadius: "2.1rem",
       },
 }));
 
