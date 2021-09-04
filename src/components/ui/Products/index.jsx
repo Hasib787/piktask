@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Layout from "../../../Layout";
 import SectionHeading from "../Heading";
 import Loader from "../Loader";
 import Product from "./Product";
@@ -65,7 +64,7 @@ const Products = (props) => {
   }, [catName, dispatch]);
 
   return (
-    <Layout>
+    <>
       {categories.length !== 0 && showHeading && (
         <SectionHeading title={catName?.name} large>
           <Button
@@ -79,13 +78,11 @@ const Products = (props) => {
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {categories.slice(0, count).map((photo, index) => (
-          <>
             {isLoading ? (
               <Loader />
             ) : (
               <>
-                {categories.length ? (
+                {categories.length ? categories.slice(0, count).map((photo, index) => (
                   <Grid
                     key={index}
                     item
@@ -96,15 +93,15 @@ const Products = (props) => {
                   >
                     <Product photo={photo} />
                   </Grid>
+                )
                 ) : (
                   <Loader />
-                )}
-              </>
-            )}
-          </>
-        ))}
+                )
+        }
+        </>
+            )
       </Grid>
-    </Layout>
+    </>
   );
 };
 

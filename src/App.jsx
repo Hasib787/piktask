@@ -1,22 +1,34 @@
+import CompleteRegistration from "./pages/Authentication/EmailVerification";
+import EarningManagement from "./admin/pages/EarningManagement";
+import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
+import AccountSettings from "./admin/pages/AccountSettings";
+import TagRelatedProducts from "./pages/TagRelatedProducts";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import BecomeContributor from "./pages/BecomeContributor";
 import { ThemeProvider } from "@material-ui/core/styles";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import PendingFiles from "./admin/pages/PendingFiles";
+import RejectFiles from "./admin/pages/RejectFiles";
+import SingleCategory from "./pages/SingleCategory";
+import UploadFiles from "./admin/pages/UploadFiles";
+import "react-toastify/dist/ReactToastify.min.css";
+import SearchResults from "./pages/SearchResults";
+import AuthorProfile from "./pages/AuthorProfile";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-import AccountSettings from "./admin/pages/AccountSettings";
-import AdminDashboard from "./admin/pages/AdminDashboard";
-import EarningManagement from "./admin/pages/EarningManagement";
-import PendingFiles from "./admin/pages/PendingFiles";
-import Publish from "./admin/pages/Publish";
-import RejectFiles from "./admin/pages/RejectFiles";
+import SingleBlogPost from "./pages/SinglePost";
+import Subscription from "./pages/Subscription";
 import Revision from "./admin/pages/Revision";
-import UploadFiles from "./admin/pages/UploadFiles";
 import Sellers from "./components/ui/Sellers";
+import Publish from "./admin/pages/Publish";
+import Categories from "./pages/Categories";
+import { useDispatch } from "react-redux";
 import theme from "./components/ui/Theme";
+import React, { useEffect } from "react";
+import Category from "./pages/Category";
+import Recent from "./pages/Recent";
+import jwt_decode from "jwt-decode";
 import { auth } from "./database";
+import axios from "axios";
 import {
   ConfirmSignup,
   Help,
@@ -27,18 +39,6 @@ import {
   Registration,
   ResetPassword,
 } from "./pages";
-import CompleteRegistration from "./pages/Authentication/EmailVerification";
-import AuthorProfile from "./pages/AuthorProfile";
-import BecomeContributor from "./pages/BecomeContributor";
-import Categories from "./pages/Categories";
-import Category from "./pages/Category";
-import Recent from "./pages/Recent";
-import SearchResults from "./pages/SearchResults";
-import SingleCategory from "./pages/SingleCategory";
-import SingleBlogPost from "./pages/SinglePost";
-import Subscription from "./pages/Subscription";
-import TagRelatedProducts from "./pages/TagRelatedProducts";
-import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -82,18 +82,16 @@ const App = () => {
   function getPopularPhotos() {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-        .then(({ data }) => {
-          if (data?.status) {
-            dispatch({
-              type: "POPULAR_CATEGORIES",
-              payload: [...data.categories],
-            });
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
+      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+      .then(({ data }) => {
+        if (data?.status) {
+          dispatch({
+            type: "POPULAR_CATEGORIES",
+            payload: [...data.categories],
+          });
+        }
+      });
+    } catch (error) { console.log(error); }
   }
 
   return (

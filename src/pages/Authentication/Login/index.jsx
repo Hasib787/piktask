@@ -24,11 +24,9 @@ import useStyles from "../Auth.styles";
 //   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
-  console.log("history", history);
   const pathHistory = useHistory();
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log("location", location);
   const classes = useStyles();
   const user = useSelector((state) => state.user);
 
@@ -43,10 +41,6 @@ export const Login = ({ history }) => {
   const [value, setValue] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-
-  
-
 
   useEffect(() => {
     if (user && user.token) history.replace(from);
@@ -64,37 +58,37 @@ export const Login = ({ history }) => {
     setLoading(true);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        if (res.data.status) {
-          const token = res.data.token;
-          localStorage.setItem("token", token);
-          const decodedToken = jwt_decode(token.split(" ")[1]);
+    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      username,
+      password,
+    })
+    .then((res) => {
+      if (res.data.status) {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        const decodedToken = jwt_decode(token.split(" ")[1]);
 
-          if (decodedToken.email) {
-            dispatch({
-              type: "SET_USER",
-              payload: {
-                ...decodedToken,
-                token,
-              },
-            });
-          }
-          // if(previousURL) {
-          //   pathHistory.push(previousURL);
-          // } else {
-            pathHistory.push(from);
-          // }
+        if (decodedToken.email) {
+          dispatch({
+            type: "SET_USER",
+            payload: {
+              ...decodedToken,
+              token,
+            },
+          });
         }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        setUsername("");
-        setPassword("");
-      });
+        // if(previousURL) {
+        //   pathHistory.push(previousURL);
+        // } else {
+          pathHistory.push(from);
+        // }
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      setUsername("");
+      setPassword("");
+    });
   };
   // //login with google
   // const handleGoogleLogin = async (googleData) => {

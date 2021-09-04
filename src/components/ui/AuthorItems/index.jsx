@@ -1,57 +1,48 @@
 import { Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import Product from "../Products/Product";
 import useStyles from "./AuthorItems.styles";
+import Product from "../Products/Product";
 import axios from "axios";
 
 const AuthorItems = ({ imageSummery, userId }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-  const [isLoading, setLoading] = useState(true);
-  const [authorAllResource, setAuthorAllResource] = useState();
 
-  const handleActiveButton = (index) => {
-    setValue(index);
-  };
+  const [authorAllResource, setAuthorAllResource] = useState();
+  const [isLoading, setLoading] = useState(true);
+  const [value, setValue] = useState(0);
+
+  const handleActiveButton = (index) => { setValue(index); };
 
   useEffect(() => {
     if (imageSummery[0]?.extension !== undefined) {
       try {
         axios
-          .get(
-            `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
-          )
-          .then(({ data }) => {
-            if (data?.status) {
-              setAuthorAllResource(data?.images);
-              setLoading(false);
-            }
-          });
-      } catch (error) {
-        console.log("All author resources", error);
-      }
-    } else {
-      console.log("Sorry no extension found");
-    }
+        .get(
+          `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
+        )
+        .then(({ data }) => {
+          if (data?.status) {
+            setAuthorAllResource(data?.images);
+            setLoading(false);
+          }
+        });
+      } catch (error) { console.log("All author resources", error); }
+    } else { console.log("Sorry no extension found"); }
   }, [userId, imageSummery])
 
   const handleAuthorResource = (tag) => {
     if (tag !== undefined) {
       try {
         axios
-          .get(`${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`)
-          .then(({ data }) => {
-            if (data?.status) {
-              setAuthorAllResource(data?.images);
-              setLoading(false);
-            }
-          });
-      } catch (error) {
-        console.log("All author resources", error);
-      }
-    } else {
-      console.log("Sorry no extension found");
-    }
+        .get(`${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setAuthorAllResource(data?.images);
+            setLoading(false);
+          }
+        });
+      } catch (error) { console.log("All author resources", error); }
+    } else { console.log("Sorry no extension found"); }
   };
 
   return (
