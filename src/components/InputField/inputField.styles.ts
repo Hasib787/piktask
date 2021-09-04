@@ -3,6 +3,14 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   inputField: {
     marginBottom: "2rem",
+    "& .MuiInputLabel-outlined": {
+      zIndex: 1,
+      transform: "translate(14px, 13px) scale(1)",
+      pointerEvents: "none",
+    },
+    "& .MuiOutlinedInput-input": {
+      padding: "11px 14px",
+    },
   },
   primaryBtn: {
     paddingTop: ".6rem",
@@ -11,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
   },
   authBtn: {
     backgroundColor: "#117A00",
-    padding: "12px 16px",
+    padding: "6px 16px",
     color: theme.palette.common.white,
-    fontSize: "1.8rem",
+    fontSize: "1.6rem",
 
     "&:hover": {
       backgroundColor: "#146b06",

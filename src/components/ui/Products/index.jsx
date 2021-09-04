@@ -58,9 +58,7 @@ const Products = (props) => {
           });
         }
       });
-    } else {
-      setLoading(false);
-    }
+    } else { setLoading(false); }
   }, [catName, dispatch]);
 
   return (

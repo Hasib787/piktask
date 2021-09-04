@@ -11,12 +11,12 @@ import {
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/piktaskLogo.svg";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
 import CustomPopper from "../CustomPopper";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import DesktopMenu from "./DesktopMenu";
 import useStyles from "./Header.styles";
 
@@ -55,6 +55,7 @@ const customStyles = makeStyles({
 const Header = () => {
   const classes = useStyles();
   const anchorRef = useRef(null);
+  const location = useLocation();
   const iconClass = customStyles();
   const user = useSelector((state) => state.user);
 
@@ -136,7 +137,7 @@ const Header = () => {
                         <Button
                           className={classes.loginBtn}
                           component={Link}
-                          to="/login"
+                          to={`/login?url=${location.pathname}`}
                         >
                           Login
                         </Button>

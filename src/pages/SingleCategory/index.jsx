@@ -11,15 +11,14 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  // Link
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import axios from "axios";
-import moment from "moment";
+import CloseIcon from "@material-ui/icons/Close";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
 import {
   EmailIcon,
   EmailShareButton,
@@ -34,29 +33,30 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
-import { toast } from "react-toastify";
-import authorPhoto from "../../assets/author.png";
-import bannerImg from "../../assets/banner/banner.png";
-import copyIcon from "../../assets/icons/copy.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
+import Product from "../../components/ui/Products/Product";
+import SectionHeading from "../../components/ui/Heading";
+import TagButtons from "../../components/ui/TagButtons";
+import SignUpModal from "../Authentication/SignUpModal";
+import bannerImg from "../../assets/banner/banner.png";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
-import Spacing from "../../components/Spacing";
+import copyIcon from "../../assets/icons/copy.svg";
+import HeroSection from "../../components/ui/Hero";
+import authorPhoto from "../../assets/author.png";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import SectionHeading from "../../components/ui/Heading";
-import HeroSection from "../../components/ui/Hero";
-import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons";
-import Layout from "../../Layout";
-import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
+import Spacing from "../../components/Spacing";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Layout from "../../Layout";
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
   const history = useHistory();
+  const location = useLocation();
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
@@ -148,8 +148,7 @@ const SingleCategory = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
     }else if(!user.token && window.innerWidth < 900){
-      // history.push(`/login?url=${shareUrl}`);
-      history.push("/login");
+      history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
@@ -173,7 +172,7 @@ const SingleCategory = () => {
     if (!user.token  && window.innerWidth > 900) {
       setOpenAuthModal(true);
     } else if (!user.token  && window.innerWidth < 900){
-      history.push("/login");
+      history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
