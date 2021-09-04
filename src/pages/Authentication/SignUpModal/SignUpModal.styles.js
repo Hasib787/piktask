@@ -3,15 +3,21 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
 
   // New user authentication modal
+  dialogModal: {
+    "& .MuiDialog-paperWidthSm": {
+      maxWidth: 800,
+    }
+  },
   leftPanel: {
     backgroundColor: "#117A00",
     padding: "2.5rem 2.5rem 5.4rem 2.5rem",
     width: "100%",
+    height: "100%",
 
     "& p": {
       color: theme.palette.common.white,
       fontWeight: 500,
-      fontSize: 16,
+      fontSize: 13,
       lineHeight: 2,
     },
     "& img": {
@@ -33,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   checkboxLabel: {
     "& .MuiFormControlLabel-label": {
       fontSize: 13,
+      marginBottom: -14,
     },
   },
 
@@ -74,31 +81,46 @@ const useStyles = makeStyles((theme) => ({
   },
   googleBtn: {
     backgroundColor: "#fff !important",
-    fontSize: "30px !important",
+    fontSize: "25px !important",
     textAlign: "center",
-    padding: "0.2rem 5rem !important",
-    width: "49%",
-    borderRadius: 0,
+    padding: "0.1rem 3rem 0.1rem 3.5rem !important",
     "&:hover": {
       backgroundColor: "rgb(28 81 103)",
     },
   },
   facebookBtn: {
     backgroundColor: "#425993",
-    padding: "1.2rem 2rem",
-    fontSize: "26px !important",
-    width: "49%",
     borderRadius: 0,
+
+    "& .kep-login-facebook": {
+      fontWeight: 700,
+      fontSize: 13,
+    },
+
     "&:hover": {
       backgroundColor: "rgb(48 72 132)",
     },
+    [theme.breakpoints.up(2000)]: {
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
+      },
+     },
     [theme.breakpoints.down(1025)]: {
-      fontSize: "17px !important",
-      padding: "20px !important",
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
+      },
      },
     [theme.breakpoints.up(2039)]: {
-      padding: "20px !important",
+      padding: "14px !important",
      },
+  },
+  closeModal: {
+    float: "right",
+    marginTop: -15,
+    color: "#117A00",
+    cursor: "pointer",
   },
   // socialLoginBtns: {
   //   display: "flex",
@@ -141,6 +163,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#469439",
     textAlign: "center",
     cursor: "pointer",
+    marginTop: "1rem",
   },
   passwordField: {
     display: "flex",
@@ -150,7 +173,7 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       top: ".8rem",
       right: "3rem",
-      width: "3rem",
+      width: "2rem",
       cursor: "pointer",
     },
 
@@ -161,7 +184,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   signUpLink: {
-    marginTop: "17%",
+    marginTop: "19%",
     fontSize: 17,
     textAlign: "center",
     "& span": {
