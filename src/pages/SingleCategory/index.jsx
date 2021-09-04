@@ -60,17 +60,16 @@ const SingleCategory = () => {
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
-  const [relatedImage, setRelatedImage] = useState([]);
+  const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [isFollowing, setFollowing] = useState(false);
+  const [isLike, setLike] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [imageDetails, setImageDetails] = useState({});
+  const [relatedImage, setRelatedImage] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
   const [allTags, setAllTags] = useState([]);
-
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
-  const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openCopyLink, setOpenCopyLink] = useState(false);
-  const [isFollowing, setFollowing] = useState(false);
-  const [isLoading, setLoading] = useState(true);
-  const [isLike, setLike] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleDialogOpen = () => {setDownloadLicenseDialog(true);};
@@ -207,6 +206,7 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
+  //Handle download image
   const handleDownload = (e) => {
     e.preventDefault();
 
@@ -220,41 +220,36 @@ const SingleCategory = () => {
         Authorization: user.token
       }
     }
-
-    axios(downloadAPI)
-    .then(({ data }) => {
-      
-      if(data?.url) {
-        axios 
-        .get(data?.url, {
-          responseType: 'blob',
-        })
-        .then((response) => {
-          console.log("response", response);
-          const url = window.URL.createObjectURL(new Blob([response.data], { type: 'octet/stream' }));
-          const link = document.createElement("a");
-          link.href = url;
-          link.setAttribute(
-            "download", 
-            `${imageDetails?.title.replace(/ /g,"_")}.${data.extension}`,
-          );
-          document.body.appendChild(link);
-          link.click();
+      axios(downloadAPI)
+        .then(({ data }) => {
+          if (data.url) {
+            axios
+              .get(data.url, {
+                responseType: "blob",
+              })
+              .then((response) => {
+                const url = window.URL.createObjectURL(
+                  new Blob([response.data])
+                );
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute(
+                  "download",
+                  `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
+                );
+                document.body.appendChild(link);
+                link.click();
+              })
+              .catch((error) => {
+                console.log("error", error);
+              });
+          }
         })
         .catch((error) => {
-          console.log("error", error);
-        })
-      }
-    })
-    .catch((error) => {
-      if(window.innerWidth > 900){
-        setOpenAuthModal(true);
-      } else if (window.innerWidth < 900){
-        history.push("/login");
-      }
-      console.log("catch",error.response);
-      toast.error(error.response.data.message);
-    })
+          console.log("catch", error.response);
+          toast.error(error.response.data.message);
+          setOpenAuthModal(true);
+        });
   };
 
 

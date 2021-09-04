@@ -1,12 +1,12 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
-import Product from "./Product";
 import Loader from "../Loader";
-import axios from "axios";
+import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,30 +34,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Products = (props) => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const { catName, count, showHeading } = props;
-
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (catName !== undefined) {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setCategories(data?.category_image);
-          setLoading(false);
-          dispatch({
-            type: "CATEGORY_BASED_ITEMS",
-            payload: {
-              totalImages: data.total_image_count.total_image,
-              categories: data.category_image,
-            },
-          });
-        }
-      });
+        .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategories(data?.category_image);
+            setLoading(false);
+            dispatch({
+              type: "CATEGORY_BASED_ITEMS",
+              payload: {
+                totalImages: data.total_image_count.total_image,
+                categories: data.category_image,
+              },
+            });
+          }
+        });
     } else {
       setLoading(false);
     }
@@ -78,28 +78,28 @@ const Products = (props) => {
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-        {isLoading ? (
-          <Loader/>
-        ) : (
-          <>
-            {categories.length ? (
-              categories?.slice(0, count).map((photo) => (
-                <Grid
-                  key={photo.image_id}
-                  item
-                  xs={6}
-                  sm={4}
-                  md={3}
-                  className={classes.productItem}
-                >
-                  <Product photo={photo} />
-                </Grid>
-              ))
+            {isLoading ? (
+              <Loader />
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
-            )}
-          </>
-        )}
+              <>
+                {categories.length ? categories.slice(0, count).map((photo, index) => (
+                  <Grid
+                    key={index}
+                    item
+                    xs={6}
+                    sm={4}
+                    md={3}
+                    className={classes.productItem}
+                  >
+                    <Product photo={photo} />
+                  </Grid>
+                )
+                ) : (
+                  <Loader />
+                )
+        }
+        </>
+            )
       </Grid>
     </>
   );
