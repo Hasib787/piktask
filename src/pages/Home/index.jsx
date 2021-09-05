@@ -1,20 +1,20 @@
-import { Button, Container } from "@material-ui/core";
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
-import Spacing from "../../components/Spacing";
-import Blog from "../../components/ui/Blog";
-import CallToAction from "../../components/ui/CallToAction";
 import { CategoryCarousel } from "../../components/ui/Carousel";
+import CallToAction from "../../components/ui/CallToAction";
+import { TopSeller } from "../../components/ui/TopSeller";
+import SectionHeading from "../../components/ui/Heading";
+import { Button, Container } from "@material-ui/core";
+import Products from "../../components/ui/Products";
+import HeroSection from "../../components/ui/Hero";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import SectionHeading from "../../components/ui/Heading";
-import HeroSection from "../../components/ui/Hero";
-import Products from "../../components/ui/Products";
-import { TopSeller } from "../../components/ui/TopSeller";
-import Layout from "../../Layout";
+import Spacing from "../../components/Spacing";
+import Blog from "../../components/ui/Blog";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import useStyles from "./Home.styles";
+import Layout from "../../Layout";
+import React from "react";
 
 export const Home = () => {
   const classes = useStyles();

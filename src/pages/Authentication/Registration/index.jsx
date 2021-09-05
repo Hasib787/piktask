@@ -5,23 +5,23 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
+import { useDispatch, useSelector } from "react-redux";
 import lockIcon from "../../../assets/password.png";
-import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import React, { useEffect, useState } from "react";
+import Spacing from "../../../components/Spacing";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { auth } from "../../../database";
-import Layout from "../../../Layout";
+import { toast } from "react-toastify";
 import useStyles from "../Auth.styles";
+import jwt_decode from "jwt-decode";
+import Layout from "../../../Layout";
+import axios from "axios";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -30,26 +30,23 @@ const clientId =
 
 export const Registration = ({ history }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(false);
-  const [confirmValue, setConfirmValue] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [isRedirectTo, setRedirectTo] = useState(false);
-
-  const handleShowHidePassword = () => {
-    setValue((value) => !value);
-  };
-  const handleShowHideConfirmPassword = () => {
-    setConfirmValue((value) => !value);
-  };
-
-  const pathHistory = useHistory();
   const location = useLocation();
+  const pathHistory = useHistory();
   const { from } = location.state || { from: { pathname: "/" } };
+  const user = useSelector((state) => state.user);
+
+  const [confirmValue, setConfirmValue] = useState(false);
+  const [isRedirectTo, setRedirectTo] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleShowHidePassword = () => { setValue((value) => !value); };
+  const handleShowHideConfirmPassword = () => { setConfirmValue((value) => !value); };
+
 
   useEffect(() => {
     if (user.token) history.push("/");
@@ -106,39 +103,39 @@ export const Registration = ({ history }) => {
     // }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-        username,
-        email,
-        password,
-        confirmPassword: password,
-      })
-      .then(async (res) => {
-        if (res?.status === 200) {
-          await auth.sendSignInLinkToEmail(email, {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-            handleCodeInApp: true,
-          });
+    .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+      username,
+      email,
+      password,
+      confirmPassword: password,
+    })
+    .then(async (res) => {
+      if (res?.status === 200) {
+        await auth.sendSignInLinkToEmail(email, {
+          url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+          handleCodeInApp: true,
+        });
 
-          // Show success message to the user
-          toast.success(
-            `An email has been sent to ${email}. Please check and confirm your registration`
-          );
+        // Show success message to the user
+        toast.success(
+          `An email has been sent to ${email}. Please check and confirm your registration`
+        );
 
-          setUsername("");
-          setEmail("");
-          setPassword("");
-          setIsLoading(false);
-          setRedirectTo(true);
-        } else {
-          console.warn("Something went wrong with signup");
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
         setUsername("");
         setEmail("");
         setPassword("");
-      });
+        setIsLoading(false);
+        setRedirectTo(true);
+      } else {
+        console.warn("Something went wrong with signup");
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    });
   };
 
   //login with google
