@@ -44,9 +44,12 @@ export const Registration = ({ history }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const handleShowHidePassword = () => { setValue((value) => !value); };
-  const handleShowHideConfirmPassword = () => { setConfirmValue((value) => !value); };
-
+  const handleShowHidePassword = () => {
+    setValue((value) => !value);
+  };
+  const handleShowHideConfirmPassword = () => {
+    setConfirmValue((value) => !value);
+  };
 
   useEffect(() => {
     if (user.token) history.push("/");
@@ -103,45 +106,44 @@ export const Registration = ({ history }) => {
     // }
 
     axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-      username,
-      email,
-      password,
-      confirmPassword: password,
-    })
-    .then(async (res) => {
-      if (res?.status === 200) {
-        await auth.sendSignInLinkToEmail(email, {
-          url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-          handleCodeInApp: true,
-        });
+      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        username,
+        email,
+        password,
+        confirmPassword: password,
+      })
+      .then(async (res) => {
+        if (res?.status === 200) {
+          await auth.sendSignInLinkToEmail(email, {
+            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+            handleCodeInApp: true,
+          });
 
-        // Show success message to the user
-        toast.success(
-          `An email has been sent to ${email}. Please check and confirm your registration`
-        );
+          // Show success message to the user
+          toast.success(
+            `An email has been sent to ${email}. Please check and confirm your registration`
+          );
 
+          setUsername("");
+          setEmail("");
+          setPassword("");
+          setIsLoading(false);
+          setRedirectTo(true);
+        } else {
+          console.warn("Something went wrong with signup");
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
         setUsername("");
         setEmail("");
         setPassword("");
-        setIsLoading(false);
-        setRedirectTo(true);
-      } else {
-        console.warn("Something went wrong with signup");
-      }
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message);
-      setUsername("");
-      setEmail("");
-      setPassword("");
-    });
+      });
   };
 
   //login with google
   const handleGoogleLogin = async (googleData) => {
-    console.log("googleData", googleData);
-    const res = await fetch(`http://192.168.1.129:8000/api/auth/google_login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/google_login`, {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId,
@@ -151,7 +153,6 @@ export const Registration = ({ history }) => {
       },
     });
     const data = await res.json();
-    console.log("data", data);
     // store returned user somehow
     if (data.status) {
       const token = data.token;
@@ -239,14 +240,18 @@ export const Registration = ({ history }) => {
                     cookiePolicy={"single_host_origin"}
                   />
 
-                  <FacebookLogin 
-                    className={classes.facebookBtn}
-                    appId="168140328625744"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={handleFacebookLogin}
-                    callback={handleFacebookLogin}
-                  />
+                  <Spacing space={{ margin: "0 0.5rem" }} />
+                  
+                  <div className={classes.facebookBtn}>
+                    <FacebookLogin
+                      // className={classes.facebookBtn}
+                      appId="168140328625744"
+                      autoLoad={false}
+                      fields="name,email,picture"
+                      onClick={handleFacebookLogin}
+                      callback={handleFacebookLogin}
+                    />
+                  </div>
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>

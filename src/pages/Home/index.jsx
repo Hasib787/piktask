@@ -75,6 +75,10 @@ export const Home = () => {
         <Products catName={popularCats[5]} showHeading count={8} />
       </Container>
 
+      <Container>
+        <Products catName={popularCats[6]} showHeading count={8} />
+      </Container>
+
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."

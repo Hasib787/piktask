@@ -157,7 +157,7 @@ const UploadFiles = () => {
     event.preventDefault();
     let tag = event.target.value;
     tag = tag.split(",")[0].trim();
-    if (tag.length && tags.length < 10 ) {
+    if (tag.length && tags.length < 10) {
       setTags([...tags, tag]);
       event.target.value = "";
     }
@@ -170,20 +170,24 @@ const UploadFiles = () => {
     setTags([...tags.filter((_, index) => index !== indexToRemove)]);
   };
 
-  const handleUsagesChange = (event) => { setUsages(event.target.value); };
-  const handleCategoryChange = (e) => { setCategory(e.target.value); };
+  const handleUsagesChange = (event) => {
+    setUsages(event.target.value);
+  };
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
 
   const loadCategories = (e) => {
     if (categoryItems.length === 0) {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/categories`)
-      .then(({ data }) => {
-        if (data?.status) {
-          const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-          setcategoryItems(sortedData);
-        }
-      })
-      .catch((error) => console.log("Categories loading error: ", error));
+        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .then(({ data }) => {
+          if (data?.status) {
+            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+            setcategoryItems(sortedData);
+          }
+        })
+        .catch((error) => console.log("Categories loading error: ", error));
     }
   };
 
@@ -197,7 +201,9 @@ const UploadFiles = () => {
     }
   };
 
-  const handleTypeOfImage = (e) => { setTypeOfImage(e.target.value); };
+  const handleTypeOfImage = (e) => {
+    setTypeOfImage(e.target.value);
+  };
 
   const handleImageFiles = (e) => {
     const file = e.target.files[0];
@@ -473,9 +479,9 @@ const UploadFiles = () => {
                       className={classes.input}
                       type="text"
                       onKeyDown={(event) => {
-                          if (event.code === "Space" || event.key === ",") {
-                            addTags(event);
-                          }
+                        if (event.code === "Space" || event.key === ",") {
+                          addTags(event);
+                        }
                       }}
                       placeholder="Add Tag"
                     />

@@ -82,16 +82,18 @@ const App = () => {
   function getPopularPhotos() {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-      .then(({ data }) => {
-        if (data?.status) {
-          dispatch({
-            type: "POPULAR_CATEGORIES",
-            payload: [...data.categories],
-          });
-        }
-      });
-    } catch (error) { console.log(error); }
+        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+        .then(({ data }) => {
+          if (data?.status) {
+            dispatch({
+              type: "POPULAR_CATEGORIES",
+              payload: [...data.categories],
+            });
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

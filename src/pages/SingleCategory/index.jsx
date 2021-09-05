@@ -155,7 +155,7 @@ const SingleCategory = () => {
   const handleFollower = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    }else if(!user.token && window.innerWidth < 900){
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -179,7 +179,7 @@ const SingleCategory = () => {
   const handleLikeBtn = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token  && window.innerWidth < 900){
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -246,7 +246,7 @@ const SingleCategory = () => {
               );
               document.body.appendChild(link);
               link.click();
-              setButtonLoading(false)
+              setButtonLoading(false);
             })
             .catch((error) => {
               console.log("error", error);
