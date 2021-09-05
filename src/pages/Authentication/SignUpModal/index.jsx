@@ -10,9 +10,13 @@ import {
 } from '@material-ui/core';
 import { CustomBtn, InputField } from '../../../components/InputField';
 import { Redirect, useHistory, useLocation } from 'react-router';
+import logoWhite from "../../../assets/logo-white.png";
+import lockIcon from "../../../assets/password.png";
 import React, { useEffect, useState } from 'react';
 import Spacing from '../../../components/Spacing';
 import FacebookLogin from "react-facebook-login";
+import authImage from "../../../assets/auth.png";
+import CloseIcon from '@material-ui/icons/Close';
 import GoogleLogin from 'react-google-login';
 import useStyles from "./SignUpModal.styles";
 import { useDispatch } from 'react-redux';
@@ -21,9 +25,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
-import lockIcon from "../../../assets/password.png";
-import logoWhite from "../../../assets/logo-white.png";
-import authImage from "../../../assets/auth.png";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -72,7 +73,7 @@ const SignUpModal = (props) => {
   const handleShowHidePassword = () => { setPasswordValue((value) => !value); };
 
   //Redirect to home page when user logs in
-  const pathHistory = useHistory();
+  const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
@@ -99,35 +100,39 @@ const SignUpModal = (props) => {
     setLoading(true);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        username: authData.userName,
-        password: authData.password,
-      })
-      .then((res) => {
-        if (res.data.status) {
-          setOpenAuthModal(false);
-          const token = res.data.token;
-          localStorage.setItem("token", token);
-          const decodedToken = jwt_decode(token.split(" ")[1]);
+    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      username: authData.userName,
+      password: authData.password,
+    })
+    .then((res) => {
+      if (res.data.status) {
+        setOpenAuthModal(false);
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        const decodedToken = jwt_decode(token.split(" ")[1]);
 
-          if (decodedToken.email) {
-            dispatch({
-              type: "SET_USER",
-              payload: {
-                ...decodedToken,
-                token,
-              },
-            });
-          }
-          pathHistory.replace(from);
+        if (decodedToken.email) {
+          dispatch({
+            type: "SET_USER",
+            payload: {
+              ...decodedToken,
+              token,
+            },
+          });
         }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-          authData.userName = "";
-          authData.password = "";
-          setLoading(false);  
-      });
+        if(location.pathname) {
+          history.push(location.pathname)
+        } else {
+          history.replace(from);
+        }
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+        authData.userName = "";
+        authData.password = "";
+        setLoading(false);  
+    });
   };
 
   //Handle signUp form
@@ -177,40 +182,40 @@ const SignUpModal = (props) => {
     // }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-        username: authData.userName,
-        email: authData.email,
-        password: authData.password,
-        confirmPassword: authData.password,
-      })
-      .then(async (res) => {
-        if (res?.status === 200) {
-          await auth.sendSignInLinkToEmail(authData.email, {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-            handleCodeInApp: true,
-          });
-      
-          // Show success message to the user
-          toast.success(
-            `An email has been sent to ${authData.email}. Please check and confirm your registration`
-          );
+    .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+      username: authData.userName,
+      email: authData.email,
+      password: authData.password,
+      confirmPassword: authData.password,
+    })
+    .then(async (res) => {
+      if (res?.status === 200) {
+        await auth.sendSignInLinkToEmail(authData.email, {
+          url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+          handleCodeInApp: true,
+        });
+    
+        // Show success message to the user
+        toast.success(
+          `An email has been sent to ${authData.email}. Please check and confirm your registration`
+        );
 
-          authData.userName = "";
-          authData.email = "";
-          authData.password = "";
-          setLoading(false);
-          setRedirectTo(true);
-        } else {
-          console.warn("Something went wrong with signup");
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
         authData.userName = "";
         authData.email = "";
         authData.password = "";
         setLoading(false);
-      });
+        setRedirectTo(true);
+      } else {
+        console.warn("Something went wrong with signup");
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      authData.userName = "";
+      authData.email = "";
+      authData.password = "";
+      setLoading(false);
+    });
   };
 
   //login with google
@@ -245,7 +250,11 @@ const SignUpModal = (props) => {
           },
         });
       }
-      pathHistory.replace(from);
+      if(location.pathname) {
+        history.push(location.pathname)
+      } else {
+        history.replace(from);
+      }
     }
   };
 
@@ -281,7 +290,11 @@ const SignUpModal = (props) => {
           },
         });
       }
-      pathHistory.replace(from);
+      if(location.pathname) {
+        history.push(location.pathname)
+      } else {
+        history.replace(from);
+      }
     }
   };
 
@@ -294,9 +307,11 @@ const SignUpModal = (props) => {
         aria-labelledby="authentication-dialog"
         aria-describedby="authentication-dialog"
         style={{ backgroundColor: "rgb(20 51 64 / 77%)" }}
-        maxWidth="md"
+        className={classes.dialogModal}
+        // maxWidth="sm"
       >
-        <DialogContent style={{ padding: 0, overflow: "hidden" }}>
+        
+        <DialogContent style={{ padding: 0, overflow: "hidden", }}>
           <Grid container spacing={3}>
             <Grid item sm={5}>
               <div className={classes.leftPanel}>
@@ -317,6 +332,12 @@ const SignUpModal = (props) => {
             </Grid>
             <Grid item sm={7}>
               <div className={classes.rightPanel}>
+              <div className={classes.closeModal}>
+                <CloseIcon 
+                  fontSize="large"
+                  onClick={() => setOpenAuthModal(false)}
+                />
+              </div>
                 <Tabs
                   value={tabIndex}
                   onChange={handleChangeTab}
@@ -344,8 +365,8 @@ const SignUpModal = (props) => {
                 <Typography
                   style={{
                     textAlign: "center",
-                    marginTop: "1.5rem",
-                    marginBottom: "1.5rem",
+                    marginTop: "1.2rem",
+                    marginBottom: "1.2rem",
                   }}
                 >
                   with your social network
@@ -363,21 +384,22 @@ const SignUpModal = (props) => {
 
                   <Spacing space={{ margin: "0 0.5rem" }} />
 
-                  <FacebookLogin
-                    className={classes.facebookBtn}
-                    appId="168140328625744"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={handleFacebookLogin}
-                    callback={handleFacebookLogin}
-                  />
+                  <div className={classes.facebookBtn}>
+                    <FacebookLogin
+                      appId="168140328625744"
+                      autoLoad={false}
+                      fields="name,email,picture"
+                      onClick={handleFacebookLogin}
+                      callback={handleFacebookLogin}
+                    />
+                  </div>
                 </div>
 
-                <Spacing space={{ height: "2rem" }} />
+                <Spacing space={{ height: "1rem" }} />
                 <div className={classes.horizontalLine}>
                   <span>OR</span>
                 </div>
-                <Spacing space={{ height: "3.2rem" }} />
+                <Spacing space={{ height: "2.5rem" }} />
 
                 {/* Tab panel for Sign In */}
                 <TabPanel value={tabIndex} index={0}>

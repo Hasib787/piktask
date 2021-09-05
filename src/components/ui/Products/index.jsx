@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -78,28 +78,27 @@ const Products = (props) => {
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <>
-                {categories.length ? categories.slice(0, count).map((photo, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={6}
-                    sm={4}
-                    md={3}
-                    className={classes.productItem}
-                  >
-                    <Product photo={photo} />
-                  </Grid>
-                )
-                ) : (
-                  <Loader />
-                )
-        }
-        </>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            {categories.length ? categories.slice(0, count).map((photo, index) => (
+              <Grid
+                key={index}
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                className={classes.productItem}
+              >
+                <Product photo={photo} />
+              </Grid>
             )
+            ) : (
+              <Loader />
+            )}
+          </>
+        )}
       </Grid>
     </>
   );

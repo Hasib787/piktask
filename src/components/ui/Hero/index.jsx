@@ -1,16 +1,16 @@
-import { Button, Container } from "@material-ui/core";
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Button, Container } from "@material-ui/core";
 import heroBG from "../../../assets/490cdcd7579.svg";
-import SectionHeading from "../Heading";
-import Search from "../Search";
 import SearchKeyWords from "../SearchKeyWords";
+import { Link } from "react-router-dom";
+import SectionHeading from "../Heading";
 import useStyles from "./Hero.styles";
+import Search from "../Search";
 
 const HeroSection = (props) => {
-  const classes = useStyles();
   const popularButtonRef = useRef();
   const recentButtonRef = useRef();
+  const classes = useStyles();
   const {
     size,
     popularKeywords,

@@ -8,17 +8,17 @@ import {
   Popper,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { useDebounce } from "../../../lib/hooks/debounceHook";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
-import CloseIcon from "@material-ui/icons/Close";
-import axios from "axios";
-import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "react-click-outside-hook";
-import { useHistory } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import searchIcon from "../../../assets/search.svg";
-import { useDebounce } from "../../../lib/hooks/debounceHook";
+import CloseIcon from "@material-ui/icons/Close";
+import { useHistory } from "react-router-dom";
 import useStyles from "./Search.styles";
 import SearchItem from "./SearchItem";
+import axios from "axios";
 
 const containerVariants = {
   expanded: {
@@ -36,32 +36,28 @@ const containerTransition = {
 };
 
 const Search = ({ mobileView }: { mobileView: boolean }) => {
-  const classes = useStyles();
   const searchRef = useRef("");
   const anchorRef = useRef("");
   const history = useHistory();
+  const classes = useStyles();
 
-  const [parentRef, isClickedOutside] = useClickOutside();
-  const [searchCategoryID, setSearchCategoryID] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
+  const [searchCategoryID, setSearchCategoryID] = useState("");
+  const [parentRef, isClickedOutside] = useClickOutside();
   const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
 
-  const [openSearchCategory, SearchCategory] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
+  const [openSearchCategory, SearchCategory] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const isEmpty = !searchResults || searchResults.length === 0;
 
-  const expandContainer = () => {
-    setIsExpanded(true);
-  };
+  const expandContainer = () => { setIsExpanded(true); };
 
-  const handleSearchToggle = () => {
-    SearchCategory((prevOpen) => !prevOpen);
-  };
+  const handleSearchToggle = () => { SearchCategory((prevOpen) => !prevOpen); };
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef?.current.contains(e.target)) {
@@ -131,14 +127,14 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const loadCategories = () => {
     if (categories.length === 0) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
-        .then(({ data }) => {
-          if (data?.status) {
-            const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-            setCategories(sortedData);
-          }
-        })
-        .catch((error) => console.log("Categories loading error: ", error));
+      .get(`${process.env.REACT_APP_API_URL}/categories`)
+      .then(({ data }) => {
+        if (data?.status) {
+          const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+          setCategories(sortedData);
+        }
+      })
+      .catch((error) => console.log("Categories loading error: ", error));
     }
   };
 
