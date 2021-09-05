@@ -172,7 +172,6 @@ const Product = ({ photo }) => {
               />
               {photo?.total_download}
               <FavoriteBorderIcon className={classes.heartIcon} />{" "}
-              {/* {photo?.total_likes} */}
               {likeCount}
             </Typography>
 
