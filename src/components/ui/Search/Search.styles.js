@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+  formSubmit: {
+    width: "100%",
+  },
   searchWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -16,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 3rem",
     fontSize: 18,
     height: "5.2rem",
-    // width: "50rem",
     borderTopLeftRadius: ".3rem",
     borderBottomLeftRadius: ".2rem",
     [theme.breakpoints.down("sm")]: {

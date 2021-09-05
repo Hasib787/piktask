@@ -36,10 +36,10 @@ const containerTransition = {
 };
 
 const Search = ({ mobileView }: { mobileView: boolean }) => {
+  const classes = useStyles();
+  const history = useHistory();
   const searchRef = useRef("");
   const anchorRef = useRef("");
-  const history = useHistory();
-  const classes = useStyles();
 
   const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
   const [searchCategoryID, setSearchCategoryID] = useState("");
@@ -56,7 +56,6 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const isEmpty = !searchResults || searchResults.length === 0;
 
   const expandContainer = () => { setIsExpanded(true); };
-
   const handleSearchToggle = () => { SearchCategory((prevOpen) => !prevOpen); };
 
   const handleClose = (e) => {
@@ -140,7 +139,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const borderStyles = {
     WebkitBorderBottomLeftRadius: isExpanded ? 0 : ".3rem",
-    MozBorderRadiusBottomleft: isExpanded ? 0 : ".3rem",
+    MozBorderRadiusBottomLeft: isExpanded ? 0 : ".3rem",
   };
 
   const handleSearch = (e) => {
@@ -161,7 +160,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   return (
     <>
-      <form action="" autoComplete="off" onSubmit={handleSearch}>
+      <form action="" autoComplete="off" onSubmit={handleSearch} className={classes.formSubmit}>
         <motion.div
           className={classes.searchWrapper}
           variants={containerVariants}

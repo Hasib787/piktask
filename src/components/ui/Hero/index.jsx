@@ -8,9 +8,9 @@ import useStyles from "./Hero.styles";
 import Search from "../Search";
 
 const HeroSection = (props) => {
-  const popularButtonRef = useRef();
-  const recentButtonRef = useRef();
   const classes = useStyles();
+  const recentButtonRef = useRef();
+  const popularButtonRef = useRef();
   const {
     size,
     popularKeywords,

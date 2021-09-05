@@ -103,10 +103,10 @@ const useStyles = makeStyles((theme) => ({
   },
   googleBtn: {
     backgroundColor: "#fff !important",
-    fontSize: "30px !important",
+    fontSize: "25px !important",
     textAlign: "center",
-    padding: "0.2rem 5rem !important",
-    width: "49%",
+    padding: "0.2rem 3rem !important",
+    width: "45%",
     borderRadius: 0,
     "&:hover": {
       backgroundColor: "rgb(28 81 103)",
@@ -120,24 +120,52 @@ const useStyles = makeStyles((theme) => ({
   },
   facebookBtn: {
     backgroundColor: "#425993",
-    padding: "1.2rem 2rem",
-    fontSize: "26px !important",
-    width: "49%",
     borderRadius: 0,
+
+    "& .kep-login-facebook": {
+      fontWeight: 700,
+      fontSize: 13,
+    },
+
     "&:hover": {
       backgroundColor: "rgb(48 72 132)",
     },
-    "@media (max-width: 1500px)": {
-      height: "6.4rem !important",
-      fontSize: "15px !important",
-  },
-    "@media (max-width: 768px)": {
-      padding: "1.5rem",
-      "& img": {
-        width: "8rem",
+    [theme.breakpoints.up(2000)]: {
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
       },
-    },
+     },
+    [theme.breakpoints.down(1025)]: {
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
+      },
+     },
+    [theme.breakpoints.up(2039)]: {
+      padding: "14px !important",
+     },
   },
+  // facebookBtn: {
+  //   backgroundColor: "#425993",
+  //   padding: "1.2rem 2rem",
+  //   fontSize: "26px !important",
+  //   width: "49%",
+  //   borderRadius: 0,
+  //   "&:hover": {
+  //     backgroundColor: "rgb(48 72 132)",
+  //   },
+  //   "@media (max-width: 1500px)": {
+  //     height: "6.4rem !important",
+  //     fontSize: "15px !important",
+  //   },
+  //   "@media (max-width: 768px)": {
+  //     padding: "1.5rem",
+  //     "& img": {
+  //       width: "8rem",
+  //     },
+  //   },
+  // },
   formDevider: {
     position: "relative",
     textAlign: "center",
@@ -187,10 +215,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   helpText: {
-    padding: "0 3rem",
     textAlign: "center",
     marginBottom: "1rem",
-    fontSize: "1.4rem",
+    fontSize: "1.3rem",
     fontWeight: 500,
     "@media (max-width: 768px)": {
       padding: 0,
@@ -198,11 +225,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   checkboxLabel: {
-    marginBottom: "2rem",
+    // marginBottom: "2rem",
     marginRight: 0,
     "& span": {
       color: theme.palette.primary.main,
-      fontSize: "1.4rem",
+      fontSize: "1.3rem",
+      marginBottom: 20,
     },
   },
   formButton: {
@@ -211,8 +239,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     fontWeight: 400,
     boxShadow: "none",
+    marginTop: "-1.8rem",
     marginBottom: "3rem",
-    padding: "1rem 2rem",
+    padding: "0.8rem 2rem",
     "& span": {
       color: theme.palette.common.white,
     },
@@ -251,9 +280,9 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     "& img": {
       position: "absolute",
-      top: ".8rem",
+      top: "1.5rem",
       right: "3rem",
-      width: "3rem",
+      width: "2rem",
       cursor: "pointer",
     },
     "@media (max-width: 768px)": {

@@ -5,16 +5,16 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import axios from "axios";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import downloadIcon from "../../../../assets/download.svg";
+import crownIcon from "../../../../assets/icons/crown.svg";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import downloadIcon from "../../../../assets/download.svg";
-import crownIcon from "../../../../assets/icons/crown.svg";
-import SignUpModal from "../../../../pages/Authentication/SignUpModal";
+import axios from "axios";
 import {
   ButtonWrapper,
   CardFooter,
@@ -26,16 +26,20 @@ const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
+
+  const [likeCount, setLikeCount] = useState(photo?.total_likes);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLike, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(photo?.total_likes);
 
   useEffect(() => {
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`, {
-          headers: { Authorization: user.token },
-        })
+        .get(
+          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`,
+          {
+            headers: { Authorization: user.token },
+          }
+        )
         .then(({ data }) => {
           if (!data?.status) {
             setLike(false);
@@ -47,36 +51,33 @@ const Product = ({ photo }) => {
         })
         .catch((error) => console.log("Like status error: ", error));
     }
-
-    
   }, [photo?.image_id, user.token]);
-
 
   const handleClick = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else if (user.id !== photo?.user_id && user.token) {
-      axios 
-        .post(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
           {},
           {
             headers: { Authorization: user.token },
           }
         )
-        .then(({data}) => {
+        .then(({ data }) => {
           if (data?.status) {
             setLike(true);
-            setLikeCount(prevState => prevState + 1);
+            setLikeCount((prevState) => prevState + 1);
           } else if (!data?.status) {
             toast.error(data.message);
             setLike(true);
           } else {
             console.log("Something wrong with the like");
           }
-        })
-    } 
+        });
+    }
   };
-
 
   return (
     <>
@@ -171,7 +172,6 @@ const Product = ({ photo }) => {
               />
               {photo?.total_download}
               <FavoriteBorderIcon className={classes.heartIcon} />{" "}
-              {/* {photo?.total_likes} */}
               {likeCount}
             </Typography>
 

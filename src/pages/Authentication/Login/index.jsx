@@ -24,10 +24,10 @@ import axios from "axios";
 //   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
-  const pathHistory = useHistory();
+  const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
-  const classes = useStyles();
+  const pathHistory = useHistory();
   const user = useSelector((state) => state.user);
 
   const previousLocation = location.search;
