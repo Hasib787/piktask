@@ -7,3 +7,5 @@ export * from "./Home";
 export * from "./NotFoundPage";
 export * from "./Pricing";
 export * from "./SearchResults";
+export * from "./Recent";
+export * from "./Category";

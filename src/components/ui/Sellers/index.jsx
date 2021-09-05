@@ -8,6 +8,7 @@ import HeroSection from "../Hero";
 import Footer from "../Footer";
 import Header from "../Header";
 import axios from "axios";
+import ProductNotFound from "../ProductNotFound";
 
 const Sellers = () => {
   const classes = useStyles();
@@ -18,13 +19,13 @@ const Sellers = () => {
   useEffect(() => {
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/sellers/top/`)
-      .then(({ data }) => {
-        if (data?.success) {
-          setTopSeller(data.sellers);
-          setIsLoading(false);
-        }
-      });
+        .get(`${process.env.REACT_APP_API_URL}/sellers/top/`)
+        .then(({ data }) => {
+          if (data?.success) {
+            setTopSeller(data.sellers);
+            setIsLoading(false);
+          }
+        });
     } catch (error) {
       console.log(error.message);
     }
@@ -36,11 +37,7 @@ const Sellers = () => {
       <HeroSection />
       <Spacing space={{ height: "3rem" }} />
       <Container>
-        <Grid
-          classes={{ container: classes.container }}
-          container
-          spacing={2}
-        >
+        <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
             <h2>Loading now......</h2>
           ) : (
@@ -76,9 +73,7 @@ const Sellers = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound />
               )}
             </>
           )}

@@ -19,7 +19,7 @@ import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 import axios from "axios";
 
-const Category = () => {
+export const Category = () => {
   const classes = useStyles();
   const { catName } = useParams();
 
@@ -214,4 +214,3 @@ const Category = () => {
   );
 };
 
-export default Category;

@@ -325,6 +325,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     backgroundColor: "#00a65a",
     color: "white",
+    transition: "1s",
+    "&:hover": {
+      backgroundColor: "#156842",
+    },
     [theme.breakpoints.down(480)]: {
       width: "100%",
       marginLeft: "0%",

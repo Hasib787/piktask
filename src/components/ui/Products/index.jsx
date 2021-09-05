@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Loader from "../Loader";
+import ProductNotFound from "../ProductNotFound";
 import Product from "./Product";
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +98,7 @@ const Products = (props) => {
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
+              <ProductNotFound />
             )}
           </>
         )}
