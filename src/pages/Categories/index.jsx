@@ -9,14 +9,15 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import CallToAction from "../../components/ui/CallToAction";
 import Spacing from "../../components/Spacing";
 import { Link } from "react-router-dom";
+import CategoryItemLoader from "../../components/ui/Loader/CategoryItemLoader";
 import axios from "axios";
-
 const Categories = () => {
   const classes = useStyles();
   const [isLoading, setLoading] = useState(true);
   const [popularCategories, setPopularCategories] = useState([]);
 
   useEffect(() => {
+    setLoading(true)
     axios
     .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
     .then(({ data }) => {
@@ -51,7 +52,7 @@ const Categories = () => {
             spacing={2}
           >
             {isLoading ? (
-              <h2>Loading now......</h2>
+              <CategoryItemLoader/>
             ) : (
               <>
                 {popularCategories.length ? (

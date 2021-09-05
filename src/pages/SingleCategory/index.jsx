@@ -49,6 +49,7 @@ import Header from "../../components/ui/Header";
 import useStyles from "./SingleCategory.styles";
 import Spacing from "../../components/Spacing";
 import { Link } from "react-router-dom";
+import Loader from "../../components/ui/Loader";
 import { toast } from "react-toastify";
 import Layout from "../../Layout";
 
@@ -65,16 +66,23 @@ const SingleCategory = () => {
   const [openCopyLink, setOpenCopyLink] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [isLike, setLike] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
   const [allTags, setAllTags] = useState([]);
   const [open, setOpen] = useState(false);
+  const [isLike, setLike] = useState(false);
 
-  const handleDialogOpen = () => {setDownloadLicenseDialog(true);};
-  const handleDialogClose = () => {setDownloadLicenseDialog(false);};
-  const handleTooltipClose = () => {setOpenCopyLink(false);};
+  const handleDialogOpen = () => {
+    setDownloadLicenseDialog(true);
+  };
+  const handleDialogClose = () => {
+    setDownloadLicenseDialog(false);
+  };
+  const handleTooltipClose = () => {
+    setOpenCopyLink(false);
+  };
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
@@ -83,64 +91,65 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
-    axios
-    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
-    .then(({ data }) => {
-      if (data?.success) {
-        setImageDetails(data.detail);
-        if (data?.related_tags) {
-          const tags = data.related_tags;
-          setAllTags(tags.filter((e) => e));
-        }
+    setLoading(true);
 
-        if (user?.token) {
-          axios
-          .get(
-            `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
-            {
-              headers: { Authorization: user.token },
-            }
-          )
-          .then((response) => {
-            if (response.data.status) {
-              setFollowing(true);
-            } else {
-              setFollowing(false);
-            }
-          });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+      .then(({ data }) => {
+        if (data?.success) {
+          setImageDetails(data.detail);
+          if (data?.related_tags) {
+            const tags = data.related_tags;
+            setAllTags(tags.filter((e) => e));
+          }
+
+          if (user?.token) {
+            axios
+              .get(
+                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                {
+                  headers: { Authorization: user.token },
+                }
+              )
+              .then((response) => {
+                if (response.data.status) {
+                  setFollowing(true);
+                } else {
+                  setFollowing(false);
+                }
+              });
+          }
         }
-      }
-    })
-    .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
 
     if (user?.token) {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
-        headers: { Authorization: user.token },
-      })
-      .then(({ data }) => {
-        if (!data?.status) {
-          setLike(false);
-        } else if (data?.status) {
-          setLike(true);
-        } else {
-          console.log("Image like status error");
-        }
-      })
-      .catch((error) => console.log("Like status error: ", error));
+        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (!data?.status) {
+            setLike(false);
+          } else if (data?.status) {
+            setLike(true);
+          } else {
+            console.log("Image like status error");
+          }
+        })
+        .catch((error) => console.log("Like status error: ", error));
     }
 
     // related product API
     axios
-    .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
-    .then(({ data }) => {
-      if (data?.status) {
-        setRelatedImage(data.images);
-        setLoading(false);
-      }
-    })
-    .catch((error) => console.log("Related image error: ", error));
-
+      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setRelatedImage(data.images);
+          setLoading(false);
+        }
+      })
+      .catch((error) => console.log("Related image error: ", error));
   }, [id, user.token]);
 
   const handleFollower = () => {
@@ -168,7 +177,7 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token  && window.innerWidth > 900) {
+    if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
     } else if (!user.token  && window.innerWidth < 900){
       history.push(`/login?url=${location.pathname}`);
@@ -210,47 +219,46 @@ const SingleCategory = () => {
     e.preventDefault();
 
     const downloadAPI = {
-      method: 'get',
+      method: "get",
       url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
     };
 
-    if(user.token){
-      downloadAPI.headers= {
-        Authorization: user.token
-      }
+    if (user.token) {
+      downloadAPI.headers = {
+        Authorization: user.token,
+      };
+      setButtonLoading(true);
     }
-      axios(downloadAPI)
-        .then(({ data }) => {
-          if (data.url) {
-            axios
-              .get(data.url, {
-                responseType: "blob",
-              })
-              .then((response) => {
-                const url = window.URL.createObjectURL(
-                  new Blob([response.data])
-                );
-                const link = document.createElement("a");
-                link.href = url;
-                link.setAttribute(
-                  "download",
-                  `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
-                );
-                document.body.appendChild(link);
-                link.click();
-              })
-              .catch((error) => {
-                console.log("error", error);
-              });
-          }
-        })
-        .catch((error) => {
-          console.log("catch", error.response);
-          toast.error(error.response.data.message);
-          setOpenAuthModal(true);
-        });
+    axios(downloadAPI)
+      .then(({ data }) => {
+        if (data.url) {
+          axios
+            .get(data.url, {
+              responseType: "blob",
+            })
+            .then((response) => {
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute(
+                "download",
+                `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
+              );
+              document.body.appendChild(link);
+              link.click();
+              setButtonLoading(false)
+            })
+            .catch((error) => {
+              console.log("error", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("catch", error.response);
+        toast.error(error.response.data.message);
+        setOpenAuthModal(true);
+      });
   };
-
 
   return (
     <Layout
@@ -470,13 +478,20 @@ const SingleCategory = () => {
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button
-                    className={classes.downloadBtn}
-                    onClick={handleDownload}
-                  >
-                    <img src={downArrowIconWhite} alt="Download" />
-                    Download
-                  </Button>
+                  {buttonLoading ? (
+                    <Button className={classes.downloadingBtn}>
+                      <img src={downArrowIconWhite} alt="Download" />
+                      Downloading....
+                    </Button>
+                  ) : (
+                    <Button
+                      className={classes.downloadBtn}
+                      onClick={handleDownload}
+                    >
+                      <img src={downArrowIconWhite} alt="Download" />
+                      Download
+                    </Button>
+                  )}
                   <div className={classes.downloadedImage}>
                     {imageDetails?.user?.images?.total_downloads}
                   </div>
@@ -528,7 +543,7 @@ const SingleCategory = () => {
         {/* <Products /> */}
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading......</h2>
+            <Loader />
           ) : (
             relatedImage?.map((photo) => (
               <Grid

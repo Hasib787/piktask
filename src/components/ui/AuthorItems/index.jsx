@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import useStyles from "./AuthorItems.styles";
 import Product from "../Products/Product";
 import axios from "axios";
+import Loader from "../Loader";
 
 const AuthorItems = ({ imageSummery, userId }) => {
   const classes = useStyles();
@@ -14,6 +15,8 @@ const AuthorItems = ({ imageSummery, userId }) => {
   const handleActiveButton = (index) => { setValue(index); };
 
   useEffect(() => {
+    setLoading(true);
+    
     if (imageSummery[0]?.extension !== undefined) {
       try {
         axios
@@ -74,7 +77,7 @@ const AuthorItems = ({ imageSummery, userId }) => {
 
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader />
           ) : (
             <>
               {authorAllResource?.length ? (

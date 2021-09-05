@@ -14,8 +14,9 @@ import { Link, useParams } from "react-router-dom";
 import HeroSection from "../../components/ui/Hero";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import useStyles from "./Category.styles";
+import Loader from "../../components/ui/Loader";
 import Layout from "../../Layout";
+import useStyles from "./Category.styles";
 import axios from "axios";
 
 const Category = () => {
@@ -32,6 +33,7 @@ const Category = () => {
   const categoryItem = categories.find((item) => item?.slug === catName);
 
   useEffect(() => {
+    setLoading(true)
     getCategories();
     getCategoriesWithId();
     popularKeyWords();
@@ -153,7 +155,7 @@ const Category = () => {
 
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader />
           ) : (
             <>
               {categoryProducts.length ? (

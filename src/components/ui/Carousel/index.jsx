@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
+import CategoryItemLoader from "../Loader/CategoryItemLoader";
 import PopularCategory from "../PopularCategory";
 import useStyles from "./Carousel.styles";
 
@@ -33,6 +34,7 @@ export const CategoryCarousel = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+   setLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
       .then(({ data }) => {
@@ -101,7 +103,7 @@ export const CategoryCarousel = () => {
       <Container>
         {/* <Grid container spacing={2}> */}
         {isLoading ? (
-          <h2>Loading...</h2>
+          <CategoryItemLoader/>
         ) : (
           <>
             {
