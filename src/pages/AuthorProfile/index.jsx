@@ -27,6 +27,7 @@ const AuthorProfile = () => {
 
 
   useEffect(() => {
+    setLoading(true);
     try {
       axios
       .get(`${process.env.REACT_APP_API_URL}/user/${username}/statistics`)

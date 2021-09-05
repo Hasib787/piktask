@@ -1,4 +1,4 @@
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -37,11 +37,12 @@ const Products = (props) => {
   const classes = useStyles();
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setLoading(true);
     if (catName !== undefined) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
@@ -59,7 +60,7 @@ const Products = (props) => {
           }
         });
     } else {
-      setLoading(false);
+      setLoading(true);
     }
   }, [catName, dispatch]);
 
@@ -79,23 +80,24 @@ const Products = (props) => {
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <Loader />
+          <Loader item={categories} />
         ) : (
           <>
-            {categories.length ? categories.slice(0, count).map((photo, index) => (
-              <Grid
-                key={index}
-                item
-                xs={6}
-                sm={4}
-                md={3}
-                className={classes.productItem}
-              >
-                <Product photo={photo} />
-              </Grid>
-            )
+            {categories.length ? (
+              categories?.slice(0, count).map((photo) => (
+                <Grid
+                  key={photo.image_id}
+                  item
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <Product photo={photo} />
+                </Grid>
+              ))
             ) : (
-              <Loader />
+              <Typography variant="body1">Sorry, no products found</Typography>
             )}
           </>
         )}
