@@ -15,8 +15,9 @@ import useStyles from "./Recent.style";
 import Layout from "../../Layout";
 import axios from "axios";
 import Loader from "../../components/ui/Loader";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 
-const Recent = () => {
+export const Recent = () => {
   const classes = useStyles();
   const [isLoading, setLoading] = useState(true);
   const [recentProduct, setRecentProduct] = useState({});
@@ -26,13 +27,13 @@ const Recent = () => {
     setLoading(true);
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setRecentProduct(data?.images);
-          setLoading(false);
-        }
-      });
+        .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
+        .then(({ data }) => {
+          if (data?.status) {
+            setRecentProduct(data?.images);
+            setLoading(false);
+          }
+        });
     } catch (error) {
       console.log("Category products error:", error);
       setLoading(false);
@@ -40,10 +41,7 @@ const Recent = () => {
   }, []);
 
   return (
-    <Layout
-      title="Recent Images | Piktask"
-      description="Recent Images"
-    >
+    <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
       <HeroSection
         background={heroBanner}
@@ -57,7 +55,7 @@ const Recent = () => {
         <SectionHeading title="Recent Images" large />
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <Loader/>
+            <Loader />
           ) : (
             <>
               {recentProduct?.length ? (
@@ -74,9 +72,7 @@ const Recent = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound />
               )}
             </>
           )}
@@ -112,5 +108,3 @@ const Recent = () => {
     </Layout>
   );
 };
-
-export default Recent;

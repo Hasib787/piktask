@@ -491,7 +491,7 @@ const SingleCategory = () => {
                   {buttonLoading ? (
                     <Button className={classes.downloadingBtn}>
                       <img src={downArrowIconWhite} alt="Download" />
-                      Downloading....
+                      Downloading...
                     </Button>
                   ) : (
                     <Button

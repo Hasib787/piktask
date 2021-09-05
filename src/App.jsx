@@ -24,8 +24,6 @@ import Categories from "./pages/Categories";
 import { useDispatch } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
-import Category from "./pages/Category";
-import Recent from "./pages/Recent";
 import jwt_decode from "jwt-decode";
 import { auth } from "./database";
 import axios from "axios";
@@ -38,6 +36,9 @@ import {
   Pricing,
   Registration,
   ResetPassword,
+  Category,
+  Recent,
+
 } from "./pages";
 
 const App = () => {

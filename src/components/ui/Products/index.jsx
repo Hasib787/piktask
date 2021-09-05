@@ -1,11 +1,12 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
-import Product from "./Product";
 import Loader from "../Loader";
+import ProductNotFound from "../ProductNotFound";
+import Product from "./Product";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +99,7 @@ const Products = (props) => {
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
+              <ProductNotFound />
             )}
           </>
         )}

@@ -13,6 +13,7 @@ import useStyles from "./SearchResults.styles";
 import { useSelector } from "react-redux";
 import Layout from "../../Layout";
 import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 
 const SearchResults = () => {
   const classes = useStyles();
@@ -71,7 +72,7 @@ const SearchResults = () => {
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          {searchResults.length && `${searchResults.length} Resources for "${keywords}"`}
+          {`${searchResults.length} Resources for "${keywords}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
@@ -92,9 +93,7 @@ const SearchResults = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound keywords={keywords}/>
               )}
             </>
           )}

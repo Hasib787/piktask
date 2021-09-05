@@ -674,7 +674,7 @@ const UploadFiles = () => {
                     icon={faCloudUploadAlt}
                     className={classes.uploadIcon}
                   />
-                  {isLoading ? "Submitting..." : "Submit"}
+                  {isLoading ? "Uploadting..." : "Upload"}
                 </Button>
               </div>
             </div>

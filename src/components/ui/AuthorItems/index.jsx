@@ -4,6 +4,7 @@ import useStyles from "./AuthorItems.styles";
 import Product from "../Products/Product";
 import axios from "axios";
 import Loader from "../Loader";
+import ProductNotFound from "../ProductNotFound";
 
 const AuthorItems = ({ imageSummery, userId }) => {
   const classes = useStyles();
@@ -94,9 +95,7 @@ const AuthorItems = ({ imageSummery, userId }) => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+               <ProductNotFound/>
               )}
             </>
           )}

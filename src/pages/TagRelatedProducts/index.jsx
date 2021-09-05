@@ -11,6 +11,7 @@ import Header from "../../components/ui/Header";
 import { useParams } from "react-router";
 import Layout from "../../Layout";
 import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 
 const TagTemplate = () => {
   const classes = useStyles();
@@ -20,27 +21,21 @@ const TagTemplate = () => {
 
   useEffect(() => {
     axios
-    .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
-    .then(({ data }) => {
-      if (data?.status) {
-        setTagRelatedProducts(data.results);
-        setLoading(false);
-      }
-    })
-    .catch((error) => console.log(" Related Tag Image error: ", error));
+      .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setTagRelatedProducts(data.results);
+          setLoading(false);
+        }
+      })
+      .catch((error) => console.log(" Related Tag Image error: ", error));
   }, [tagName]);
 
   return (
-    <Layout 
-      title={`${tagName} | Piktask`}
-      description={`${tagName} | Piktask`}
-    >
+    <Layout title={`${tagName} | Piktask`} description={`${tagName} | Piktask`}>
       <Header />
-      <HeroSection
-        background={heroBanner}
-        size="medium"
-      />
-        
+      <HeroSection background={heroBanner} size="medium" />
+
       {/* <div className={classes.tagWrapper}>
         <Container>
           <TagButtons />
@@ -69,9 +64,7 @@ const TagTemplate = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound />
               )}
             </>
           )}
