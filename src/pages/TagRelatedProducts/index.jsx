@@ -1,19 +1,16 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
 import heroBanner from "../../assets/banner/banner-tag-page.png";
-import Spacing from "../../components/Spacing";
+import TagButtons from "../../components/ui/TagButtons/index";
 import CallToAction from "../../components/ui/CallToAction";
+import Product from "../../components/ui/Products/Product";
+import useStyles from "./TagRelatedProducts.style";
+import HeroSection from "../../components/ui/Hero";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
-import Products from "../../components/ui/Products";
-import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons/index";
+import { useParams } from "react-router";
 import Layout from "../../Layout";
-// import TagButtons from "../../components/ui/TagButtons";
-import useStyles from "./TagRelatedProducts.style";
+import axios from "axios";
 
 const TagTemplate = () => {
   const classes = useStyles();
@@ -23,20 +20,20 @@ const TagTemplate = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setTagRelatedProducts(data.results);
-          setLoading(false);
-        }
-      })
-      .catch((error) => console.log(" Related Tag Image error: ", error));
-  }, []);
+    .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
+    .then(({ data }) => {
+      if (data?.status) {
+        setTagRelatedProducts(data.results);
+        setLoading(false);
+      }
+    })
+    .catch((error) => console.log(" Related Tag Image error: ", error));
+  }, [tagName]);
 
   return (
     <Layout 
-      title={`${tagName}-Piktask`}
-      description={`${tagName}-Piktask`}
+      title={`${tagName} | Piktask`}
+      description={`${tagName} | Piktask`}
     >
       <Header />
       <HeroSection

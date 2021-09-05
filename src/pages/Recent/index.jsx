@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
 import { Container, Button, Grid, Typography } from "@material-ui/core";
-import CallToAction from "../../components/ui/CallToAction";
-import { Link } from "react-router-dom";
 import heroBanner from "../../assets/banner/banner-single-page.png";
-import Layout from "../../Layout";
+import CallToAction from "../../components/ui/CallToAction";
+import Product from "../../components/ui/Products/Product";
+import { TopSeller } from "../../components/ui/TopSeller";
+import SectionHeading from "../../components/ui/Heading";
+import React, { useEffect, useState } from "react";
+import HeroSection from "../../components/ui/Hero";
+import Header from "../../components/ui/Header";
+import Footer from "../../components/ui/Footer";
 import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
-import Header from "../../components/ui/Header";
-import SectionHeading from "../../components/ui/Heading";
-import HeroSection from "../../components/ui/Hero";
-import { TopSeller } from "../../components/ui/TopSeller";
+import { Link } from "react-router-dom";
 import useStyles from "./Recent.style";
-import Product from "../../components/ui/Products/Product";
+import Layout from "../../Layout";
 import axios from "axios";
-import Footer from "../../components/ui/Footer";
 import Loader from "../../components/ui/Loader";
 
 const Recent = () => {
@@ -26,13 +26,13 @@ const Recent = () => {
     setLoading(true);
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setRecentProduct(data?.images);
-            setLoading(false);
-          }
-        });
+      .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setRecentProduct(data?.images);
+          setLoading(false);
+        }
+      });
     } catch (error) {
       console.log("Category products error:", error);
       setLoading(false);
@@ -41,7 +41,7 @@ const Recent = () => {
 
   return (
     <Layout
-      title="Recent Images-Piktask"
+      title="Recent Images | Piktask"
       description="Recent Images"
     >
       <Header />
