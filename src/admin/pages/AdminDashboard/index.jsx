@@ -16,28 +16,29 @@ import {
   Tabs,
   Typography,
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/styles";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import authorImg from "../../../assets/author.png";
-import authorBadge from "../../../assets/badge.png";
-import image3 from "../../../assets/bangladesh.png";
-import image1 from "../../../assets/brazil.png";
-import box from "../../../assets/dashboardicons/box.svg";
+// import DoughnutChart from "../../components/Charts/DoughnutChart";
 import arrowDown from "../../../assets/dashboardicons/icon1.svg";
 import moneyIcon from "../../../assets/dashboardicons/money.svg";
 import downloadIcon from "../../../assets/icons/downArrow.svg";
+import box from "../../../assets/dashboardicons/box.svg";
+import portfolioData from "../../../data/portfolio.json";
+import authorBadge from "../../../assets/badge.png";
+import image3 from "../../../assets/bangladesh.png";
+import authorImg from "../../../assets/author.png";
+import Footer from "../../../components/ui/Footer";
+import AdminHeader from "../../components/Header";
+import { withStyles } from "@material-ui/styles";
+import image1 from "../../../assets/brazil.png";
 import image4 from "../../../assets/india.png";
 import image2 from "../../../assets/japan.png";
-import map from "../../../assets/map.png";
-import Footer from "../../../components/ui/Footer";
-import portfolioData from "../../../data/portfolio.json";
-import useStyles from "../../admin.styles";
-// import DoughnutChart from "../../components/Charts/DoughnutChart";
-import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import DoughnutChart from "./DoughnutChart";
+import useStyles from "../../admin.styles";
+import { useSelector } from "react-redux";
+import map from "../../../assets/map.png";
+import React, { useState } from "react";
+import Layout from "../../../Layout";
 
 const ProfileProgress = withStyles((theme) => ({
   root: {
@@ -70,9 +71,10 @@ function TabPanel(props) {
 
 const AdminDashboard = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const { portfolios } = portfolioData;
   const user = useSelector((state) => state.user);
+
+  const [value, setValue] = useState(0);
 
   function selectTab(index) {
     return {
@@ -81,9 +83,7 @@ const AdminDashboard = () => {
     };
   }
 
-  const handleChange = (e, index) => {
-    setValue(index);
-  };
+  const handleChange = (e, index) => { setValue(index); };
 
   const rows = [
     {
@@ -121,7 +121,7 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <>
+    <Layout>
       <AdminHeader />
 
       <div className={classes.adminRoot}>
@@ -483,7 +483,7 @@ const AdminDashboard = () => {
         </main>
       </div>
       <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

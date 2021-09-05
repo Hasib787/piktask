@@ -1,13 +1,13 @@
-import { Button, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
+import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Loader from "../Loader";
 import ProductNotFound from "../ProductNotFound";
 import Product from "./Product";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -36,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);

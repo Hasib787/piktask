@@ -5,23 +5,23 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
+import { useDispatch, useSelector } from "react-redux";
 import lockIcon from "../../../assets/password.png";
-import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import React, { useEffect, useState } from "react";
+import Spacing from "../../../components/Spacing";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { auth } from "../../../database";
-import Layout from "../../../Layout";
+import { toast } from "react-toastify";
 import useStyles from "../Auth.styles";
+import jwt_decode from "jwt-decode";
+import Layout from "../../../Layout";
+import axios from "axios";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -30,15 +30,19 @@ const clientId =
 
 export const Registration = ({ history }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(false);
-  const [confirmValue, setConfirmValue] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const pathHistory = useHistory();
+  const { from } = location.state || { from: { pathname: "/" } };
+  const user = useSelector((state) => state.user);
+
+  const [confirmValue, setConfirmValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleShowHidePassword = () => {
     setValue((value) => !value);
@@ -46,10 +50,6 @@ export const Registration = ({ history }) => {
   const handleShowHideConfirmPassword = () => {
     setConfirmValue((value) => !value);
   };
-
-  const pathHistory = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
     if (user.token) history.push("/");
@@ -143,8 +143,7 @@ export const Registration = ({ history }) => {
 
   //login with google
   const handleGoogleLogin = async (googleData) => {
-    console.log("googleData", googleData);
-    const res = await fetch(`http://192.168.1.129:8000/api/auth/google_login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/google_login`, {
       method: "POST",
       body: JSON.stringify({
         token: googleData.tokenId,
@@ -154,7 +153,6 @@ export const Registration = ({ history }) => {
       },
     });
     const data = await res.json();
-    console.log("data", data);
     // store returned user somehow
     if (data.status) {
       const token = data.token;
@@ -242,14 +240,18 @@ export const Registration = ({ history }) => {
                     cookiePolicy={"single_host_origin"}
                   />
 
-                  <FacebookLogin 
-                    className={classes.facebookBtn}
-                    appId="168140328625744"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={handleFacebookLogin}
-                    callback={handleFacebookLogin}
-                  />
+                  <Spacing space={{ margin: "0 0.5rem" }} />
+                  
+                  <div className={classes.facebookBtn}>
+                    <FacebookLogin
+                      // className={classes.facebookBtn}
+                      appId="168140328625744"
+                      autoLoad={false}
+                      fields="name,email,picture"
+                      onClick={handleFacebookLogin}
+                      callback={handleFacebookLogin}
+                    />
+                  </div>
                 </div>
 
                 <Typography variant="subtitle1" className={classes.formDevider}>

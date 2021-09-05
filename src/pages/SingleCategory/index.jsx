@@ -97,9 +97,9 @@ const SingleCategory = () => {
       .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
       .then(({ data }) => {
         if (data?.success) {
-          setImageDetails(data.detail);
+          setImageDetails(data?.detail);
           if (data?.related_tags) {
-            const tags = data.related_tags;
+            const tags = data?.related_tags;
             setAllTags(tags.filter((e) => e));
           }
 
@@ -155,7 +155,7 @@ const SingleCategory = () => {
   const handleFollower = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    }else if(!user.token && window.innerWidth < 900){
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -179,7 +179,7 @@ const SingleCategory = () => {
   const handleLikeBtn = () => {
     if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token  && window.innerWidth < 900){
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -246,7 +246,7 @@ const SingleCategory = () => {
               );
               document.body.appendChild(link);
               link.click();
-              setButtonLoading(false)
+              setButtonLoading(false);
             })
             .catch((error) => {
               console.log("error", error);
@@ -258,6 +258,16 @@ const SingleCategory = () => {
         toast.error(error.response.data.message);
         setOpenAuthModal(true);
       });
+  };
+
+  const intToString = (value) => {
+    var suffixes = ["", "k", "m", "b", "t"];
+    var suffixNum = Math.floor(("" + value).length / 3);
+    var shortValue = parseFloat((suffixNum !== 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(2));
+    if (shortValue % 1 !== 0) {
+      shortValue = shortValue.toFixed(1);
+    }
+    return shortValue + suffixes[suffixNum];
   };
 
   return (
@@ -493,7 +503,7 @@ const SingleCategory = () => {
                     </Button>
                   )}
                   <div className={classes.downloadedImage}>
-                    {imageDetails?.user?.images?.total_downloads}
+                    {intToString(imageDetails?.user?.images?.total_downloads)}
                   </div>
                 </div>
                 {user.id !== imageDetails?.user_id && (

@@ -26,7 +26,6 @@ export const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
   itemFooter: {
-    
     padding: "1rem 0rem",
     display: "flex",
     flexDirection: "column",
