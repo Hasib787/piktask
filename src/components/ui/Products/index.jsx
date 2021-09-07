@@ -1,7 +1,7 @@
 import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Loader from "../Loader";
@@ -41,30 +41,76 @@ const Products = (props) => {
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user);
+
+  const [scrolling, setScrolling] = useState(true);
+  const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setLoading(true);
-    if (catName !== undefined) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data?.category_image);
-            setLoading(false);
-            dispatch({
-              type: "CATEGORY_BASED_ITEMS",
-              payload: {
-                totalImages: data.total_image_count.total_image,
-                categories: data.category_image,
-              },
-            });
-          }
-        });
-    } else {
-      setLoading(true);
-    }
+    window.onScroll = function() {
+      let currentPosition = window.pageYOffset;
+      let n = 0;
+      while (n < 2) {
+        
+        if(currentPosition % 700 === 0){
+            axios
+              .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}?limit=8`)
+              .then(({ data }) => {
+                if (data?.status) {
+                  setCategories(data?.category_image);
+                  setLoading(false);
+                  dispatch({
+                    type: "CATEGORY_BASED_ITEMS",
+                    payload: {
+                      totalImages: data.total_image_count.total_image,
+                      categories: data.category_image,
+                    },
+                  });
+                }
+              });
+        }
+        n++;
+      }
+      //   if (currentPosition > scrollTop) {
+      //     // downScroll code
+      //     setScrolling(true);
+      //   } else {
+      //     // upScroll code
+      //     setScrolling(false);
+      //   }
+      //   setScrollTop(currentPosition <= 0 ? 0 : currentPosition);
+      // }
+      // if(scrolling){
+      //   window.addEventListener("scroll", onScroll);
+      //   return () => window.removeEventListener("scroll", onScroll);
+      // } 
+      }
   }, [catName, dispatch]);
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   setLoading(true);
+  //   if (catName !== undefined) {
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+  //       .then(({ data }) => {
+  //         if (data?.status) {
+  //           setCategories(data?.category_image);
+  //           setLoading(false);
+  //           dispatch({
+  //             type: "CATEGORY_BASED_ITEMS",
+  //             payload: {
+  //               totalImages: data.total_image_count.total_image,
+  //               categories: data.category_image,
+  //             },
+  //           });
+  //         }
+  //       });
+  //   } else {
+  //     setLoading(true);
+  //   }
+  // }, [catName, dispatch]);
 
   return (
     <>
@@ -85,7 +131,7 @@ const Products = (props) => {
           <Loader item={categories} />
         ) : (
           <>
-            {categories.length ? (
+            {scrolling && categories.length ? (
               categories?.slice(0, count).map((photo) => (
                 <Grid
                   key={photo.image_id}

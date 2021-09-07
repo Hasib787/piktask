@@ -225,12 +225,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   checkboxLabel: {
-    // marginBottom: "2rem",
+    paddingBottom: "3rem",
     marginRight: 0,
     "& span": {
       color: theme.palette.primary.main,
       fontSize: "1.3rem",
-      marginBottom: 20,
     },
   },
   formButton: {
