@@ -36,14 +36,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  tagTitle: {
-    fontSize: "2.2rem",
-    // width: "20rem",
-    textAlign: "center",
-    [theme.breakpoints.down("md")]: {
-      display: "block",
-    },
-  },
   tagContainer: {
     // width: "70%",
     [theme.breakpoints.down("md")]: {
@@ -125,8 +117,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2.8rem",
   },
   tagTitle: {
+    textAlign: "center",
     fontSize: "2.2rem",
     marginRight: "2rem",
+    [theme.breakpoints.down("md")]: {
+      display: "block",
+    },
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginBottom: "1.5rem",

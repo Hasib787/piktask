@@ -43,6 +43,9 @@ const Products = (props) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+  const [scrolling, setScrolling] = useState(true);
+  const [scrollTop, setScrollTop] = useState(0);
+
   useEffect(() => {
     setLoading(true);
     
@@ -75,6 +78,30 @@ const Products = (props) => {
     }
   }, [dispatch, catName, user]);
 
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   setLoading(true);
+  //   if (catName !== undefined) {
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
+  //       .then(({ data }) => {
+  //         if (data?.status) {
+  //           setCategories(data?.category_image);
+  //           setLoading(false);
+  //           dispatch({
+  //             type: "CATEGORY_BASED_ITEMS",
+  //             payload: {
+  //               totalImages: data.total_image_count.total_image,
+  //               categories: data.category_image,
+  //             },
+  //           });
+  //         }
+  //       });
+  //   } else {
+  //     setLoading(true);
+  //   }
+  // }, [catName, dispatch]);
+
   return (
     <>
       {categories.length !== 0 && showHeading && (
@@ -94,7 +121,7 @@ const Products = (props) => {
           <Loader item={categories} />
         ) : (
           <>
-            {categories.length ? (
+            {scrolling && categories.length ? (
               categories?.slice(0, count).map((photo) => (
                 <Grid
                   key={photo.image_id}

@@ -18,6 +18,7 @@ import Loader from "../../components/ui/Loader";
 import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 
 export const Category = () => {
   const classes = useStyles();
@@ -150,7 +151,7 @@ export const Category = () => {
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          {totalImageCount && `${totalImageCount} Resources`}
+          {`${totalImageCount} Resources`}
         </Typography>
 
         <Grid classes={{ container: classes.container }} container spacing={2}>
@@ -172,7 +173,7 @@ export const Category = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">No resources found</Typography>
+                <ProductNotFound/>
               )}
             </>
           )}
