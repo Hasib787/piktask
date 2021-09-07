@@ -23,7 +23,6 @@ import {
 } from "./Product.styles";
 
 const Product = ({ photo }) => {
-  console.log("item",photo)
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
@@ -172,8 +171,7 @@ const Product = ({ photo }) => {
                 alt="Total Download"
               />
               {photo?.total_download}
-              <FavoriteBorderIcon className={classes.heartIcon} />{" "}
-              {likeCount}
+              <FavoriteBorderIcon className={classes.heartIcon} /> {likeCount}
             </Typography>
 
             <ButtonWrapper>
