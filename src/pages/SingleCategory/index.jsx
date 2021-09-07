@@ -73,6 +73,7 @@ const SingleCategory = () => {
   const [allTags, setAllTags] = useState([]);
   const [open, setOpen] = useState(false);
   const [isLike, setLike] = useState(false);
+  const [downloadCount, setDownloadCount] = useState();
 
   const handleDialogOpen = () => {
     setDownloadLicenseDialog(true);
@@ -103,7 +104,7 @@ const SingleCategory = () => {
             setAllTags(tags.filter((e) => e));
           }
 
-          if (user?.token) {
+          if (user && user?.token) {
             axios
               .get(
                 `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
@@ -123,7 +124,7 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
-    if (user?.token) {
+    if (user && user?.token) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
           headers: { Authorization: user.token },
@@ -150,12 +151,12 @@ const SingleCategory = () => {
         }
       })
       .catch((error) => console.log("Related image error: ", error));
-  }, [id, user.token]);
+  }, [id, user]);
 
   const handleFollower = () => {
-    if (!user.token && window.innerWidth > 900) {
+    if (!user && !user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token && window.innerWidth < 900) {
+    } else if (!user && !user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -177,9 +178,9 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token && window.innerWidth > 900) {
+    if (!user && !user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token && window.innerWidth < 900) {
+    } else if (!user && !user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -219,11 +220,11 @@ const SingleCategory = () => {
     e.preventDefault();
 
     const downloadAPI = {
-      method: "get",
       url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+      method: "get",
     };
 
-    if (user.token) {
+    if (user && user.token) {
       downloadAPI.headers = {
         Authorization: user.token,
       };
@@ -246,18 +247,21 @@ const SingleCategory = () => {
               );
               document.body.appendChild(link);
               link.click();
+
+              const prevState = imageDetails?.user?.images?.total_downloads;
+              setDownloadCount(prevState + 1);
               setButtonLoading(false);
             })
             .catch((error) => {
               console.log("error", error);
             });
-        }
-      })
-      .catch((error) => {
-        console.log("catch", error.response);
-        toast.error(error.response.data.message);
-        setOpenAuthModal(true);
-      });
+          }
+        })
+        .catch((error) => {
+          console.log("catch", error.response);
+          toast.error(error.response.data.message);
+          setOpenAuthModal(true);
+        });
   };
 
   const intToString = (value) => {
@@ -503,7 +507,11 @@ const SingleCategory = () => {
                     </Button>
                   )}
                   <div className={classes.downloadedImage}>
-                    {intToString(imageDetails?.user?.images?.total_downloads)}
+                    {downloadCount ? (
+                      intToString(downloadCount)
+                    ) : (
+                      intToString(imageDetails?.user?.images?.total_downloads)
+                    )}
                   </div>
                 </div>
                 {user.id !== imageDetails?.user_id && (
