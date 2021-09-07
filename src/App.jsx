@@ -78,7 +78,7 @@ const App = () => {
     // recentProducts();
     getPopularPhotos();
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   function getPopularPhotos() {
     try {
