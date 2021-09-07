@@ -23,7 +23,6 @@ import {
 } from "./Product.styles";
 
 const Product = ({ photo }) => {
-  console.log("item",photo)
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);

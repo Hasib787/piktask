@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   headerBottom: {
     "& > .MuiAppBar-colorPrimary": {
-      background: "#143340",
+      // background: "#143340",
+      background: "#001c30",
       height: 70,
     },
 

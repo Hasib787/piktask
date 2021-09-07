@@ -2,8 +2,25 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   copyrightWrapper: {
-    background: theme.palette.primary.main,
-    height: 102,
+    // background: theme.palette.primary.main,
+    
+    backgroundPosition: "center center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    height: 80,
+    "&::before": {
+      // background: "rgb(20 51 64 / 94%)",
+      background: "rgba(0, 28, 48, 0.7)",
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    },
 
     "@media (max-width: 768px)": {
       height: "auto",
@@ -11,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: "100%",
+    zIndex: 9999
   },
   gridRoot: {
     display: "flex",

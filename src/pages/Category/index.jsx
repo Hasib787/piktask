@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import heroBanner from "../../assets/banner/banner-category-page.png";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
 import React, { useEffect, useState } from "react";
@@ -18,13 +19,13 @@ import Loader from "../../components/ui/Loader";
 import Layout from "../../Layout";
 import useStyles from "./Category.styles";
 import axios from "axios";
-import ProductNotFound from "../../components/ui/ProductNotFound";
+import { useSelector } from "react-redux";
 
 export const Category = () => {
   const classes = useStyles();
   const { catName } = useParams();
+  const user = useSelector(state => state.user);
 
-  
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
@@ -42,9 +43,18 @@ export const Category = () => {
 
 
   const getCategoriesWithId = () => {
-    if (categoryItem?.id !== undefined) {
+    if (categoryItem?.id) {
+
+      let relatedImageURL;
+
+      if(user && user?.id){
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}`
+      } else {
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`
+      }
+      
       axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
+      .get(relatedImageURL)
       .then(({ data }) => {
         if (data?.status) {
           setCategoryProducts(data?.category_image);
@@ -68,7 +78,6 @@ export const Category = () => {
       if (data?.status) {
         const popularSearch = (data?.keywords);
         setPopularSearchKeywords(popularSearch.filter((e) => e));
-
       }
     })
     .catch((error) => {
@@ -94,7 +103,7 @@ export const Category = () => {
   //Fetch api to get data for the category page by sorting by popularity
   const getCategoryProducts = (e) => {
     const product = e.target.value;
-    if (categoryItem?.id !== undefined) {
+    if (categoryItem?.id) {
       axios
       .get(
         `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`

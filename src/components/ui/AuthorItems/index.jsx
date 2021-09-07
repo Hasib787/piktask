@@ -1,13 +1,15 @@
-import { Container, Grid, Tab, Tabs, Typography } from "@material-ui/core";
+import { Container, Grid, Tab, Tabs } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import useStyles from "./AuthorItems.styles";
 import Product from "../Products/Product";
 import axios from "axios";
 import Loader from "../Loader";
 import ProductNotFound from "../ProductNotFound";
+import { useSelector } from "react-redux";
 
 const AuthorItems = ({ imageSummery, userId }) => {
   const classes = useStyles();
+  const user = useSelector(state => state.user);
 
   const [authorAllResource, setAuthorAllResource] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -18,12 +20,19 @@ const AuthorItems = ({ imageSummery, userId }) => {
   useEffect(() => {
     setLoading(true);
     
-    if (imageSummery[0]?.extension !== undefined) {
+    if (imageSummery[0]?.extension) {
+
+      let authorResourcesURL;
+
+      if(user && user?.id){
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}?userId=${user?.id}`
+      } else {
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
+      }
+
       try {
         axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
-        )
+        .get(authorResourcesURL)
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);
@@ -32,13 +41,22 @@ const AuthorItems = ({ imageSummery, userId }) => {
         });
       } catch (error) { console.log("All author resources", error); }
     } else { console.log("Sorry no extension found"); }
-  }, [userId, imageSummery])
+  }, [userId, imageSummery, user])
 
   const handleAuthorResource = (tag) => {
-    if (tag !== undefined) {
+    if (tag) {
+
+      let authorResourcesURL;
+
+      if(user && user?.id){
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}?userId=${user?.id}`
+      } else {
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`
+      }
+
       try {
         axios
-        .get(`${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`)
+        .get(authorResourcesURL)
         .then(({ data }) => {
           if (data?.status) {
             setAuthorAllResource(data?.images);

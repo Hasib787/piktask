@@ -117,7 +117,7 @@ const SingleCategory = () => {
                   setFollowing(true);
                 } else {
                   setFollowing(false);
-                }
+                } 
               });
           }
         }
@@ -142,8 +142,16 @@ const SingleCategory = () => {
     }
 
     // related product API
+    
+    let relatedImageURL;
+
+    if(user && user?.id){
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${id}/related_image?user_id=${user?.id}`
+    } else {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${id}/related_image`
+    }
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+      .get(relatedImageURL)
       .then(({ data }) => {
         if (data?.status) {
           setRelatedImage(data.images);
