@@ -20,6 +20,8 @@ const TagTemplate = () => {
   const [tagRelatedProducts, setTagRelatedProducts] = useState([]);
 
   useEffect(() => {
+
+    // https://piktask.com/api/client/search/?tag=sports&user_id=17
     axios
       .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
       .then(({ data }) => {

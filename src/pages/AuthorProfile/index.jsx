@@ -2,7 +2,7 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import CallToAction from "../../components/ui/CallToAction";
 import AuthorItems from "../../components/ui/AuthorItems";
 import SocialShare from "../../components/ui/SocialShare";
-import heroBanner from "../../assets/banner/banner.jpg";
+import heroBanner from "../../assets/banner/lucas-wesney-s-y2HJElONo-unsplash.jpg";
 import SignUpModal from "../Authentication/SignUpModal";
 import React, { useEffect, useState } from "react";
 import authorImg from "../../assets/author.png";

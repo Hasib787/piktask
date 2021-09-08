@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   popularButton: {
     marginRight: "1rem",
-    border: "2px solid white",
+    border: "2px solid #fff",
     padding: "0.4rem 2.5rem",
     fontSize: "14px",
     fontWeight: 500,
@@ -72,16 +72,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#117A00",
-      border: "2px solid #117A00",
+      backgroundColor: "#0387EA",
+      border: "2px solid #0387EA",
     },
     "&:hover": {
-      backgroundColor: "#117A00",
+      backgroundColor: "#0387EA",
       color: "#fff",
     },
   },
   recentButton:{
-    border: "2px solid white",
+    border: "2px solid #fff",
     padding: "0.4rem 2.5rem",
     fontSize: "14px",
     fontWeight: 500,
@@ -89,11 +89,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#117A00",
-      border: "2px solid #117A00",
+      backgroundColor: "#0387EA",
+      border: "2px solid #0387EA",
     },
     "&:hover": {
-      backgroundColor: "#117A00",
+      backgroundColor: "#0387EA",
       color: "#fff",
     },
   },

@@ -1,14 +1,15 @@
-import { Button, Container, Grid, Typography } from "@material-ui/core";
+import { Button, Container, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 import useStyles from "./Sellers.style";
 import { Link } from "react-router-dom";
-import Layout from "../../../Layout";
-import Spacing from "../../Spacing";
-import HeroSection from "../Hero";
-import Footer from "../Footer";
-import Header from "../Header";
+import Layout from "../../Layout";
+import Spacing from "../../components/Spacing";
+import HeroSection from "../../components/ui/Hero";
+import Footer from "../../components/ui/Footer";
+import Header from "../../components/ui/Header";
 import axios from "axios";
-import ProductNotFound from "../ProductNotFound";
+import SellerInfo from "../../components/ui/TopSeller/SellerInfo";
 
 const Sellers = () => {
   const classes = useStyles();
@@ -52,24 +53,7 @@ const Sellers = () => {
                     md={3}
                     className={classes.productItem}
                   >
-                    <div className={classes.catItemWrapper}>
-                      <div className={classes.catItem}>
-                        <Link to={`/${photo.username}`}>
-                          <img
-                            className={classes.catImage}
-                            src={photo?.avatar}
-                            alt="author images"
-                          />
-                        </Link>
-                        <Button
-                          className={classes.catName}
-                          component={Link}
-                          to={`/${photo.username}`}
-                        >
-                          {photo?.username}
-                        </Button>
-                      </div>
-                    </div>
+                    <SellerInfo photo={photo} />
                   </Grid>
                 ))
               ) : (
