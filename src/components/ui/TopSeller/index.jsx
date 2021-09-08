@@ -2,6 +2,7 @@ import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ProductNotFound from "../ProductNotFound";
 import useStyles from "./TopSeller.style";
 
 export const TopSeller = () => {
@@ -63,7 +64,7 @@ export const TopSeller = () => {
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
+              <ProductNotFound/>
             )}
           </>
         )}
