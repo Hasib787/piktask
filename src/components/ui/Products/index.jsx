@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "all 0.3s linear",
 
     "&:hover": {
-      backgroundColor: "#117A00",
+      backgroundColor: theme.palette.secondary.main,
       color: "#fff",
     },
   },

@@ -18,7 +18,7 @@ import { ToastContainer } from "react-toastify";
 import SingleBlogPost from "./pages/SinglePost";
 import Subscription from "./pages/Subscription";
 import Revision from "./admin/pages/Revision";
-import Sellers from "./components/ui/Sellers";
+import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
 import { useDispatch } from "react-redux";

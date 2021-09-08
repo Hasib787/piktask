@@ -146,7 +146,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   favouriteIconBtn: {
-    backgroundColor: "#469439",
+    backgroundColor: theme.palette.secondary.light,
     fontSize: "16px",
     display: "flex",
     alignItems: "center",

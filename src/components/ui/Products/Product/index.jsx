@@ -21,15 +21,20 @@ import {
   CardWrapper,
   useStyles,
 } from "./Product.styles";
+import { getWords } from "../../../../helpers";
 
 const Product = ({ photo }) => {
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
+  
+  const title = photo?.title;
+  const titleLength = title.split(" ");
 
   const [likeCount, setLikeCount] = useState(photo?.total_likes);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLike, setLike] = useState(false);
+
 
   const handleLikeBtn = () => {
     if (!user.token) {
@@ -112,7 +117,15 @@ const Product = ({ photo }) => {
               to={`/photo/${photo?.image_id}`}
             >
               <Typography variant="h2" className={classes.title}>
-                {photo?.title}
+                {titleLength.length > 7 ? (
+                  <>
+                  { getWords(6, photo?.title)}...
+                  </>
+                ) : (
+                  <>
+                  {photo?.title}
+                  </>
+                )}
               </Typography>
             </Link>
           </CardContent>
