@@ -43,10 +43,11 @@ const Products = (props) => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const [scrolling, setScrolling] = useState(true);
+  const [scrolling, setScrolling] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
+
     setLoading(true);
     
     let categoryURL;
