@@ -14,21 +14,21 @@ interface Guidline {
 
 const Blog = (): JSX.Element => {
   const classes = useStyles();
-  const posts: Guidline[] = postData.posts;
+  const posts: Guidline[] = postData.posts;  
 
   return (
     <div className={classes.wrapper}>
       <Container>
         <Grid container className={classes.headingWrapepr}>
           <Typography className={classes.heading} variant="h2">
-            Designhill Guidline
+            Piktask Guidline
           </Typography>
           <Typography className={classes.subheading} variant="subtitle1">
             Tens of millions of designers are using png tree
           </Typography>
         </Grid>
 
-        <Grid container spacing={3} className={classes.postsWrapper}>
+        <Grid container spacing={2} className={classes.postsWrapper}>
           {posts.length > 0 &&
             posts.map((post) => (
               <Post
@@ -37,6 +37,7 @@ const Blog = (): JSX.Element => {
                 description={post.description}
                 image={post.image}
                 id={post._id}
+                author={post.author}
               />
             ))}
         </Grid>

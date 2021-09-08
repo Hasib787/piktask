@@ -10,9 +10,10 @@ type Props = {
   title: string;
   description: string;
   image: string;
+  author: string;
 };
 
-const Post: FC<Props> = ({ title, description, image, id }) => {
+const Post: FC<Props> = ({ title, description, image, id, author }) => {
   const classes: ClassNameMap = useStyles();
 
   return (
@@ -24,11 +25,12 @@ const Post: FC<Props> = ({ title, description, image, id }) => {
         </div>
         <div className={classes.contentWrapper}>
           <Link to={`/blog/${id}`} className={classes.titleLink}>
-            <Typography className={classes.title} variant="h2">
+            <Typography className={classes.title}>
               {title}
             </Typography>
           </Link>
-          <Typography variant="body1">{getWords(10, description)}</Typography>
+          <Typography className={classes.description} variant="h2">{getWords(10, description)}...</Typography>
+          <Typography className={classes.authorInfo}>By {author} <span>2 weeks ago</span></Typography>
         </div>
       </div>
     </Grid>

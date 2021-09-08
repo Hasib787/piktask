@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "13px",
     transition: "all 0.3s ease",
     "&.active": {
-      color: "#76c71a",
+      color: "#76C71A",
     },
     "&:last-child": {
       marginRight: "3rem",
     },
     "&:hover": {
-      color: "#76c71a",
+      color: "#76C71A",
     },
 
     "@media (max-width: 1024px)": {
@@ -86,7 +86,10 @@ const useStyles = makeStyles((theme) => ({
   },
   enterprise: {
     color: "#FDAF01",
+    border: "0.2rem solid #FDAF01",
     fontSize: "1.4rem",
+    padding: "0.3rem 1rem",
+    borderRadius: "3rem",
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
       paddingLeft: "1rem",
@@ -95,13 +98,14 @@ const useStyles = makeStyles((theme) => ({
   },
   premium: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.light,
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
-    marginLeft: "0.5rem",
+    marginLeft: "1rem",
     marginRight: "1rem",
     border: ".2rem solid",
     borderColor: "transparent",
+    transition: "all 0.3s linear",
     "&:hover": {
       borderColor: `${theme.palette.common.white}`,
     },
@@ -118,12 +122,12 @@ const useStyles = makeStyles((theme) => ({
   sellContentBtn: {
     ...theme.typography.button,
     border: `.2rem solid`,
-    borderColor: theme.palette.secondary.main,
+    borderColor: theme.palette.secondary.light,
     padding: "0.3rem 1rem",
-    marginRight: "1.5rem",
+    marginRight: "1rem",
     fontSize: "1.3rem",
     "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.secondary.light,
     },
     [theme.breakpoints.down(1100)]: {
       width: "11rem",
@@ -137,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
   signInBtn: {
     ...theme.typography.button,
     ...theme.typography.darkButton,
+    // backgroundColor: theme.palette.secondary.light,
     border:".2rem solid transparent",
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
@@ -152,8 +157,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     fontSize: "4.8rem",
-    width: "4.8rem",
-    height: "4.8rem",
+    width: "3.6rem",
+    height: "3.6rem",
     borderRadius: "100%",
     position: "relative",
     right: "-0.6rem",

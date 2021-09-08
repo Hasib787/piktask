@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentWrapper: {
     padding: "1.6rem 2.5rem",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     "& a:hover": {
       "& $title": {
         color: theme.palette.secondary.main,
@@ -54,8 +55,19 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
   },
   title: {
+    fontSize: "1.5rem",
+    fontWeight: "700",
+    marginBottom: "0.8rem",
+    transition: "color 0.3s linear",
+  },
+  description: {
     fontSize: "2rem",
     marginBottom: "0.8rem",
+    transition: "color 0.3s linear",
+  },
+  authorInfo: {
+    fontSize: "1.3rem",
+    marginTop: "0.8rem",
     transition: "color 0.3s linear",
   },
 }));

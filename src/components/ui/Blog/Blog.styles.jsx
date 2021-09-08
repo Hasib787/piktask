@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    backgroundColor: "#001c30",
-    marginTop: "10rem",
-    padding: "5rem 0 5rem",
+    // backgroundColor: "#F8FCFF",
+    backgroundColor: "#f3f3f3",
+    marginTop: "5rem",
+    padding: "3rem 0rem",
   },
   headingWrapepr: {
     display: "flex",
@@ -14,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3rem",
   },
   heading: {
-    color: theme.palette.common.white,
+    color: "#001c30",
     fontSize: "3.5rem",
     marginBottom: ".5rem",
   },
   subheading: {
+    color: "#001c30",
     fontSize: "1.8rem",
-    color: theme.palette.common.white,
   },
   postsWrapper: {
     marginBottom: "2rem",
