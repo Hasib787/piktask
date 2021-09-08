@@ -21,7 +21,7 @@ const ProductNotFound = ({ keywords }) => {
           and search again
         </Typography>
         <Button className={classes.headingButton} component={Link} to="/">
-          Suggestion
+            Go Home
         </Button>
       </div>
     </Container>
