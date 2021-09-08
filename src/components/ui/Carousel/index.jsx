@@ -52,8 +52,8 @@ export const CategoryCarousel = () => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: false,
-    speed: 1500,
+    autoplay: true,
+    speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,

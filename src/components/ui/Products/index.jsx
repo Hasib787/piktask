@@ -55,7 +55,7 @@ const Products = (props) => {
       let n = 0;
 
       let currentPosition = scrolling;
-      if (currentPosition % 700 === 0) {
+      if (currentPosition % 100 === 0) {
         console.log("Position1", currentPosition);
         axios
           .get(
