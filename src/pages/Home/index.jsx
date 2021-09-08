@@ -18,6 +18,7 @@ import Layout from "../../Layout";
 export const Home = () => {
   const classes = useStyles();
   const popularCats = useSelector((state) => state.popularCategories);
+  const productCategories = useSelector((state) => state.productCategories);
 
   return (
     <Layout
@@ -51,7 +52,7 @@ export const Home = () => {
       <CategoryCarousel />
 
       <Container>
-        <Products catName={popularCats[0]} showHeading count={8} />
+        <Products  catName={productCategories[0]} showHeading count={8} />
       </Container>
 
       <Container>

@@ -1,7 +1,7 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import ProductNotFound from "../ProductNotFound";
 import SellerInfo from "./SellerInfo";
 import useStyles from "./TopSeller.style";
 
@@ -48,7 +48,7 @@ export const TopSeller = () => {
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
+              <ProductNotFound />
             )}
           </>
         )}
