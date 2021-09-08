@@ -1,8 +1,8 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Button, Container, Grid, Typography } from "@material-ui/core";
 import CallToAction from "../../components/ui/CallToAction";
 import AuthorItems from "../../components/ui/AuthorItems";
 import SocialShare from "../../components/ui/SocialShare";
-import heroBanner from "../../assets/banner/banner.png";
+import heroBanner from "../../assets/banner/banner.jpg";
 import SignUpModal from "../Authentication/SignUpModal";
 import React, { useEffect, useState } from "react";
 import authorImg from "../../assets/author.png";
@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Layout from "../../Layout";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const AuthorProfile = () => {
@@ -23,6 +24,7 @@ const AuthorProfile = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [imageSummery, setImageSummery] = useState([]);
+  const [isFollowing, setFollowing] = useState(false);
   const [profileInfo, setProfileInfo] = useState({});
 
 
@@ -41,13 +43,61 @@ const AuthorProfile = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [username])
+
+
+    if (user && user?.token) {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/sellers/follow_status/${user.id}`,
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then((response) => {
+          if (response.data.status) {
+            setFollowing(true);
+          } else {
+            setFollowing(false);
+          }
+        });
+    }
+
+  }, [username, user])
+
+
+
+
 
   const handleJoinUsButton = () =>{
     if (!user.token) {
       setOpenAuthModal(true);
     }
   }
+
+  const handleFollower = () => {
+    // if (!user && !user.token && window.innerWidth > 900) {
+    //   setOpenAuthModal(true);
+    // } else if (!user && !user.token && window.innerWidth < 900) {
+    //   history.push(`/login?url=${location.pathname}`);
+    // } else if (user.id !== imageDetails?.user_id && user.token) {
+    //   axios
+    //     .post(
+    //       `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
+    //       {},
+    //       {
+    //         headers: { Authorization: user.token },
+    //       }
+    //     )
+    //     .then((response) => {
+    //       if (response?.status === 200) {
+    //         setFollowing(!isFollowing);
+    //       }
+    //     });
+    // } else {
+    //   toast.error("You can't follow yourself");
+    // }
+  };
+
   
   return (
     <Layout title={`${profileInfo?.username} | Piktask`}>
@@ -61,7 +111,7 @@ const AuthorProfile = () => {
             <h1>Loading...</h1>
           ) : (
             <>
-              {profileInfo !== undefined ? (
+              {profileInfo ? (
                 <Grid container className={classes.profileWrapper}>
                   <div className={classes.authorImg}>
                     {profileInfo?.avatar ? (
@@ -87,6 +137,14 @@ const AuthorProfile = () => {
                         Downloads
                         <span>{profileInfo?.total_downloads}</span>
                       </Typography>
+                      <div>
+                        <Button
+                          className={classes.followBtn}
+                          onClick={handleFollower}
+                        >
+                          {!isFollowing ? <>Follow</> : <>Following</>}
+                        </Button>
+                      </div>
                     </div>
                     <div className={classes.authorSocials}>
                       {profileInfo.facebook || profileInfo.instagram || profileInfo.twitter ? (

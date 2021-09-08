@@ -5,6 +5,7 @@ import photoBackground from "../../../../assets/transparent_bg.jpg";
 export const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "#F8F8F8",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     "&:hover": {
       "& $singlePageLink, $favouriteIcon, $favouriteIconBtn": {
         opacity: 1,
@@ -19,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
   itemContainer: {
     background: `url(${photoBackground})`,
     position: "relative",
-    height: 210,
+    height: 240,
   },
   image: {
     width: "100%",
@@ -77,14 +78,15 @@ export const useStyles = makeStyles((theme) => ({
     height: 37,
     borderRadius: "100%",
     padding: "0.2rem",
-    backgroundColor: "#1B3F4E",
+    // backgroundColor: "#1B3F4E",
+    boxShadow: "0px 0px 5px #ddd",
     marginRight: "0.8rem",
   },
   authorImage: {
     width: "100%",
     height: "100%",
     borderRadius: "100%",
-    color: "white",
+    color: "#000",
     cursor: "pointer",
   },
   profileName: {
@@ -114,8 +116,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   iconBtn: {
     borderRadius: "50%",
-    width: "3.8rem",
-    height: "3.8rem",
+    width: "3rem",
+    height: "3rem",
     zIndex: 1,
     transition: "all 0.3s linear",
   },
@@ -161,13 +163,13 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   premiumIcon: {
-    backgroundColor: "#26AA10",
+    backgroundColor: "#FDAF01",
     marginBottom: "8px",
     "&:hover": {
       backgroundColor: "rgb(68 68 68 / 60%)",
     },
     "& img": {
-      width: "2.2rem",
+      width: "1.5rem",
     },
   },
   singlePageLink: {

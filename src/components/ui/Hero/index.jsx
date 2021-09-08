@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Container } from "@material-ui/core";
-import heroBG from "../../../assets/490cdcd7579.svg";
+// import heroBG from "../../../assets/490cdcd7579.svg";
+import heroBG from "../../../assets/banner/lucas-wesney-s-y2HJElONo-unsplash.jpg";
 import SearchKeyWords from "../SearchKeyWords";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";

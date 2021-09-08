@@ -2,20 +2,21 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "#001c30",
     marginTop: "10rem",
-    padding: "6.6rem 0 5rem",
+    padding: "5rem 0 5rem",
   },
   headingWrapepr: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: "7rem",
+    marginBottom: "3rem",
   },
   heading: {
     color: theme.palette.common.white,
-    marginBottom: "1rem",
+    fontSize: "3.5rem",
+    marginBottom: ".5rem",
   },
   subheading: {
     fontSize: "1.8rem",
@@ -32,15 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
   moreButton: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.secondary.main,
-    padding: "0.5rem 1.2rem",
+    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#0387EA",
+    padding: "0.5rem 2.5rem",
     margin: "auto",
     fontSize: "1.3rem",
     border: "0.2rem solid transparent",
     display: "block",
     transition: "all 0.3s linear",
     "&:hover": {
-     borderColor:"#117A00",
+     borderColor:"#0387EA",
   },
 }
 }));
