@@ -133,7 +133,7 @@ const DesktopMenu = ({ history }) => {
               Premium
             </Button>
 
-            {user && user?.token ? (
+            {user && user?.isLogged ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}

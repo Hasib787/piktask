@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
-import banner from "../../../assets/banner/banner.png";
+// import banner from "../../../assets/banner/banner.png";
+import banner from "../../../assets/banner/hans.jpg";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -19,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
       left: 0,
       width: "100%",
       height: "100%",
-      backgroundColor: "rgb(27 63 78 / 90%)",
+      // backgroundColor: "rgb(27 63 78 / 90%)",
+      background: "rgba(0, 28, 48, 0.4)",
     },
   },
   container: {

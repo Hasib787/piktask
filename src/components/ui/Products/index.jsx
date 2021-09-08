@@ -1,12 +1,12 @@
-import { Button, Grid } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
 import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Button, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import ProductNotFound from "../ProductNotFound";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
-import Loader from "../Loader";
-import ProductNotFound from "../ProductNotFound";
 import Product from "./Product";
+import Loader from "../Loader";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 const Products = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const user = useSelector((state) => state.user);
 
   const [scrolling, setScrolling] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
@@ -49,74 +49,35 @@ const Products = (props) => {
   useEffect(() => {
 
     setLoading(true);
-    window.onscroll = () => {
-      setScrolling(window.pageYOffset);
+    
+    let categoryURL;
 
-      let n = 0;
+    if(user && user?.id){
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}?user_id=${user?.id}`
+    } else {
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}`
+    }
 
-      let currentPosition = scrolling;
-      if (currentPosition % 100 === 0) {
-        console.log("Position1", currentPosition);
-        axios
-          .get(
-            `${process.env.REACT_APP_API_URL}/categories/${catName?.id}`
-          )
-          .then(({ data }) => {
-            console.log("loadData", data);
-            if (data?.status) {
-              setCategories(data?.category_image);
-              setLoading(false);
-              dispatch({
-                type: "CATEGORY_BASED_ITEMS",
-                payload: {
-                  totalImages: data.total_image_count.total_image,
-                  categories: data.category_image,
-                },
-              });
-            }
-          });
-      }
-    };
-    //   if (currentPosition > scrollTop) {
-    //     // downScroll code
-    //     setScrolling(true);
-    //   } else {
-    //     // upScroll code
-    //     setScrolling(false);
-    //   }
-    //   setScrollTop(currentPosition <= 0 ? 0 : currentPosition);
-    // }
-    // if(scrolling){
-    //   window.addEventListener("scroll", onScroll);
-    //   return () => window.removeEventListener("scroll", onScroll);
-    // }
-
-    setLoading(false);
-  }, [scrolling]);
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  //   setLoading(true);
-  //   if (catName !== undefined) {
-  //     axios
-  //       .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}?limit=8`)
-  //       .then(({ data }) => {
-  //         if (data?.status) {
-  //           setCategories(data?.category_image);
-  //           setLoading(false);
-  //           dispatch({
-  //             type: "CATEGORY_BASED_ITEMS",
-  //             payload: {
-  //               totalImages: data.total_image_count.total_image,
-  //               categories: data.category_image,
-  //             },
-  //           });
-  //         }
-  //       });
-  //   } else {
-  //     setLoading(true);
-  //   }
-  // }, [catName, dispatch]);
+    if (catName) {
+      axios
+        .get(categoryURL)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategories(data?.category_image);
+            setLoading(false);
+            dispatch({
+              type: "CATEGORY_BASED_ITEMS",
+              payload: {
+                totalImages: data.total_image_count.total_image,
+                categories: data.category_image,
+              },
+            });
+          }
+        });
+    } else {
+      setLoading(true);
+    }
+  }, [dispatch, catName, user]);
 
   return (
     <>
@@ -137,7 +98,7 @@ const Products = (props) => {
           <Loader item={categories} />
         ) : (
           <>
-            {categories.length ? (
+            {scrolling && categories?.length ? (
               categories?.slice(0, count).map((photo) => (
                 <Grid
                   key={photo.image_id}
@@ -147,7 +108,7 @@ const Products = (props) => {
                   md={3}
                   className={classes.productItem}
                 >
-                  <Product photo={photo} />
+                  <Product catId={catName?.id} photo={photo} />
                 </Grid>
               ))
             ) : (

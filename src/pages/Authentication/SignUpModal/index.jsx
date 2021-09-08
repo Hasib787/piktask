@@ -19,7 +19,7 @@ import authImage from "../../../assets/auth.png";
 import CloseIcon from '@material-ui/icons/Close';
 import GoogleLogin from 'react-google-login';
 import useStyles from "./SignUpModal.styles";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../../database';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -56,6 +56,7 @@ const SignUpModal = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { openAuthModal, setOpenAuthModal } = props;
+  const user = useSelector((state) => state.user);
   
   const [passwordValue, setPasswordValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
@@ -107,6 +108,7 @@ const SignUpModal = (props) => {
     .then((res) => {
       if (res.data.status) {
         setOpenAuthModal(false);
+        user.isLogged = true;
         const token = res.data.token;
         localStorage.setItem("token", token);
         const decodedToken = jwt_decode(token.split(" ")[1]);

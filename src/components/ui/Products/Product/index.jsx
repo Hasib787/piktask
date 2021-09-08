@@ -31,29 +31,7 @@ const Product = ({ photo }) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLike, setLike] = useState(false);
 
-  useEffect(() => {
-    if (user?.token) {
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`,
-          {
-            headers: { Authorization: user.token },
-          }
-        )
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
-    }
-  }, [photo?.image_id, user.token]);
-
-  const handleClick = () => {
+  const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else if (user.id !== photo?.user_id && user.token) {
@@ -96,12 +74,12 @@ const Product = ({ photo }) => {
             </IconButton>
           )}
 
-          {!isLike ? (
+          {!photo?.isLike && !isLike ? (
             <IconButton
               ref={likeRef}
               classes={{ root: classes.favouriteIcon }}
               className={classes.iconBtn}
-              onClick={handleClick}
+              onClick={handleLikeBtn}
             >
               <FavoriteBorderIcon fontSize={"large"} />
             </IconButton>
@@ -110,7 +88,7 @@ const Product = ({ photo }) => {
               ref={likeRef}
               classes={{ root: classes.favouriteIconBtn }}
               className={classes.iconBtn}
-              onClick={handleClick}
+              onClick={handleLikeBtn}
             >
               <FavoriteBorderIcon fontSize={"large"} />
             </IconButton>

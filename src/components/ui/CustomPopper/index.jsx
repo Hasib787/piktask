@@ -11,9 +11,8 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import firebase from "firebase";
-import React from "react";
-import { useSelector } from "react-redux";
+// import firebase from "firebase";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -28,22 +27,42 @@ const CustomPopper = ({
   handleListKeyDown,
 }) => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-  const userSignout = () => {
+  const handleSignout = () => {
+
     if (user && user?.token) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          toast.success("You successfully signed out");
-          window.location.reload(history.replace("/"));
-        })
-        .catch((error) => {
-          console.log("Signout error", error.message);
-        });
+
+      toast.success("You successfully signed out");
+      user.isLogged = false;
+      history.push("/")
       localStorage.clear();
+
+      dispatch({
+        type: "LOGOUT",
+        payload: {
+          email:"",
+          token:"",
+        },
+      });
+
+      // firebase
+      //   .auth()
+      //   .signOut()
+      //   .then(() => {
+      //     toast.success("You successfully signed out");
+      //     // window.location.reload(history.replace("/"));
+      //     // window.location.reload("/");
+      //     user.isLogged=false;
+      //     history.push("/")
+      //     localStorage.clear();
+
+      //   })
+      //   .catch((error) => {
+      //     console.log("Signout error", error.message);
+      //   });
     }
   };
 
@@ -172,7 +191,7 @@ const CustomPopper = ({
                   className={classes.userMenuItem}
                   onClick={(e) => {
                     handleClose(e);
-                    userSignout();
+                    handleSignout();
                   }}
                 >
                   Logout

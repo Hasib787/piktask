@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     position: "relative",
     "&::before": {
-      background: "rgb(20 51 64 / 94%)",
+      // background: "rgb(20 51 64 / 94%)",
+      background: "rgba(0, 28, 48, 0.6)",
       content: '""',
       position: "absolute",
       top: 0,
