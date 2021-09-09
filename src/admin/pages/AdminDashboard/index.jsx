@@ -74,6 +74,7 @@ const AdminDashboard = () => {
   const { portfolios } = portfolioData;
   const user = useSelector((state) => state.user);
 
+
   const [value, setValue] = useState(0);
 
   function selectTab(index) {
@@ -121,13 +122,15 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <Layout>
-      <AdminHeader />
+    <Layout title={`Dashboard || Piktask`}>
 
       <div className={classes.adminRoot}>
-        <Sidebar />
+        <div>
+          <Sidebar />
+        </div>
 
         <main className={classes.content}>
+          <AdminHeader />
           <Grid
             container
             spacing={2}
@@ -480,9 +483,9 @@ const AdminDashboard = () => {
               </Card>
             </Grid>
           </Grid>
+          <Footer addminFooter />
         </main>
       </div>
-      <Footer addminFooter />
     </Layout>
   );
 };

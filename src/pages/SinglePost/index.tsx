@@ -1,4 +1,4 @@
-import { Container, Typography } from "@material-ui/core";
+import { Container, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/ui/Footer";
@@ -7,7 +7,7 @@ import HeroSection from "../../components/ui/Hero";
 import postData from "../../data/blog.json";
 import Layout from "../../Layout";
 import useStyles from "./SinglePost.styles";
-import bannerImg from "../../assets/banner/banner.png";
+// import bannerImg from "../../assets/banner/banner.png";
 import Spacing from "../../components/Spacing";
 
 interface Post {
@@ -32,13 +32,42 @@ const SingleBlogPost = () => {
   return (
     <Layout>
       <Header />
-      <HeroSection background={bannerImg} size="medium" />
+      <HeroSection size="medium" />
       <Spacing space={{height: "5rem"}} />
       <Container>
-        <img src={getPostByID?.image} alt={getPostByID?.title} />
-        <Typography variant="h2">{getPostByID?.title}</Typography>
-        <Typography>{getPostByID?.author}</Typography>
-        <Typography>{getPostByID?.description}</Typography>
+        <Grid 
+          container
+          spacing={3}
+        >
+          <Grid item sm={8}>
+            <div className={classes.blogImageWrapper}>
+              <img src={getPostByID?.image} alt={getPostByID?.title} />
+            </div>
+            <div className={classes.blogAuthorInfo}>
+              <Typography variant="h2">{getPostByID?.title}</Typography>
+              <Typography>{getPostByID?.description}</Typography>
+              <Typography>By {getPostByID?.author} <span>2 weeks ago</span></Typography>
+            </div>
+            <Spacing space={{height: "4rem"}} />
+            <div className={classes.blogContent}>
+              <Typography>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt excepturi, consectetur, animi veritatis earum, placeat rem ex harum inventore odio molestiae officia libero tempore impedit accusantium porro nesciunt quaerat delectus perferendis cupiditate est. Tenetur dolor odit aut inventore at atque sint ipsam, beatae fugit deserunt alias amet repudiandae soluta eos!
+              </Typography>
+            </div>
+            <Spacing space={{height: "4rem"}} />
+            <div className={classes.blogContent}>
+              <Typography>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt excepturi, consectetur, animi veritatis earum, placeat rem ex harum inventore odio molestiae officia libero tempore impedit accusantium porro nesciunt quaerat delectus perferendis cupiditate est. Tenetur dolor odit aut inventore at atque sint ipsam, beatae fugit deserunt alias amet repudiandae soluta eos!
+              </Typography>
+            </div>
+          </Grid>
+          <Grid item sm={4}>
+            <Typography variant="h2">{getPostByID?.title}</Typography>
+            <Typography>{getPostByID?.author}</Typography>
+            <Typography>{getPostByID?.description}</Typography>
+            <Typography>By {getPostByID?.author} <span>2 weeks ago</span></Typography>
+          </Grid>
+        </Grid>
       </Container>
       <Spacing space={{height: "5rem"}} />
       <Footer />

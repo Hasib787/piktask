@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     display: "flex",
-    marginTop: "8rem",
+    // marginTop: "8rem",
   },
   cardRoot: {
     height: "100%",
@@ -14,12 +14,13 @@ const useStyles = makeStyles((theme) => ({
     // flexGrow: 1,
     // padding: theme.spacing(2),
     padding: 0,
-    width: "calc(100vw - 315px)",
-    marginTop: "2rem",
+    // width: "calc(100vw - 315px)",
+    // marginTop: "2rem",
     marginLeft: "2rem",
     marginRight: "2rem",
   },
   dashboardGridContainer: {
+    marginTop: "1rem",
     marginBottom: "2rem",
   },
   cardHeading: {

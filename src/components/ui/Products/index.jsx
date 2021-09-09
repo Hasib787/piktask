@@ -39,6 +39,7 @@ const Products = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+
   const { catName, count, showHeading } = props;
   const [categories, setCategories] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -98,7 +99,7 @@ const Products = (props) => {
           <Loader item={categories} />
         ) : (
           <>
-            {scrolling && categories?.length ? (
+            {categories?.length ? (
               categories?.slice(0, count).map((photo) => (
                 <Grid
                   key={photo.image_id}

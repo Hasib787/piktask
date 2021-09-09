@@ -8,17 +8,18 @@ const useStyles = makeStyles((theme) => ({
      },
   },
   appbarHeader: {
-    backgroundColor: "white",
+    // backgroundColor: "white",
+    backgroundColor: "#1B3F4E",
     boxShadow: "none",
   },
   fullwidth: {
     width: "100%",
-    height: "8rem",
+    height: "7rem",
     // backgroundColor: "#1B3F4E",
   },
   root: {
     height: "100%",
-    paddingTop: "1.5rem",
+    paddingTop: "1rem",
   },
   container: {
     height: "100%",

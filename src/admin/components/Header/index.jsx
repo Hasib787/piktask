@@ -100,7 +100,7 @@ const AdminHeader = () => {
   };
   return (
     <>
-      <AppBar position="fixed" className={classes.appbarHeader}>
+      <div position="fixed" className={classes.appbarHeader}>
         {mobileView ? (
           <div className={classes.fullwidth}>
           <Container classes={{ root: classes.root }}>
@@ -173,9 +173,7 @@ const AdminHeader = () => {
 
                 <Grid item xs={10} classes={{ item: classes.item }}>
                   <div className={classes.headerInfo}>
-                    <Typography className={classes.earningAmount} variant="h4">
-                      UnpaiD Earning : $0.20
-                    </Typography>
+                    
                     <Button
                       className={classes.uploadBtn}
                       component={Link}
@@ -264,7 +262,7 @@ const AdminHeader = () => {
           handleClose={handleClose}
           handleListKeyDown={handleListKeyDown}
         />
-      </AppBar>
+      </div>
     </>
   );
 };

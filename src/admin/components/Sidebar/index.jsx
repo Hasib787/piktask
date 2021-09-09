@@ -1,8 +1,9 @@
-import { Collapse, List, ListItem, ListItemText } from "@material-ui/core";
+import { Button, Collapse, List, ListItem, ListItemText } from "@material-ui/core";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./Sidebar.styles";
+import logo from "../../../assets/Logo/piktask-6.png"
 
 const Sidebar = () => {
   const classes = useStyles();
@@ -52,6 +53,16 @@ const Sidebar = () => {
 
   return (
     <aside className={classes.sidebarWrapper}>
+      <div className={classes.logoWrapper}>
+        <Button
+          component={Link}
+          to="/"
+          // className={classes.logoWrapper}
+          disableRipple
+        >
+          <img src={logo} className={classes.sidebarLogo} alt="Piktask Logo" />
+        </Button>
+      </div>
       <List component="nav" aria-labelledby="nested-sidebar-nav">
         <ListItem
           classes={{

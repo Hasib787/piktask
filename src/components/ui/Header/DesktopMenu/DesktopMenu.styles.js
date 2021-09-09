@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: "12rem",
+    width: "100%",
     display: "block",
   },
   menuUnderline: {
