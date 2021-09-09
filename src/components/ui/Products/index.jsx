@@ -38,14 +38,11 @@ const Products = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const popularCategories = useSelector((state) => state.popularCategories);
+  const productCategories = useSelector((state) => state.productCategories);
 
-  const { catName, count, showHeading } = props;
-  const [categories, setCategories] = useState([]);
+  const { category, count, showHeading } = props;
+  const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
-
-  const [scrolling, setScrolling] = useState(0);
-  let [index, setIndex] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -53,21 +50,20 @@ const Products = (props) => {
     let categoryURL;
 
     if (user && user?.id) {
-      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}?user_id=${user?.id}?limit=8`;
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}?limit=8`;
     } else {
-      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}?limit=8`;
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?limit=8`;
     }
-
-    if (catName) {
+    if (category) {
       axios.get(categoryURL).then(({ data }) => {
         if (data?.status) {
-          setCategories(data?.category_image);
+          setImages(data?.category_image);
           setLoading(false);
           dispatch({
             type: "CATEGORY_BASED_ITEMS",
             payload: {
               totalImages: data.total_image_count.total_image,
-              categories: data.category_image,
+              images: data.category_image,
             },
           });
         }
@@ -75,66 +71,16 @@ const Products = (props) => {
     } else {
       setLoading(true);
     }
-  }, [dispatch, catName, user]);
-
-  const addProducts = [];
-
-  useEffect(() => {
-    setLoading(true);
-    let categoryURL;
-
-    window.onscroll = () => {
-      setScrolling(window.pageYOffset);
-
-      let currentPosition = scrolling;
-
-      if (
-        popularCategories.length &&
-        currentPosition % 100 === 0 &&
-        index <= 7
-      ) {
-        const category = popularCategories[index];
-        setIndex((index) => index + 1);
-        // console.log('addProducts1', addProducts);
-        // console.log("setindex", index);
-        // console.log("category", category);
-        if (user && user?.id) {
-          categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}`;
-        } else {
-          categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}`;
-        }
-        axios.get(categoryURL).then(({ data }) => {
-          // console.log("loadData", data);
-          // addProducts.push(data);
-          // console.log("addProducts1", addProducts);
-
-          if (data?.status) {
-            setCategories(data?.category_image);
-            dispatch({
-              type: "PRODUCT_CATEGORIES",
-              payload: 
-                [...data.category_image]
-            });
-            setLoading(false);
-          } else {
-            setLoading(true);
-          }
-        });
-      }
-    };
-
-    setLoading(false);
-  }, [scrolling, catName, user]);
-
+  }, [dispatch, category, user]);
 
   return (
     <>
-      {categories.length !== 0 && showHeading && (
-        <SectionHeading title={catName?.name} large>
+      {images.length !== 0 && showHeading && (
+        <SectionHeading title={category?.name} large>
           <Button
             className={classes.headingButton}
             component={Link}
-            to={`category/${catName?.slug}`}
+            to={`category/${category?.slug}`}
           >
             See More
           </Button>
@@ -143,10 +89,10 @@ const Products = (props) => {
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <Loader item={categories} />
+          <Loader item={images} />
         ) : (
           <>
-            {categories?.slice(0, count).map((photo) => (
+            {images?.slice(0, count).map((photo) => (
               <Grid
                 key={photo.image_id}
                 item
@@ -155,7 +101,7 @@ const Products = (props) => {
                 md={3}
                 className={classes.productItem}
               >
-                <Product catId={catName?.id} photo={photo} />
+                <Product catId={category?.id} photo={photo} />
               </Grid>
             ))}
           </>

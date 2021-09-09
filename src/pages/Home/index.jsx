@@ -14,11 +14,34 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useStyles from "./Home.styles";
 import Layout from "../../Layout";
+import { useState } from "react";
 
 export const Home = () => {
   const classes = useStyles();
-  const popularCats = useSelector((state) => state.popularCategories);
-  const productCategories = useSelector((state) => state.productCategories);
+  const categories = useSelector((state) => state.popularCategories);
+  const [popularCats, setPopularCats] = useState([])
+  const [scrolling, setScrolling] = useState(0);
+  let [index, setIndex] = useState(0);
+
+    
+    window.onscroll = () => {
+
+      setScrolling(window.pageYOffset);
+      let currentPosition = scrolling;
+      console.log("currentPosition",currentPosition)
+     
+        if (
+          categories.length &&
+          currentPosition % 350 === 0 &&
+          index <= 7
+        ) {
+          const category = categories[index];
+          setIndex((index) => index + 1);
+           popularCats.push(category);
+          // console.log("categoryValue",category)
+        }
+    };
+
 
   return (
     <Layout
@@ -51,33 +74,34 @@ export const Home = () => {
       {/* Carousel with Categories */}
       <CategoryCarousel />
 
-      <Container>
-        <Products  catName={productCategories[0]} showHeading count={8} />
+      {popularCats.length && popularCats.map((category, index) => 
+        <Container>
+          <Products key={index} category={category} showHeading count={8} />
+        </Container>
+      )};
+      {/* <Container>
+        <Products catName={productCategories[0]} showHeading count={8} />
+      </Container> */}
+
+      {/* <Container>
+        <Products catName={productCategories[2]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[1]} showHeading count={8} />
+        <Products catName={productCategories[3]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[2]} showHeading count={8} />
+        <Products catName={productCategories[4]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[3]} showHeading count={8} />
+        <Products catName={productCategories[5]} showHeading count={8} />
       </Container>
 
       <Container>
-        <Products catName={popularCats[4]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={popularCats[5]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={popularCats[6]} showHeading count={8} />
-      </Container>
+        <Products catName={productCategories[6]} showHeading count={8} />
+      </Container> */}
 
       <CallToAction
         title="Daily 10 image/photos Download"
