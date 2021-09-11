@@ -32,7 +32,7 @@ export const Home = () => {
      
         if (
           categories.length &&
-          currentPosition % 350 === 0 &&
+          currentPosition % 50 > 30 &&
           index <= 7
         ) {
           const category = categories[index];

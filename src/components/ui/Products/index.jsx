@@ -50,7 +50,7 @@ const Products = (props) => {
     let categoryURL;
 
     if (user && user?.id) {
-      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}?limit=8`;
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}&limit=8`;
     } else {
       categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?limit=8`;
     }
@@ -93,17 +93,18 @@ const Products = (props) => {
         ) : (
           <>
             {images?.slice(0, count).map((photo) => (
-              <Grid
-                key={photo.image_id}
-                item
-                xs={6}
-                sm={4}
-                md={3}
-                className={classes.productItem}
-              >
-                <Product catId={category?.id} photo={photo} />
-              </Grid>
-            ))}
+                <Grid
+                  key={photo.image_id}
+                  item
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <Product catId={category?.id} photo={photo} />
+                </Grid>
+              ))
+            }
           </>
         )}
       </Grid>
