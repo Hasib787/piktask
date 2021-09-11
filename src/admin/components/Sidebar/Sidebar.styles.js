@@ -4,31 +4,29 @@ const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   sidebarWrapper: {
-    // backgroundColor: "#FAFAFA",
     backgroundColor: "#001c30",
     width: "28rem",
-    // paddingTop: "1rem",
     height: "100vh",
-    // position: "fixed",
-    // zIndex: "9999",
+    position: "fixed",
   },
   logoWrapper: {
     width: 160,
     padding: 0,
-    margin: "0 auto",
     "&:hover": {
       background: "transparent",
     },
-
+    
     "@media (max-width: 1024px)": {
       width: "12rem",
-
+      
       "& img": {
         width: "100%",
       },
     },
   },
   sidebarLogo: {
+    marginLeft: "5.5rem",
+    marginTop: "1rem",
     width: "100%",
     display: "block",
   },

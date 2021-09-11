@@ -6,22 +6,22 @@ import {
   Grid,
   LinearProgress,
   Paper,
-  Tab,
+  // Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tabs,
+  // Tabs,
   Typography,
 } from "@material-ui/core";
 // import DoughnutChart from "../../components/Charts/DoughnutChart";
 import arrowDown from "../../../assets/dashboardicons/icon1.svg";
 import moneyIcon from "../../../assets/dashboardicons/money.svg";
-import downloadIcon from "../../../assets/icons/downArrow.svg";
+// import downloadIcon from "../../../assets/icons/downArrow.svg";
 import box from "../../../assets/dashboardicons/box.svg";
-import portfolioData from "../../../data/portfolio.json";
+// import portfolioData from "../../../data/portfolio.json";
 import authorBadge from "../../../assets/badge.png";
 import image3 from "../../../assets/bangladesh.png";
 import authorImg from "../../../assets/author.png";
@@ -35,9 +35,9 @@ import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import DoughnutChart from "./DoughnutChart";
 import useStyles from "../../admin.styles";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import map from "../../../assets/map.png";
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../../Layout";
 
 const ProfileProgress = withStyles((theme) => ({
@@ -53,38 +53,38 @@ const ProfileProgress = withStyles((theme) => ({
   },
 }))(LinearProgress);
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//   const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <>{children}</>}
-    </div>
-  );
-}
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && <>{children}</>}
+//     </div>
+//   );
+// }
 
 const AdminDashboard = () => {
   const classes = useStyles();
-  const { portfolios } = portfolioData;
-  const user = useSelector((state) => state.user);
+  // const { portfolios } = portfolioData;
+  // const user = useSelector((state) => state.user);
 
 
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
 
-  function selectTab(index) {
-    return {
-      id: `portfolio-${index}`,
-      "aria-controls": `portfolio-tabpanel-${index}`,
-    };
-  }
+  // function selectTab(index) {
+  //   return {
+  //     id: `portfolio-${index}`,
+  //     "aria-controls": `portfolio-tabpanel-${index}`,
+  //   };
+  // }
 
-  const handleChange = (e, index) => { setValue(index); };
+  // const handleChange = (e, index) => { setValue(index); };
 
   const rows = [
     {
@@ -136,7 +136,66 @@ const AdminDashboard = () => {
             spacing={2}
             className={classes.dashboardGridContainer}
           >
-            <Grid item xs={12} sm={7}>
+            <Grid item lg={3} md={3} sm={6} xm={12}>
+              <CardContent className={classes.statisticsContent}>
+                <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                  <img src={arrowDown} alt="Download" />
+                </div>
+                <Typography className={classes.totalCount} variant="h1">
+                  30.2K
+                  <span>Download</span>
+                </Typography>
+                <Typography className={classes.lastTotalCount}>
+                  Last month: 35.4K
+                </Typography>
+              </CardContent>
+            </Grid>
+
+            <Grid item lg={3} md={3} sm={6} xm={12}>
+              <CardContent className={classes.statisticsContent}>
+                <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                  <img src={arrowDown} alt="Download" />
+                </div>
+                <Typography className={classes.totalCount} variant="h1">
+                  30.2K
+                  <span>Download</span>
+                </Typography>
+                <Typography className={classes.lastTotalCount}>
+                  Last month: 35.4K
+                </Typography>
+              </CardContent>
+            </Grid>
+
+            <Grid item lg={3} md={3} sm={6} xm={12}>
+              <CardContent className={classes.statisticsContent}>
+                <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                  <img src={arrowDown} alt="Download" />
+                </div>
+                <Typography className={classes.totalCount} variant="h1">
+                  30.2K
+                  <span>Download</span>
+                </Typography>
+                <Typography className={classes.lastTotalCount}>
+                  Last month: 35.4K
+                </Typography>
+              </CardContent>
+            </Grid>
+
+            <Grid item lg={3} md={3} sm={6} xm={12}>
+              <CardContent className={classes.statisticsContent}>
+                <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                  <img src={arrowDown} alt="Download" />
+                </div>
+                <Typography className={classes.totalCount} variant="h1">
+                  30.2K
+                  <span>Download</span>
+                </Typography>
+                <Typography className={classes.lastTotalCount}>
+                  Last month: 35.4K
+                </Typography>
+              </CardContent>
+            </Grid>
+            {/* <Grid item xs={12} sm={7}>
               <Card className={classes.cardRoot}>
                 <CardContent className={classes.statisticCardContent}>
                   <div className={classes.cardHeading}>
@@ -216,13 +275,13 @@ const AdminDashboard = () => {
                     </div>
                     <ProfileProgress variant="determinate" value={60} />
                     <Typography className={classes.aboutText}>
-                      Increase your discoverability > Tell us{" "}
+                      Increase your discoverability {">"} Tell us{" "}
                       <span>about you</span>
                     </Typography>
                   </div>
                 </CardContent>
               </Card>
-            </Grid>
+            </Grid> */}
           </Grid>
 
           {/* Map & country wise earning statistics */}
@@ -298,7 +357,7 @@ const AdminDashboard = () => {
             </Grid>
           </Grid>
 
-          <Card className={`${classes.cardRoot} ${classes.portfolioContainer}`}>
+          {/* <Card className={`${classes.cardRoot} ${classes.portfolioContainer}`}>
             <Grid container className={classes.portfolioTabWrapper}>
               <Typography className={classes.portfolioHeading} variant="h2">
                 My Portfolio
@@ -372,11 +431,11 @@ const AdminDashboard = () => {
                 Illustrations
               </TabPanel>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Grid
             container
-            spacing={2}
+            // spacing={2}
             className={classes.dashboardGridContainer}
           >
             <Grid item xs={12} sm={12} md={6}>
