@@ -23,10 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     padding: 0,
-    width: "calc(100vw - 315px)",
+    width: "100%",
     marginLeft: "2rem",
     marginRight: "2rem",
-    marginTop: "2rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
     },

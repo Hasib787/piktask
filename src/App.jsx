@@ -1,6 +1,6 @@
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import EarningManagement from "./admin/pages/EarningManagement";
-import PrivateRoute from "./redux/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import AccountSettings from "./admin/pages/AccountSettings";
 import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
@@ -21,7 +21,7 @@ import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -43,9 +43,16 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user)
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // if(!user.token){
+    //   user.isLogged= false;
+    // } else{
+    //   user.isLogged = true;
+    // }
 
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -104,11 +111,12 @@ const App = () => {
         <Route exact path="/" component={Home} />
         {/* <Route exact path="/popular" component={Home} /> */}
         {/* Admin */}
-        <PrivateRoute
+        {/* <PrivateRoute
           exact
           path="/admin/dashboard"
           component={AdminDashboard}
-        />
+        /> */}
+        <Route exact path="/admin/dashboard" component={AdminDashboard} />
         <Route exact path="/admin/upload" component={UploadFiles} />
         <Route exact path="/admin/pending" component={PendingFiles} />
         <Route exact path="/admin/revision" component={Revision} />

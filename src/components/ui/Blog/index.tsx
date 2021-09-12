@@ -21,7 +21,7 @@ const Blog = (): JSX.Element => {
       <Container>
         <Grid container className={classes.headingWrapepr}>
           <Typography className={classes.heading} variant="h2">
-            Piktask Guidline
+            Piktask Guideline
           </Typography>
           <Typography className={classes.subheading} variant="subtitle1">
             Tens of millions of designers are using png tree

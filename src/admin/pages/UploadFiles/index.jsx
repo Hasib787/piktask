@@ -343,7 +343,7 @@ const UploadFiles = () => {
   };
 
   return (
-    <Layout>
+    <Layout title={`Upload || Piktask`}>
       <AdminHeader />
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}

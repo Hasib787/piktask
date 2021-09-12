@@ -99,14 +99,14 @@ const useStyles = makeStyles((theme) => ({
   },
   totalAmount: {
     color: "#76C71A",
-    fontSize: "2rem",
+    fontSize: "2.8rem",
     lineHeight: 1,
     "@media (max-width: 576px)": {
       fontSize: "1.5rem",
     },
   },
   totalText: {
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
     fontWeight: 400,
     "@media (max-width: 576px)": {
       fontSize: "1.3rem",
@@ -119,9 +119,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     fontSize: "1.5rem",
-    fontWeight: 500,
     "& span": {
       color: "inherit",
+    },
+    "& svg": {
+      color: "#b6b6b6",
     },
     "&:last-child": {
       borderBottom: "0px solid transparent",

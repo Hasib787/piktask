@@ -4,9 +4,31 @@ const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   sidebarWrapper: {
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#001c30",
     width: "28rem",
-    paddingTop: "1rem",
+    height: "100vh",
+    position: "fixed",
+  },
+  logoWrapper: {
+    width: 160,
+    padding: 0,
+    "&:hover": {
+      background: "transparent",
+    },
+    
+    "@media (max-width: 1024px)": {
+      width: "12rem",
+      
+      "& img": {
+        width: "100%",
+      },
+    },
+  },
+  sidebarLogo: {
+    marginLeft: "5.5rem",
+    marginTop: "1rem",
+    width: "100%",
+    display: "block",
   },
   container: {
     "& svg": {
@@ -95,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectedItem: {
-    backgroundColor: "#114960 !important",
+    backgroundColor: "#0387EA !important",
     "& span": {
       color: `${theme.palette.common.white}`,
     },
@@ -150,10 +172,15 @@ const useStyles = makeStyles((theme) => ({
 
   // Submenu
   submenuContainer: {
-    backgroundColor: "rgb(17 73 96 / 9%)",
+    // backgroundColor: "rgb(17 73 96 / 9%)",
+    backgroundColor: "#023458",
 
     "& a": {
       paddingLeft: "3.5rem",
+
+      "& span": {
+        color: "#fff",
+      },
     },
   },
   dropdownMenu: {
@@ -164,6 +191,11 @@ const useStyles = makeStyles((theme) => ({
 
   gutters: {
     paddingLeft: "3.6rem",
+    color: "#fff",
+
+    "& div span": {
+      color: "#fff",
+    },
   },
 }));
 

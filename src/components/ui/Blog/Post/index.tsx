@@ -17,7 +17,7 @@ const Post: FC<Props> = ({ title, description, image, id, author }) => {
   const classes: ClassNameMap = useStyles();
 
   return (
-    <Grid item xs={8} sm={6} md={3} className={classes.root}>
+    <Grid item xs={6} sm={6} md={3} className={classes.root}>
       <div className={classes.postWrapper}>
         <div className={classes.imageWrapper}>
           <Link to={`/blog/${id}`} className={classes.singlePost} />

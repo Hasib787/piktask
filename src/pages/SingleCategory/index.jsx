@@ -162,9 +162,9 @@ const SingleCategory = () => {
   }, [id, user]);
 
   const handleFollower = () => {
-    if (!user && !user.token && window.innerWidth > 900) {
+    if ((!user || !user.token) && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user && !user.token && window.innerWidth < 900) {
+    } else if ((!user || !user.token) && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -186,9 +186,9 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user && !user.token && window.innerWidth > 900) {
+    if ((!user || !user.token) && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user && !user.token && window.innerWidth < 900) {
+    } else if ((!user || !user.token) && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios

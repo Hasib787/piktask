@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
   },
   authBtn: {
-    backgroundColor: "#117A00",
+    // backgroundColor: "#117A00",
+    backgroundColor: "#0387EA",
     padding: "6px 16px",
     color: theme.palette.common.white,
     fontSize: "1.6rem",

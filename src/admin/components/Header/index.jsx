@@ -1,13 +1,13 @@
 import {
-  AppBar,
+  // AppBar,
   Button,
   Container,
   Drawer,
   makeStyles,
   Grid,
-  MenuItem,
-  MenuList,
-  Toolbar,
+  // MenuItem,
+  // MenuList,
+  // Toolbar,
   Typography,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -16,7 +16,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import userPhoto from "../../../assets/author.png";
 import crownIcon from "../../../assets/icons/crown.svg";
 import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../../../components/ui/CustomPopper";
@@ -100,7 +99,7 @@ const AdminHeader = () => {
   };
   return (
     <>
-      <AppBar position="fixed" className={classes.appbarHeader}>
+      <div position="fixed" className={classes.appbarHeader}>
         {mobileView ? (
           <div className={classes.fullwidth}>
           <Container classes={{ root: classes.root }}>
@@ -162,32 +161,22 @@ const AdminHeader = () => {
                 alignItems="center"
               >
                 <Grid item xs={2}>
-                  <Link to="/" className={classes.adminLogoLink}>
+                  <Button
+                    className={classes.uploadBtn}
+                    component={Link}
+                    to="/admin/upload"
+                  >
                     <img
-                      className={classes.adminLogo}
-                      src={logo}
-                      alt="Piktask"
+                      className={classes.ButtoncrownIcon}
+                      src={crownIcon}
+                      alt="Upload"
                     />
-                  </Link>
+                    Upload
+                  </Button>
                 </Grid>
 
                 <Grid item xs={10} classes={{ item: classes.item }}>
                   <div className={classes.headerInfo}>
-                    <Typography className={classes.earningAmount} variant="h4">
-                      UnpaiD Earning : $0.20
-                    </Typography>
-                    <Button
-                      className={classes.uploadBtn}
-                      component={Link}
-                      to="/admin/upload"
-                    >
-                      <img
-                        className={classes.ButtoncrownIcon}
-                        src={crownIcon}
-                        alt="Upload"
-                      />
-                      Upload
-                    </Button>
                     <div
                       className={classes.userProfile}
                       onClick={handleToggle}
@@ -264,7 +253,7 @@ const AdminHeader = () => {
           handleClose={handleClose}
           handleListKeyDown={handleListKeyDown}
         />
-      </AppBar>
+      </div>
     </>
   );
 };

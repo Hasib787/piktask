@@ -2,11 +2,12 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+    // marginTop: "8rem",
   },
   cardRoot: {
     height: "100%",
+    width: "100%",
     borderRadius: 0,
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
   },
@@ -14,58 +15,62 @@ const useStyles = makeStyles((theme) => ({
     // flexGrow: 1,
     // padding: theme.spacing(2),
     padding: 0,
-    width: "calc(100vw - 315px)",
-    marginTop: "2rem",
-    marginLeft: "2rem",
-    marginRight: "2rem",
+    // width: "calc(100vw - 315px)",
+    // marginTop: "2rem",
+    marginLeft: "29rem",
+    marginRight: "1rem",
   },
   dashboardGridContainer: {
+    marginTop: "1rem",
     marginBottom: "2rem",
   },
-  cardHeading: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: "3rem",
-  },
-  statistics: {
-    fontSize: "2.5rem",
-  },
-  updateBtn: {
-    ...theme.typography.button,
-    padding: ".6rem 2rem",
-    backgroundColor: "rgb(17 122 0 / 25%)",
-    color: theme.palette.primary.main,
-    border: ".2rem solid",
-    borderColor: "rgb(17 122 0 / 0%)",
-    "&:hover": {
-      borderColor: "rgb(17 122 0 / 25%)",
-      backgroundColor: "rgb(17 122 0 / 0%)",
-      color: theme.palette.secondary.main,
-    },
-  },
-  statisticCardContent: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  statisticsInnerWrapper: {
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-    marginBottom: ".5rem",
-    height: "100%",
-  },
+  // cardHeading: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "space-between",
+  //   marginBottom: "3rem",
+  // },
+  // statistics: {
+  //   fontSize: "2.5rem",
+  // },
+  // updateBtn: {
+  //   ...theme.typography.button,
+  //   padding: ".6rem 2rem",
+  //   backgroundColor: "rgb(17 122 0 / 25%)",
+  //   color: theme.palette.primary.main,
+  //   border: ".2rem solid",
+  //   borderColor: "rgb(17 122 0 / 0%)",
+  //   "&:hover": {
+  //     borderColor: "rgb(17 122 0 / 25%)",
+  //     backgroundColor: "rgb(17 122 0 / 0%)",
+  //     color: theme.palette.secondary.main,
+  //   },
+  // },
+  // statisticCardContent: {
+  //   height: "100%",
+  //   display: "flex",
+  //   flexDirection: "column",
+  // },
+  // statisticsInnerWrapper: {
+  //   display: "flex",
+  //   alignItems: "flex-end",
+  //   justifyContent: "space-between",
+  //   flexWrap: "wrap",
+  //   marginBottom: ".5rem",
+  //   height: "100%",
+  // },
   statisticsContent: {
-    display: "flex",
-    alignItems: "center",
+    textAlign: "center",
+    // marginLeft: "1rem",
+    backgroundColor: "#fff",
+    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
     "&:hover": {
       "& img": {
         transform: "rotate(360deg)",
         transition: "all 0.5s linear",
       },
     },
+    
   },
 
   statisticsIcon: {
@@ -92,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   arrowIcon: {
+    margin: "0 auto",
     backgroundColor: "#EEEDFC",
   },
   boxIcon: {
@@ -100,13 +106,16 @@ const useStyles = makeStyles((theme) => ({
   moneyIcon: {
     backgroundColor: "#EDF8EF",
   },
-  statisticsText: {
+  totalCount: {
     fontSize: "2.5rem",
+    margin: "2rem 0rem",
     lineHeight: 1,
     "& span": {
-      fontSize: "1.6rem",
+      color: "#b6b6b6",
+      fontSize: "1.4rem",
       display: "block",
-      marginTop: ".5rem",
+      marginTop: ".7rem",
+      fontWeight: "400"
     },
     "@media (max-width: 1170px)": {
       fontSize: "2.2rem",

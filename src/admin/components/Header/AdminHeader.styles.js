@@ -9,16 +9,18 @@ const useStyles = makeStyles((theme) => ({
   },
   appbarHeader: {
     backgroundColor: "white",
+    // backgroundColor: "#1B3F4E",
     boxShadow: "none",
   },
   fullwidth: {
     width: "100%",
-    height: "8rem",
+    height: "7rem",
     // backgroundColor: "#1B3F4E",
+    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
   },
   root: {
     height: "100%",
-    paddingTop: "1.5rem",
+    paddingTop: "1rem",
   },
   container: {
     height: "100%",
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadBtn: {
     ...theme.typography.button,
-    backgroundColor: "#117A00",
+    backgroundColor: "#0387EA",
     padding: "0.5rem 1.4rem",
     marginRight: "2rem",
     fontSize: "1.4rem",
