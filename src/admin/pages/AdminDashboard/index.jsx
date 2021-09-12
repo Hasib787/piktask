@@ -38,12 +38,14 @@ import Sidebar from "../../components/Sidebar";
 import useStyles from "./admin.styles";
 // import { useSelector } from "react-redux";
 // import map from "../../../assets/map.png";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../../Layout";
 import Blog from "../../../components/ui/Blog";
 import { TopSeller } from "../../../components/ui/TopSeller";
 import SectionHeading from "../../../components/ui/Heading";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 // const ProfileProgress = withStyles((theme) => ({
 //   root: {
@@ -77,8 +79,25 @@ import { Link } from "react-router-dom";
 const AdminDashboard = () => {
   const classes = useStyles();
   // const { portfolios } = portfolioData;
-  // const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
+  const [authorFiles, setAuthorFiles] = useState({});
 
+  useEffect(() => {
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/user/earning/images`,
+    {
+      headers: { Authorization: user.token },
+    }
+    )
+    .then(({data}) => {
+      // console.log("data", data);
+      if(data?.status) {
+        setAuthorFiles(data?.images);
+      }
+    })
+  }, [user.token])
+
+  // console.log("authorFiles", authorFiles);
 
   // const [value, setValue] = useState(0);
 
@@ -137,7 +156,7 @@ const AdminDashboard = () => {
           <AdminHeader />
           <Grid
             container
-            spacing={2}
+            // spacing={2}
             className={classes.dashboardGridContainer}
           >
             <Grid item lg={3} md={3} sm={6} xm={12}>
@@ -206,15 +225,16 @@ const AdminDashboard = () => {
           {/* Map & country wise earning statistics */}
           <Grid
             container
-            spacing={2}
+            // spacing={2}
             className={classes.dashboardGridContainer}
           >
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               <Card className={classes.cardRoot}>
                 {/* <CardHeader>Location</CardHeader> */}
                 <CardContent className={classes.authorCard}>
                   <div className={classes.cardHeading}>
                     <Heading tag="h2">Your Last File's</Heading>
+                    <Button className={classes.loadMoreBtn}>Load more</Button>
                   </div>
                   <TableContainer
                     className={classes.tableContainer}
@@ -270,9 +290,9 @@ const AdminDashboard = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
               <Card className={classes.cardRoot}>
-                <CardContent>
+                <CardContent className={classes.authorCard}>
                   <div className={classes.cardHeading}>
                     <Heading tag="h2">Piktask Top File's</Heading>
                   </div>

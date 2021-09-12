@@ -71,7 +71,6 @@ const Products = (props) => {
     } else {
       setLoading(true);
     }
-    setLoading(false);
   }, [dispatch, category, user]);
 
   return (

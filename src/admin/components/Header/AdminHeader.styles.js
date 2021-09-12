@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "100%",
     backgroundColor: "#f1f1f1",
     marginRight: "1rem",
+    cursor: "pointer",
     "& svg": {
       color: "#0387EA",
       margin: "0.5rem 0.6rem",
@@ -69,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.4rem",
     border: "2px solid",
     borderColor: "transparent",
-
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor:"#2b5d21",
+      backgroundColor:"#0773c5",
     },
     [theme.breakpoints.down(769)]: {
       display: "none",

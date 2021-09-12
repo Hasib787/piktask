@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
   basicInfo: {
     minWidth: "100%",
-    borderColor: "#e08e0b",
-    backgroundColor: "#f39c12",
+    borderColor: "#0387EA",
+    backgroundColor: "#0387EA",
     color: "white",
     padding: "2rem",
     marginBottom: "2rem",

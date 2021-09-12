@@ -176,7 +176,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#023458",
 
     "& a": {
-      paddingLeft: "3.5rem",
+      paddingLeft: "6rem",
 
       "& span": {
         color: "#fff",

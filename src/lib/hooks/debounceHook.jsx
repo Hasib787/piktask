@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-type SearchType = {
-  value: string;
-  timeout: number;
-  callback: () => void;
-};
+// type SearchType = {
+//   value: string;
+//   timeout: number;
+//   callback: () => void;
+// };
 
 export const useDebounce = (
   value: string,

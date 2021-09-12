@@ -35,7 +35,7 @@ const containerTransition = {
   stiffness: 150,
 };
 
-const Search = ({ mobileView }: { mobileView: boolean }) => {
+const Search = ({ mobileView }) => {
   const classes = useStyles();
   const history = useHistory();
   const searchRef = useRef("");
@@ -85,7 +85,7 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
     if (isClickedOutside) collapseContainer();
   }, [isClickedOutside]);
 
-  const prepareSearchQuery = (query: string) => {
+  const prepareSearchQuery = (query) => {
     let url;
 
     if (searchCategoryID) {
