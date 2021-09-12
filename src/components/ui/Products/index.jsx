@@ -94,17 +94,18 @@ const Products = (props) => {
         ) : (
           <>
             {images?.slice(0, count).map((photo) => (
-              <Grid
-                key={photo.image_id}
-                item
-                xs={6}
-                sm={4}
-                md={3}
-                className={classes.productItem}
-              >
-                <Product catId={category?.id} photo={photo} />
-              </Grid>
-            ))}
+                <Grid
+                  key={photo.image_id}
+                  item
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  className={classes.productItem}
+                >
+                  <Product catId={category?.id} photo={photo} />
+                </Grid>
+              ))
+            }
           </>
         )}
       </Grid>

@@ -22,7 +22,7 @@ export const Recent = () => {
   const [isLoading, setLoading] = useState(true);
   const [recentProduct, setRecentProduct] = useState({});
 
-  //data load
+  //Load Initial value
   useEffect(() => {
     setLoading(true);
 
@@ -41,6 +41,36 @@ export const Recent = () => {
         setLoading(false);
       });
   }, []);
+
+//onScroll data load 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  function handleScroll() {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+      document.documentElement.offsetHeight
+    ){
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setRecentProduct(data?.images);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Category products error:", error);
+        setLoading(false);
+      });
+     }else{
+      setLoading(true);
+     }
+  }
 
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
