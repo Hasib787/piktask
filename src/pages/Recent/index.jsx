@@ -25,19 +25,21 @@ export const Recent = () => {
   //data load
   useEffect(() => {
     setLoading(true);
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setRecentProduct(data?.images);
-            setLoading(false);
-          }
-        });
-    } catch (error) {
-      console.log("Category products error:", error);
-      setLoading(false);
-    }
+
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setRecentProduct(data?.images);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Category products error:", error);
+        setLoading(false);
+      });
   }, []);
 
   return (

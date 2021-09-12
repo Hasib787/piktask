@@ -38,56 +38,49 @@ const Products = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const productCategories = useSelector((state) => state.productCategories);
 
-
-  const { catName, count, showHeading } = props;
-  const [categories, setCategories] = useState([]);
+  const { category, count, showHeading } = props;
+  const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const [scrolling, setScrolling] = useState(0);
-  const [scrollTop, setScrollTop] = useState(0);
-
   useEffect(() => {
-
     setLoading(true);
-    
+
     let categoryURL;
 
-    if(user && user?.id){
-      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}?user_id=${user?.id}`
+    if (user && user?.id) {
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}?limit=8`;
     } else {
-      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${catName?.id}`
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?limit=8`;
     }
-
-    if (catName) {
-      axios
-        .get(categoryURL)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data?.category_image);
-            setLoading(false);
-            dispatch({
-              type: "CATEGORY_BASED_ITEMS",
-              payload: {
-                totalImages: data.total_image_count.total_image,
-                categories: data.category_image,
-              },
-            });
-          }
-        });
+    if (category) {
+      axios.get(categoryURL).then(({ data }) => {
+        if (data?.status) {
+          setImages(data?.category_image);
+          setLoading(false);
+          dispatch({
+            type: "CATEGORY_BASED_ITEMS",
+            payload: {
+              totalImages: data.total_image_count.total_image,
+              images: data.category_image,
+            },
+          });
+        }
+      });
     } else {
       setLoading(true);
     }
-  }, [dispatch, catName, user]);
+  }, [dispatch, category, user]);
 
   return (
     <>
-      {categories.length !== 0 && showHeading && (
-        <SectionHeading title={catName?.name} large>
+      {images.length !== 0 && showHeading && (
+        <SectionHeading title={category?.name} large>
           <Button
             className={classes.headingButton}
             component={Link}
-            to={`category/${catName?.slug}`}
+            to={`category/${category?.slug}`}
           >
             See More
           </Button>
@@ -96,25 +89,21 @@ const Products = (props) => {
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <Loader item={categories} />
+          <Loader item={images} />
         ) : (
           <>
-            {categories?.length ? (
-              categories?.slice(0, count).map((photo) => (
-                <Grid
-                  key={photo.image_id}
-                  item
-                  xs={6}
-                  sm={4}
-                  md={3}
-                  className={classes.productItem}
-                >
-                  <Product catId={catName?.id} photo={photo} />
-                </Grid>
-              ))
-            ) : (
-              <ProductNotFound />
-            )}
+            {images?.slice(0, count).map((photo) => (
+              <Grid
+                key={photo.image_id}
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                className={classes.productItem}
+              >
+                <Product catId={category?.id} photo={photo} />
+              </Grid>
+            ))}
           </>
         )}
       </Grid>
