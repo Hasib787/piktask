@@ -2,6 +2,7 @@ import { Card, CardContent, Grid, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -12,13 +13,12 @@ const Publish = () => {
   const [products, setProducts] = useState(productData.products);
 
   return (
-    <>
-      <AdminHeader />
-
+    <Layout title={"Publish || Piktask"}>
       <div className={classes.adminRoot}>
         <Sidebar />
 
         <main className={classes.content}>
+          <AdminHeader />
           <div className={classes.headingWrapepr}>
             <Heading tag="h2">Publish File</Heading>
           </div>
@@ -45,11 +45,11 @@ const Publish = () => {
               </div>
             )}
           </Grid>
+          <Footer addminFooter />
         </main>
       </div>
 
-      <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

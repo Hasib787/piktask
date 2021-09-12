@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     transition: "all 0.3s linear",
     "&:hover": {
-     borderColor:"#0387EA",
+      backgroundColor: "#0773c5",
+      borderColor:"#0773c5",
   },
 }
 }));

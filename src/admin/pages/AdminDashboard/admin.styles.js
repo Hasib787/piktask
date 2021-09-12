@@ -128,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     paddingRight: "5rem",
     paddingLeft: "5rem",
-    textAlign: "center",
+    // textAlign: "center",
   },
   authorBadge: {
     position: "absolute",
@@ -152,8 +152,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authorImg: {
-    width: "7rem",
-    height: "7rem",
+    width: "5rem",
+    height: "5rem",
     borderRadius: "100%",
     border: "2px solid #ECEEF5",
     padding: "2px",
@@ -194,6 +194,7 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     padding: "1rem",
     fontSize: "1.6rem",
+    // textAlign: "center",
   },
 
   // Portfolio
@@ -327,6 +328,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     "& img": {
       width: "100%",
+    },
+  },
+  headingButton: {
+    ...theme.typography.button,
+    // backgroundColor: "rgba(0, 0, 0, 0.04)",
+    padding: "0.4rem 1rem",
+    fontSize: "1.3rem",
+    fontWeight: 500,
+    color: "#1B3F4E",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+      color: "#fff",
     },
   },
 }));

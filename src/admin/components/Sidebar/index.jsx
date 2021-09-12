@@ -3,12 +3,14 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./Sidebar.styles";
-import logo from "../../../assets/Logo/piktask-6.png"
+import logo from "../../../assets/Logo/piktask-6.png";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const Sidebar = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(0);
 
@@ -43,9 +45,9 @@ const Sidebar = () => {
     }
   }, [value]);
 
-  const handleChange = (e, index) => {
-    setValue(index);
-  };
+  // const handleChange = (e, index) => {
+  //   setValue(index);
+  // };
 
   const handleClick = () => {
     setOpen(!open);
@@ -73,6 +75,7 @@ const Sidebar = () => {
           to="/admin/dashboard"
           selected={value === 0}
         >
+          <DashboardIcon />
           <ListItemText primary="Dashboard" />
         </ListItem>
         <ListItem
@@ -86,6 +89,7 @@ const Sidebar = () => {
           to="/admin/upload"
           selected={value === 1}
         >
+          <CloudUploadIcon />
           <ListItemText primary="Upload File" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>

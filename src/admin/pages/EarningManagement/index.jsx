@@ -23,6 +23,7 @@ import image1 from "../../../assets/brazil.png";
 import image4 from "../../../assets/india.png";
 import image2 from "../../../assets/japan.png";
 import Footer from "../../../components/ui/Footer";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -196,13 +197,13 @@ const EarningManagement = () => {
   };
 
   return (
-    <>
-      <AdminHeader />
+    <Layout title={"Earning Management || Piktask"}>
 
       <div className={classes.adminRoot}>
         <Sidebar />
 
         <main className={classes.content}>
+          <AdminHeader />
           <div className={classes.headingWrapepr}>
             <Heading tag="h2">Earning Management</Heading>
           </div>
@@ -669,11 +670,11 @@ const EarningManagement = () => {
               </Table>
             </TableContainer>
           </Grid>
+        <Footer addminFooter />
         </main>
       </div>
 
-      <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

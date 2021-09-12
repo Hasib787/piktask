@@ -43,6 +43,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginLeft: "auto",
   },
+  notificationIcon: {
+    height: "4rem",
+    width: "4rem",
+    borderRadius: "100%",
+    backgroundColor: "#f1f1f1",
+    marginRight: "1rem",
+    "& svg": {
+      color: "#0387EA",
+      margin: "0.5rem 0.6rem",
+      fontSize: "2.8rem",
+    },
+  },
   earningAmount: {
     fontSize: "1.8rem",
     fontWeight: 500,
@@ -83,13 +95,12 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   adminPhoto: {
-    width: "4.8rem",
-    height: "4.8rem",
+    width: "4rem",
+    height: "4rem",
     borderRadius: "100%",
-    marginRight: "1.5rem",
   },
   userName: {
-    paddingLeft: "1.5rem",
+    paddingLeft: "1rem",
     fontSize: "1.8rem",
     fontWeight: 500,
     color: "#1B3F4E", 
