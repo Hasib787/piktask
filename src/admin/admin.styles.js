@@ -108,12 +108,14 @@ const useStyles = makeStyles((theme) => ({
   },
   totalCount: {
     fontSize: "2.5rem",
+    margin: "2rem 0rem",
     lineHeight: 1,
     "& span": {
-      fontSize: "1.6rem",
+      color: "#b6b6b6",
+      fontSize: "1.4rem",
       display: "block",
-      marginTop: ".5rem",
-      fontWeight: "500"
+      marginTop: ".7rem",
+      fontWeight: "400"
     },
     "@media (max-width: 1170px)": {
       fontSize: "2.2rem",

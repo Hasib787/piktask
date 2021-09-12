@@ -139,11 +139,11 @@ const AdminDashboard = () => {
             <Grid item lg={3} md={3} sm={6} xm={12}>
               <CardContent className={classes.statisticsContent}>
                 <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
-                  <img src={arrowDown} alt="Download" />
+                  <img src={moneyIcon} alt="Money" />
                 </div>
                 <Typography className={classes.totalCount} variant="h1">
                   30.2K
-                  <span>Download</span>
+                  <span>Earning</span>
                 </Typography>
                 <Typography className={classes.lastTotalCount}>
                   Last month: 35.4K
@@ -173,7 +173,7 @@ const AdminDashboard = () => {
                 </div>
                 <Typography className={classes.totalCount} variant="h1">
                   30.2K
-                  <span>Download</span>
+                  <span>Follower</span>
                 </Typography>
                 <Typography className={classes.lastTotalCount}>
                   Last month: 35.4K
@@ -183,12 +183,14 @@ const AdminDashboard = () => {
 
             <Grid item lg={3} md={3} sm={6} xm={12}>
               <CardContent className={classes.statisticsContent}>
-                <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
-                  <img src={arrowDown} alt="Download" />
+                <div
+                  className={`${classes.arrowIcon} ${classes.statisticsIcon}`}
+                >
+                  <img src={box} alt="Products" />
                 </div>
                 <Typography className={classes.totalCount} variant="h1">
                   30.2K
-                  <span>Download</span>
+                  <span>Files</span>
                 </Typography>
                 <Typography className={classes.lastTotalCount}>
                   Last month: 35.4K
