@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
   },
   infoItem: {
-    color: "#b4b4b4",
+    color: "#9b979f",
     testAlign: "center",
     fontSize: "1.3rem",
     marginRight: "2rem",
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.6rem",
       display: "block",
       fontWeight: 700,
-      color: "#000",
+      color: "#1b3f4e",
     },
     "&:last-child": {
       marginRight: "0rem",
