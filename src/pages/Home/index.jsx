@@ -25,10 +25,8 @@ export const Home = () => {
 
     
     window.onscroll = () => {
-
       setScrolling(window.pageYOffset);
       let currentPosition = scrolling;
-      console.log("currentPosition",currentPosition)
      
         if (
           categories.length &&
@@ -38,7 +36,6 @@ export const Home = () => {
           const category = categories[index];
           setIndex((index) => index + 1);
            popularCats.push(category);
-          // console.log("categoryValue",category)
         }
     };
 

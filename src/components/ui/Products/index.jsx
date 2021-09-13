@@ -38,7 +38,6 @@ const Products = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const productCategories = useSelector((state) => state.productCategories);
 
   const { category, count, showHeading } = props;
   const [images, setImages] = useState([]);
