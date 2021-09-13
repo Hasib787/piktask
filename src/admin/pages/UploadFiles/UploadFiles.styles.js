@@ -24,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     // width: "100%",
-    marginLeft: "29rem",
-    marginRight: "1rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
   uploadContainer: {
-    marginTop: "2rem",
+    margin: "2rem",
     [theme.breakpoints.down(769)]: {
       padding: "0rem 2rem",
     },

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "#001c30",
-    fontSize: "3.5rem",
+    fontSize: "3rem",
     marginBottom: ".5rem",
   },
   subheading: {

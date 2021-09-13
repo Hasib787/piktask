@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 // };
 
 export const useDebounce = (
-  value: string,
-  timeout: number,
+  value,
+  timeout,
   callback: () => void
 ): void => {
   const [timer, setTimer] = useState("");

@@ -15,13 +15,24 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "0rem",
   },
   dashboardGridContainer: {
-    padding: "2rem 1rem 0rem 1rem",
+    padding: "1.5rem 1rem 0rem 1rem",
+  },
+  totalStatus: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // marginBottom: "1.5rem",
+    margin: "0rem 1rem",
+
+    "& h2": {
+      fontSize: "1.8rem"
+    },
   },
   cardHeading: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "1.5rem",
+    padding: "1rem 0rem",
 
     "& h2": {
       fontSize: "1.8rem"
@@ -32,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   // },
   loadMoreBtn: {
     ...theme.typography.button,
-    padding: ".3rem 1.5rem",
+    padding: ".2rem 1.5rem",
     backgroundColor: "#fff",
     color: "#000",
     border: ".2rem solid",
@@ -61,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: "1rem",
     backgroundColor: "#fff",
+    paddingBottom: "1.5rem",
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
     "&:hover": {
       "& img": {
@@ -287,7 +299,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bestAuthorBadge: {
     position: "absolute",
-    width: "2.8rem",
+    width: "1.8rem",
     objectFit: "cover",
     top: "1rem",
   },

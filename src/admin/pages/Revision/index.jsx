@@ -20,31 +20,33 @@ const Revision = () => {
 
         <main className={classes.content}>
           <AdminHeader />
-          <div className={classes.headingWrapepr}>
-            <Heading tag="h2">Under Revision</Heading>
-          </div>
+          <div className={classes.cardContentWrapper}>
+            <div className={classes.headingWrapepr}>
+              <Heading tag="h2">Under Revision</Heading>
+            </div>
 
-          <Grid container spacing={4}>
-            {products.length > 0 ? (
-              products.map((product) => (
-                <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
-                  <Card className={classes.cardWrapper}>
-                    <img src={product.image} alt={product.name} />
-                    <CardContent>
-                      <Typography variant="h3">{product.name}</Typography>
-                      <Typography variant="subtitle1">
-                        Under Revision
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-              <div className={classes.noItemsFound}>
-                <Typography>No products are in pending</Typography>
-              </div>
-            )}
-          </Grid>
+            <Grid container spacing={3}>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+                    <Card className={classes.cardWrapper}>
+                      <img src={product.image} alt={product.name} />
+                      <CardContent>
+                        <Typography variant="h3">{product.name}</Typography>
+                        <Typography variant="subtitle1">
+                          Under Revision
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))
+              ) : (
+                <div className={classes.noItemsFound}>
+                  <Typography>No products are in pending</Typography>
+                </div>
+              )}
+            </Grid>
+          </div>
           <Footer addminFooter />
         </main>
       </div>

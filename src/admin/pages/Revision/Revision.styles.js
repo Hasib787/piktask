@@ -10,9 +10,12 @@ const useStyles = makeStyles((theme) => ({
     // padding: theme.spacing(2),
     padding: 0,
     // width: "calc(100vw - 315px)",
-    marginLeft: "29rem",
-    marginRight: "1rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
     // marginTop: "2rem",
+  },
+  cardContentWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
