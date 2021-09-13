@@ -26,7 +26,7 @@ export const Recent = () => {
   const [items, setItems] = useState([]);
   let [pageCount, setPageCount] = useState(0);
 
-  console.log('Page count',pageCount);
+  console.log("Page count", pageCount);
 
   //Load Initial value
   useEffect(() => {
@@ -52,21 +52,21 @@ export const Recent = () => {
   }, []);
 
   //onScroll data load
-  // useEffect(() => {
-  //   setLoading(true);
-  //   window.onscroll = () => {
-  //     if (document.documentElement.scrollTop % 700 === 0) { 
-  //       setPageCount((pageCount) => pageCount + 1);
-  //       console.log("pageCount-3",pageCount);
-  //     }
-  //   };
+  useEffect(() => {
+    setLoading(true);
+    window.onscroll = () => {
+      if (document.documentElement.scrollTop % 700 === 0) {
+        pageCount = pageCount + 1;
+        setPageCount(pageCount);
+        console.log("pageCount-3", pageCount);
+      }
+    };
 
-     
-  //   // return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
+    // return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   // console.log("recentProduct",recentProduct)
   // function handleScroll() {
-  //   if (document.documentElement.scrollTop % 700 === 0) { 
+  //   if (document.documentElement.scrollTop % 700 === 0) {
   //     setPageCount((pageCount) => pageCount + 1);
   //     console.log("pageCount-3",pageCount);
   //     // console.log("recentProduct",recentProduct)
@@ -94,11 +94,10 @@ export const Recent = () => {
   // }
 
   window.onscroll = () => {
-   
-    if (document.documentElement.scrollTop % 700 === 0) { 
-      pageCount= pageCount + 1
+    if (document.documentElement.scrollTop % 700 === 0) {
+      pageCount = pageCount + 1;
       setPageCount(pageCount);
-      console.log("pageCount-3",pageCount);
+      console.log("pageCount-3", pageCount);
     }
   };
 
