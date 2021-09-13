@@ -7,15 +7,7 @@ import twitterLogo from '../../../assets/icons/twitter-round.svg';
 import { Link } from "react-router-dom";
 
 
-type Props = {
-  title: string;
-  position?: string;
-  textCase?: string;
-  profileInfo?: string;
-  socialMedias?: string;
-};
-
-const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }: Props) => {
+const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) => {
   const classes = useStyles();
 
   return (
@@ -68,7 +60,7 @@ const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }: P
       </List>
 
       <List>
-        {socialMedias && socialMedias.map((media: Media, index: number) => (
+        {socialMedias && socialMedias.map((media, index) => (
           <Link key={index} to={media.url} target="_blank">
             <img
               className={classes.socialIcon}

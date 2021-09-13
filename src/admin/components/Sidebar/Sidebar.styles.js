@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   sidebarWrapper: {
     backgroundColor: "#001c30",
     width: "28rem",
-    height: "100vh",
+    height: "100%",
     position: "fixed",
   },
   logoWrapper: {
@@ -176,7 +176,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#023458",
 
     "& a": {
-      paddingLeft: "3.5rem",
+      paddingLeft: "6rem",
 
       "& span": {
         color: "#fff",
@@ -195,6 +195,10 @@ const useStyles = makeStyles((theme) => ({
 
     "& div span": {
       color: "#fff",
+    },
+    "& svg": {
+      color: "#fff",
+      marginRight: "1rem",
     },
   },
 }));

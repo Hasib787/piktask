@@ -1,6 +1,7 @@
 import { Container, Grid } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Loader from "../Loader";
 import ProductNotFound from "../ProductNotFound";
 import SellerInfo from "./SellerInfo";
 import useStyles from "./TopSeller.style";
@@ -16,7 +17,6 @@ export const TopSeller = () => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
         .then(({ data }) => {
-          console.log("data", data);
           if (data?.success) {
             setTopSeller(data.sellers);
             setIsLoading(false);
@@ -31,7 +31,7 @@ export const TopSeller = () => {
     <Container>
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <h2>Loading now......</h2>
+          <Loader />
         ) : (
           <>
             {topSeller.length ? (

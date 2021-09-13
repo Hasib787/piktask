@@ -5,47 +5,56 @@ const useStyles = makeStyles((theme) => ({
     // display: "flex",
     // marginTop: "8rem",
   },
-  cardRoot: {
-    height: "100%",
-    width: "100%",
-    borderRadius: 0,
-    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
-  },
   content: {
     // flexGrow: 1,
     // padding: theme.spacing(2),
     padding: 0,
     // width: "calc(100vw - 315px)",
     // marginTop: "2rem",
-    marginLeft: "29rem",
-    marginRight: "1rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
   },
   dashboardGridContainer: {
-    marginTop: "1rem",
-    marginBottom: "2rem",
+    padding: "1.5rem 1rem 0rem 1rem",
   },
-  // cardHeading: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "space-between",
-  //   marginBottom: "3rem",
-  // },
+  totalStatus: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    // marginBottom: "1.5rem",
+    margin: "0rem 1rem",
+
+    "& h2": {
+      fontSize: "1.8rem"
+    },
+  },
+  cardHeading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "1rem 0rem",
+
+    "& h2": {
+      fontSize: "1.8rem"
+    },
+  },
   // statistics: {
   //   fontSize: "2.5rem",
   // },
-  // updateBtn: {
-  //   ...theme.typography.button,
-  //   padding: ".6rem 2rem",
-  //   backgroundColor: "rgb(17 122 0 / 25%)",
-  //   color: theme.palette.primary.main,
-  //   border: ".2rem solid",
-  //   borderColor: "rgb(17 122 0 / 0%)",
-  //   "&:hover": {
-  //     borderColor: "rgb(17 122 0 / 25%)",
-  //     backgroundColor: "rgb(17 122 0 / 0%)",
-  //     color: theme.palette.secondary.main,
-  //   },
-  // },
+  loadMoreBtn: {
+    ...theme.typography.button,
+    padding: ".2rem 1.5rem",
+    backgroundColor: "#fff",
+    color: "#000",
+    border: ".2rem solid",
+    borderColor: "#0387EA",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      borderColor: "#0387EA",
+      backgroundColor: "#0387EA",
+      color: "#fff",
+    },
+  },
   // statisticCardContent: {
   //   height: "100%",
   //   display: "flex",
@@ -61,8 +70,9 @@ const useStyles = makeStyles((theme) => ({
   // },
   statisticsContent: {
     textAlign: "center",
-    // marginLeft: "1rem",
+    margin: "1rem",
     backgroundColor: "#fff",
+    paddingBottom: "1.5rem",
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
     "&:hover": {
       "& img": {
@@ -75,16 +85,16 @@ const useStyles = makeStyles((theme) => ({
 
   statisticsIcon: {
     borderRadius: "100%",
-    width: "5.5rem",
-    height: "5.5rem",
+    width: "4rem",
+    height: "4rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginRight: "1.5rem",
 
     "& img": {
-      width: "2.5rem",
-      height: "2.5rem",
+      width: "2rem",
+      height: "2rem",
     },
 
     "@media (max-width: 1170px)": {
@@ -124,11 +134,17 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  cardRoot: {
+    borderRadius: 0,
+    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
+    margin: "1rem",
+  },
   authorCard: {
-    position: "relative",
-    paddingRight: "5rem",
-    paddingLeft: "5rem",
-    textAlign: "center",
+    // position: "relative",
+    padding: "2rem",
+    // paddingLeft: "5rem",
+    // margin: "2rem",
+    // textAlign: "center",
   },
   authorBadge: {
     position: "absolute",
@@ -152,8 +168,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authorImg: {
-    width: "7rem",
-    height: "7rem",
+    width: "5rem",
+    height: "5rem",
     borderRadius: "100%",
     border: "2px solid #ECEEF5",
     padding: "2px",
@@ -194,6 +210,7 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     padding: "1rem",
     fontSize: "1.6rem",
+    // textAlign: "center",
   },
 
   // Portfolio
@@ -282,7 +299,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bestAuthorBadge: {
     position: "absolute",
-    width: "2.8rem",
+    width: "1.8rem",
     objectFit: "cover",
     top: "1rem",
   },
@@ -327,6 +344,20 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     "& img": {
       width: "100%",
+    },
+  },
+  headingButton: {
+    ...theme.typography.button,
+    // backgroundColor: "rgba(0, 0, 0, 0.04)",
+    padding: "0.4rem 1rem",
+    fontSize: "1.3rem",
+    fontWeight: 500,
+    color: "#1B3F4E",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+      color: "#fff",
     },
   },
 }));

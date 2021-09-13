@@ -10,6 +10,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import React, { useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -30,13 +31,13 @@ const RejectFiles = () => {
   };
 
   return (
-    <>
-      <AdminHeader />
+    <Layout title={"RejectFiles || Piktask"}>
 
       <div className={classes.adminRoot}>
         <Sidebar />
 
         <main className={classes.content}>
+          <AdminHeader />
           <div className={classes.headingWrapepr}>
             <Heading tag="h2">Reject Files</Heading>
           </div>
@@ -63,6 +64,7 @@ const RejectFiles = () => {
               </div>
             )}
           </Grid>
+          <Footer addminFooter />
         </main>
       </div>
 
@@ -152,8 +154,8 @@ const RejectFiles = () => {
         </Button>
       </Drawer>
 
-      <Footer addminFooter />
-    </>
+      
+    </Layout>
   );
 };
 

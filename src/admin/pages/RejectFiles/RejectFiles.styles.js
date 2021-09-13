@@ -2,17 +2,17 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+    // marginTop: "8rem",
   },
   content: {
     // flexGrow: 1,
     // padding: theme.spacing(2),
     padding: 0,
-    width: "calc(100vw - 315px)",
-    marginLeft: "2rem",
-    marginRight: "2rem",
-    marginTop: "2rem",
+    // width: "calc(100vw - 315px)",
+    marginLeft: "29rem",
+    marginRight: "1rem",
+    // marginTop: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.5rem",
       fontWeight: 500,
       color: "#FF0000",
+      cursor: "pointer",
     },
   },
 
@@ -50,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: "60rem",
-    top: "8rem",
-    height: "calc(100vh - 8rem)",
+    // top: "8rem",
+    height: "100%",
     borderTop: "1px solid #ddd",
   },
   closeIcon: {
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3.5rem",
     color: "#B7B7B7",
     "&:hover": {
-      color: "#FB5252",
+      color: "#0387EA",
     },
   },
   modalHeader: {
@@ -100,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#114960",
   },
   viewBtn: {
-    backgroundColor: "#117A00",
+    backgroundColor: "#0387EA",
     fontSize: "2.2rem",
     padding: "1.5rem 2rem",
     borderRadius: 0,

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   imageWrapper: {
     position: "relative",
-    height: "257px",
+    height: "230px",
     overflow: "hidden",
 
     "& img": {

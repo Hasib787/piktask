@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   coverImage: {
     cursor: "pointer",
     width: "100%",
-    height: "240px",
+    height: "200px",
     objectFit: "cover",
   },
   sellerProfileImage: {

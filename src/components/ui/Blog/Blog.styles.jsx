@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: "#001c30",
-    fontSize: "3.5rem",
+    fontSize: "3rem",
     marginBottom: ".5rem",
   },
   subheading: {
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     transition: "all 0.3s linear",
     "&:hover": {
-     borderColor:"#0387EA",
+      backgroundColor: "#0773c5",
+      borderColor:"#0773c5",
   },
 }
 }));

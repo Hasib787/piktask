@@ -22,6 +22,7 @@ import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
 import { useSelector } from "react-redux";
 import MobileSidebarMenu from "../Sidebar/MobileSidebarMenu";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const customStyles = makeStyles({
   menuWrapper: {
@@ -177,6 +178,9 @@ const AdminHeader = () => {
 
                 <Grid item xs={10} classes={{ item: classes.item }}>
                   <div className={classes.headerInfo}>
+                    <div className={classes.notificationIcon}>
+                      <NotificationsIcon />
+                    </div>
                     <div
                       className={classes.userProfile}
                       onClick={handleToggle}

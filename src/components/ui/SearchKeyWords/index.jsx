@@ -1,11 +1,11 @@
 import {  Typography } from "@material-ui/core";
 import React, { FC, useEffect, useState } from "react";
 import useStyles from "./SearchKeyWords.styles";
-import { PropTypes } from "../Hero";
+// import { PropTypes } from "../Hero";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const SearchKeyWords: FC<PropTypes> = (props): JSX.Element => {
+const SearchKeyWords = (props) => {
   const classes = useStyles();
   const { popularKeywords, creativeWorksDone } = props;
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);

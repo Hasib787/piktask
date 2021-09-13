@@ -344,11 +344,11 @@ const UploadFiles = () => {
 
   return (
     <Layout title={`Upload || Piktask`}>
-      <AdminHeader />
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
+          <AdminHeader />
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.uploadContainer}>
               <div className={classes.basicInfo}>
@@ -679,9 +679,9 @@ const UploadFiles = () => {
               </div>
             </div>
           </form>
+          <Footer addminFooter />
         </main>
       </div>
-      <Footer addminFooter />
     </Layout>
   );
 };

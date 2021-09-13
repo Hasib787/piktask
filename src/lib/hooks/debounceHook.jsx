@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-type SearchType = {
-  value: string;
-  timeout: number;
-  callback: () => void;
-};
+// type SearchType = {
+//   value: string;
+//   timeout: number;
+//   callback: () => void;
+// };
 
 export const useDebounce = (
-  value: string,
-  timeout: number,
+  value,
+  timeout,
   callback: () => void
 ): void => {
   const [timer, setTimer] = useState("");
