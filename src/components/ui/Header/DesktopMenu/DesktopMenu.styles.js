@@ -132,7 +132,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(1100)]: {
       width: "11rem",
       fontSize: "1.1rem",
-      marginRight: "0",
       paddingLeft: "0.7rem",
       paddingRight: "0.7rem",
     },

@@ -1,4 +1,4 @@
-import { Container, Button, Grid, Typography } from "@material-ui/core";
+import { Container, Button, Grid } from "@material-ui/core";
 import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
@@ -16,20 +16,26 @@ import Layout from "../../Layout";
 import axios from "axios";
 import Loader from "../../components/ui/Loader";
 import ProductNotFound from "../../components/ui/ProductNotFound";
+import { useSelector } from "react-redux";
 
 export const Recent = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [recentProduct, setRecentProduct] = useState({});
+  const [pageCount, setPageCount] = useState([]);
 
   //Load Initial value
   useEffect(() => {
     setLoading(true);
-
+    let recentUrl;
+    if (user && user?.id) {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8`;
+    } else {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
+    }
     axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`
-      )
+      .get(recentUrl)
       .then(({ data }) => {
         if (data?.status) {
           setRecentProduct(data?.images);
@@ -42,35 +48,42 @@ export const Recent = () => {
       });
   }, []);
 
-//onScroll data load 
+  //onScroll data load
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    setLoading(true);
+    const scroll = window.addEventListener("scroll", handleScroll);
+    console.log("Scrolling", scroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   function handleScroll() {
+
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    ){
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`
-      )
-      .then(({ data }) => {
-        if (data?.status) {
-          setRecentProduct(data?.images);
+      document.documentElement.scrollTop % 700 === 0
+    ) {
+      console.log("Hello");
+      let recentUrl;
+      if (user && user?.id) {
+        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&user_id=${user.id}`;
+      } else {
+        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
+      }
+      axios
+        .get(recentUrl)
+        .then(({ data }) => {
+          if (data?.status) {
+            setRecentProduct(data?.images);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log("Category products error:", error);
           setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log("Category products error:", error);
-        setLoading(false);
-      });
-     }else{
-      setLoading(true);
-     }
+        });
+    }
+    return;
   }
+
 
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
