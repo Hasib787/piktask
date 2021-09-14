@@ -23,13 +23,16 @@ export const Recent = () => {
   const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [recentProduct, setRecentProduct] = useState({});
-  const [pageCount, setPageCount] = useState([]);
+  const [items, setItems] = useState([]);
+  let [pageCount, setPageCount] = useState(0);
+
+  console.log("Page count", pageCount);
 
   //Load Initial value
   useEffect(() => {
     setLoading(true);
     let recentUrl;
-    if (user && user?.id) {
+    if (user?.id) {
       recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8`;
     } else {
       recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
@@ -51,39 +54,52 @@ export const Recent = () => {
   //onScroll data load
   useEffect(() => {
     setLoading(true);
-    const scroll = window.addEventListener("scroll", handleScroll);
-    console.log("Scrolling", scroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  function handleScroll() {
-
-    if (
-      document.documentElement.scrollTop % 700 === 0
-    ) {
-      console.log("Hello");
-      let recentUrl;
-      if (user && user?.id) {
-        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&user_id=${user.id}`;
-      } else {
-        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
+    window.onscroll = () => {
+      if (document.documentElement.scrollTop % 700 === 0) {
+        pageCount = pageCount + 1;
+        setPageCount(pageCount);
+        console.log("pageCount-3", pageCount);
       }
-      axios
-        .get(recentUrl)
-        .then(({ data }) => {
-          if (data?.status) {
-            setRecentProduct(data?.images);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log("Category products error:", error);
-          setLoading(false);
-        });
-    }
-    return;
-  }
+    };
 
+    // return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  // console.log("recentProduct",recentProduct)
+  // function handleScroll() {
+  //   if (document.documentElement.scrollTop % 700 === 0) {
+  //     setPageCount((pageCount) => pageCount + 1);
+  //     console.log("pageCount-3",pageCount);
+  //     // console.log("recentProduct",recentProduct)
+
+  //     // let recentUrl;
+  //     // if (user?.id) {
+  //     //   recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8&page=${pageCount}`;
+  //     // } else {
+  //     //   recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&page=${pageCount}`;
+  //     //   console.log("pageCount-2",pageCount);
+  //     // }
+  //     // axios
+  //     //   .get(recentUrl)
+  //     //   .then(({ data }) => {
+  //     //     if (data?.status) {
+  //     //       setRecentProduct(data?.images);
+  //     //       setLoading(false);
+  //     //     }
+  //     //   })
+  //     //   .catch((error) => {
+  //     //     console.log("Category products error:", error);
+  //     //     setLoading(false);
+  //     //   });
+  //   }
+  // }
+
+  window.onscroll = () => {
+    if (document.documentElement.scrollTop % 700 === 0) {
+      pageCount = pageCount + 1;
+      setPageCount(pageCount);
+      console.log("pageCount-3", pageCount);
+    }
+  };
 
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
