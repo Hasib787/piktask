@@ -72,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#0387EA",
-      border: "2px solid #0387EA",
+      backgroundColor: "#0088f2",
+      border: "2px solid #0088f2",
     },
     "&:hover": {
-      backgroundColor: "#0387EA",
+      backgroundColor: "#0088f2",
       color: "#fff",
     },
   },
@@ -89,11 +89,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#0387EA",
-      border: "2px solid #0387EA",
+      backgroundColor: "#0088f2",
+      border: "2px solid #0088f2",
     },
     "&:hover": {
-      backgroundColor: "#0387EA",
+      backgroundColor: "#0088f2",
       color: "#fff",
     },
   },

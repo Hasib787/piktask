@@ -6,13 +6,12 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: "8rem",
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    marginLeft: "29rem",
-    marginRight: "1rem",
-    // marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+  },
+  earningManagementWrapper: {
+    margin: "2rem",
   },
   indicator: {
     backgroundColor: "transparent",

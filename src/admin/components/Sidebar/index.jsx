@@ -103,14 +103,14 @@ const Sidebar = () => {
             disablePadding
             className={classes.submenuContainer}
           >
-            {/* <ListItem
+            <ListItem
               component={Link}
-              to="/admin/submit"
+              to="/admin/pending"
               className={classes.nested}
-              selected={value === 0}
+              selected={value === 1 && selectedItem === 2}
             >
               <ListItemText primary="Submit File(50)" />
-            </ListItem> */}
+            </ListItem>
             <ListItem
               component={Link}
               to="/admin/revision"

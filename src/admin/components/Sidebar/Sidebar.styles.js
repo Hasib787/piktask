@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectedItem: {
-    backgroundColor: "#0387EA !important",
+    backgroundColor: "#0088f2 !important",
     "& span": {
       color: `${theme.palette.common.white}`,
     },

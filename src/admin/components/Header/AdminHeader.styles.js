@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "1rem",
     cursor: "pointer",
     "& svg": {
-      color: "#0387EA",
+      color: "#0088f2",
       margin: "0.5rem 0.6rem",
       fontSize: "2.8rem",
     },
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadBtn: {
     ...theme.typography.button,
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     padding: "0.5rem 1.4rem",
     marginRight: "2rem",
     fontSize: "1.4rem",

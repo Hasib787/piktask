@@ -47,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fff",
     color: "#000",
     border: ".2rem solid",
-    borderColor: "#0387EA",
+    borderColor: "#0088f2",
     transition: "all 0.3s linear",
     "&:hover": {
-      borderColor: "#0387EA",
-      backgroundColor: "#0387EA",
+      borderColor: "#0088f2",
+      backgroundColor: "#0088f2",
       color: "#fff",
     },
   },
@@ -191,6 +191,7 @@ const useStyles = makeStyles((theme) => ({
   },
   earningImg: {
     width: "10rem",
+    // position: "relative"
   },
   tableHead: {
     backgroundColor: "#ECEEF5",
@@ -210,9 +211,27 @@ const useStyles = makeStyles((theme) => ({
   tableCell: {
     padding: "1rem",
     fontSize: "1.6rem",
-    // textAlign: "center",
-  },
+    textAlign: "center",
 
+    "& svg": {
+      marginBottom: "-0.19rem",
+    },
+  },
+  authProductWrapper: {
+    display: "flex",
+  },
+  premiumIcon: {
+    margin: "auto 1rem",
+    height: "3rem",
+    width: "3rem",
+    borderRadius: "100%",
+    backgroundColor: "#f1f1f1",
+    cursor: "pointer",
+    "& img": {
+      margin: "0.8rem",
+      width: "1.5rem",
+    },
+  },
   // Portfolio
   portfolioContainer: {
     height: "auto",
@@ -359,6 +378,20 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
       color: "#fff",
     },
+  },
+  loadingWrapper: {
+    margin: "1rem",
+  },
+  loading: {
+    backgroundColor: "#fff",
+    padding: "5rem",
+    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
+    width: "100%",
+    height: "100%",
+    margin: "auto 0rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 

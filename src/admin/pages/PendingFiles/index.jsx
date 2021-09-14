@@ -11,6 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import React, { useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -49,13 +50,13 @@ const PendingFiles = () => {
   };
 
   return (
-    <>
-      <AdminHeader />
+    <Layout>
 
       <div className={classes.adminRoot}>
         <Sidebar />
 
         <main className={classes.content}>
+          <AdminHeader />
           <div className={classes.headingWrapepr}>
             <Heading tag="h2">Not Yet Submit</Heading>
             <div>
@@ -123,11 +124,11 @@ const PendingFiles = () => {
 
             <EditItem item={editItem} />
           </Drawer>
+          <Footer />
         </main>
       </div>
 
-      <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

@@ -2,18 +2,22 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+    // marginTop: "8rem",
   },
   content: {
     // flexGrow: 1,
     // padding: theme.spacing(2),
     padding: 0,
     // width: "calc(100vw - 315px)",
-    width: "100%",
+    marginLeft: "28rem",
+    marginRight: "0rem",
     // marginLeft: "2rem",
     // marginRight: "2rem",
     // marginTop: "2rem",
+  },
+  profileContentWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",

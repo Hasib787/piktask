@@ -38,33 +38,35 @@ const RejectFiles = () => {
 
         <main className={classes.content}>
           <AdminHeader />
-          <div className={classes.headingWrapepr}>
-            <Heading tag="h2">Reject Files</Heading>
-          </div>
+          <div className={classes.rejectFilesWrapper}>
+            <div className={classes.headingWrapepr}>
+              <Heading tag="h2">Reject Files</Heading>
+            </div>
 
-          <Grid container spacing={4}>
-            {products.length > 0 ? (
-              products.map((product) => (
-                <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
-                  <Card
-                    className={classes.cardWrapper}
-                    onClick={() => handleClick(product)}
-                  >
-                    <img src={product.image} alt={product.name} />
-                    <CardContent>
-                      <Typography variant="h3">{product.name}</Typography>
-                      <Typography variant="subtitle1">Reject File</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-              <div className={classes.noItemsFound}>
-                <Typography>No products are in pending</Typography>
-              </div>
-            )}
-          </Grid>
-          <Footer addminFooter />
+            <Grid container spacing={2}>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <Grid key={product._id} item xs={12} sm={6} md={3} lg={3}>
+                    <Card
+                      className={classes.cardWrapper}
+                      onClick={() => handleClick(product)}
+                    >
+                      <img src={product.image} alt={product.name} />
+                      <CardContent className={classes.cardContent}>
+                        <Typography variant="h3">{product.name}</Typography>
+                        <Typography variant="subtitle1">Reject File</Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))
+              ) : (
+                <div className={classes.noItemsFound}>
+                  <Typography>No products are in pending</Typography>
+                </div>
+              )}
+            </Grid>
+          </div>
+          <Footer />
         </main>
       </div>
 

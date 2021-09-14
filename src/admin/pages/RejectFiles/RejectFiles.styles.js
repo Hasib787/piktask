@@ -6,13 +6,12 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: "8rem",
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    marginLeft: "29rem",
-    marginRight: "1rem",
-    // marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+  },
+  rejectFilesWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
@@ -22,15 +21,23 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: "2rem",
-    marginBottom: "4.5rem",
+    marginBottom: "1.5rem",
   },
   cardWrapper: {
     position: "relative",
-    padding: "3.5rem 3rem 0",
+    padding: "1.5rem",
+    cursor: "pointer",
     "& img": {
       width: "100%",
+      height: 150,
       borderRadius: theme.shape.borderRadius,
     },
+    "& .MuiCardContent-root": {
+      paddingBottom: "0rem !important",
+    },
+  },
+  cardContent: {
+    padding: "1rem 1rem 1rem 0rem",
     "& h3": {
       fontSize: "2rem",
       marginBottom: "1rem",
@@ -60,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "3.5rem",
     color: "#B7B7B7",
     "&:hover": {
-      color: "#0387EA",
+      color: "#0088f2",
     },
   },
   modalHeader: {
@@ -101,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#114960",
   },
   viewBtn: {
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     fontSize: "2.2rem",
     padding: "1.5rem 2rem",
     borderRadius: 0,

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   leftPanel: {
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     // backgroundColor: "#117A00",
     padding: "2.5rem 2.5rem 5.4rem 2.5rem",
     width: "100%",
@@ -62,13 +62,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#CCCCCC",
   },
   selected: {
-    color: "#0387EA",
+    color: "#0088f2",
     // color: "#117A00",
   },
   passwordResetLink: {
     fontSize: 17,
     // color: "#469439",
-    color: "#0387EA",
+    color: "#0088f2",
     textAlign: "center",
     display: "block",
     textDecoration: "none",
@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
   closeModal: {
     float: "right",
     marginTop: -15,
-    color: "#0387EA",
+    color: "#0088f2",
     cursor: "pointer",
   },
   // socialLoginBtns: {
@@ -163,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
   },
   authText: {
     fontSize: 17,
-    color: "#0387EA",
+    color: "#0088f2",
     // color: "#469439",
     textAlign: "center",
     cursor: "pointer",
@@ -194,7 +194,7 @@ const useStyles = makeStyles((theme) => ({
     "& span": {
       cursor: "pointer",
       // color: "#469439",
-      color: "#0387EA",
+      color: "#0088f2",
     },
   },
 }));

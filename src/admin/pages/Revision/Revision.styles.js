@@ -6,13 +6,9 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: "8rem",
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
     marginLeft: "28rem",
     marginRight: "0rem",
-    // marginTop: "2rem",
   },
   cardContentWrapper: {
     margin: "2rem",
@@ -25,26 +21,33 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: "2rem",
-    marginBottom: "4.5rem",
+    marginBottom: "1.5rem",
   },
   cardWrapper: {
     position: "relative",
-    padding: "3.5rem 3rem 0",
+    padding: "0.5rem",
     height: "100%",
     "& img": {
       width: "100%",
+      height: 150,
+      objectFit: "cover",
       borderRadius: theme.shape.borderRadius,
     },
+    "& .MuiCardContent-root": {
+      paddingBottom: "0rem !important",
+    },
+  },
+  cardContent: {
+    padding: "1rem 1rem 1rem 0rem",
     "& h3": {
-      fontSize: "2rem",
-      marginBottom: "1rem",
+      fontSize: "1.4rem",
       lineHeight: "1.5",
       color: "#114960",
     },
     "& h6": {
-      fontSize: "1.5rem",
+      fontSize: "1.2rem",
       fontWeight: 500,
-      color: "#114960",
+      color: "#a6a6a6",
     },
   },
 }));

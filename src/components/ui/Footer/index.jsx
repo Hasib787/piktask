@@ -14,7 +14,7 @@ import facebook from "../../../assets/icons/facebook-round.svg";
 import twitter from "../../../assets/icons/twitter-round.svg";
 import instagram from "../../../assets/icons/instagram-round.svg";
 
-const Footer = ({ addminFooter = false }) => {
+const Footer = () => {
   const classes = useStyles();
   const socialMedias = [
     {
@@ -34,10 +34,7 @@ const Footer = ({ addminFooter = false }) => {
     },
   ];
   return (
-    <footer
-      style={addminFooter ? { marginTop: "4rem" } : undefined}
-      className={classes.footerRoot}
-    >
+    <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
           <Column>

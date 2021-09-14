@@ -4,22 +4,22 @@ const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
     // marginTop: "8rem",
-    [theme.breakpoints.up(1700)]: {
-      marginTop: "8rem",
-      margin: "0rem 10rem",
-    },
-    [theme.breakpoints.up(1900)]: {
-      marginTop: "8rem",
-      margin: "0rem 15rem",
-    },
-    [theme.breakpoints.up(2100)]: {
-      marginTop: "8rem",
-      margin: "0rem 30rem",
-    },
-    [theme.breakpoints.up(2560)]: {
-      marginTop: "8rem",
-      margin: "0rem 51rem",
-    },
+    // [theme.breakpoints.up(1700)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 10rem",
+    // },
+    // [theme.breakpoints.up(1900)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 15rem",
+    // },
+    // [theme.breakpoints.up(2100)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 30rem",
+    // },
+    // [theme.breakpoints.up(2560)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 51rem",
+    // },
   },
   content: {
     padding: 0,
@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
   basicInfo: {
     minWidth: "100%",
-    borderColor: "#0387EA",
-    backgroundColor: "#0387EA",
+    borderColor: "#0088f2",
+    backgroundColor: "#0088f2",
     color: "white",
     padding: "2rem",
     marginBottom: "2rem",
@@ -322,18 +322,18 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "0.7px solid lightgray",
   },
   uploadBtn: {
-    padding: "13px 29px",
+    padding: "1rem 3rem",
     marginLeft: "50%",
     transform: "translateX(-50%)",
     border: "none",
     borderRadius: "3px",
     fontSize: "18px",
     cursor: "pointer",
-    backgroundColor: "#00a65a",
+    backgroundColor: "#0088f2",
     color: "white",
-    transition: "1s",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "#156842",
+      backgroundColor: "#0773c5",
     },
     [theme.breakpoints.down(480)]: {
       width: "100%",

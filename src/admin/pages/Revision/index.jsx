@@ -25,16 +25,17 @@ const Revision = () => {
               <Heading tag="h2">Under Revision</Heading>
             </div>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               {products.length > 0 ? (
                 products.map((product) => (
-                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+                  <Grid key={product._id} item xs={12} sm={6} md={2} lg={3}>
                     <Card className={classes.cardWrapper}>
                       <img src={product.image} alt={product.name} />
-                      <CardContent>
+                      <CardContent className={classes.cardContent}>
                         <Typography variant="h3">{product.name}</Typography>
                         <Typography variant="subtitle1">
-                          Under Revision
+                          Submission: 01 April, 2021
+                          <span style={{marginLeft: "5rem"}}>type: jpg</span>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -47,7 +48,7 @@ const Revision = () => {
               )}
             </Grid>
           </div>
-          <Footer addminFooter />
+          <Footer />
         </main>
       </div>
 

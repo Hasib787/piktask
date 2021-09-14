@@ -19,6 +19,7 @@ import linkedin from "../../../assets/icons/linkedin.svg";
 import shutterstock from "../../../assets/icons/shutterstock.svg";
 import twitter from "../../../assets/icons/twitter.svg";
 import Footer from "../../../components/ui/Footer";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./AccountSettings.styles";
@@ -34,13 +35,14 @@ const AccountSettings = () => {
   };
 
   return (
-    <>
-      <AdminHeader />
+    <Layout>
 
       <div className={classes.adminRoot}>
         <Sidebar />
 
         <main className={classes.content}>
+          <AdminHeader />
+          <div className={classes.profileContentWrapper}>
           <div className={classes.settingsHero}>
             <Typography variant="h1">Your Account Dashboard</Typography>
           </div>
@@ -543,12 +545,13 @@ const AccountSettings = () => {
               </div>
             </form>
           </div>
+          </div>
           {/* Ends form wrapper */}
+          <Footer addminFooter />
         </main>
       </div>
 
-      <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

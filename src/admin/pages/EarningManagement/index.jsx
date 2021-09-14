@@ -204,473 +204,475 @@ const EarningManagement = () => {
 
         <main className={classes.content}>
           <AdminHeader />
-          <div className={classes.headingWrapepr}>
-            <Heading tag="h2">Earning Management</Heading>
-          </div>
-
-          <Grid container spacing={0}>
-            <Grid item xs={12}>
-              <Card className={classes.cardWrapper}>
-                <div className={classes.graphBox}>
-                  <div className={classes.amount}>2.54$</div>
-                  <span className={classes.title}>Current Earning</span>
-                  <span className={classes.duration}>Last month: 1.45</span>
-                </div>
-                <div className={classes.graphBox}>
-                  <span
-                    className={`${classes.amount} ${classes.totalEarningColor}`}
-                  >
-                    255.00$
-                  </span>
-                  <span className={classes.title}>Total Earning</span>
-                  <span className={`${classes.duration} ${classes.bgColor2}`}>
-                    Last month: 1.45
-                  </span>
-                </div>
-                <div className={classes.graphBox}>
-                  <span
-                    className={`${classes.amount} ${classes.paidDownloadColro}`}
-                  >
-                    255.00$
-                  </span>
-                  <span className={classes.title}>Paid Download</span>
-                  <span className={`${classes.duration} ${classes.bgColor3}`}>
-                    Last month: 1.45
-                  </span>
-                </div>
-                <div className={classes.graphBox}>
-                  <span
-                    className={`${classes.amount} ${classes.freeDownloadColor}`}
-                  >
-                    652:00k
-                  </span>
-                  <span className={classes.title}>Free Download</span>
-                  <span className={`${classes.duration} ${classes.bgColor4}`}>
-                    Last month: 1.45
-                  </span>
-                </div>
-                <div className={classes.graphBox}>
-                  <span
-                    className={`${classes.amount} ${classes.totalDownloadColor}`}
-                  >
-                    258.00k
-                  </span>
-                  <span className={classes.title}>Total Download</span>
-                  <span className={`${classes.duration} ${classes.bgColor5}`}>
-                    Last month: 1.45
-                  </span>
-                </div>
-              </Card>
-            </Grid>
-          </Grid>
-
-          <div>
-            <Typography className={classes.formTitle} variant="h4">
-              Select Period
-            </Typography>
-
-            <div className={classes.statisticsFormWrapper}>
-              <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
-                <div className={classes.fields}>
-                  <Typography
-                    className={classes.fieldTitle}
-                    variant="subtitle1"
-                  >
-                    From
-                  </Typography>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={month}
-                      onChange={(e) => setMonth(e.target.value)}
-                      inputProps={{
-                        // name: 'age',
-                        id: "months",
-                      }}
-                    >
-                      {months.length > 0 &&
-                        months.map((month, index) => (
-                          <option key={month} value={month}>
-                            {month}
-                          </option>
-                        ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={currentDate}
-                      onChange={(e) => setCurrentDate(e.target.value)}
-                      inputProps={{
-                        id: "date",
-                      }}
-                    >
-                      {getAllDays().map((day) => (
-                        <option key={day} value={day}>
-                          {day}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={year}
-                      onChange={(e) => setYear(e.target.value)}
-                      inputProps={{
-                        id: "year",
-                      }}
-                    >
-                      {getAllYears().map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-                <div className={classes.fields}>
-                  <Typography
-                    className={classes.fieldTitle}
-                    variant="subtitle1"
-                  >
-                    To
-                  </Typography>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={month}
-                      onChange={(e) => setMonth(e.target.value)}
-                      inputProps={{
-                        // name: 'age',
-                        id: "months",
-                      }}
-                    >
-                      {months.length > 0 &&
-                        months.map((month, index) => (
-                          <option key={month} value={month}>
-                            {month}
-                          </option>
-                        ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={currentDate}
-                      onChange={(e) => setCurrentDate(e.target.value)}
-                      inputProps={{
-                        id: "date",
-                      }}
-                    >
-                      {getAllDays().map((day) => (
-                        <option key={day} value={day}>
-                          {day}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
-                    {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
-                    <Select
-                      native
-                      value={year}
-                      onChange={(e) => setYear(e.target.value)}
-                      inputProps={{
-                        id: "year",
-                      }}
-                    >
-                      {getAllYears().map((year) => (
-                        <option key={year} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-
-                <Button className={classes.statisticsBtn}>
-                  Display Statistics
-                </Button>
-              </form>
+          <div className={classes.earningManagementWrapper}>
+            <div className={classes.headingWrapper}>
+              <Heading tag="h2">Earning Management</Heading>
             </div>
-            {/* End Statistics form */}
 
-            <Tabs
-              value={earningData}
-              onChange={handleChange}
-              aria-label="Earning Chart"
-              className={classes.tabsBtnWrapper}
-              classes={{ indicator: classes.indicator }}
-            >
-              <Tab
-                label="Earning Line"
-                {...selectData(0)}
-                onClick={() => setOnClickEvent(!onClickEvent)}
-                className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
-              />
-              <Tab
-                label="Earning Table"
-                {...selectData(1)}
-                className={`${classes.earningBtn} ${classes.earningGrayBtn}`}
-              />
-            </Tabs>
-
-            <TabPanel value={earningData} index={0}>
-              <canvas
-                id="earningChart"
-                ref={refChart}
-                width="600"
-                height="200"
-              ></canvas>
-            </TabPanel>
-
-            <TabPanel value={earningData} index={1}>
-              <Grid item xs={12} className={classes.earningDataWrapper}>
-                <div className={classes.sellerEarningTableWrapper}>
-                  <Typography variant="h2">
-                    Top Sellers Earning Table
-                  </Typography>
-                  <Button className={classes.downloadTableBtn}>
-                    Download Table
-                  </Button>
-                </div>
-                <TableContainer
-                  className={classes.tableContainer}
-                  component={Paper}
-                >
-                  <Table
-                    className={`${classes.table} ${classes.dataTableCard}`}
-                    aria-label="Product data table"
-                  >
-                    <TableHead>
-                      <TableRow className={classes.earningSellingTableHead}>
-                        <TableCell
-                          className={`${classes.sellingTableCellHead}`}
-                        >
-                          Date
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.sellingTableCellHead}`}
-                        >
-                          Total Earning
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.sellingTableCellHead}`}
-                        >
-                          Premium Earning
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.sellingTableCellHead}`}
-                        >
-                          Free Earning
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.sellingTableCellHead}`}
-                        >
-                          Total Download
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-
-                    <TableBody>
-                      {/* <tr style={{display: "block", marginTop: "2rem"}}></tr> */}
-                      <TableRow className={classes.tableRowContent}>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          1/1/2020
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          30k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          20k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          5k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          9
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className={classes.tableRowContent}>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          1/1/2020
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          30k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          20k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          5k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          9
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className={classes.tableRowContent}>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          1/1/2020
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          30k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          20k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          5k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          9
-                        </TableCell>
-                      </TableRow>
-                      <TableRow className={classes.tableRowContent}>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          1/1/2020
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          30k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          20k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          5k
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          9
-                        </TableCell>
-                      </TableRow>
-                      <TableRow
-                        className={`${classes.tableRowContent} ${classes.totalEarnings}`}
-                      >
-                        <TableCell
-                          className={`${classes.sellingTableCell}`}
-                        ></TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          Total($)
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          10.00$
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          0.8.00$
-                        </TableCell>
-                        <TableCell className={`${classes.sellingTableCell}`}>
-                          30
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+            <Grid container spacing={0}>
+              <Grid item xs={12}>
+                <Card className={classes.cardWrapper}>
+                  <div className={classes.graphBox}>
+                    <div className={classes.amount}>2.54$</div>
+                    <span className={classes.title}>Current Earning</span>
+                    <span className={classes.duration}>Last month: 1.45</span>
+                  </div>
+                  <div className={classes.graphBox}>
+                    <span
+                      className={`${classes.amount} ${classes.totalEarningColor}`}
+                    >
+                      255.00$
+                    </span>
+                    <span className={classes.title}>Total Earning</span>
+                    <span className={`${classes.duration} ${classes.bgColor2}`}>
+                      Last month: 1.45
+                    </span>
+                  </div>
+                  <div className={classes.graphBox}>
+                    <span
+                      className={`${classes.amount} ${classes.paidDownloadColro}`}
+                    >
+                      255.00$
+                    </span>
+                    <span className={classes.title}>Paid Download</span>
+                    <span className={`${classes.duration} ${classes.bgColor3}`}>
+                      Last month: 1.45
+                    </span>
+                  </div>
+                  <div className={classes.graphBox}>
+                    <span
+                      className={`${classes.amount} ${classes.freeDownloadColor}`}
+                    >
+                      652:00k
+                    </span>
+                    <span className={classes.title}>Free Download</span>
+                    <span className={`${classes.duration} ${classes.bgColor4}`}>
+                      Last month: 1.45
+                    </span>
+                  </div>
+                  <div className={classes.graphBox}>
+                    <span
+                      className={`${classes.amount} ${classes.totalDownloadColor}`}
+                    >
+                      258.00k
+                    </span>
+                    <span className={classes.title}>Total Download</span>
+                    <span className={`${classes.duration} ${classes.bgColor5}`}>
+                      Last month: 1.45
+                    </span>
+                  </div>
+                </Card>
               </Grid>
-            </TabPanel>
-          </div>
+            </Grid>
 
-          <Grid item xs={12} className={classes.tableWrapper}>
-            <TableContainer
-              className={classes.tableContainer}
-              component={Paper}
-            >
-              <Table
-                className={`${classes.table} ${classes.dataTableCard}`}
-                aria-label="Product data table"
+            <div>
+              <Typography className={classes.formTitle} variant="h4">
+                Select Period
+              </Typography>
+
+              <div className={classes.statisticsFormWrapper}>
+                <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
+                  <div className={classes.fields}>
+                    <Typography
+                      className={classes.fieldTitle}
+                      variant="subtitle1"
+                    >
+                      From
+                    </Typography>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={month}
+                        onChange={(e) => setMonth(e.target.value)}
+                        inputProps={{
+                          // name: 'age',
+                          id: "months",
+                        }}
+                      >
+                        {months.length > 0 &&
+                          months.map((month, index) => (
+                            <option key={month} value={month}>
+                              {month}
+                            </option>
+                          ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={currentDate}
+                        onChange={(e) => setCurrentDate(e.target.value)}
+                        inputProps={{
+                          id: "date",
+                        }}
+                      >
+                        {getAllDays().map((day) => (
+                          <option key={day} value={day}>
+                            {day}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                        inputProps={{
+                          id: "year",
+                        }}
+                      >
+                        {getAllYears().map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                  <div className={classes.fields}>
+                    <Typography
+                      className={classes.fieldTitle}
+                      variant="subtitle1"
+                    >
+                      To
+                    </Typography>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={month}
+                        onChange={(e) => setMonth(e.target.value)}
+                        inputProps={{
+                          // name: 'age',
+                          id: "months",
+                        }}
+                      >
+                        {months.length > 0 &&
+                          months.map((month, index) => (
+                            <option key={month} value={month}>
+                              {month}
+                            </option>
+                          ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={currentDate}
+                        onChange={(e) => setCurrentDate(e.target.value)}
+                        inputProps={{
+                          id: "date",
+                        }}
+                      >
+                        {getAllDays().map((day) => (
+                          <option key={day} value={day}>
+                            {day}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
+                      <Select
+                        native
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                        inputProps={{
+                          id: "year",
+                        }}
+                      >
+                        {getAllYears().map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+
+                  <Button className={classes.statisticsBtn}>
+                    Display Statistics
+                  </Button>
+                </form>
+              </div>
+              {/* End Statistics form */}
+
+              <Tabs
+                value={earningData}
+                onChange={handleChange}
+                aria-label="Earning Chart"
+                className={classes.tabsBtnWrapper}
+                classes={{ indicator: classes.indicator }}
               >
-                <TableHead>
-                  <TableRow className={classes.tableHead}>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.tableCellHead}`}
-                    >
-                      Thumb
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.tableCellHead}`}
-                    >
-                      ID
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.tableCellHead}`}
-                    >
-                      Type
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.tableCellHead}`}
-                    >
-                      Upload Date
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.tableCellHead}`}
-                    >
-                      Earning
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+                <Tab
+                  label="Earning Line"
+                  {...selectData(0)}
+                  onClick={() => setOnClickEvent(!onClickEvent)}
+                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                />
+                <Tab
+                  label="Earning Table"
+                  {...selectData(1)}
+                  className={`${classes.earningBtn} ${classes.earningGrayBtn}`}
+                />
+              </Tabs>
 
-                <TableBody>
-                  <tr style={{ display: "block", marginTop: "2rem" }}></tr>
-                  {rows.map((row) => (
-                    <TableRow key={row.id} className={classes.tableRowContent}>
+              <TabPanel value={earningData} index={0}>
+                <canvas
+                  id="earningChart"
+                  ref={refChart}
+                  width="600"
+                  height="200"
+                ></canvas>
+              </TabPanel>
+
+              <TabPanel value={earningData} index={1}>
+                <Grid item xs={12} className={classes.earningDataWrapper}>
+                  <div className={classes.sellerEarningTableWrapper}>
+                    <Typography variant="h2">
+                      Top Sellers Earning Table
+                    </Typography>
+                    <Button className={classes.downloadTableBtn}>
+                      Download Table
+                    </Button>
+                  </div>
+                  <TableContainer
+                    className={classes.tableContainer}
+                    component={Paper}
+                  >
+                    <Table
+                      className={`${classes.table} ${classes.dataTableCard}`}
+                      aria-label="Product data table"
+                    >
+                      <TableHead>
+                        <TableRow className={classes.earningSellingTableHead}>
+                          <TableCell
+                            className={`${classes.sellingTableCellHead}`}
+                          >
+                            Date
+                          </TableCell>
+                          <TableCell
+                            className={`${classes.sellingTableCellHead}`}
+                          >
+                            Total Earning
+                          </TableCell>
+                          <TableCell
+                            className={`${classes.sellingTableCellHead}`}
+                          >
+                            Premium Earning
+                          </TableCell>
+                          <TableCell
+                            className={`${classes.sellingTableCellHead}`}
+                          >
+                            Free Earning
+                          </TableCell>
+                          <TableCell
+                            className={`${classes.sellingTableCellHead}`}
+                          >
+                            Total Download
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+
+                      <TableBody>
+                        {/* <tr style={{display: "block", marginTop: "2rem"}}></tr> */}
+                        <TableRow className={classes.tableRowContent}>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            1/1/2020
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            30k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            20k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            5k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            9
+                          </TableCell>
+                        </TableRow>
+                        <TableRow className={classes.tableRowContent}>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            1/1/2020
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            30k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            20k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            5k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            9
+                          </TableCell>
+                        </TableRow>
+                        <TableRow className={classes.tableRowContent}>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            1/1/2020
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            30k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            20k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            5k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            9
+                          </TableCell>
+                        </TableRow>
+                        <TableRow className={classes.tableRowContent}>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            1/1/2020
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            30k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            20k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            5k
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            9
+                          </TableCell>
+                        </TableRow>
+                        <TableRow
+                          className={`${classes.tableRowContent} ${classes.totalEarnings}`}
+                        >
+                          <TableCell
+                            className={`${classes.sellingTableCell}`}
+                          ></TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            Total($)
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            10.00$
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            0.8.00$
+                          </TableCell>
+                          <TableCell className={`${classes.sellingTableCell}`}>
+                            30
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Grid>
+              </TabPanel>
+            </div>
+
+            <Grid item xs={12} className={classes.tableWrapper}>
+              <TableContainer
+                className={classes.tableContainer}
+                component={Paper}
+              >
+                <Table
+                  className={`${classes.table} ${classes.dataTableCard}`}
+                  aria-label="Product data table"
+                >
+                  <TableHead>
+                    <TableRow className={classes.tableHead}>
                       <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        className={`${classes.tableCell} ${classes.tableCellHead}`}
                       >
-                        <img
-                          className={classes.earningImg}
-                          src={row.image}
-                          alt={row.location}
-                        />
+                        Thumb
                       </TableCell>
                       <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        className={`${classes.tableCell} ${classes.tableCellHead}`}
                       >
-                        13252622
+                        ID
                       </TableCell>
                       <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        className={`${classes.tableCell} ${classes.tableCellHead}`}
                       >
-                        VECTORS
+                        Type
                       </TableCell>
                       <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        className={`${classes.tableCell} ${classes.tableCellHead}`}
                       >
-                        20/10/2021
+                        Upload Date
                       </TableCell>
                       <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        className={`${classes.tableCell} ${classes.tableCellHead}`}
                       >
-                        0.20$
+                        Earning
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        <Footer addminFooter />
+                  </TableHead>
+
+                  <TableBody>
+                    <tr style={{ display: "block", marginTop: "2rem" }}></tr>
+                    {rows.map((row) => (
+                      <TableRow key={row.id} className={classes.tableRowContent}>
+                        <TableCell
+                          className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        >
+                          <img
+                            className={classes.earningImg}
+                            src={row.image}
+                            alt={row.location}
+                          />
+                        </TableCell>
+                        <TableCell
+                          className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        >
+                          13252622
+                        </TableCell>
+                        <TableCell
+                          className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        >
+                          VECTORS
+                        </TableCell>
+                        <TableCell
+                          className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        >
+                          20/10/2021
+                        </TableCell>
+                        <TableCell
+                          className={`${classes.tableCell} ${classes.tableCellRow}`}
+                        >
+                          0.20$
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          </div>
+        <Footer />
         </main>
       </div>
 
