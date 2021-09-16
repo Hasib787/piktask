@@ -60,15 +60,17 @@ const RejectFiles = () => {
             <Grid container spacing={2}>
               {products.length > 0 ? (
                 products.map((product) => (
-                  <Grid key={product._id} item xs={12} sm={6} md={3} lg={3}>
+                  <Grid key={product._id} item xs={12} sm={6} md={2} lg={3}>
                     <Card
                       className={classes.cardWrapper}
                       onClick={() => handleClick(product)}
                     >
-                      <img src={product.image} alt={product.name} />
+                      <div className={classes.cardImage}>
+                        <img src={product.image} alt={product.name} />
+                      </div>
                       <CardContent className={classes.cardContent}>
-                        <Typography variant="h3">{product.name}</Typography>
-                        <Typography variant="subtitle1">Reject File</Typography>
+                        {/* <Typography variant="h3">{product.name}</Typography> */}
+                        <Typography variant="h3">Reject File</Typography>
                       </CardContent>
                     </Card>
                   </Grid>

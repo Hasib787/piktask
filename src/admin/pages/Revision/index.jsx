@@ -44,13 +44,11 @@ const Revision = () => {
                 products.map((product) => (
                   <Grid key={product._id} item xs={12} sm={6} md={2} lg={3}>
                     <Card className={classes.cardWrapper}>
-                      <img src={product.image} alt={product.name} />
+                      <div className={classes.cardImage}>
+                        <img src={product.image} alt={product.name} />
+                      </div>
                       <CardContent className={classes.cardContent}>
-                        <Typography variant="h3">{product.name}</Typography>
-                        <Typography variant="subtitle1">
-                          Submission: 01 April, 2021
-                          <span style={{marginLeft: "5rem"}}>type: jpg</span>
-                        </Typography>
+                        <Typography variant="h3">Revision</Typography>
                       </CardContent>
                     </Card>
                   </Grid>

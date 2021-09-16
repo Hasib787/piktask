@@ -10,13 +10,14 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import EuroIcon from '@material-ui/icons/Euro';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useSelector } from "react-redux";
 
-const Sidebar = ({productLength}) => {
+const Sidebar = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  // const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(0);
+  const totalPublishFile = useSelector((state) => state.totalPublishFile);
 
   useEffect(() => {
     if (window.location.pathname === "/admin/dashboard" && value !== 0) {
@@ -138,13 +139,7 @@ const Sidebar = ({productLength}) => {
               className={classes.nested}
               selected={value === 1 && selectedItem === 5}
             >
-              {
-                productLength ? (
-                  <ListItemText primary={`Publish(${productLength})`} />
-                ) : (
-                  <ListItemText primary="Publish(0)" />
-                )
-              }
+              <ListItemText primary={`Publish(${totalPublishFile.length})`} />
             </ListItem>
           </List>
         </Collapse>

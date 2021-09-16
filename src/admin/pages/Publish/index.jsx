@@ -22,7 +22,7 @@ import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./Publish.styles";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { getWords } from "../../../helpers";
 import { Link } from "react-router-dom";
@@ -31,6 +31,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const Publish = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const [isLoading, setLoading] = useState(false);
@@ -63,10 +64,15 @@ const Publish = () => {
         if(data?.status) {
           setAllPublishProduct(data?.images);
           setLoading(false);
+
+          dispatch({
+            type: "TOTAL_IMAGE_EARNING",
+            payload: [...data?.images],
+          });
         }
       })
     }
-  }, [user.token]);
+  }, [user.token, dispatch]);
 
   
   // Date wise API integration
@@ -143,8 +149,9 @@ const Publish = () => {
 
   return (
     <Layout title={"Publish || Piktask"}>
+      {isLoading}
       <div className={classes.adminRoot}>
-        {mobileView ? null : <Sidebar productLength={allPublishProduct?.length} className={classes.adminSidebar} />}
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
           <AdminHeader />

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     marginLeft: "28rem",
     marginRight: "0rem",
-    marginTop: "8rem",
+    marginTop: "10rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
@@ -35,30 +35,32 @@ const useStyles = makeStyles((theme) => ({
   },
   cardWrapper: {
     position: "relative",
-    padding: "1.5rem",
     cursor: "pointer",
     "& img": {
       width: "100%",
       height: 150,
-      borderRadius: theme.shape.borderRadius,
+      borderRadius: "0.1rem",
     },
     "& .MuiCardContent-root": {
       paddingBottom: "0rem !important",
     },
   },
+  cardImage: {
+    padding: "0.4rem 0.4rem 0rem 0.4rem",
+  },
   cardContent: {
-    padding: "1rem 1rem 1rem 0rem",
+    padding: "0rem",
+    backgroundColor: "#f1f1f1",
+    marginTop: "-0.39rem !important",
     "& h3": {
-      fontSize: "2rem",
-      marginBottom: "1rem",
+      fontSize: "1.4rem",
       lineHeight: "1.5",
       color: "#114960",
+      textAlign: "center",
+      padding: "0.5rem 0rem",
     },
-    "& h6": {
-      fontSize: "1.5rem",
-      fontWeight: 500,
-      color: "#FF0000",
-      cursor: "pointer",
+    "& .MuiCardContent-root": {
+      padding: "0rem !important",
     },
   },
 
@@ -67,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "2 !important",
   },
   paper: {
-    width: "60rem",
-    // top: "8rem",
+    width: "40rem",
+    top: "7rem",
     height: "100%",
     borderTop: "1px solid #ddd",
   },
