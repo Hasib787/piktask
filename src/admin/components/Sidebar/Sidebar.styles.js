@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
     width: "28rem",
     height: "100%",
     position: "fixed",
+    zIndex: "9999",
+    top: 0,
   },
   logoWrapper: {
     width: 160,

@@ -8,14 +8,15 @@ const useStyles = makeStyles((theme) => ({
      },
   },
   appbarHeader: {
-    backgroundColor: "white",
-    // backgroundColor: "#1B3F4E",
+    backgroundColor: "#fff",
     boxShadow: "none",
   },
-  fullwidth: {
+  fullWidth: {
     width: "100%",
     height: "7rem",
-    // backgroundColor: "#1B3F4E",
+    backgroundColor: "#fff",
+    // position: "fixed",
+    // zIndex: "9999",
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
   },
   root: {
@@ -32,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   adminLogo: {
-    width: "13rem",
+    width: "15rem",
+    marginTop: "0.6rem",
   },
   logo: {
     width: "10rem",
@@ -66,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     backgroundColor: "#0088f2",
     padding: "0.5rem 1.4rem",
+    marginLeft: "28rem",
     marginRight: "2rem",
     fontSize: "1.4rem",
     border: "2px solid",

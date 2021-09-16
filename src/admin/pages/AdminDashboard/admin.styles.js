@@ -3,16 +3,28 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
-    // marginTop: "8rem",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    // marginTop: "2rem",
     marginLeft: "28rem",
     marginRight: "0rem",
+    marginTop: "8rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  loaderItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
   },
   dashboardGridContainer: {
     padding: "1.5rem 1rem 0rem 1rem",
@@ -135,16 +147,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   cardRoot: {
+    height: "57.6rem",
     borderRadius: 0,
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
     margin: "1rem",
   },
   authorCard: {
-    // position: "relative",
     padding: "2rem",
-    // paddingLeft: "5rem",
-    // margin: "2rem",
-    // textAlign: "center",
   },
   authorBadge: {
     position: "absolute",

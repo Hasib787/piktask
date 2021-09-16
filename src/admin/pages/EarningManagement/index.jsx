@@ -62,14 +62,30 @@ const rows = [
 ];
 
 const EarningManagement = () => {
+  const refChart = useRef();
   const classes = useStyles();
+
+  const months = moment.months();
   const [year, setYear] = useState(moment().year());
   const [month, setMonth] = useState(moment().format("MMMM"));
   const [currentDate, setCurrentDate] = useState(moment().date());
+  
   const [earningData, setEarningData] = useState(0);
   const [onClickEvent, setOnClickEvent] = useState(true);
-  const months = moment.months();
-  const refChart = useRef();
+
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   useEffect(() => {
     const canvasID = refChart.current;
@@ -200,7 +216,7 @@ const EarningManagement = () => {
     <Layout title={"Earning Management || Piktask"}>
 
       <div className={classes.adminRoot}>
-        <Sidebar />
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
           <AdminHeader />

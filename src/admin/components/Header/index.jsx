@@ -9,6 +9,7 @@ import {
   // MenuList,
   // Toolbar,
   Typography,
+  AppBar,
 } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -17,7 +18,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import crownIcon from "../../../assets/icons/crown.svg";
-import logo from "../../../assets/piktaskLogo.svg";
+import logo from "../../../assets/Logo/piktask-6.png";
 import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
 import { useSelector } from "react-redux";
@@ -47,7 +48,8 @@ const customStyles = makeStyles({
   menuIcon: {
     fontSize: "4rem",
     cursor: "pointer",
-    color: "#000",
+    // color: "#0088f2",
+    color: "#001c30",
   },
   closeMenuIcon:{
     fontSize: "3rem",
@@ -98,11 +100,12 @@ const AdminHeader = () => {
   const handleMobileMenu = () => {
     setOpenMobileMenu(true);
   };
+
   return (
     <>
-      <div position="fixed" className={classes.appbarHeader}>
+      <AppBar position="fixed" className={classes.appbarHeader}>
         {mobileView ? (
-          <div className={classes.fullwidth}>
+          <div className={classes.fullWidth}>
           <Container classes={{ root: classes.root }}>
             <Grid
               container
@@ -153,7 +156,7 @@ const AdminHeader = () => {
           </Container>
         </div>
         ) : (
-          <div className={classes.fullwidth}>
+          <div className={classes.fullWidth}>
             <Container classes={{ root: classes.root }}>
               <Grid
                 container
@@ -209,12 +212,12 @@ const AdminHeader = () => {
           </div>
         )}
         <Drawer
-        anchor="right"
-        classes={{ paper: classes.paper }}
-        open={openMobileMenu}
-        onClose={() => setOpenMobileMenu(false)}
-      >
-        <div className={iconClass.closeIconWrapper}>
+          anchor="right"
+          classes={{ paper: classes.paper }}
+          open={openMobileMenu}
+          onClose={() => setOpenMobileMenu(false)}
+        >
+          <div className={iconClass.closeIconWrapper}>
             <CloseIcon
               onClick={() => setOpenMobileMenu(false)}
               className={iconClass.closeMenuIcon}
@@ -247,9 +250,8 @@ const AdminHeader = () => {
               </div>
             )}
           </div>
-         <MobileSidebarMenu 
-         />
-       </Drawer>
+          <MobileSidebarMenu />
+        </Drawer>
         <CustomPopper
           open={open}
           handleToggle={handleToggle}
@@ -257,7 +259,7 @@ const AdminHeader = () => {
           handleClose={handleClose}
           handleListKeyDown={handleListKeyDown}
         />
-      </div>
+      </AppBar>
     </>
   );
 };

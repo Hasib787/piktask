@@ -122,7 +122,7 @@ export const Home = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller />
+      <TopSeller homeTopSeller />
 
       {/* BLOG SECTION */}
       <Blog />

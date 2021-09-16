@@ -21,11 +21,18 @@ const useStyles = makeStyles((theme) => ({
     //   margin: "0rem 51rem",
     // },
   },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
+  },
   content: {
     padding: 0,
     // width: "100%",
     marginLeft: "28rem",
     marginRight: "0rem",
+    marginTop: "8rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
@@ -35,11 +42,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "2rem",
     [theme.breakpoints.down(769)]: {
       padding: "0rem 2rem",
-    },
-  },
-  adminSidebar: {
-    [theme.breakpoints.down(769)]: {
-      display: "none",
     },
   },
   basicInfo: {

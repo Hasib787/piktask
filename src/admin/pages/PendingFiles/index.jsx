@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
 import Layout from "../../../Layout";
@@ -25,6 +25,20 @@ const PendingFiles = () => {
   const [selected, setSelected] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [editItem, setEditItem] = useState({});
+
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   const handleDelete = (id) => {
     setProducts(products.filter((product) => product._id !== id));
@@ -53,11 +67,11 @@ const PendingFiles = () => {
     <Layout>
 
       <div className={classes.adminRoot}>
-        <Sidebar />
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
-          <AdminHeader />
           <div className={classes.headingWrapepr}>
+          <AdminHeader />
             <Heading tag="h2">Not Yet Submit</Heading>
             <div>
               <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>

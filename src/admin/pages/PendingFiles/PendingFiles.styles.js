@@ -3,16 +3,22 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
-    // marginTop: "8rem",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
     marginLeft: "29rem",
     marginRight: "0rem",
-    // marginTop: "2rem",
+    marginTop: "8rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
   },
   headingWrapepr: {
     display: "flex",
