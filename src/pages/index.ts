@@ -10,3 +10,4 @@ export * from "./SearchResults";
 export * from "./Recent";
 export * from "./PopularImages";
 export * from "./Category";
+export * from "./TrendingSearch";

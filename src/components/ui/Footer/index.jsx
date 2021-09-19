@@ -82,17 +82,17 @@ const Footer = () => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/images/recent_images">
                   New resources
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to={"/images/popular_images"}>
+                <Link className={classes.navLink} to="/images/popular_images">
                   The most popular content
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/search/trending_search">
                   Search trends
                 </Link>
               </ListItem>

@@ -1,4 +1,5 @@
 import { Container, Button, Grid } from "@material-ui/core";
+import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
 import { TopSeller } from "../../components/ui/TopSeller";
@@ -67,9 +68,8 @@ export const Recent = () => {
         setPageCount(pageCount);
         // var products = setItems([pageCount]);
         // products=  items.concat(...Object.values(recentProduct))
-        // console.log("****products********", products); 
         setItems(recentProduct.concat(pageCount))
-            
+          
         loadData(); 
       }
     };
@@ -80,6 +80,7 @@ export const Recent = () => {
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
       <HeroSection
+        background={heroBanner}
         size="large"
         popularKeywords
         heroButton
@@ -113,7 +114,6 @@ export const Recent = () => {
           )}
         </Grid>
       </Container>
-      <Spacing space={{ height: "3rem" }} />
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
@@ -136,7 +136,7 @@ export const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller homeTopSeller />
+      <TopSeller />
       {/* BLOG SECTION */}
       <Blog />
 
