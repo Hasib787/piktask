@@ -1,35 +1,63 @@
 import { makeStyles } from "@material-ui/core";
+import profileBanner from '../../../assets/banner/profile-banner.jpg';
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    width: "100%",
-    // marginLeft: "2rem",
-    // marginRight: "2rem",
-    // marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "10rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  profileContentWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
   },
   settingsHero: {
-    backgroundColor: "#114960",
+    backgroundImage: `url(${profileBanner})`,
+
+    backgroundPosition: "center center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
     display: "flex",
     alignItems: "center",
+    position: "relative",
     justifyContent: "center",
-    height: "30rem",
+    height: "20rem",
     marginBottom: "2.5rem",
     "& h1": {
       color: theme.palette.common.white,
-      fontSize: "2.8rem",
+      fontSize: "3.5rem",
       fontWeight: 500,
+      zIndex: 999,
     },
+
+    "&::before": {
+      background: "rgba(0, 28, 48, 0.6)",
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    },
+
+    // backgroundColor: "#114960",
+    
   },
 
   headingWrapper: {
@@ -158,15 +186,18 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     top: "-.5rem",
     width: "8rem",
-    height: "6.1rem",
+    height: "5.85rem",
     display: "flex",
     justifyContent: "center",
     border: "1px solid rgba(0, 0, 0, 0.23)",
 
     "& img": {
-      width: "3rem",
+      width: "2.5rem",
       height: "auto",
     },
+  },
+  facebookIcon: {
+    width: "1.6rem !important",
   },
 
   buttonGroup: {
@@ -175,9 +206,9 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsBtn: {
     // ...theme.typography.button,
-    padding: "1.4rem 5rem",
+    padding: "1rem 2rem",
     color: theme.palette.common.white,
-    fontSize: "1.8rem",
+    fontSize: "1.4rem",
     borderRadius: ".5rem",
   },
   restoreBtn: {
@@ -188,9 +219,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   saveBtn: {
-    backgroundColor: "#1B3F4E",
+    backgroundColor: "#0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "rgb(45 87 105)",
+      backgroundColor: "#0773c5",
     },
   },
   selectArea: {

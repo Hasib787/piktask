@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import HeroSection from "../../components/ui/Hero";
-import heroBanner from "../../assets/banner/banner-single-page.png";
 import Layout from "../../Layout";
 import useStyles from "./Categories.style";
-import { Button, Container, Grid, Typography } from "@material-ui/core";
+import { Button, Container, Grid } from "@material-ui/core";
 import CallToAction from "../../components/ui/CallToAction";
 import Spacing from "../../components/Spacing";
 import { Link } from "react-router-dom";
@@ -37,7 +36,6 @@ const Categories = () => {
     <Layout title="All Categories-Piktask" description="All Categories-Piktask">
       <Header />
       <HeroSection
-        background={heroBanner}
         title="Graphic Resources for Free Download"
         size="large"
         popularKeywords

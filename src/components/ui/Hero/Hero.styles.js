@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-// import heroBG from "../../../assets/490cdcd7579.svg";
 
 const useStyles = makeStyles((theme) => ({
   heroWrapper: {
@@ -10,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     position: "relative",
     "&::before": {
-      // background: "rgb(20 51 64 / 94%)",
       background: "rgba(0, 28, 48, 0.6)",
       content: '""',
       position: "absolute",
@@ -72,11 +70,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#0387EA",
-      border: "2px solid #0387EA",
+      backgroundColor: "#0088f2",
+      border: "2px solid #0088f2",
     },
     "&:hover": {
-      backgroundColor: "#0387EA",
+      backgroundColor: "#0088f2",
       color: "#fff",
     },
   },
@@ -89,11 +87,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     transition: "all 0.3s linear",
     "&.active":{
-      backgroundColor: "#0387EA",
-      border: "2px solid #0387EA",
+      backgroundColor: "#0088f2",
+      border: "2px solid #0088f2",
     },
     "&:hover": {
-      backgroundColor: "#0387EA",
+      backgroundColor: "#0088f2",
       color: "#fff",
     },
   },

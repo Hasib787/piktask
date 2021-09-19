@@ -1,6 +1,5 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import heroBanner from "../../assets/banner/banner-tag-page.png";
-import TagButtons from "../../components/ui/TagButtons/index";
+// import TagButtons from "../../components/ui/TagButtons/index";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
 import useStyles from "./TagRelatedProducts.style";
@@ -36,7 +35,7 @@ const TagTemplate = () => {
   return (
     <Layout title={`${tagName} | Piktask`} description={`${tagName} | Piktask`}>
       <Header />
-      <HeroSection background={heroBanner} size="medium" />
+      <HeroSection size="medium" />
 
       {/* <div className={classes.tagWrapper}>
         <Container>

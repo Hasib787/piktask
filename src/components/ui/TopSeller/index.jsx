@@ -6,8 +6,9 @@ import ProductNotFound from "../ProductNotFound";
 import SellerInfo from "./SellerInfo";
 import useStyles from "./TopSeller.style";
 
-export const TopSeller = () => {
+export const TopSeller = (props) => {
   const classes = useStyles();
+  const {homeTopSeller, adminDashBoard} = props;
   const [isLoading, setIsLoading] = useState(false);
   const [topSeller, setTopSeller] = useState([]);
 
@@ -28,31 +29,63 @@ export const TopSeller = () => {
   }, []);
 
   return (
-    <Container>
-      <Grid classes={{ container: classes.container }} container spacing={2}>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            {topSeller.length ? (
-              topSeller?.map((photo) => (
-                <Grid
-                  key={photo.id}
-                  item
-                  xs={6}
-                  sm={4}
-                  md={3}
-                  className={classes.productItem}
-                >
-                  <SellerInfo photo={photo} />
-                </Grid>
-              ))
+    <>
+      <Container>
+        {homeTopSeller && (
+          <Grid classes={{ container: classes.container }} container spacing={2}>
+            {isLoading ? (
+              <Loader />
             ) : (
-              <ProductNotFound />
+              <>
+                {topSeller.length ? (
+                  topSeller?.map((photo) => (
+                    <Grid
+                      key={photo.id}
+                      item
+                      xs={6}
+                      sm={4}
+                      md={3}
+                      className={classes.productItem}
+                    >
+                      <SellerInfo photo={photo} />
+                    </Grid>
+                  ))
+                ) : (
+                  <ProductNotFound />
+                )}
+              </>
             )}
-          </>
+          </Grid>
         )}
-      </Grid>
-    </Container>
+
+      {adminDashBoard && (
+        <Grid classes={{ container: classes.container }} container spacing={2}>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              {topSeller.length ? (
+                topSeller?.map((photo) => (
+                  <Grid
+                    key={photo.id}
+                    item
+                    xs={6}
+                    sm={6}
+                    md={3}
+                    className={classes.productItem}
+                  >
+                    <SellerInfo photo={photo} />
+                  </Grid>
+                ))
+              ) : (
+                <ProductNotFound />
+              )}
+            </>
+          )}
+        </Grid>
+      )}
+      </Container>
+
+    </>
   );
 };

@@ -3,16 +3,25 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
-    // marginTop: "8rem",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    marginLeft: "29rem",
-    marginRight: "1rem",
-    // marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "10rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  rejectFilesWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
@@ -22,45 +31,56 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: "2rem",
-    marginBottom: "4.5rem",
+    marginBottom: "1.5rem",
   },
   cardWrapper: {
     position: "relative",
-    padding: "3.5rem 3rem 0",
+    cursor: "pointer",
     "& img": {
       width: "100%",
-      borderRadius: theme.shape.borderRadius,
+      height: 150,
+      borderRadius: "0.1rem",
     },
+    "& .MuiCardContent-root": {
+      paddingBottom: "0rem !important",
+    },
+  },
+  cardImage: {
+    padding: "0.4rem 0.4rem 0rem 0.4rem",
+  },
+  cardContent: {
+    padding: "0rem",
+    backgroundColor: "#f1f1f1",
+    marginTop: "-0.39rem !important",
     "& h3": {
-      fontSize: "2rem",
-      marginBottom: "1rem",
+      fontSize: "1.4rem",
       lineHeight: "1.5",
       color: "#114960",
+      textAlign: "center",
+      padding: "0.5rem 0rem",
     },
-    "& h6": {
-      fontSize: "1.5rem",
-      fontWeight: 500,
-      color: "#FF0000",
-      cursor: "pointer",
+    "& .MuiCardContent-root": {
+      padding: "0rem !important",
     },
   },
 
   // Modal
   drawerRoot: {
-    zIndex: "2 !important",
+    zIndex: "9999 !important",
   },
   paper: {
-    width: "60rem",
-    // top: "8rem",
+    width: "40rem",
+    top: "0rem",
     height: "100%",
     borderTop: "1px solid #ddd",
+
   },
   closeIcon: {
     cursor: "pointer",
     fontSize: "3.5rem",
     color: "#B7B7B7",
     "&:hover": {
-      color: "#0387EA",
+      color: "#0088f2",
     },
   },
   modalHeader: {
@@ -101,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#114960",
   },
   viewBtn: {
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     fontSize: "2.2rem",
     padding: "1.5rem 2rem",
     borderRadius: 0,

@@ -3,16 +3,25 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
-    // marginTop: "8rem",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    // width: "calc(100vw - 315px)",
-    marginLeft: "29rem",
-    marginRight: "1rem",
-    // marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "8rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  earningManagementWrapper: {
+    margin: "2rem",
   },
   indicator: {
     backgroundColor: "transparent",
@@ -101,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
   totalEarningColor: {
     color: "#6EE671",
   },
-  paidDownloadColro: {
+  paidDownloadColor: {
     color: "#FB5252",
   },
   freeDownloadColor: {
@@ -197,7 +206,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "rgb(17 122 0 / 90%)",
     },
   },
-  earningGrayBtn: {
+  downloadBtn: {
+    backgroundColor: "#434343",
+    marginRight: "2rem",
+    "&:hover": {
+      backgroundColor: "rgb(67 67 67 / 90%)",
+    },
+  },
+  filesBtn: {
     backgroundColor: "#434343",
     "&:hover": {
       backgroundColor: "rgb(67 67 67 / 90%)",

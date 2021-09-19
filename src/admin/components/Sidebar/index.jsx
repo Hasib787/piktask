@@ -9,13 +9,15 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import EuroIcon from '@material-ui/icons/Euro';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  // const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(0);
+  const totalPublishFile = useSelector((state) => state.totalPublishFile);
 
   useEffect(() => {
     if (window.location.pathname === "/admin/dashboard" && value !== 0) {
@@ -25,6 +27,7 @@ const Sidebar = () => {
       setValue(1);
       setSelectedItem(1);
     } else if (window.location.pathname === "/admin/pending" && value !== 2) {
+      setOpen(true);
       setValue(1);
       setSelectedItem(2);
     } else if (window.location.pathname === "/admin/revision" && value !== 3) {
@@ -45,7 +48,10 @@ const Sidebar = () => {
       setValue(7);
     } else if (window.location.pathname === "/admin/guidline" && value !== 8) {
       setValue(8);
+    }else if (window.location.pathname === "/admin/settings" && value !== 9) {
+      setValue(9);
     }
+     
   }, [value]);
 
   // const handleChange = (e, index) => {
@@ -103,21 +109,21 @@ const Sidebar = () => {
             disablePadding
             className={classes.submenuContainer}
           >
-            {/* <ListItem
+            <ListItem
               component={Link}
-              to="/admin/submit"
+              to="/admin/pending"
               className={classes.nested}
-              selected={value === 0}
+              selected={value === 1 && selectedItem === 2}
             >
-              <ListItemText primary="Submit File(50)" />
-            </ListItem> */}
+              <ListItemText primary="Submit File(0)" />
+            </ListItem>
             <ListItem
               component={Link}
               to="/admin/revision"
               className={classes.nested}
               selected={value === 1 && selectedItem === 3}
             >
-              <ListItemText primary="Under Revision(30)" />
+              <ListItemText primary="Under Revision(0)" />
             </ListItem>
             <ListItem
               component={Link}
@@ -125,7 +131,7 @@ const Sidebar = () => {
               className={classes.nested}
               selected={value === 1 && selectedItem === 4}
             >
-              <ListItemText primary="Reject File(6)" />
+              <ListItemText primary="Reject File(0)" />
             </ListItem>
             <ListItem
               component={Link}
@@ -133,7 +139,7 @@ const Sidebar = () => {
               className={classes.nested}
               selected={value === 1 && selectedItem === 5}
             >
-              <ListItemText primary="Publish(24)" />
+              <ListItemText primary={`Publish(${totalPublishFile.length})`} />
             </ListItem>
           </List>
         </Collapse>
@@ -143,7 +149,6 @@ const Sidebar = () => {
             gutters: classes.gutters,
             selected: classes.selectedItem,
           }}
-          onClick={handleClick}
           component={Link}
           to="/admin/earnings"
           selected={value === 6}
@@ -156,7 +161,6 @@ const Sidebar = () => {
             gutters: classes.gutters,
             selected: classes.selectedItem,
           }}
-          onClick={handleClick}
           component={Link}
           to="/admin/plan"
           selected={value === 7}
@@ -169,13 +173,24 @@ const Sidebar = () => {
             gutters: classes.gutters,
             selected: classes.selectedItem,
           }}
-          onClick={handleClick}
           component={Link}
           to="/admin/guidline"
           selected={value === 8}
         >
           <HelpOutlineIcon />
           <ListItemText primary="Guidline" />
+        </ListItem>
+        <ListItem
+          classes={{
+            gutters: classes.gutters,
+            selected: classes.selectedItem,
+          }}
+          component={Link}
+          to="/admin/settings"
+          selected={value === 9}
+        >
+          <AccountCircleIcon />
+          <ListItemText primary="User Profile" />
         </ListItem>
       </List>
     </aside>

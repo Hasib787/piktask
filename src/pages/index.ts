@@ -8,4 +8,5 @@ export * from "./NotFoundPage";
 export * from "./Pricing";
 export * from "./SearchResults";
 export * from "./Recent";
+export * from "./PopularImages";
 export * from "./Category";

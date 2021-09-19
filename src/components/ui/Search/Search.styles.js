@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchIconWrapper: {
     // backgroundColor: theme.palette.primary.light,
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     width: 122,
     height: "5.2rem",
     cursor: "pointer",
