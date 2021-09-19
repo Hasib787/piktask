@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-// import banner from "../../../assets/banner/banner.png";
 import banner from "../../../assets/banner/hans.jpg";
 
 const useStyles = makeStyles((theme) => ({
@@ -9,7 +8,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    marginTop: "4rem",
     position: "relative",
     textAlign: "center",
 
@@ -20,13 +18,12 @@ const useStyles = makeStyles((theme) => ({
       left: 0,
       width: "100%",
       height: "100%",
-      // backgroundColor: "rgb(27 63 78 / 90%)",
       background: "rgba(0, 28, 48, 0.4)",
     },
   },
   container: {
     position: "relative",
-    padding: "6rem 0rem 5rem",
+    padding: "2.5rem 0rem",
 
     "@media (max-width: 576px)": {
       paddingRight: "3rem",
@@ -48,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     fontSize: "1.5rem",
     fontWeight: 500,
-    marginBottom: "3rem",
+    marginBottom: "2rem",
 
     "@media (max-width: 576px)": {
       fontSize: "1.5rem",

@@ -6,7 +6,6 @@ import {
   Select,
   Typography,
 } from "@material-ui/core";
-import heroBanner from "../../assets/banner/banner-category-page.png";
 import ProductNotFound from "../../components/ui/ProductNotFound";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
@@ -127,7 +126,6 @@ export const Category = () => {
     <Layout title={`${catName} | Piktask`}>
       <Header />
       <HeroSection
-        background={heroBanner}
         size="large"
         creativeWorksDone
         title="Graphic Resource for Free Download"

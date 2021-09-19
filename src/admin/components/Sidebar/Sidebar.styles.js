@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
     width: "28rem",
     height: "100%",
     position: "fixed",
+    zIndex: "9999",
+    top: 0,
   },
   logoWrapper: {
     width: 160,
@@ -117,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectedItem: {
-    backgroundColor: "#0387EA !important",
+    backgroundColor: "#0088f2 !important",
     "& span": {
       color: `${theme.palette.common.white}`,
     },

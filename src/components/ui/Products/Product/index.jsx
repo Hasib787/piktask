@@ -119,11 +119,11 @@ const Product = ({ photo }) => {
               <Typography variant="h2" className={classes.title}>
                 {titleLength.length > 7 ? (
                   <>
-                  { getWords(6, photo?.title)}...
+                    { getWords(6, photo?.title)}...
                   </>
                 ) : (
                   <>
-                  {photo?.title}
+                    {photo?.title}
                   </>
                 )}
               </Typography>

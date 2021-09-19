@@ -1,7 +1,6 @@
 import {
   Container,
   Grid,
-  Link,
   List,
   ListItem,
   Typography,
@@ -13,8 +12,9 @@ import { Column, useStyles } from "./Footer.styles";
 import facebook from "../../../assets/icons/facebook-round.svg";
 import twitter from "../../../assets/icons/twitter-round.svg";
 import instagram from "../../../assets/icons/instagram-round.svg";
+import { Link } from "react-router-dom";
 
-const Footer = ({ addminFooter = false }) => {
+const Footer = () => {
   const classes = useStyles();
   const socialMedias = [
     {
@@ -34,10 +34,7 @@ const Footer = ({ addminFooter = false }) => {
     },
   ];
   return (
-    <footer
-      style={addminFooter ? { marginTop: "4rem" } : undefined}
-      className={classes.footerRoot}
-    >
+    <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
           <Column>
@@ -90,7 +87,7 @@ const Footer = ({ addminFooter = false }) => {
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to={"/images/popular_images"}>
                   The most popular content
                 </Link>
               </ListItem>

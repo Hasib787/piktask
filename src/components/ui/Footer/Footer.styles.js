@@ -33,9 +33,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   navLink: {
     fontSize: "1.5rem",
+    textDecoration: "none",
+    color: "#27434f",
     fontWeight: 400,
     fontFamily: "'Roboto', sans-serif",
     transition: "color 0.3s linear",
+    cursor: "pointer",
     "&:hover": {
       textDecoration: "none",
       color: theme.palette.secondary.main,

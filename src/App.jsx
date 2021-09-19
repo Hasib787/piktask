@@ -1,6 +1,6 @@
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import EarningManagement from "./admin/pages/EarningManagement";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import AccountSettings from "./admin/pages/AccountSettings";
 import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
@@ -21,7 +21,7 @@ import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -38,21 +38,15 @@ import {
   ResetPassword,
   Category,
   Recent,
+  PopularImages,
 
 } from "./pages";
 
 const App = () => {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user)
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // if(!user.token){
-    //   user.isLogged= false;
-    // } else{
-    //   user.isLogged = true;
-    // }
 
     // Check firebase auth state
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -82,27 +76,41 @@ const App = () => {
       }
     }
 
-    // recentProducts();
-    getPopularPhotos();
+    // Popular categories API integration
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+      .then(({ data }) => {
+        if (data?.status) {
+          dispatch({
+            type: "POPULAR_CATEGORIES",
+            payload: [...data.categories],
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+    // getPopularPhotos();
     return () => unsubscribe();
   }, [dispatch]);
 
-  function getPopularPhotos() {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-        .then(({ data }) => {
-          if (data?.status) {
-            dispatch({
-              type: "POPULAR_CATEGORIES",
-              payload: [...data.categories],
-            });
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // function getPopularPhotos() {
+  //   try {
+  //     axios
+  //       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
+  //       .then(({ data }) => {
+  //         if (data?.status) {
+  //           dispatch({
+  //             type: "POPULAR_CATEGORIES",
+  //             payload: [...data.categories],
+  //           });
+  //         }
+  //       });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -145,6 +153,7 @@ const App = () => {
         <Route exact path="/sellers" component={Sellers} />
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/images/recent_images" component={Recent} />
+        <Route exact path="/images/popular_images" component={PopularImages} />
         <Route exact path="/search/:keywords" component={SearchResults} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />

@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   root: {
-    // width: "100%",
+    boxShadow: "0 2px 13px 5px rgb(0 0 0 / 10%)",
   },
   container: {
     marginBottom: "4rem",
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     padding: "1rem 0.6rem",
     flexWrap: "wrap",
+    
     [theme.breakpoints.down("xs")]: {
       padding: 0,
       justifyContent: "flex-start",

@@ -1,4 +1,3 @@
-import heroBanner from "../../assets/banner/banner-single-page.png";
 import { Container, Grid, Typography } from "@material-ui/core";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
@@ -64,7 +63,6 @@ const SearchResults = () => {
     <Layout title={`${keywords} | Piktask`}>
       <Header></Header>
       <HeroSection
-        background={heroBanner}
         size="large"
         popularKeywords
         title="Graphic Resources for Free Download"

@@ -2,19 +2,29 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    width: "calc(100vw - 315px)",
-    marginLeft: "2rem",
-    marginRight: "2rem",
-    marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "6rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
   },
-  headingWrapepr: {
+  dashboardGridContainer: {
+    // padding: "1.5rem 1rem 1rem 1rem",
+    padding: "2rem",
+  },
+  headingWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -32,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actionBtn: {
     ...theme.typography.button,
-    padding: ".4rem 3rem",
+    padding: ".2rem 2rem",
     backgroundColor: theme.palette.primary.main,
     marginLeft: "1rem",
     border: ".2rem solid",
@@ -77,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     "& img": {
       width: "100%",
       borderRadius: theme.shape.borderRadius,
+      // objectFit: "cover",
     },
     "& h3": {
       fontSize: "1.4rem",
@@ -108,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   editItemContainer: {
-    width: "60rem",
+    width: "55rem",
     padding: "3rem 4.5rem",
 
     "@media (max-width: 600px)": {

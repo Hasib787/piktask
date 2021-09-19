@@ -5,7 +5,7 @@ const lightDark = "#1B3F4E";
 // const green = "#117A00";
 
 const green = "#76C71A";
-const blue = "#0387EA";
+const blue = "#0088f2";
 const lightBlack = "#14323F";
 
 const theme = createTheme({

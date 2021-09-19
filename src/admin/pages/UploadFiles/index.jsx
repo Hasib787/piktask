@@ -679,7 +679,7 @@ const UploadFiles = () => {
               </div>
             </div>
           </form>
-          <Footer addminFooter />
+          <Footer />
         </main>
       </div>
     </Layout>

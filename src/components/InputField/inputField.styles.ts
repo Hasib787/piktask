@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   authBtn: {
     // backgroundColor: "#117A00",
-    backgroundColor: "#0387EA",
+    backgroundColor: "#0088f2",
     padding: "6px 16px",
     color: theme.palette.common.white,
     fontSize: "1.6rem",

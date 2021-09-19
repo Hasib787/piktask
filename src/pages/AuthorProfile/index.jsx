@@ -10,15 +10,16 @@ import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import useStyles from "./AuthorProfile.styles";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import Layout from "../../Layout";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 const AuthorProfile = () => {
   const classes = useStyles();
   const { username } = useParams();
+  const history = useHistory();
+  const location = useLocation();
   const user = useSelector((state) => state.user);
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
@@ -44,7 +45,6 @@ const AuthorProfile = () => {
       console.log(error);
     }
 
-
     if (user && user?.token) {
       axios
         .get(
@@ -64,10 +64,6 @@ const AuthorProfile = () => {
 
   }, [username, user])
 
-
-
-
-
   const handleJoinUsButton = () =>{
     if (!user.token) {
       setOpenAuthModal(true);
@@ -75,27 +71,27 @@ const AuthorProfile = () => {
   }
 
   const handleFollower = () => {
-    // if (!user && !user.token && window.innerWidth > 900) {
-    //   setOpenAuthModal(true);
-    // } else if (!user && !user.token && window.innerWidth < 900) {
-    //   history.push(`/login?url=${location.pathname}`);
-    // } else if (user.id !== imageDetails?.user_id && user.token) {
-    //   axios
-    //     .post(
-    //       `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
-    //       {},
-    //       {
-    //         headers: { Authorization: user.token },
-    //       }
-    //     )
-    //     .then((response) => {
-    //       if (response?.status === 200) {
-    //         setFollowing(!isFollowing);
-    //       }
-    //     });
-    // } else {
-    //   toast.error("You can't follow yourself");
-    // }
+    if (!user.token && window.innerWidth > 900) {
+      setOpenAuthModal(true);
+    } else if (!user.token && window.innerWidth < 900) {
+      history.push(`/login?url=${location.pathname}`);
+    } else if (user.token) {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/sellers/followers/${user?.id}`,
+          {},
+          {
+            headers: { Authorization: user.token },
+          }
+        )
+        .then((response) => {
+          if (response?.status === 200) {
+            setFollowing(!isFollowing);
+          }
+        });
+    } else {
+      toast.error("You can't follow yourself");
+    }
   };
 
   
@@ -137,14 +133,16 @@ const AuthorProfile = () => {
                         Downloads
                         <span>{profileInfo?.total_downloads}</span>
                       </Typography>
-                      <div>
-                        <Button
-                          className={classes.followBtn}
-                          onClick={handleFollower}
-                        >
-                          {!isFollowing ? <>Follow</> : <>Following</>}
-                        </Button>
-                      </div>
+                      {user.id !== profileInfo?.id && (
+                        <div>
+                          <Button
+                            className={classes.followBtn}
+                            onClick={handleFollower}
+                          >
+                            {!isFollowing ? <>Follow</> : <>Following</>}
+                          </Button>
+                        </div>
+                      )}
                     </div>
                     <div className={classes.authorSocials}>
                       {profileInfo.facebook || profileInfo.instagram || profileInfo.twitter ? (
