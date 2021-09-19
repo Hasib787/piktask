@@ -31,11 +31,10 @@ export const Recent = () => {
 //data load
   const loadData = ()=>{
     let recentUrl;
-    if (user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8&page=${pageCount}`;
+    if (user && user?.id) {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8&page=${pageCount}`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&page=${pageCount}`;
-      console.log("pageCount-2", pageCount);
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&page=${pageCount}`;
     }
 
     if(recentProduct.length !== 0){
