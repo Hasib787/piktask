@@ -1,4 +1,3 @@
-import heroBanner from "../../assets/banner/banner-single-page.png";
 import { CategoryCarousel } from "../../components/ui/Carousel";
 import CallToAction from "../../components/ui/CallToAction";
 import { TopSeller } from "../../components/ui/TopSeller";
@@ -47,7 +46,6 @@ export const Home = () => {
     >
       <Header />
       <HeroSection
-        background={heroBanner}
         size="large"
         popularKeywords
         heroButton

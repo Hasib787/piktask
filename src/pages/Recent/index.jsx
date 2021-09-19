@@ -1,5 +1,4 @@
 import { Container, Button, Grid } from "@material-ui/core";
-import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
 import { TopSeller } from "../../components/ui/TopSeller";
@@ -30,9 +29,9 @@ export const Recent = () => {
     setLoading(true);
     let recentUrl;
     if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8`;
     }
     axios
       .get(recentUrl)
@@ -46,7 +45,7 @@ export const Recent = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, []);
+  }, [user]);
 
   //onScroll data load
   useEffect(() => {
@@ -64,9 +63,9 @@ export const Recent = () => {
       console.log("Hello");
       let recentUrl;
       if (user && user?.id) {
-        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&user_id=${user.id}`;
+        recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&user_id=${user.id}`;
       } else {
-        recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8`;
+        recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8`;
       }
       axios
         .get(recentUrl)
@@ -89,7 +88,6 @@ export const Recent = () => {
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
       <HeroSection
-        background={heroBanner}
         size="large"
         popularKeywords
         heroButton
@@ -123,6 +121,7 @@ export const Recent = () => {
           )}
         </Grid>
       </Container>
+      <Spacing space={{ height: "3rem" }} />
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
@@ -145,7 +144,7 @@ export const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller />
+      <TopSeller homeTopSeller />
       {/* BLOG SECTION */}
       <Blog />
 

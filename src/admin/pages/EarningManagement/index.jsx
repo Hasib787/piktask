@@ -15,13 +15,11 @@ import {
   Tabs,
   Typography,
 } from "@material-ui/core";
+import axios from "axios";
 import Chart from "chart.js";
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
-import image3 from "../../../assets/bangladesh.png";
-import image1 from "../../../assets/brazil.png";
-import image4 from "../../../assets/india.png";
-import image2 from "../../../assets/japan.png";
+import { useSelector } from "react-redux";
 import Footer from "../../../components/ui/Footer";
 import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
@@ -30,40 +28,11 @@ import Sidebar from "../../components/Sidebar";
 import useStyles from "./EarningManagement.styles";
 import TabPanel from "./TabPanel";
 
-const rows = [
-  {
-    id: 1,
-    image: image1,
-    location: "Brazil",
-    earning: 0.2,
-    date: "31-1-2021",
-  },
-  {
-    id: 2,
-    image: image2,
-    location: "Bangladesh",
-    earning: 0.4,
-    date: "31-1-2021",
-  },
-  {
-    id: 3,
-    image: image3,
-    location: "Japan",
-    earning: 0.35,
-    date: "31-1-2021",
-  },
-  {
-    id: 4,
-    image: image4,
-    location: "India",
-    earning: 0.6,
-    date: "31-1-2021",
-  },
-];
 
 const EarningManagement = () => {
   const refChart = useRef();
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
 
   const months = moment.months();
   const [year, setYear] = useState(moment().year());
@@ -72,6 +41,8 @@ const EarningManagement = () => {
   
   const [earningData, setEarningData] = useState(0);
   const [onClickEvent, setOnClickEvent] = useState(true);
+  const [totalSummary, setTotalSummery] = useState({});
+  const [isLoading, setLoading] = useState(false);
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -85,7 +56,28 @@ const EarningManagement = () => {
 
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
-  }, []);
+
+
+    // Author current month earning
+    if(user?.token){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/earning/summary`,
+      {
+        headers: {Authorization: user.token},
+      })
+      .then(({data}) => {
+        if(data?.status){
+          setTotalSummery(data?.summery);
+          setLoading(false);
+        }
+      })
+    }
+    
+
+    // Total earning management statistics API integrate
+
+
+  }, [user.token]);
 
   useEffect(() => {
     const canvasID = refChart.current;
@@ -181,10 +173,6 @@ const EarningManagement = () => {
     });
   }, [onClickEvent]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   const handleChange = (e, newValue) => {
     setEarningData(newValue);
   };
@@ -229,53 +217,45 @@ const EarningManagement = () => {
               <Grid item xs={12}>
                 <Card className={classes.cardWrapper}>
                   <div className={classes.graphBox}>
-                    <div className={classes.amount}>2.54$</div>
-                    <span className={classes.title}>Current Earning</span>
-                    <span className={classes.duration}>Last month: 1.45</span>
+                    <div className={classes.amount}>{totalSummary?.total_earning}$</div>
+                    <span className={classes.title}>Total Earning</span>
+                    {/* <span className={classes.duration}>Last month: 0.00</span> */}
                   </div>
-                  <div className={classes.graphBox}>
-                    <span
-                      className={`${classes.amount} ${classes.totalEarningColor}`}
-                    >
-                      255.00$
+                  {/* <div className={classes.graphBox}>
+                    <span className={`${classes.amount} ${classes.totalEarningColor}`}>
+                      {totalSummary?.total_earning}$
                     </span>
                     <span className={classes.title}>Total Earning</span>
                     <span className={`${classes.duration} ${classes.bgColor2}`}>
-                      Last month: 1.45
+                      Last month: 0.00
                     </span>
+                  </div> */}
+                  <div className={classes.graphBox}>
+                    <span className={`${classes.amount} ${classes.paidDownloadColor}`}>
+                      {totalSummary?.total_images}
+                    </span>
+                    <span className={classes.title}>Total Files</span>
+                    {/* <span className={`${classes.duration} ${classes.bgColor3}`}>
+                      Last month: 0.00
+                    </span> */}
                   </div>
                   <div className={classes.graphBox}>
-                    <span
-                      className={`${classes.amount} ${classes.paidDownloadColro}`}
-                    >
-                      255.00$
+                    <span className={`${classes.amount} ${classes.freeDownloadColor}`}>
+                      {totalSummary?.total_followers}
                     </span>
-                    <span className={classes.title}>Paid Download</span>
-                    <span className={`${classes.duration} ${classes.bgColor3}`}>
-                      Last month: 1.45
-                    </span>
+                    <span className={classes.title}>Total Follower</span>
+                    {/* <span className={`${classes.duration} ${classes.bgColor4}`}>
+                      Last month: 0.00
+                    </span> */}
                   </div>
                   <div className={classes.graphBox}>
-                    <span
-                      className={`${classes.amount} ${classes.freeDownloadColor}`}
-                    >
-                      652:00k
-                    </span>
-                    <span className={classes.title}>Free Download</span>
-                    <span className={`${classes.duration} ${classes.bgColor4}`}>
-                      Last month: 1.45
-                    </span>
-                  </div>
-                  <div className={classes.graphBox}>
-                    <span
-                      className={`${classes.amount} ${classes.totalDownloadColor}`}
-                    >
-                      258.00k
+                    <span className={`${classes.amount} ${classes.totalDownloadColor}`}>
+                      {totalSummary?.total_downloads}
                     </span>
                     <span className={classes.title}>Total Download</span>
-                    <span className={`${classes.duration} ${classes.bgColor5}`}>
-                      Last month: 1.45
-                    </span>
+                    {/* <span className={`${classes.duration} ${classes.bgColor5}`}>
+                      Last month: 0.00
+                    </span> */}
                   </div>
                 </Card>
               </Grid>
@@ -287,7 +267,7 @@ const EarningManagement = () => {
               </Typography>
 
               <div className={classes.statisticsFormWrapper}>
-                <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
+                <div className={classes.selectPeriodFrom}>
                   <div className={classes.fields}>
                     <Typography
                       className={classes.fieldTitle}
@@ -432,7 +412,7 @@ const EarningManagement = () => {
                   <Button className={classes.statisticsBtn}>
                     Display Statistics
                   </Button>
-                </form>
+                </div>
               </div>
               {/* End Statistics form */}
 
@@ -608,85 +588,6 @@ const EarningManagement = () => {
                 </Grid>
               </TabPanel>
             </div>
-
-            <Grid item xs={12} className={classes.tableWrapper}>
-              <TableContainer
-                className={classes.tableContainer}
-                component={Paper}
-              >
-                <Table
-                  className={`${classes.table} ${classes.dataTableCard}`}
-                  aria-label="Product data table"
-                >
-                  <TableHead>
-                    <TableRow className={classes.tableHead}>
-                      <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellHead}`}
-                      >
-                        Thumb
-                      </TableCell>
-                      <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellHead}`}
-                      >
-                        ID
-                      </TableCell>
-                      <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellHead}`}
-                      >
-                        Type
-                      </TableCell>
-                      <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellHead}`}
-                      >
-                        Upload Date
-                      </TableCell>
-                      <TableCell
-                        className={`${classes.tableCell} ${classes.tableCellHead}`}
-                      >
-                        Earning
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    <tr style={{ display: "block", marginTop: "2rem" }}></tr>
-                    {rows.map((row) => (
-                      <TableRow key={row.id} className={classes.tableRowContent}>
-                        <TableCell
-                          className={`${classes.tableCell} ${classes.tableCellRow}`}
-                        >
-                          <img
-                            className={classes.earningImg}
-                            src={row.image}
-                            alt={row.location}
-                          />
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.tableCell} ${classes.tableCellRow}`}
-                        >
-                          13252622
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.tableCell} ${classes.tableCellRow}`}
-                        >
-                          VECTORS
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.tableCell} ${classes.tableCellRow}`}
-                        >
-                          20/10/2021
-                        </TableCell>
-                        <TableCell
-                          className={`${classes.tableCell} ${classes.tableCellRow}`}
-                        >
-                          0.20$
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Grid>
           </div>
         <Footer />
         </main>

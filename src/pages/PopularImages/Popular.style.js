@@ -1,6 +1,6 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+ const useStyles = makeStyles((theme) => ({
   productItem: {
     "@media (max-width: 576px)": {
       maxWidth: "100%",
@@ -21,4 +21,5 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 export default useStyles;

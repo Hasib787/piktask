@@ -9,6 +9,7 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
 import Layout from "../../../Layout";
@@ -64,60 +65,62 @@ const PendingFiles = () => {
   };
 
   return (
-    <Layout>
+    <Layout title={`Pending || Piktask`}>
 
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
-          <div className={classes.headingWrapepr}>
           <AdminHeader />
-            <Heading tag="h2">Not Yet Submit</Heading>
-            <div>
-              <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
-                Delete File
-              </Button>
-              <Button className={`${classes.actionBtn} ${classes.addFileBtn}`}>
-                Add File
-              </Button>
-              <Button className={`${classes.actionBtn} ${classes.workInfoBtn}`}>
-                Add Work Information
-              </Button>
-            </div>
-          </div>
-
-          <Grid container spacing={4}>
-            {products.length > 0 ? (
-              products.map((product) => (
-                <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
-                  <Card
-                    className={classes.pendingFileCard}
-                    onClick={(e) => {
-                      selectedProduct(e, product);
-                    }}
-                  >
-                    <DeleteIcon
-                      onClick={() => handleDelete(product._id)}
-                      className={classes.deleteIcon}
-                    />
-                    <img
-                      onClick={() => editSingleItem(product)}
-                      src={product.image}
-                      alt={product.name}
-                    />
-                    <CardContent>
-                      <Typography variant="h3">{product.name}</Typography>
-                      <Typography variant="body2">File Size: 10MB</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-              <div className={classes.noItemsFound}>
-                <Typography>No products are in pending</Typography>
+          <div className={classes.dashboardGridContainer}>
+            <div className={classes.headingWrapper}>
+              <Heading tag="h2">Not Yet Submit</Heading>
+              <div>
+                <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
+                  Delete File
+                </Button>
+                <Button to={`/admin/upload`} component={Link} className={`${classes.actionBtn} ${classes.addFileBtn}`}>
+                  Add File
+                </Button>
+                <Button className={`${classes.actionBtn} ${classes.workInfoBtn}`}>
+                  Add Work Information
+                </Button>
               </div>
-            )}
-          </Grid>
+            </div>
+
+            <Grid container spacing={2}>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+                    <Card
+                      className={classes.pendingFileCard}
+                      onClick={(e) => {
+                        selectedProduct(e, product);
+                      }}
+                    >
+                      <DeleteIcon
+                        onClick={() => handleDelete(product._id)}
+                        className={classes.deleteIcon}
+                      />
+                      <img
+                        onClick={() => editSingleItem(product)}
+                        src={product.image}
+                        alt={product.name}
+                      />
+                      <CardContent>
+                        <Typography variant="h3">{product.name}</Typography>
+                        <Typography variant="body2">File Size: 10MB</Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))
+              ) : (
+                <div className={classes.noItemsFound}>
+                  <Typography>No products are in pending</Typography>
+                </div>
+              )}
+            </Grid>
+          </div>
 
           <Drawer
             anchor="right"

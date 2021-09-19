@@ -66,13 +66,14 @@ const useStyles = makeStyles((theme) => ({
 
   // Modal
   drawerRoot: {
-    zIndex: "2 !important",
+    zIndex: "9999 !important",
   },
   paper: {
     width: "40rem",
-    top: "7rem",
+    top: "0rem",
     height: "100%",
     borderTop: "1px solid #ddd",
+
   },
   closeIcon: {
     cursor: "pointer",

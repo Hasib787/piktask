@@ -459,7 +459,7 @@ const AccountSettings = () => {
                           htmlFor="facebook"
                           className={classes.portfolioIconWrapper}
                         >
-                          <img src={facebook} alt="Facebook Icon" />
+                          <img src={facebook} className={classes.facebookIcon} alt="Facebook Icon" />
                         </label>
                         <TextField
                           id="facebook"

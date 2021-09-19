@@ -7,7 +7,7 @@ const PopularCategory = ({ photo }) => {
   const classes = useStyles();
 
   return (
-      <div className={classes.catItemWrapper}>
+    <div className={classes.catItemWrapper}>
       <div className={classes.catItem}>
         <img
           className={classes.catImage}

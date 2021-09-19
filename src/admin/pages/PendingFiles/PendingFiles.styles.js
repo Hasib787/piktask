@@ -12,15 +12,19 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     padding: 0,
-    marginLeft: "29rem",
+    marginLeft: "28rem",
     marginRight: "0rem",
-    marginTop: "10rem",
+    marginTop: "6rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
-  headingWrapepr: {
+  dashboardGridContainer: {
+    // padding: "1.5rem 1rem 1rem 1rem",
+    padding: "2rem",
+  },
+  headingWrapper: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actionBtn: {
     ...theme.typography.button,
-    padding: ".4rem 3rem",
+    padding: ".2rem 2rem",
     backgroundColor: theme.palette.primary.main,
     marginLeft: "1rem",
     border: ".2rem solid",
@@ -83,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     "& img": {
       width: "100%",
       borderRadius: theme.shape.borderRadius,
+      // objectFit: "cover",
     },
     "& h3": {
       fontSize: "1.4rem",
@@ -114,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   editItemContainer: {
-    width: "60rem",
+    width: "55rem",
     padding: "3rem 4.5rem",
 
     "@media (max-width: 600px)": {

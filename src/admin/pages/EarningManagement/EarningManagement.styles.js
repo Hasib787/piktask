@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
   totalEarningColor: {
     color: "#6EE671",
   },
-  paidDownloadColro: {
+  paidDownloadColor: {
     color: "#FB5252",
   },
   freeDownloadColor: {

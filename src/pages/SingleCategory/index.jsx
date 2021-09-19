@@ -38,7 +38,6 @@ import Product from "../../components/ui/Products/Product";
 import SectionHeading from "../../components/ui/Heading";
 import TagButtons from "../../components/ui/TagButtons";
 import SignUpModal from "../Authentication/SignUpModal";
-import bannerImg from "../../assets/banner/banner.png";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
 import copyIcon from "../../assets/icons/copy.svg";
@@ -288,7 +287,7 @@ const SingleCategory = () => {
       description={`${imageDetails?.description} | Piktask`}
     >
       <Header />
-      <HeroSection background={bannerImg} size="medium" />
+      <HeroSection size="medium" />
       <Container className={classes.containerWrapper}>
         <Grid
           container
