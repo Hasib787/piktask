@@ -58,7 +58,7 @@ const EarningManagement = () => {
     window.addEventListener("resize", () => setResponsiveness());
 
 
-    // Author current month earning
+    // Total earning summary API integration
     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/user/earning/summary`,
@@ -75,6 +75,28 @@ const EarningManagement = () => {
     
 
     // Total earning management statistics API integrate
+
+    if(user?.token){
+
+      var newDate = new Date();
+      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
+      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
+      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
+
+
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
+      {
+        headers: {Authorization: user.token},
+      })
+      .then(({data}) => {
+        // console.log("data", data.images);
+        // if(data?.status){
+        //   setTotalSummery(data?.summery);
+        //   setLoading(false);
+        // }
+      })
+    }
 
 
   }, [user.token]);
@@ -199,6 +221,40 @@ const EarningManagement = () => {
       "aria-controls": `earning-tabpanel-${index}`,
     };
   };
+
+
+
+  const handleSelectedGraphRatio = (e) => {
+
+    // console.log("targetValue", e.target.dataset.clicknow);
+    console.log("targetValue", e.target);
+
+    if(user?.token){
+
+      var newDate = new Date();
+      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
+      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
+      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
+
+
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
+      {
+        headers: {Authorization: user.token},
+      })
+      .then(({data}) => {
+        console.log("data1", data.images);
+        // if(data?.status){
+        //   setTotalSummery(data?.summery);
+        //   setLoading(false);
+        // }
+      })
+    }
+
+  };
+
+
+
 
   return (
     <Layout title={"Earning Management || Piktask"}>
@@ -424,15 +480,33 @@ const EarningManagement = () => {
                 classes={{ indicator: classes.indicator }}
               >
                 <Tab
-                  label="Earning Line"
+                  label="Earning"
                   {...selectData(0)}
-                  onClick={() => setOnClickEvent(!onClickEvent)}
+                  onClick={() => {
+                    setOnClickEvent(!onClickEvent); 
+                    handleSelectedGraphRatio()
+                  }}
                   className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
                 />
                 <Tab
-                  label="Earning Table"
+                  label="Download"
                   {...selectData(1)}
-                  className={`${classes.earningBtn} ${classes.earningGrayBtn}`}
+                  onClick={(e) => {
+                    setOnClickEvent(!onClickEvent); 
+                    handleSelectedGraphRatio(e);
+                  }}
+                  // dataset="download"
+                  data-clicknow="download"
+                  className={`${classes.earningBtn} ${classes.downloadBtn}`}
+                />
+                <Tab
+                  label="Files"
+                  {...selectData(2)}
+                  onClick={() => {
+                    setOnClickEvent(!onClickEvent); 
+                    handleSelectedGraphRatio()
+                  }}
+                  className={`${classes.earningBtn} ${classes.filesBtn}`}
                 />
               </Tabs>
 
@@ -446,7 +520,13 @@ const EarningManagement = () => {
               </TabPanel>
 
               <TabPanel value={earningData} index={1}>
-                <Grid item xs={12} className={classes.earningDataWrapper}>
+                <canvas
+                  id="earningChart"
+                  ref={refChart}
+                  width="600"
+                  height="200"
+                ></canvas>
+                {/* <Grid item xs={12} className={classes.earningDataWrapper}>
                   <div className={classes.sellerEarningTableWrapper}>
                     <Typography variant="h2">
                       Top Sellers Earning Table
@@ -494,7 +574,6 @@ const EarningManagement = () => {
                       </TableHead>
 
                       <TableBody>
-                        {/* <tr style={{display: "block", marginTop: "2rem"}}></tr> */}
                         <TableRow className={classes.tableRowContent}>
                           <TableCell className={`${classes.sellingTableCell}`}>
                             1/1/2020
@@ -585,7 +664,15 @@ const EarningManagement = () => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </Grid>
+                </Grid> */}
+              </TabPanel>
+              <TabPanel value={earningData} index={2}>
+                <canvas
+                  id="earningChart"
+                  ref={refChart}
+                  width="600"
+                  height="200"
+                ></canvas>
               </TabPanel>
             </div>
           </div>

@@ -206,7 +206,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "rgb(17 122 0 / 90%)",
     },
   },
-  earningGrayBtn: {
+  downloadBtn: {
+    backgroundColor: "#434343",
+    marginRight: "2rem",
+    "&:hover": {
+      backgroundColor: "rgb(67 67 67 / 90%)",
+    },
+  },
+  filesBtn: {
     backgroundColor: "#434343",
     "&:hover": {
       backgroundColor: "rgb(67 67 67 / 90%)",
