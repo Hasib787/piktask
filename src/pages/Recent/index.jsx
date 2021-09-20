@@ -1,4 +1,5 @@
 import { Container, Button, Grid } from "@material-ui/core";
+import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
 import Product from "../../components/ui/Products/Product";
 import { TopSeller } from "../../components/ui/TopSeller";
@@ -30,11 +31,10 @@ export const Recent = () => {
 //data load
   const loadData = ()=>{
     let recentUrl;
-    if (user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?user_id=${user.id}&limit=8&page=${pageCount}`;
+    if (user && user?.id) {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8&page=${pageCount}`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images/recent_images/by_date?limit=8&page=${pageCount}`;
-      console.log("pageCount-2", pageCount);
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&page=${pageCount}`;
     }
 
     if(recentProduct.length !== 0){
@@ -68,9 +68,8 @@ export const Recent = () => {
         setPageCount(pageCount);
         // var products = setItems([pageCount]);
         // products=  items.concat(...Object.values(recentProduct))
-        // console.log("****products********", products); 
         setItems(recentProduct.concat(pageCount))
-            
+          
         loadData(); 
       }
     };
@@ -81,6 +80,7 @@ export const Recent = () => {
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
       <HeroSection
+        background={heroBanner}
         size="large"
         popularKeywords
         heroButton
@@ -114,7 +114,6 @@ export const Recent = () => {
           )}
         </Grid>
       </Container>
-      <Spacing space={{ height: "3rem" }} />
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
@@ -137,7 +136,7 @@ export const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller homeTopSeller />
+      <TopSeller />
       {/* BLOG SECTION */}
       <Blog />
 
