@@ -161,9 +161,6 @@ const Publish = () => {
             </div>
 
             <div className={classes.dateRanges}>
-              <Typography className={classes.formTitle} variant="h4">
-                Select Period
-              </Typography>
 
               <div className={classes.statisticsFormWrapper}>
                 <div className={classes.selectPeriodFrom}>

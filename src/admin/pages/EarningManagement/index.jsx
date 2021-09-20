@@ -44,6 +44,9 @@ const EarningManagement = () => {
   const [totalSummary, setTotalSummery] = useState({});
   const [isLoading, setLoading] = useState(false);
 
+  const [chartData, setChartData] = useState({});
+
+  // Mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
 
@@ -101,58 +104,93 @@ const EarningManagement = () => {
 
   }, [user.token]);
 
+
+  const handleChange = (e, newValue) => {
+    setEarningData(newValue);
+  };
+
+  const getAllDays = () => {
+    const days = [];
+    for (let i = 0; i < moment().daysInMonth(); i++) {
+      days.push(i + 1);
+    }
+    return days;
+  };
+
+  const getAllYears = () => {
+    const years = [];
+    for (let i = 1970; i <= moment().year(); i++) {
+      years.push(i);
+    }
+    return years.sort((a, b) => b - a);
+  };
+
+  const selectData = (index) => {
+    return {
+      id: `earning-tab-${index}`,
+      "aria-controls": `earning-tabpanel-${index}`,
+    };
+  };
+
+
+
+  const handleSelectedGraphRatio = (e) => {
+
+    // console.log("targetValue", e.target.dataset.onclick);
+    var selectedName = e.target.dataset.onclick;
+
+    if(user?.token){
+
+      let totalCount = [];
+      let labelCount = [];
+
+      var newDate = new Date();
+      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
+      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
+      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
+
+
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=${selectedName}`,
+      {
+        headers: {Authorization: user.token},
+      })
+      .then(({data}) => {
+        console.log("data1", data.images);
+        if(data?.status){
+          data?.images.forEach((element) => {
+            totalCount.push(element.value);
+            labelCount.push(element.date);
+          });
+          setLoading(false);
+        }
+        setChartData({
+          labels: labelCount,
+          datasets: [
+            {
+              label: "Earning",
+              data: totalCount,
+              backgroundColor: "#2195F2",
+              borderColor: "#2195F2",
+              fill: false,
+            },
+          ],
+        })
+      })
+    }
+  };
+
+  console.log("chartData", chartData);
+
+
   useEffect(() => {
     const canvasID = refChart.current;
 
     new Chart(canvasID, {
       type: "line",
-      data: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ],
-        datasets: [
-          {
-            label: "Earning",
-            backgroundColor: "#2195F2",
-            borderColor: "#2195F2",
-            fill: false,
-            data: [10, 30, 39, 20, 25, 34, -10, 28, 69, 97, 321],
-          },
-          {
-            label: "Download",
-            backgroundColor: "#E74F82",
-            borderColor: "#E74F82",
-            fill: false,
-            data: [18, 33, 22, 19, 11, 39, 30],
-          },
-          {
-            label: "Premium",
-            backgroundColor: "#8665C1",
-            borderColor: "#8665C1",
-            fill: false,
-            data: [13, 43, 62, 29, 17, 31, 60],
-          },
-          {
-            label: "Free",
-            backgroundColor: "#180F27",
-            borderColor: "#180F27",
-            fill: false,
-            data: [28, 23, 12, 39, 51, 69, 70],
-          },
-        ],
-      },
+      data: {chartData},
       options: {
+        responsive: true,
         indexAxis: "y",
         showLine: true,
         spanGaps: true,
@@ -181,7 +219,7 @@ const EarningManagement = () => {
               display: true,
               type: "logarithmic",
               gridLines: {
-                display: false,
+                display: true,
               },
               ticks: {
                 suggestedMin: 10,
@@ -193,68 +231,9 @@ const EarningManagement = () => {
         },
       },
     });
-  }, [onClickEvent]);
-
-  const handleChange = (e, newValue) => {
-    setEarningData(newValue);
-  };
-
-  const getAllDays = () => {
-    const days = [];
-    for (let i = 0; i < moment().daysInMonth(); i++) {
-      days.push(i + 1);
-    }
-    return days;
-  };
-
-  const getAllYears = () => {
-    const years = [];
-    for (let i = 1970; i <= moment().year(); i++) {
-      years.push(i);
-    }
-    return years.sort((a, b) => b - a);
-  };
-
-  const selectData = (index) => {
-    return {
-      id: `earnin-tab-${index}`,
-      "aria-controls": `earning-tabpanel-${index}`,
-    };
-  };
-
-
-
-  const handleSelectedGraphRatio = (e) => {
-
-    // console.log("targetValue", e.target.dataset.clicknow);
-    console.log("targetValue", e.target);
-
-    if(user?.token){
-
-      var newDate = new Date();
-      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
-      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
-      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
-
-
-      axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
-      {
-        headers: {Authorization: user.token},
-      })
-      .then(({data}) => {
-        console.log("data1", data.images);
-        // if(data?.status){
-        //   setTotalSummery(data?.summery);
-        //   setLoading(false);
-        // }
-      })
-    }
-
-  };
-
-
-
+  }, [onClickEvent, chartData]);
+  
+  // console.log("totalStatistics", totalStatistics);
 
   return (
     <Layout title={"Earning Management || Piktask"}>
@@ -472,43 +451,41 @@ const EarningManagement = () => {
               </div>
               {/* End Statistics form */}
 
-              <Tabs
+              <div
                 value={earningData}
                 onChange={handleChange}
                 aria-label="Earning Chart"
                 className={classes.tabsBtnWrapper}
                 classes={{ indicator: classes.indicator }}
               >
-                <Tab
-                  label="Earning"
+                <button
                   {...selectData(0)}
-                  onClick={() => {
+                  onClick={(e) => {
                     setOnClickEvent(!onClickEvent); 
-                    handleSelectedGraphRatio()
+                    handleSelectedGraphRatio(e)
                   }}
+                  data-onclick="earning"
                   className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
-                />
-                <Tab
-                  label="Download"
+                >Earning</button>
+                <button
                   {...selectData(1)}
                   onClick={(e) => {
                     setOnClickEvent(!onClickEvent); 
-                    handleSelectedGraphRatio(e);
+                    handleSelectedGraphRatio(e)
                   }}
-                  // dataset="download"
-                  data-clicknow="download"
-                  className={`${classes.earningBtn} ${classes.downloadBtn}`}
-                />
-                <Tab
-                  label="Files"
+                  data-onclick="download"
+                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                >Download</button>
+                <button
                   {...selectData(2)}
-                  onClick={() => {
+                  onClick={(e) => {
                     setOnClickEvent(!onClickEvent); 
-                    handleSelectedGraphRatio()
+                    handleSelectedGraphRatio(e)
                   }}
-                  className={`${classes.earningBtn} ${classes.filesBtn}`}
-                />
-              </Tabs>
+                  data-onclick="file"
+                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                >Files</button>
+              </div>
 
               <TabPanel value={earningData} index={0}>
                 <canvas
@@ -526,145 +503,7 @@ const EarningManagement = () => {
                   width="600"
                   height="200"
                 ></canvas>
-                {/* <Grid item xs={12} className={classes.earningDataWrapper}>
-                  <div className={classes.sellerEarningTableWrapper}>
-                    <Typography variant="h2">
-                      Top Sellers Earning Table
-                    </Typography>
-                    <Button className={classes.downloadTableBtn}>
-                      Download Table
-                    </Button>
-                  </div>
-                  <TableContainer
-                    className={classes.tableContainer}
-                    component={Paper}
-                  >
-                    <Table
-                      className={`${classes.table} ${classes.dataTableCard}`}
-                      aria-label="Product data table"
-                    >
-                      <TableHead>
-                        <TableRow className={classes.earningSellingTableHead}>
-                          <TableCell
-                            className={`${classes.sellingTableCellHead}`}
-                          >
-                            Date
-                          </TableCell>
-                          <TableCell
-                            className={`${classes.sellingTableCellHead}`}
-                          >
-                            Total Earning
-                          </TableCell>
-                          <TableCell
-                            className={`${classes.sellingTableCellHead}`}
-                          >
-                            Premium Earning
-                          </TableCell>
-                          <TableCell
-                            className={`${classes.sellingTableCellHead}`}
-                          >
-                            Free Earning
-                          </TableCell>
-                          <TableCell
-                            className={`${classes.sellingTableCellHead}`}
-                          >
-                            Total Download
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-
-                      <TableBody>
-                        <TableRow className={classes.tableRowContent}>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            1/1/2020
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            30k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            20k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            5k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            9
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className={classes.tableRowContent}>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            1/1/2020
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            30k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            20k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            5k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            9
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className={classes.tableRowContent}>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            1/1/2020
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            30k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            20k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            5k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            9
-                          </TableCell>
-                        </TableRow>
-                        <TableRow className={classes.tableRowContent}>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            1/1/2020
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            30k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            20k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            5k
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            9
-                          </TableCell>
-                        </TableRow>
-                        <TableRow
-                          className={`${classes.tableRowContent} ${classes.totalEarnings}`}
-                        >
-                          <TableCell
-                            className={`${classes.sellingTableCell}`}
-                          ></TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            Total($)
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            10.00$
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            0.8.00$
-                          </TableCell>
-                          <TableCell className={`${classes.sellingTableCell}`}>
-                            30
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Grid> */}
+                
               </TabPanel>
               <TabPanel value={earningData} index={2}>
                 <canvas
