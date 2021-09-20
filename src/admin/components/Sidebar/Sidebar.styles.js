@@ -138,9 +138,9 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer",
     },
   },
-  submenuWrapper: {
-    backgroundColor: "#114960",
-  },
+  // submenuWrapper: {
+  //   backgroundColor: "#114960",
+  // },
 
   tabMenu: {
     padding: "0 3.5rem",
