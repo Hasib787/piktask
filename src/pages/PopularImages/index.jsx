@@ -27,9 +27,9 @@ export const PopularImages = () => {
     setLoading(true);
     let recentUrl;
     if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&user_id=${user.id}&limit=8`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&user_id=${user.id}`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&limit=8`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular`;
     }
     axios
       .get(recentUrl)

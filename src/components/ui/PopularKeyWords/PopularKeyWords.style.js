@@ -1,11 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    tagWrapper: {
-        // [theme.breakpoints.down(426)]: {
-        //   display: "none",
-        // },
-      },
       tagsContainer: {
         display: "flex",
         flexWrap: "wrap",
