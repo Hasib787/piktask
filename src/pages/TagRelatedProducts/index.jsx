@@ -11,6 +11,8 @@ import { useParams } from "react-router";
 import Layout from "../../Layout";
 import axios from "axios";
 import ProductNotFound from "../../components/ui/ProductNotFound";
+import Loader from "../../components/ui/Loader";
+import Spacing from "../../components/Spacing";
 
 const TagTemplate = () => {
   const classes = useStyles();
@@ -19,8 +21,7 @@ const TagTemplate = () => {
   const [tagRelatedProducts, setTagRelatedProducts] = useState([]);
 
   useEffect(() => {
-
-    // https://piktask.com/api/client/search/?tag=sports&user_id=17
+    setLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
       .then(({ data }) => {
@@ -36,19 +37,13 @@ const TagTemplate = () => {
     <Layout title={`${tagName} | Piktask`} description={`${tagName} | Piktask`}>
       <Header />
       <HeroSection size="medium" />
-
-      {/* <div className={classes.tagWrapper}>
-        <Container>
-          <TagButtons />
-        </Container>
-      </div> */}
       <Container>
         <Typography className={classes.totalResources} variant="h4">
           {`${tagRelatedProducts.length} Resources for "${tagName}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader/>
           ) : (
             <>
               {tagRelatedProducts.length ? (
@@ -71,6 +66,8 @@ const TagTemplate = () => {
           )}
         </Grid>
       </Container>
+
+      <Spacing space= {{height:"5rem"}} />
 
       <CallToAction
         title="Join Designhill designer team"
