@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "13px",
     transition: "all 0.3s ease",
     "&.active": {
-      color: "#76C71A",
+      color: theme.palette.secondary.main,
     },
     "&:last-child": {
       marginRight: "3rem",
     },
     "&:hover": {
-      color: "#76C71A",
+      color: theme.palette.secondary.main,
     },
 
     "@media (max-width: 1024px)": {
