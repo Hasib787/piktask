@@ -81,6 +81,9 @@ const EarningManagement = () => {
 
     if(user?.token){
 
+      let totalCount = [];
+      let labelCount = [];
+
       var newDate = new Date();
       var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
       var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
@@ -93,11 +96,25 @@ const EarningManagement = () => {
         headers: {Authorization: user.token},
       })
       .then(({data}) => {
-        // console.log("data", data.images);
-        // if(data?.status){
-        //   setTotalSummery(data?.summery);
-        //   setLoading(false);
-        // }
+        if(data?.status){
+          data?.images.forEach((element) => {
+            totalCount.push(element.value);
+            labelCount.push(element.date);
+          });
+          setLoading(false);
+        }
+        setChartData({
+          labels: labelCount,
+          datasets: [
+            {
+              label: "earning",
+              data: totalCount,
+              backgroundColor: "#2195F2",
+              borderColor: "#2195F2",
+              fill: false,
+            },
+          ],
+        })
       })
     }
 
@@ -156,7 +173,6 @@ const EarningManagement = () => {
         headers: {Authorization: user.token},
       })
       .then(({data}) => {
-        console.log("data1", data.images);
         if(data?.status){
           data?.images.forEach((element) => {
             totalCount.push(element.value);
@@ -168,7 +184,7 @@ const EarningManagement = () => {
           labels: labelCount,
           datasets: [
             {
-              label: "Earning",
+              label: `${selectedName}`,
               data: totalCount,
               backgroundColor: "#2195F2",
               borderColor: "#2195F2",
@@ -180,15 +196,13 @@ const EarningManagement = () => {
     }
   };
 
-  console.log("chartData", chartData);
-
 
   useEffect(() => {
     const canvasID = refChart.current;
 
     new Chart(canvasID, {
       type: "line",
-      data: {chartData},
+      data: chartData,
       options: {
         responsive: true,
         indexAxis: "y",
