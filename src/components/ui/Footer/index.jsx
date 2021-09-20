@@ -126,11 +126,6 @@ const Footer = () => {
               </ListItem>
               <ListItem className={classes.navItem}>
                 <Link className={classes.navLink} to="#">
-                  Jobs
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
                   Sell your content
                 </Link>
               </ListItem>
