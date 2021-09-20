@@ -44,6 +44,7 @@ export const Recent = () => {
         if (data?.status) {
           setRecentProduct(data?.images);
           setLoading(false);
+          setItems(recentProduct.concat())
         }
       })
       .catch((error) => {
@@ -66,11 +67,12 @@ export const Recent = () => {
       if (document.documentElement.scrollTop % 700 === 0) {
         pageCount = pageCount + 1;
         setPageCount(pageCount);
+        // setItems.push(pageCount);
         // var products = setItems([pageCount]);
         // products=  items.concat(...Object.values(recentProduct))
-        setItems(recentProduct.concat(pageCount))
-          
+        
         loadData(); 
+        // setItems(recentProduct.concat(pageCount))
       }
     };
   }, []);
@@ -114,6 +116,9 @@ export const Recent = () => {
           )}
         </Grid>
       </Container>
+
+      <Spacing space={{ height: "3.5rem" }} />
+
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
@@ -136,7 +141,7 @@ export const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller />
+      <TopSeller  homeTopSeller />
       {/* BLOG SECTION */}
       <Blog />
 
