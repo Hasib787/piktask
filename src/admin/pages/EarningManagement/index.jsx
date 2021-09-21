@@ -3,16 +3,7 @@ import {
   Card,
   FormControl,
   Grid,
-  Paper,
   Select,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tabs,
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
@@ -33,11 +24,6 @@ const EarningManagement = () => {
   const refChart = useRef();
   const classes = useStyles();
   const user = useSelector((state) => state.user);
-
-  const months = moment.months();
-  const [year, setYear] = useState(moment().year());
-  const [month, setMonth] = useState(moment().format("MMMM"));
-  const [currentDate, setCurrentDate] = useState(moment().date());
   
   const [earningData, setEarningData] = useState(0);
   const [onClickEvent, setOnClickEvent] = useState(true);
@@ -45,6 +31,7 @@ const EarningManagement = () => {
   const [isLoading, setLoading] = useState(false);
 
   const [chartData, setChartData] = useState({});
+  const [selectName, setSelectName] = useState("earning");
 
   // Mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -76,9 +63,7 @@ const EarningManagement = () => {
       })
     }
     
-
     // Total earning management statistics API integrate
-
     if(user?.token){
 
       let totalCount = [];
@@ -101,30 +86,49 @@ const EarningManagement = () => {
             totalCount.push(element.value);
             labelCount.push(element.date);
           });
+          setChartData({
+            labels: labelCount,
+            datasets: [
+              {
+                label: "earning",
+                data: totalCount,
+                backgroundColor: "#2195F2",
+                borderColor: "#2195F2",
+                fill: false,
+              },
+            ],
+          })
           setLoading(false);
         }
-        setChartData({
-          labels: labelCount,
-          datasets: [
-            {
-              label: "earning",
-              data: totalCount,
-              backgroundColor: "#2195F2",
-              borderColor: "#2195F2",
-              fill: false,
-            },
-          ],
-        })
       })
     }
-
-
   }, [user.token]);
 
 
-  const handleChange = (e, newValue) => {
-    setEarningData(newValue);
+  const handleChange = (e, newValue) => { setEarningData(newValue);};
+
+  const selectData = (index) => {
+    return {
+      id: `earning-tab-${index}`,
+      "aria-controls": `earning-tabpanel-${index}`,
+    };
   };
+
+
+  // Date wise dashboard statistics API integration
+  // From
+  const fromMonths = moment.months();
+  let [fromYear, setFromYear] = useState(moment().year());
+  let [fromMonth, setFromMonth] = useState(moment().format("MMMM"));
+  let [fromCurrentDate, setFromCurrentDate] = useState(moment(1).date());
+
+  
+  // To
+  const toMonths = moment.months();
+  let [toYear, setToYear] = useState(moment().year());
+  let [toMonth, setToMonth] = useState(moment().format("MMMM"));
+  let [toCurrentDate, setToCurrentDate] = useState(moment().date());
+
 
   const getAllDays = () => {
     const days = [];
@@ -136,39 +140,44 @@ const EarningManagement = () => {
 
   const getAllYears = () => {
     const years = [];
-    for (let i = 1970; i <= moment().year(); i++) {
+    for (let i = 1990; i <= moment().year(); i++) {
       years.push(i);
     }
     return years.sort((a, b) => b - a);
   };
 
-  const selectData = (index) => {
-    return {
-      id: `earning-tab-${index}`,
-      "aria-controls": `earning-tabpanel-${index}`,
-    };
-  };
 
 
+  let fromDateMonths = moment().month(fromMonth).format("M");
+  if(fromDateMonths < 10){
+    fromDateMonths = "0" + fromDateMonths;
+  }
+  if(fromCurrentDate < 10){
+    fromCurrentDate = "0" + fromCurrentDate;
+  }
+  let fromDates = (fromYear + "-" + fromDateMonths + "-" + fromCurrentDate);
 
-  const handleSelectedGraphRatio = (e) => {
+  
+  let toDateMonths = moment().month(toMonth).format("M");
+  if(toDateMonths < 10){
+    toDateMonths = "0" + toDateMonths;
+  }
+  if(toCurrentDate < 10){
+    toCurrentDate = "0" + toCurrentDate;
+  }
+  let toDates = (fromYear + "-" + toDateMonths + "-" + toCurrentDate);
 
-    // console.log("targetValue", e.target.dataset.onclick);
-    var selectedName = e.target.dataset.onclick;
+  
+  const handleDateSubmit = (e) => {
+    e.preventDefault();
 
-    if(user?.token){
+     if(user?.token){
 
       let totalCount = [];
       let labelCount = [];
 
-      var newDate = new Date();
-      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
-      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
-      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
-
-
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=${selectedName}`,
+      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectName}`,
       {
         headers: {Authorization: user.token},
       })
@@ -178,24 +187,62 @@ const EarningManagement = () => {
             totalCount.push(element.value);
             labelCount.push(element.date);
           });
+          setChartData({
+            labels: labelCount,
+            datasets: [
+              {
+                label: `${selectName}`,
+                data: totalCount,
+                backgroundColor: "#2195F2",
+                borderColor: "#2195F2",
+                fill: false,
+              },
+            ],
+          })
           setLoading(false);
         }
-        setChartData({
-          labels: labelCount,
-          datasets: [
-            {
-              label: `${selectedName}`,
-              data: totalCount,
-              backgroundColor: "#2195F2",
-              borderColor: "#2195F2",
-              fill: false,
-            },
-          ],
-        })
       })
     }
   };
 
+  const handleSelectedGraphRatio = (e) => {
+
+    var selectedName = e.target.name;
+    setSelectName(e.target.name);
+
+    if(user?.token){
+
+      let totalCount = [];
+      let labelCount = [];
+
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectedName}`,
+      {
+        headers: {Authorization: user.token},
+      })
+      .then(({data}) => {
+        if(data?.status){
+          data?.images.forEach((element) => {
+            totalCount.push(element.value);
+            labelCount.push(element.date);
+          });
+          setChartData({
+            labels: labelCount,
+            datasets: [
+              {
+                label: `${selectedName}`,
+                data: totalCount,
+                backgroundColor: "#2195F2",
+                borderColor: "#2195F2",
+                fill: false,
+              },
+            ],
+          })
+          setLoading(false);
+        }
+      })
+    }
+  };
 
   useEffect(() => {
     const canvasID = refChart.current;
@@ -246,8 +293,6 @@ const EarningManagement = () => {
       },
     });
   }, [onClickEvent, chartData]);
-  
-  // console.log("totalStatistics", totalStatistics);
 
   return (
     <Layout title={"Earning Management || Piktask"}>
@@ -268,43 +313,24 @@ const EarningManagement = () => {
                   <div className={classes.graphBox}>
                     <div className={classes.amount}>{totalSummary?.total_earning}$</div>
                     <span className={classes.title}>Total Earning</span>
-                    {/* <span className={classes.duration}>Last month: 0.00</span> */}
                   </div>
-                  {/* <div className={classes.graphBox}>
-                    <span className={`${classes.amount} ${classes.totalEarningColor}`}>
-                      {totalSummary?.total_earning}$
-                    </span>
-                    <span className={classes.title}>Total Earning</span>
-                    <span className={`${classes.duration} ${classes.bgColor2}`}>
-                      Last month: 0.00
-                    </span>
-                  </div> */}
                   <div className={classes.graphBox}>
                     <span className={`${classes.amount} ${classes.paidDownloadColor}`}>
                       {totalSummary?.total_images}
                     </span>
                     <span className={classes.title}>Total Files</span>
-                    {/* <span className={`${classes.duration} ${classes.bgColor3}`}>
-                      Last month: 0.00
-                    </span> */}
                   </div>
                   <div className={classes.graphBox}>
                     <span className={`${classes.amount} ${classes.freeDownloadColor}`}>
                       {totalSummary?.total_followers}
                     </span>
                     <span className={classes.title}>Total Follower</span>
-                    {/* <span className={`${classes.duration} ${classes.bgColor4}`}>
-                      Last month: 0.00
-                    </span> */}
                   </div>
                   <div className={classes.graphBox}>
                     <span className={`${classes.amount} ${classes.totalDownloadColor}`}>
                       {totalSummary?.total_downloads}
                     </span>
                     <span className={classes.title}>Total Download</span>
-                    {/* <span className={`${classes.duration} ${classes.bgColor5}`}>
-                      Last month: 0.00
-                    </span> */}
                   </div>
                 </Card>
               </Grid>
@@ -316,7 +342,7 @@ const EarningManagement = () => {
               </Typography>
 
               <div className={classes.statisticsFormWrapper}>
-                <div className={classes.selectPeriodFrom}>
+              <div className={classes.selectPeriodFrom}>
                   <div className={classes.fields}>
                     <Typography
                       className={classes.fieldTitle}
@@ -328,18 +354,17 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value)}
+                        value={fromMonth}
+                        onChange={(e) => setFromMonth(e.target.value)}
                         inputProps={{
                           // name: 'age',
                           id: "months",
                         }}
                       >
-                        {months.length > 0 &&
-                          months.map((month, index) => (
+                        {fromMonths.length > 0 &&
+                          fromMonths.map((month, index) => (
                             <option key={month} value={month}>
                               {month}
                             </option>
@@ -350,11 +375,10 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={currentDate}
-                        onChange={(e) => setCurrentDate(e.target.value)}
+                        value={fromCurrentDate}
+                        onChange={(e) => setFromCurrentDate(e.target.value)}
                         inputProps={{
                           id: "date",
                         }}
@@ -370,11 +394,10 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
+                        value={fromYear}
+                        onChange={(e) => setFromYear(e.target.value)}
                         inputProps={{
                           id: "year",
                         }}
@@ -398,18 +421,17 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value)}
+                        value={toMonth}
+                        onChange={(e) => setToMonth(e.target.value)}
                         inputProps={{
                           // name: 'age',
                           id: "months",
                         }}
                       >
-                        {months.length > 0 &&
-                          months.map((month, index) => (
+                        {toMonths.length > 0 &&
+                          toMonths.map((month, index) => (
                             <option key={month} value={month}>
                               {month}
                             </option>
@@ -420,11 +442,10 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={currentDate}
-                        onChange={(e) => setCurrentDate(e.target.value)}
+                        value={toCurrentDate}
+                        onChange={(e) => setToCurrentDate(e.target.value)}
                         inputProps={{
                           id: "date",
                         }}
@@ -440,11 +461,10 @@ const EarningManagement = () => {
                       variant="outlined"
                       className={classes.formControl}
                     >
-                      {/* <InputLabel htmlFor="months" >Months</InputLabel> */}
                       <Select
                         native
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
+                        value={toYear}
+                        onChange={(e) => setToYear(e.target.value)}
                         inputProps={{
                           id: "year",
                         }}
@@ -458,7 +478,10 @@ const EarningManagement = () => {
                     </FormControl>
                   </div>
 
-                  <Button className={classes.statisticsBtn}>
+                  <Button 
+                    onClick={(e) => handleDateSubmit(e)}  
+                    className={classes.showMoreBtn}
+                  >
                     Display Statistics
                   </Button>
                 </div>
@@ -478,7 +501,7 @@ const EarningManagement = () => {
                     setOnClickEvent(!onClickEvent); 
                     handleSelectedGraphRatio(e)
                   }}
-                  data-onclick="earning"
+                  name="earning"
                   className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
                 >Earning</button>
                 <button
@@ -487,7 +510,7 @@ const EarningManagement = () => {
                     setOnClickEvent(!onClickEvent); 
                     handleSelectedGraphRatio(e)
                   }}
-                  data-onclick="download"
+                  name="download"
                   className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
                 >Download</button>
                 <button
@@ -496,7 +519,7 @@ const EarningManagement = () => {
                     setOnClickEvent(!onClickEvent); 
                     handleSelectedGraphRatio(e)
                   }}
-                  data-onclick="file"
+                  name="file"
                   className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
                 >Files</button>
               </div>

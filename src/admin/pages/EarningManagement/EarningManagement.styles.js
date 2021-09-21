@@ -100,13 +100,6 @@ const useStyles = makeStyles((theme) => ({
       borderTop: 0,
     },
   },
-  duration: {
-    fontSize: "1.2rem",
-    color: "#676767",
-    backgroundColor: "rgb(247 182 58 / 8%)",
-    borderRadius: "3rem",
-    padding: "0.8rem 1.5rem",
-  },
   totalEarningColor: {
     color: "#6EE671",
   },
@@ -174,19 +167,18 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "#E0E0E0",
     },
   },
-  statisticsBtn: {
-    backgroundColor: "#117A00",
+  showMoreBtn: {
+    padding: "0.6rem 1.5rem",
+    backgroundColor: "#0088f2",
+    color: "#fff",
     marginTop: "2.5rem",
-    padding: ".9rem 2.2rem",
-    color: theme.palette.common.white,
-    marginLeft: "2rem",
-    fontWeight: 500,
+    border: ".2rem solid",
+    borderColor: "#0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "rgb(17 122 0 / 90%)",
-    },
-    "@media (max-width: 1020px)": {
-      marginLeft: 0,
-      marginTop: "1rem",
+      backgroundColor: "#0773c5",
+      borderColor: "#0773c5",
+      color: "#fff",
     },
   },
   tabsBtnWrapper: {

@@ -184,7 +184,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   showMoreBtn: {
-    // ...theme.typography.button,
     padding: "0.6rem 1.5rem",
     backgroundColor: "#0088f2",
     color: "#fff",

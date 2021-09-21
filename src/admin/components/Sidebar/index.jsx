@@ -174,7 +174,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/guidline"
+          to="/admin/guidLine"
           selected={value === 8}
         >
           <HelpOutlineIcon />
@@ -190,7 +190,7 @@ const Sidebar = () => {
           selected={value === 9}
         >
           <AccountCircleIcon />
-          <ListItemText primary="User Profile" />
+          <ListItemText primary="Account Setting" />
         </ListItem>
       </List>
     </aside>
