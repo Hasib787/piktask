@@ -42,6 +42,7 @@ import {
   TrendingSearch,
 
 } from "./pages";
+import GuidLine from "./pages/GuidLine";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -92,26 +93,8 @@ const App = () => {
         console.log(error);
       })
 
-    // getPopularPhotos();
     return () => unsubscribe();
   }, [dispatch]);
-
-  // function getPopularPhotos() {
-  //   try {
-  //     axios
-  //       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-  //       .then(({ data }) => {
-  //         if (data?.status) {
-  //           dispatch({
-  //             type: "POPULAR_CATEGORIES",
-  //             payload: [...data.categories],
-  //           });
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -132,6 +115,7 @@ const App = () => {
         <Route exact path="/admin/reject" component={RejectFiles} />
         <Route exact path="/admin/publish" component={Publish} />
         <Route exact path="/admin/earnings" component={EarningManagement} />
+        <Route exact path="/admin/guidLine" component={GuidLine} />
         <Route exact path="/admin/settings" component={AccountSettings} />
 
         {/* <Route exact path="/categories" component={Home} /> */}
