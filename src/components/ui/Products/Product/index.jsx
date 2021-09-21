@@ -29,7 +29,7 @@ const Product = ({ photo }) => {
   const user = useSelector((state) => state.user);
   
   const title = photo?.title;
-  const titleLength = title.split(" ");
+  const titleLength = title?.split(" ");
 
   const [likeCount, setLikeCount] = useState(photo?.total_likes);
   const [openAuthModal, setOpenAuthModal] = useState(false);
@@ -117,7 +117,7 @@ const Product = ({ photo }) => {
               to={`/photo/${photo?.image_id}`}
             >
               <Typography variant="h2" className={classes.title}>
-                {titleLength.length > 7 ? (
+                {titleLength?.length > 7 ? (
                   <>
                     { getWords(6, photo?.title)}...
                   </>
