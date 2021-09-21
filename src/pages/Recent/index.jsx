@@ -22,37 +22,36 @@ export const Recent = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
-  const [recentProduct, setRecentProduct] = useState({});
-  const [items, setItems] = useState([]);
-  let [pageCount, setPageCount] = useState(1);
+  const [recentProduct, setRecentProduct] = useState([]);
+  // const [items, setItems] = useState([]);
+  // const [newProduct, setNewProduct] = useState([]);
+  // let [pageCount, setPageCount] = useState(1);
 
-  console.log("Page count", pageCount);
+  // console.log("Page count", pageCount);
 
-//data load
-  const loadData = ()=>{
+  //data load
+  const loadData = () => {
     let recentUrl;
     if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8&page=${pageCount}`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&page=${pageCount}`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent`;
     }
-
-    if(recentProduct.length !== 0){
-      axios
+    axios
       .get(recentUrl)
       .then(({ data }) => {
         if (data?.status) {
+          console.log("data image", data.images);
           setRecentProduct(data?.images);
           setLoading(false);
-          setItems(recentProduct.concat())
+          // recentProduct.push(recentProduct.concat(recentProduct));
         }
       })
       .catch((error) => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-    }
-  }
+  };
 
   //Load Initial value
   useEffect(() => {
@@ -61,23 +60,39 @@ export const Recent = () => {
   }, []);
 
   //onScroll data load
-  useEffect(() => {
-    setLoading(true);
-    window.onscroll = () => {
-      if (document.documentElement.scrollTop % 700 === 0) {
-        pageCount = pageCount + 1;
-        setPageCount(pageCount);
-        // setItems.push(pageCount);
-        // var products = setItems([pageCount]);
-        // products=  items.concat(...Object.values(recentProduct))
-        
-        loadData(); 
-        // setItems(recentProduct.concat(pageCount))
-      }
-    };
-  }, []);
-  console.log("recentProduct",recentProduct);
-  console.log("items",items);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   window.onscroll = () => {
+  //     if (document.documentElement.scrollTop % 300 === 0) {
+  //       pageCount = pageCount + 1;
+  //       setPageCount(pageCount);
+  //       let recentUrl;
+  //       if (user && user?.id) {
+  //         recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8&page=${pageCount}`;
+  //       } else {
+  //         recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&page=${pageCount}`;
+  //       }
+  //       axios
+  //         .get(recentUrl)
+  //         .then(({ data }) => {
+  //           if (data?.status) {
+  //             console.log("data image", data.images);
+  //             setRecentProduct([...recentProduct, ...data.images]);
+  //             setLoading(false);
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.log("Category products error:", error);
+  //           setLoading(false);
+  //         });
+  //     }
+  //   };
+  // }, []);
+
+  // newProduct.push(recentProduct.concat(items));
+
+  // console.log("recentProduct", recentProduct);
+  // console.log("items", items);
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
@@ -97,9 +112,9 @@ export const Recent = () => {
           ) : (
             <>
               {recentProduct?.length ? (
-                recentProduct?.map((photo) => (
+                recentProduct?.map((photo, index) => (
                   <Grid
-                    key={photo.length}
+                    key={index}
                     item
                     xs={6}
                     sm={4}
@@ -141,7 +156,7 @@ export const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller  homeTopSeller />
+      <TopSeller homeTopSeller />
       {/* BLOG SECTION */}
       <Blog />
 
