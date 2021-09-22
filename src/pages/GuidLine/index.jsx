@@ -16,7 +16,7 @@ const GuidLine = () => {
       <Spacing space={{marginTop: "7rem"}} />
       <HeroSection
         size="medium"
-        guidLine
+        isSearch
         title="Piktask Guidline"
       />
       <Spacing space={{height: "3rem"}} />

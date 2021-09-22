@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Container } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 import heroBG from "../../../assets/banner/lucas-wesney-s-y2HJElONo-unsplash.jpg";
 import SearchKeyWords from "../SearchKeyWords";
 import { Link } from "react-router-dom";
@@ -17,7 +17,11 @@ const HeroSection = (props) => {
     creativeWorksDone,
     title,
     heroButton,
-    guidLine
+    isSearch,
+    terms,
+    copyrightInfo,
+    license,
+    cookiesPolicy,
   } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -54,11 +58,39 @@ const HeroSection = (props) => {
           {title && (
             <SectionHeading title={title} color="white" center size={size} />
           )}
-
-          {!guidLine && (
-          <Search mobileView={mobileView} />
+          {terms && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+            >
+              Terms And Condition
+            </Typography>
+          )}
+          {copyrightInfo && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Copyright information
+            </Typography>
+          )}
+          {license && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              License Agreement
+            </Typography>
+          )}
+          {cookiesPolicy && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Cookies policy
+            </Typography>
           )}
 
+          {!isSearch && <Search mobileView={mobileView} />}
           <SearchKeyWords
             popularKeywords={popularKeywords}
             heroButton={heroButton}

@@ -43,6 +43,7 @@ const Products = (props) => {
   const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+// Data load
   useEffect(() => {
     setLoading(true);
 

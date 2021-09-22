@@ -20,9 +20,10 @@ export const Home = () => {
   const categories = useSelector((state) => state.popularCategories);
   const [popularCats, setPopularCats] = useState([])
   const [scrolling, setScrolling] = useState(0);
-  let [index, setIndex] = useState(0);
+  let [index, setIndex] = useState(1);
 
-    
+
+  //onScroll data load function 
     window.onscroll = () => {
       setScrolling(window.pageYOffset);
       let currentPosition = scrolling;
@@ -34,7 +35,7 @@ export const Home = () => {
         ) {
           const category = categories[index];
           setIndex((index) => index + 1);
-           popularCats.push(category);
+          popularCats.push(category);
         }
     };
 
@@ -69,34 +70,15 @@ export const Home = () => {
       {/* Carousel with Categories */}
       <CategoryCarousel />
 
+      <Container>
+        <Products category={categories[0]} showHeading count={8} />
+      </Container>
+
       {popularCats.length && popularCats.map((category, index) => 
         <Container>
           <Products key={index} category={category} showHeading count={8} />
         </Container>
       )};
-      {/* <Container>
-        <Products catName={productCategories[0]} showHeading count={8} />
-      </Container> */}
-
-      {/* <Container>
-        <Products catName={productCategories[2]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={productCategories[3]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={productCategories[4]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={productCategories[5]} showHeading count={8} />
-      </Container>
-
-      <Container>
-        <Products catName={productCategories[6]} showHeading count={8} />
-      </Container> */}
 
       <CallToAction
         title="Daily 10 image/photos Download"
