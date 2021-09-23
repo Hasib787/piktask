@@ -17,9 +17,9 @@ export const CopyrightInfo = () => {
         <HeroSection copyrightInfo size="medium" isSearch />
         <Spacing space={{ height: "5rem" }} />
         <Container>
-          <div className={classes.termsWrapper}>
+          <div className={classes.copyRightWrapper}>
             <div>
-              <div className={classes.guidLineTitle}>
+              <div className={classes.copyRightTitle}>
                 <Typography variant="h2">What we own : </Typography>
               </div>
               <Spacing space={{ height: "1rem" }} />
@@ -36,7 +36,7 @@ export const CopyrightInfo = () => {
                   stated in these terms.
                 </Typography>
                 <Spacing space={{ height: "3rem" }} />
-                <div className={classes.guidLineTitle}>
+                <div className={classes.copyRightTitle}>
                   <Typography variant="h2">Copyright : </Typography>
                 </div>
                 <Spacing space={{ height: "1rem" }} />

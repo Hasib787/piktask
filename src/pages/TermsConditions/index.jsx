@@ -18,11 +18,11 @@ export const TermsConditions = () => {
       <Container>
         <div className={classes.termsWrapper}>
           <div>
-            <div className={classes.guidLineTitle}>
+            <div className={classes.termsTitle}>
               <Typography variant="h2">What we own : </Typography>
             </div>
             <Spacing space={{ height: "1rem" }} />
-            <div className={classes.guidLineContent}>
+            <div>
               <Typography className={classes.description}>
                 We own all the Piktask content that we have put on Piktask. This
                 includes the design,Software,Website, Theme, Template,Idea,
@@ -35,7 +35,7 @@ export const TermsConditions = () => {
                 stated in these terms.
               </Typography>
               <Spacing space={{ height: "3rem" }} />
-              <div className={classes.guidLineTitle}>
+              <div className={classes.termsTitle}>
                 <Typography variant="h2">Copyright : </Typography>
               </div>
               <Spacing space={{ height: "1rem" }} />
@@ -43,7 +43,7 @@ export const TermsConditions = () => {
                 Copyright, trademark and intellectual property claims: We
                 respect the intellectual property rights of others and we tried
                 to develop our softwares and application based on others
-                company's property.If anybody see any issues or any propoerty
+                company's property.If anybody see any issues or any property
                 matches with your property then we will remove it.
               </Typography>
             </div>

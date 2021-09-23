@@ -44,6 +44,7 @@ import {
   CopyrightInfo,
   LicenseAgreement,
   CookiesPolicy,
+  Support,
 } from "./pages";
 import GuidLine from "./pages/GuidLine";
 
@@ -125,7 +126,8 @@ const App = () => {
         <Route exact path="/copyrightInformation" component={CopyrightInfo} />
         <Route exact path="/licenseAgreement" component={LicenseAgreement} />
         <Route exact path="/cookiesPolicy" component={CookiesPolicy} />
-       
+        <Route exact path="/support" component={Support} />
+        
         {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />

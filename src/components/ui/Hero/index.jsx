@@ -22,6 +22,7 @@ const HeroSection = (props) => {
     copyrightInfo,
     license,
     cookiesPolicy,
+    support,
   } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -70,7 +71,7 @@ const HeroSection = (props) => {
               style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
               variant="h1"
             >
-              Copyright information
+              Copyright Information
             </Typography>
           )}
           {license && (
@@ -86,7 +87,15 @@ const HeroSection = (props) => {
               style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
               variant="h1"
             >
-              Cookies policy
+              Cookies Policy
+            </Typography>
+          )}
+          {support && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Support
             </Typography>
           )}
 

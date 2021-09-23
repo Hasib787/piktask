@@ -166,7 +166,7 @@ const Footer = () => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/support">
                   Support
                 </Link>
               </ListItem>
