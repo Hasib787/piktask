@@ -98,16 +98,15 @@ const useStyles = makeStyles((theme) => ({
   },
   premium: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: "#0088f2",
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
     marginLeft: "1rem",
     marginRight: "1rem",
-    border: ".2rem solid",
-    borderColor: "transparent",
+    border: ".2rem solid #0088f2",
     transition: "all 0.3s linear",
     "&:hover": {
-      borderColor: `${theme.palette.common.white}`,
+      borderColor: "#0088f2",
     },
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
@@ -139,11 +138,16 @@ const useStyles = makeStyles((theme) => ({
 
   signInBtn: {
     ...theme.typography.button,
-    ...theme.typography.darkButton,
-    // backgroundColor: theme.palette.secondary.light,
-    border:".2rem solid transparent",
+    backgroundColor: "#0088f2",
+    border:".2rem solid #0088f2",
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: "#0773c5",
+      border:".2rem solid #fff",
+    },
 
     "@media (max-width: 480px)": {
       padding: ".8rem 1.5rem !important",
@@ -164,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#FB5252",
   },
   arrowDown: {
-    fontSize: "5rem",
+    fontSize: "3.5rem",
     color: "#244e5f",
   },
 }));

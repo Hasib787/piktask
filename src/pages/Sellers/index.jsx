@@ -1,8 +1,6 @@
-import { Button, Container, Grid } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import ProductNotFound from "../../components/ui/ProductNotFound";
 import useStyles from "./Sellers.style";
-import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import Spacing from "../../components/Spacing";
 import HeroSection from "../../components/ui/Hero";
@@ -43,8 +41,7 @@ const Sellers = () => {
             <h2>Loading now......</h2>
           ) : (
             <>
-              {topSeller.length ? (
-                topSeller?.map((photo) => (
+              {topSeller?.map((photo) => (
                   <Grid
                     key={photo.id}
                     item
@@ -55,10 +52,7 @@ const Sellers = () => {
                   >
                     <SellerInfo photo={photo} />
                   </Grid>
-                ))
-              ) : (
-                <ProductNotFound />
-              )}
+                ))}
             </>
           )}
         </Grid>

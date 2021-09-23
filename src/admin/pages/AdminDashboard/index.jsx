@@ -190,11 +190,11 @@ const AdminDashboard = () => {
                     <img src={followerIcon} alt="followerIcon" />
                   </div>
                   <Typography className={classes.totalCount} variant="h1">
-                    {earnCurrentMonth?.total_followers}
+                    {earnCurrentMonth?.total_follower}
                     <span>Follower</span>
                   </Typography>
                   <Typography className={classes.lastTotalCount}>
-                    Last month: {earnPreviousMonth?.total_followers}
+                    Last month: {earnPreviousMonth?.total_follower}
                   </Typography>
                 </CardContent>
               </Grid>

@@ -291,11 +291,11 @@ const Search = ({ mobileView }) => {
                 )}
 
                 {!isLoading && !isEmpty && (
-                  <>
+                  <div onClick={collapseContainer}>
                     {searchResults.map((item, index) => (
                       <SearchItem key={index} item={item} />
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
             </div>

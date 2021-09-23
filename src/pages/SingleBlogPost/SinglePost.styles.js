@@ -1,15 +1,17 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  blogContainer: {
+    padding: "0rem 15rem",
+  },
   blogImageWrapper:{
-    backgroundColor: "#fff",
-    padding: "2rem",
-    height: 600,
+    height: 400,
     boxShadow: "0px 0px 10px #ddd",
 
     "& img": {
       height: "100%",
       width: "100%",
+      objectFit: "cover",
     },
   },
   blogAuthorInfo: {

@@ -107,7 +107,7 @@ const SingleCategory = () => {
             setAllTags(tags.filter((e) => e));
           }
 
-          if (user && user?.token) {
+          if (user?.token) {
             axios
               .get(
                 `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
@@ -127,7 +127,7 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
-    if (user && user?.token) {
+    if (user?.token) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
           headers: { Authorization: user.token },

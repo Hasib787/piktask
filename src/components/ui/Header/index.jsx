@@ -12,7 +12,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../../assets/piktaskLogo.svg";
+import logo from "../../../assets/Logo/piktask-6.png";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
 import CustomPopper from "../CustomPopper";
@@ -23,13 +23,13 @@ import useStyles from "./Header.styles";
 const customStyles = makeStyles({
   menuWrapper: {
     top: "1.8rem",
-    marginTop: 20,
+    marginTop: 10,
     color: "#FFF",
     display: "flex",
     justifyContent: "space-between",
 
     "@media (max-width: 425px)": {
-      marginTop: 10,
+      marginTop: 5,
     },
   },
   closeIconWrapper: {
@@ -105,7 +105,7 @@ const Header = () => {
                   <Button
                     component={Link}
                     to="/"
-                    className={classes.logoWrapper}
+                    className={classes.headerLogo}
                     disableRipple
                   >
                     <img src={logo} className={classes.logo} alt="Dev" />
@@ -198,7 +198,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <Toolbar disableGutters className={classes.menuWrapper}>
+        <Toolbar disableGutters className={classes.wrapperMenu}>
           <MenuList className={classes.navItems}>
             <MenuItem
               onClick={() => setOpenMobileMenu(false)}

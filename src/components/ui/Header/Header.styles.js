@@ -48,6 +48,44 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  headerLogo: {
+    width: 153,
+    marginRight: "2rem",
+    padding: 0,
+    "& .MuiButton-label": {
+      justifyContent: "flex-start",
+    },
+    "&:hover": {
+      background: "transparent",
+    },
+
+    "@media (max-width: 1024px)": {
+      width: "14rem",
+
+      "& img": {
+        width: "100%",
+        marginTop: "0.6rem",
+      },
+    },
+    "@media (max-width: 425px)": {
+      width: "12rem",
+
+      "& img": {
+        width: "100%",
+        marginTop: "1.2rem",
+      },
+    },
+
+    [theme.breakpoints.down(357)]: {
+      width: "12rem",
+      
+      "& img": {
+        width: "100%",
+        marginTop: "1.2rem",
+        
+      },
+    },
+  },
   logo: {
     width: "10.5rem",
     display: "block",
@@ -61,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  menuWrapper: {
+  wrapperMenu: {
     width: "30rem",
     flexDirection: "column",
   },
@@ -143,6 +181,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     right: "-0.6rem",
     color: "#FB5252",
+
+    [theme.breakpoints.down(770)]: {
+      width: "4rem",
+      height: "4rem",
+    },
   },
   arrowDown: {
     fontSize: "5rem",
