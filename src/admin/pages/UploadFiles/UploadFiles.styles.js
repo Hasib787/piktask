@@ -128,6 +128,9 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       padding: "1.28rem 1.5rem",
     },
+    '&:after': {
+      borderColor: "gray",
+  },
     "& p": {
       fontSize: "14px",
     },
