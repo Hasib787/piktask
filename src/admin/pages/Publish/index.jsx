@@ -144,8 +144,8 @@ const Publish = () => {
         }
       })
     }
-
   };
+
 
   return (
     <Layout title={"Publish || Piktask"}>
@@ -359,7 +359,7 @@ const Publish = () => {
                                 className={classes.tableRowContent}
                               >
                                 <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                                  <Link to={`/photo/${product?.id}`}>
+                                  <Link to={`/images/${product?.title.replace(/ /g, "_")}&id=${product?.id}`}>
                                     <img
                                       className={classes.publishImg}
                                       src={product?.preview}

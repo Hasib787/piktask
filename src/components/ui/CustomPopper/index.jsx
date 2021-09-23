@@ -119,14 +119,14 @@ const CustomPopper = ({
                     </div>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button className={classes.accountStatusBtn}>
+                    {/* <Button className={classes.accountStatusBtn}>
                       <img
                         className={classes.accountIcon}
                         src={crownGreenIcon}
                         alt="Free"
                       />
                       Free
-                    </Button>
+                    </Button> */}
                   </Grid>
                 </Grid>
 

@@ -8,7 +8,7 @@ import {
 import React from "react";
 import SocialShare from "../SocialShare";
 import Copyright from "./CopyRight";
-import { Column, useStyles } from "./Footer.styles";
+import { useStyles } from "./Footer.styles";
 import facebook from "../../../assets/icons/facebook-round.svg";
 import twitter from "../../../assets/icons/twitter-round.svg";
 import instagram from "../../../assets/icons/instagram-round.svg";
@@ -37,7 +37,7 @@ const Footer = () => {
     <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
-          <Column>
+          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Categories
             </Typography>
@@ -74,8 +74,8 @@ const Footer = () => {
                 </Link>
               </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Content
             </Typography>
@@ -102,8 +102,8 @@ const Footer = () => {
                 </Link>
               </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Information
             </Typography>
@@ -129,9 +129,19 @@ const Footer = () => {
                   Sell your content
                 </Link>
               </ListItem>
+              <ListItem className={classes.navItem}>
+                <Link className={classes.navLink} to="/support">
+                  Support
+                </Link>
+              </ListItem>
+              <ListItem className={classes.navItem}>
+                <Link className={classes.navLink} to="#">
+                  Contact
+                </Link>
+              </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Legal
             </Typography>
@@ -157,37 +167,16 @@ const Footer = () => {
                   Cookies policy
                 </Link>
               </ListItem>
+              <Grid className={classes.gridRoot}>
+                <Grid item xs={12}>
+                  <SocialShare
+                    socialMedias={socialMedias}
+                    position="left"
+                  />
+                </Grid>
+              </Grid>
             </List>
-          </Column>
-          <Column>
-            <Typography variant="h3" className={classes.footerHeading}>
-              Help
-            </Typography>
-
-            <List className={classes.menuWrapper}>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="/support">
-                  Support
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Contact
-                </Link>
-              </ListItem>
-              <Typography variant="h3" className={classes.socialMediaTitle}>
-              Social Media
-            </Typography>
-            <Grid className={classes.gridRoot}>
-            <Grid item xs={12}>
-            <SocialShare
-              socialMedias={socialMedias}
-              position="left"
-            />
           </Grid>
-          </Grid>
-            </List>
-          </Column>
         </Grid>
       </Container>
 

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         transition: "all 0.3s linear",
       },
       "&:hover .MuiSvgIcon-root": {
-        backgroundColor: "#117A00",
+        backgroundColor: "#0088f2",
         color: "white",
       },
     },
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         transition: "all 0.3s linear",
       },
       "&:hover .MuiSvgIcon-root": {
-        backgroundColor: "#117A00",
+        backgroundColor: "#0088f2",
         color: "white",
       },
     },

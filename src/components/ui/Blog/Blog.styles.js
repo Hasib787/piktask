@@ -32,15 +32,17 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "flex-start",
     },
   },
+  seeMoreButton: {
+    textAlign: "center",
+  },
   moreButton: {
     ...theme.typography.button,
-    // backgroundColor: theme.palette.secondary.main,
     backgroundColor: "#0088f2",
     padding: "0.5rem 2.5rem",
-    margin: "auto",
+    // margin: "0 auto",
     fontSize: "1.3rem",
     border: "0.2rem solid transparent",
-    display: "block",
+    // display: "block",
     transition: "all 0.3s linear",
     "&:hover": {
       backgroundColor: "#0773c5",

@@ -23,6 +23,7 @@ const HeroSection = (props) => {
     license,
     cookiesPolicy,
     support,
+    blogsTitle,
   } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -96,6 +97,14 @@ const HeroSection = (props) => {
               variant="h1"
             >
               Support
+            </Typography>
+          )}
+          {blogsTitle && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Piktask Blog
             </Typography>
           )}
 

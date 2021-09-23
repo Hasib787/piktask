@@ -185,17 +185,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2.5rem",
   },
   earningBtn: {
-    ...theme.typography.button,
-    borderRadius: 0,
-    fontWeight: 500,
-    padding: "1rem 2.5rem",
-    fontSize: "1.5rem",
-  },
-  earningGreenBtn: {
-    backgroundColor: "#117A00",
+    padding: "0.6rem 1.5rem",
+    backgroundColor: "#0088f2 !important",
+    color: "#fff",
     marginRight: "2rem",
+    borderRadius: 2,
+    border: ".2rem solid",
+    borderColor: "#0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "rgb(17 122 0 / 90%)",
+      backgroundColor: "#0773c5 !important",
+      borderColor: "#0773c5",
+      color: "#fff",
     },
   },
   downloadBtn: {

@@ -15,7 +15,7 @@ import SearchResults from "./pages/SearchResults";
 import AuthorProfile from "./pages/AuthorProfile";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import SingleBlogPost from "./pages/SinglePost";
+// import SingleBlogPost from "./pages/SinglePost";
 import Subscription from "./pages/Subscription";
 import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
@@ -47,6 +47,8 @@ import {
   Support,
 } from "./pages";
 import GuidLine from "./pages/GuidLine";
+import SingleBlogPost from "./pages/SingleBlogPost";
+import AllBlogs from "./pages/AllBlogs";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -152,6 +154,7 @@ const App = () => {
         <Route exact path="/images/popular_images" component={PopularImages} />
         <Route exact path="/search/:keywords" component={SearchResults} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
+        <Route exact path="/allBlogs/blogs" component={AllBlogs} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/:username" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />

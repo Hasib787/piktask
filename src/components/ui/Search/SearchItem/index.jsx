@@ -9,7 +9,7 @@ const SearchItem = ({ item }) => {
   
 
   return (
-    <Link to={`/photo/${item?.image_id}`} className={classes.searchItemWrapper}>
+    <Link to={`/images/${item?.title.replace(/ /g, "_")}&id=${item?.image_id}`} className={classes.searchItemWrapper}>
       <div className={classes.searchLeft}>
         <div className={classes.thumbnail}>
           <img src={item?.thumbnail} alt={item?.title} />

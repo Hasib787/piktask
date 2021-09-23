@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     outline: "none",
   },
   gridUserInfo: {
+    width: "32rem",
     padding: "1rem",
     alignItems: "center",
     outline: "none",

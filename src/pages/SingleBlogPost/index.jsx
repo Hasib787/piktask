@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Box, Container, Grid, TextField, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/ui/Footer";
@@ -46,6 +46,19 @@ const SingleBlogPost = () => {
     })
   }, [id]);
 
+  const [commentsData, setCommentsData] = useState({
+    comment: "",
+  });
+
+  const handleAuthData = (e) => {
+    const { name, value } = e.target;
+    setCommentsData({ ...commentsData, [name]: value });
+  };
+
+  const handleCommentPost = () => {
+    
+  };
+
   return (
     <Layout>
       <Header />
@@ -55,6 +68,7 @@ const SingleBlogPost = () => {
         <Grid 
           container
           spacing={3}
+          className={classes.blogContainer}
         >
           <Grid item sm={8}>
             <div className={classes.blogImageWrapper}>
@@ -82,6 +96,10 @@ const SingleBlogPost = () => {
             <div className={classes.blogContent}>
               <Typography>{blogDetails?.description}</Typography>
             </div>
+            <Spacing space={{height: "4rem"}} />
+            <div className={classes.blogContent}>
+              <Typography>{blogDetails?.description}</Typography>
+            </div>
           </Grid>
 
           <Grid item sm={4}>
@@ -91,12 +109,46 @@ const SingleBlogPost = () => {
                 recentBlogsPost?.slice(0, 3).map((post) => (
                   <Post recentBlog key={post?.id} post={post}/>
                 ))}
-          </Grid>
+            </Grid>
           </Grid>
         </Grid>
-        <Spacing space={{height: "5rem"}} />
 
-        <RelatedBlogs blogID={id} />
+        <Spacing space={{height: "5rem"}} />
+        <div className={classes.blogContainer}>
+          <form onSubmit={handleCommentPost}>
+            <TextField
+              label="Comment"
+              name="userName"
+              value={commentsData.comment}
+              onChange={handleAuthData}
+              autoComplete="off"
+            />
+          </form>
+          {/* <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '5 0%' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                id="outlined-multiline-static"
+                label="Multiline"
+                multiline
+                rows={4}
+                defaultValue="Default Value"
+              />
+            </div>
+          </Box> */}
+        </div>
+
+        <Spacing space={{height: "5rem"}} />
+        <div className={classes.blogContainer}>
+          <RelatedBlogs blogID={id} />
+        </div>
+
       </Container>
       <Spacing space={{height: "2rem"}} />
       <Footer />

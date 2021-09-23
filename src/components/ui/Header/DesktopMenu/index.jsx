@@ -12,8 +12,6 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import signInIcon from "../../../../assets/icons/signInIcon.svg";
 import React, { useEffect, useRef, useState } from "react";
 import crownIcon from "../../../../assets/icons/crown.svg";
-// import logo from "../../../../assets/piktaskLogo.svg";
-// import logo from "../../../../assets/Logo/piktask-5.png";
 import logo from "../../../../assets/Logo/piktask-6.png";
 import { Link, NavLink } from "react-router-dom";
 import CustomPopper from "../../CustomPopper";
@@ -112,7 +110,7 @@ const DesktopMenu = ({ history }) => {
             {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {user && user?.token && (
+            {/* {user && user?.token && (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
@@ -120,21 +118,21 @@ const DesktopMenu = ({ history }) => {
               >
                 Sell Your Content
               </Button>
-            )}
+            )} */}
 
-            <Button disableRipple className={classes.enterprise}>
+            {/* <Button disableRipple className={classes.enterprise}>
               <img
                 className={classes.crownIcon}
                 src={enterpriseCrownIcon}
                 alt="Crown"
               />
               Enterprise
-            </Button>
+            </Button> */}
             
-            <Button className={classes.premium}>
+            {/* <Button className={classes.premium}>
               <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
               Premium
-            </Button>
+            </Button> */}
 
             {user && user?.isLogged ? (
               <div
