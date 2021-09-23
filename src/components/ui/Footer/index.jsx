@@ -77,7 +77,7 @@ const Footer = () => {
           </Column>
           <Column>
             <Typography variant="h3" className={classes.footerHeading}>
-              Contact
+              Content
             </Typography>
 
             <List className={classes.menuWrapper}>

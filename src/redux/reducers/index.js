@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { categoriesReducer } from "./categoriesReducer";
+import { categoryItemsReducer } from "./categoryItemsReducer";
 import { categoryReducer } from "./categoryReducer";
 import { recentPhotoReducer } from "./recentPhotoReducer";
 import { totalPublishFileReducer } from "./totalPublishFileReducer";
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   recentPhotos: recentPhotoReducer,
   allCategories: categoriesReducer,
   totalPublishFile: totalPublishFileReducer,
+  categoryBasedItems: categoryItemsReducer,
 });
 
 export default rootReducer;

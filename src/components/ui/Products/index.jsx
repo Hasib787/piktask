@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import ProductNotFound from "../ProductNotFound";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Product from "./Product";
