@@ -1,6 +1,7 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import useStyles from "./Blog.styles";
 import Post from "./Post";
 
@@ -41,7 +42,9 @@ const Blog = () => {
               <Post key={post?.id} post={post}/>
             ))}
         </Grid>
-        <Button className={classes.moreButton}>See More</Button>
+        <div className={classes.seeMoreButton}>
+          <Button to="/allBlogs/blogs" component={Link} className={classes.moreButton}>See More</Button>
+        </div>
       </Container>
     </div>
   );

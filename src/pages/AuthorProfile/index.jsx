@@ -39,29 +39,29 @@ const AuthorProfile = () => {
           setProfileInfo(data?.profile);
           setImageSummery(data?.images_summary);
           setLoading(false);
+
+          if (user?.token) {
+            axios
+              .get(
+                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
+                {
+                  headers: { Authorization: user.token },
+                }
+              )
+              .then((response) => {
+                if (response.data.status) {
+                  setFollowing(true);
+                } else {
+                  setFollowing(false);
+                }
+              });
+          }
+
         }
       })
     } catch (error) {
       console.log(error);
     }
-
-    if (user && user?.token) {
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/sellers/follow_status/${user.id}`,
-          {
-            headers: { Authorization: user.token },
-          }
-        )
-        .then((response) => {
-          if (response.data.status) {
-            setFollowing(true);
-          } else {
-            setFollowing(false);
-          }
-        });
-    }
-
   }, [username, user])
 
   const handleJoinUsButton = () =>{
@@ -78,7 +78,7 @@ const AuthorProfile = () => {
     } else if (user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/sellers/followers/${user?.id}`,
+          `${process.env.REACT_APP_API_URL}/sellers/followers/${profileInfo?.id}`,
           {},
           {
             headers: { Authorization: user.token },
@@ -93,6 +93,8 @@ const AuthorProfile = () => {
       toast.error("You can't follow yourself");
     }
   };
+
+  console.log("profileInfo", profileInfo?.id);
 
   
   return (

@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../../../assets/piktaskLogo.svg";
+import logo from "../../../../assets/Logo/piktask-6.png";
 import useStyles from "./CopyRight.styles";
 import heroBG from "../../../../assets/banner/frank-eiffert-2LjdRhVElBw-unsplash.jpg";
 

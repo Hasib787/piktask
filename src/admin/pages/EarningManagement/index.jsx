@@ -502,7 +502,7 @@ const EarningManagement = () => {
                     handleSelectedGraphRatio(e)
                   }}
                   name="earning"
-                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                  className={classes.earningBtn}
                 >Earning</button>
                 <button
                   {...selectData(1)}
@@ -511,7 +511,7 @@ const EarningManagement = () => {
                     handleSelectedGraphRatio(e)
                   }}
                   name="download"
-                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                  className={classes.earningBtn}
                 >Download</button>
                 <button
                   {...selectData(2)}
@@ -520,7 +520,7 @@ const EarningManagement = () => {
                     handleSelectedGraphRatio(e)
                   }}
                   name="file"
-                  className={`${classes.earningBtn} ${classes.earningGreenBtn}`}
+                  className={classes.earningBtn}
                 >Files</button>
               </div>
 
