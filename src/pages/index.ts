@@ -12,3 +12,7 @@ export * from "./PopularImages";
 export * from "./Category";
 export * from "./GuidLine";
 export * from "./TrendingSearch";
+export * from "./TermsConditions";
+export * from "./CopyrightInfo";
+export * from "./LicenseAgreement";
+export * from "./CookiesPolicy";

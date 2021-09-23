@@ -77,7 +77,7 @@ const Footer = () => {
           </Column>
           <Column>
             <Typography variant="h3" className={classes.footerHeading}>
-              Contact
+              Content
             </Typography>
 
             <List className={classes.menuWrapper}>
@@ -138,22 +138,22 @@ const Footer = () => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/termsConditions">
                   Terms &amp; conditions
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/licenseAgreement">
                   License Agreement
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/copyrightInformation">
                   Copyright information
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/cookiesPolicy">
                   Cookies policy
                 </Link>
               </ListItem>

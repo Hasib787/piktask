@@ -40,7 +40,10 @@ import {
   Recent,
   PopularImages,
   TrendingSearch,
-
+  TermsConditions,
+  CopyrightInfo,
+  LicenseAgreement,
+  CookiesPolicy,
 } from "./pages";
 import GuidLine from "./pages/GuidLine";
 
@@ -118,6 +121,11 @@ const App = () => {
         <Route exact path="/admin/guidLine" component={GuidLine} />
         <Route exact path="/admin/settings" component={AccountSettings} />
 
+        <Route exact path="/termsConditions" component={TermsConditions} />
+        <Route exact path="/copyrightInformation" component={CopyrightInfo} />
+        <Route exact path="/licenseAgreement" component={LicenseAgreement} />
+        <Route exact path="/cookiesPolicy" component={CookiesPolicy} />
+       
         {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />
