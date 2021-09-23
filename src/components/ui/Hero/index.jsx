@@ -24,6 +24,7 @@ const HeroSection = (props) => {
     cookiesPolicy,
     support,
     blogsTitle,
+    contact,
   } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -97,6 +98,14 @@ const HeroSection = (props) => {
               variant="h1"
             >
               Support
+            </Typography>
+          )}
+           {contact && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              How can we help you?
             </Typography>
           )}
           {blogsTitle && (
