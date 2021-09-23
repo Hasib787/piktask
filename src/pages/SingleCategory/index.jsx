@@ -60,6 +60,10 @@ const SingleCategory = () => {
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
+  console.log("location", location.pathname.split('=').pop());
+
+  const imageID = location.pathname.split('=').pop();
+
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openCopyLink, setOpenCopyLink] = useState(false);
@@ -94,7 +98,7 @@ const SingleCategory = () => {
     setLoading(true);
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/images/${imageID}`)
       .then(({ data }) => {
         if (data?.success) {
           setImageDetails(data?.detail);
@@ -125,7 +129,7 @@ const SingleCategory = () => {
 
     if (user && user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
+        .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
@@ -145,9 +149,9 @@ const SingleCategory = () => {
     let relatedImageURL;
 
     if(user && user?.id){
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${id}/related_image?user_id=${user?.id}`
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`
     } else {
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${id}/related_image`
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`
     }
     axios
       .get(relatedImageURL)
@@ -158,7 +162,7 @@ const SingleCategory = () => {
         }
       })
       .catch((error) => console.log("Related image error: ", error));
-  }, [id, user]);
+  }, [imageID, user]);
 
   const handleFollower = () => {
     if ((!user || !user.token) && window.innerWidth > 900) {
@@ -192,7 +196,7 @@ const SingleCategory = () => {
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/images/${id}/like`,
+          `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
           {},
           {
             headers: { Authorization: user.token },
@@ -227,7 +231,7 @@ const SingleCategory = () => {
     e.preventDefault();
 
     const downloadAPI = {
-      url: `${process.env.REACT_APP_API_URL}/images/${id}/download/`,
+      url: `${process.env.REACT_APP_API_URL}/images/${imageID}/download/`,
       method: "get",
     };
 

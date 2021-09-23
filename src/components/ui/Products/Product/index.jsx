@@ -10,7 +10,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import downloadIcon from "../../../../assets/download.svg";
 import crownIcon from "../../../../assets/icons/crown.svg";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -103,9 +103,9 @@ const Product = ({ photo }) => {
         <div className={classes.itemContainer}>
           <Link
             className={classes.singlePageLink}
-            to={`/photo/${photo?.image_id}`}
+            to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
           />
-          <Link to={`/photo/${photo?.image_id}`}>
+          <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
             <img className={classes.image} src={photo?.thumbnail} alt="" />
           </Link>
         </div>
@@ -114,7 +114,7 @@ const Product = ({ photo }) => {
           <CardContent className={classes.productTitle}>
             <Link
               className={classes.titleLink}
-              to={`/photo/${photo?.image_id}`}
+              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
             >
               <Typography variant="h2" className={classes.title}>
                 {titleLength?.length > 7 ? (
@@ -169,7 +169,7 @@ const Product = ({ photo }) => {
               <Button
                 className={classes.categoryButton}
                 component={Link}
-                to={`/photo/${photo?.image_id}`}
+                to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
               >
                 Download
               </Button>

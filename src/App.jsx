@@ -153,7 +153,7 @@ const App = () => {
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/:username" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
-        <Route exact path="/photo/:id" component={SingleCategory} />
+        <Route exact path="/images/:id" component={SingleCategory} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </ThemeProvider>

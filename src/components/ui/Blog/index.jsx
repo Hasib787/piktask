@@ -1,20 +1,27 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import React from "react";
-import postData from "../../../data/blog.json";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import useStyles from "./Blog.styles";
 import Post from "./Post";
 
-interface Guidline {
-  _id: string;
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-}
 
-const Blog = (): JSX.Element => {
+const Blog = () => {
   const classes = useStyles();
-  const posts: Guidline[] = postData.posts;  
+
+  const [blogsPost, setBlogsPost] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/blogs/`)
+    .then(({data}) => {
+      if(data?.status){
+        setBlogsPost(data?.blogs);
+        setLoading(false);
+      }
+    })
+  }, []);
 
   return (
     <div className={classes.wrapper}>
@@ -29,16 +36,9 @@ const Blog = (): JSX.Element => {
         </Grid>
 
         <Grid container spacing={2} className={classes.postsWrapper}>
-          {posts.length > 0 &&
-            posts.map((post) => (
-              <Post
-                key={post._id}
-                title={post.title}
-                description={post.description}
-                image={post.image}
-                id={post._id}
-                author={post.author}
-              />
+          {blogsPost?.length > 0 &&
+            blogsPost?.slice(0, 4).map((post) => (
+              <Post key={post?.id} post={post}/>
             ))}
         </Grid>
         <Button className={classes.moreButton}>See More</Button>

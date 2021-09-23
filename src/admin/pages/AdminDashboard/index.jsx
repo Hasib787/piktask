@@ -34,7 +34,6 @@ import followerIcon from '../../../assets/icons/followerIcon.png';
 import Spacing from "../../../components/Spacing";
 import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AdminDashboard = () => {
   const classes = useStyles();
@@ -267,7 +266,7 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/photo/${authLastFile?.id}`}>
+                              <Link to={`/images/${authLastFile?.title.replace(/ /g, "_")}&id=${authLastFile?.id}`}>
                                 <img
                                   className={classes.earningImg}
                                   src={authLastFile?.preview}
@@ -336,7 +335,7 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/photo/${topFile?.id}`}>
+                              <Link to={`/images/${topFile?.title.replace(/ /g, "_")}&id=${topFile?.id}`}>
                                 <img
                                   className={classes.earningImg}
                                   src={topFile?.thumbnail}
