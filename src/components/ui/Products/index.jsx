@@ -7,6 +7,7 @@ import SectionHeading from "../Heading";
 import Product from "./Product";
 import Loader from "../Loader";
 import axios from "axios";
+import ProductNotFound from "../ProductNotFound";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,7 +43,7 @@ const Products = (props) => {
   const [images, setImages] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-// Data load
+  // Data load
   useEffect(() => {
     setLoading(true);
 
@@ -91,7 +92,8 @@ const Products = (props) => {
           <Loader item={images} />
         ) : (
           <>
-            {images?.slice(0, count).map((photo) => (
+            {images.length ? (
+              images?.slice(0, count).map((photo) => (
                 <Grid
                   key={photo.image_id}
                   item
@@ -103,7 +105,9 @@ const Products = (props) => {
                   <Product catId={category?.id} photo={photo} />
                 </Grid>
               ))
-            }
+            ) : (
+              <ProductNotFound />
+            )}
           </>
         )}
       </Grid>

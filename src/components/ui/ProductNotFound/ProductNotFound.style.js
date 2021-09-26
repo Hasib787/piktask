@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     headingButton: {
         ...theme.typography.button,
-        backgroundColor: "#117A00",
+        backgroundColor: "#0088f2",
         margin: "7px",
         padding: "0.5rem 2.2rem",
         fontSize: "1.5rem",
@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
         transition: "all 0.5s linear",
     
         "&:hover": {
-          backgroundColor: "#1F5B16",
+          borderColor: "#0773c5",
+          backgroundColor: "#0773c5",
         },
       },
 }));
