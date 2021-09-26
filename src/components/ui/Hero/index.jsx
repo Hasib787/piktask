@@ -24,6 +24,7 @@ const HeroSection = (props) => {
     cookiesPolicy,
     support,
     blogsTitle,
+    guidLine,
     contact,
   } = props;
 
@@ -114,6 +115,14 @@ const HeroSection = (props) => {
               variant="h1"
             >
               Piktask Blog
+            </Typography>
+          )}
+          {guidLine && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Piktask GuidLine
             </Typography>
           )}
 
