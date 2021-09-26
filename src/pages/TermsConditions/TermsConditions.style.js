@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "0 2rem",
     },
   },
-  guidLineTitle:{
+  termsTitle:{
     color: "black !important",
     fontSize: "2.2rem",
   },

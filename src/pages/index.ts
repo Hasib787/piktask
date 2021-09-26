@@ -18,3 +18,5 @@ export * from "./TermsConditions";
 export * from "./CopyrightInfo";
 export * from "./LicenseAgreement";
 export * from "./CookiesPolicy";
+export * from "./Support"
+export * from "./Contact"

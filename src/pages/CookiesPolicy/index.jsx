@@ -16,13 +16,13 @@ export const CookiesPolicy = () => {
       <HeroSection cookiesPolicy size="medium" isSearch />
       <Spacing space={{ height: "5rem" }} />
       <Container>
-        <div className={classes.termsWrapper}>
+        <div className={classes.cookiesPolicyWrapper}>
           <div>
-            <div className={classes.guidLineTitle}>
+            <div className={classes.cookiesPolicyTitle}>
               <Typography variant="h2">What we own : </Typography>
             </div>
             <Spacing space={{ height: "1rem" }} />
-            <div className={classes.guidLineContent}>
+            <div>
               <Typography className={classes.description}>
                 We own all the Piktask content that we have put on Piktask. This
                 includes the design,Software,Website, Theme, Template,Idea,
@@ -35,7 +35,7 @@ export const CookiesPolicy = () => {
                 stated in these terms.
               </Typography>
               <Spacing space={{ height: "3rem" }} />
-              <div className={classes.guidLineTitle}>
+              <div className={classes.cookiesPolicyTitle}>
                 <Typography variant="h2">Web browser cookies : </Typography>
               </div>
               <Spacing space={{ height: "1rem" }} />

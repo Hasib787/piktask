@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  termsWrapper: {
+  cookiesPolicyWrapper: {
     padding: "0rem 20rem",
     [theme.breakpoints.down("769")]:{
         padding: "0 2rem",
     },
   },
-  guidLineTitle:{
+  cookiesPolicyTitle:{
     color: "black !important",
     fontSize: "2.2rem",
   },
