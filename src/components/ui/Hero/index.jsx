@@ -23,6 +23,7 @@ const HeroSection = (props) => {
     license,
     cookiesPolicy,
     blogsTitle,
+    guidLine,
   } = props;
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -96,6 +97,14 @@ const HeroSection = (props) => {
               variant="h1"
             >
               Piktask Blog
+            </Typography>
+          )}
+          {guidLine && (
+            <Typography
+              style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
+              variant="h1"
+            >
+              Piktask GuidLine
             </Typography>
           )}
 

@@ -1,8 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    guidLineWrapper: {
+    guidLineMenu: {
         display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    guidLineWrapper: {
+        // display: "flex",
     },
     guidLineImage: {
         width: "65rem",
