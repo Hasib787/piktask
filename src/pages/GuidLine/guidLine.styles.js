@@ -7,20 +7,37 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     guidLineWrapper: {
-        // display: "flex",
+        padding: "0rem 20rem",
+    },
+    guidLineImageWrapper: {
+        display: "flex",
     },
     guidLineImage: {
         width: "65rem",
-        height: "50rem",
-        padding: "2rem",
-        backgroundColor: "#ddd",
-        marginRight: "5rem",
+        height: "20rem",
+        margin: "1rem",
 
         "& img": {
             width: "100%",
             height: "100%",
+            objectFit: "cover",
+        },
+
+        [theme.breakpoints.down(769)]: {
+            width: "100%",
+            height: "100%",
         }
-    }
+    },
+    guidLineContent: {
+        "& p": {
+            lineHeight: "4rem",
+        },
+
+        "& span": {
+            fontWeight: "500", 
+            fontSize: "1.5rem"
+        }
+    },
 }));
 
 export default useStyles;
