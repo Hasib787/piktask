@@ -50,6 +50,7 @@ import {
 import GuidLine from "./pages/GuidLine";
 import SingleBlogPost from "./pages/SingleBlogPost";
 import AllBlogs from "./pages/AllBlogs";
+import UserProfile from "./userDashboard/pages/UserProfile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -125,6 +126,16 @@ const App = () => {
         <Route exact path="/admin/guidLine" component={GuidLine} />
         <Route exact path="/admin/settings" component={AccountSettings} />
 
+
+        {/* user Dashboard */}
+        <Route exact path="/userDashboard/userProfile" component={UserProfile} />
+        <Route exact path="/userDashboard/favorites" component={UploadFiles} />
+        <Route exact path="/userDashboard/downloads" component={PendingFiles} />
+        <Route exact path="/userDashboard/following" component={Revision} />
+        <Route exact path="/userDashboard/devices" component={RejectFiles} />
+        <Route exact path="/userDashboard/mySubscription" component={Publish} />
+
+
         <Route exact path="/termsConditions" component={TermsConditions} />
         <Route exact path="/copyrightInformation" component={CopyrightInfo} />
         <Route exact path="/licenseAgreement" component={LicenseAgreement} />
@@ -132,6 +143,7 @@ const App = () => {
         <Route exact path="/support" component={Support} />
         <Route exact path="/contact" component={Contact} />
         
+
         {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />

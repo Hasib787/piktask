@@ -49,7 +49,7 @@ export const Contact = () => {
                   <Typography variant="h2">Submit a request </Typography>
                 </div>
                 <Spacing space={{ height: "1rem" }} />
-                <div className={classes.supportForm}>
+                <div className={classes.contactForm}>
                 <FormControl fullWidth className={classes.fieldWrapper}>
                     <label htmlFor="name">
                       Name <span>*</span>
@@ -116,13 +116,13 @@ export const Contact = () => {
                   </FormControl>
                   <Button
                     variant="contained"
-                    className={classes.uploadBtn}
+                    className={classes.sentBtn}
                     type="submit"
                     disabled={isLoading}
                   >
                     <FontAwesomeIcon
                       icon={faEnvelope}
-                      className={classes.uploadIcon}
+                      className={classes.sentIcon}
                     />
                     {isLoading ? "Sending..." : "Send"}
                   </Button>

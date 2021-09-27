@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     supportWrapper: {
     padding: "0rem 30rem",
-    [theme.breakpoints.down("769")]:{
+    [theme.breakpoints.down("1200")]:{
         padding: "0 2rem",
     },
   },
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.6rem",
     lineHeight: "28px",
   },
-  supportForm:{
+  contactForm:{
     backgroundColor: "White",
     borderRadius: "4px",
     padding:"2.2rem",
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem",
     borderRadius: "5px",
   },
-  uploadBtn: {
+  sentBtn: {
     padding: "1rem 3rem",
     marginLeft: "50%",
     transform: "translateX(-50%)",
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
       transform: "translateX(0%)",
     },
   },
-  uploadIcon: {
+  sentIcon: {
     marginRight: "7px",
   },
 }));

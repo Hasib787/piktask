@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import CategoryItemLoader from "../Loader/CategoryItemLoader";
 import PopularCategory from "../PopularCategory";
+import ProductNotFound from "../ProductNotFound";
 import useStyles from "./Carousel.styles";
 
 function NavigateNextArrow(props) {
@@ -34,7 +35,7 @@ export const CategoryCarousel = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-   setLoading(true);
+    setLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
       .then(({ data }) => {
@@ -103,16 +104,18 @@ export const CategoryCarousel = () => {
       <Container>
         {/* <Grid container spacing={2}> */}
         {isLoading ? (
-          <CategoryItemLoader/>
+          <CategoryItemLoader />
         ) : (
           <>
-            {
+            {popularCategories.length ? (
               <Slider {...settings} className={classes.carouselWrapper}>
                 {popularCategories?.map((photo) => (
                   <PopularCategory key={photo.id} photo={photo} />
                 ))}
               </Slider>
-            }
+            ) : (
+              <ProductNotFound />
+            )}
           </>
         )}
         {/* </Grid> */}
