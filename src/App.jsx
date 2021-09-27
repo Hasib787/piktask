@@ -15,7 +15,6 @@ import SearchResults from "./pages/SearchResults";
 import AuthorProfile from "./pages/AuthorProfile";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-// import SingleBlogPost from "./pages/SinglePost";
 import Subscription from "./pages/Subscription";
 import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
