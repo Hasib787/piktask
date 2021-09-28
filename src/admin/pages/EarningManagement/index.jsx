@@ -120,7 +120,7 @@ const EarningManagement = () => {
   const fromMonths = moment.months();
   let [fromYear, setFromYear] = useState(moment().year());
   let [fromMonth, setFromMonth] = useState(moment().format("MMMM"));
-  let [fromCurrentDate, setFromCurrentDate] = useState(moment(1).date());
+  let [fromCurrentDate, setFromCurrentDate] = useState("0" + moment(1).date());
 
   
   // To
@@ -133,7 +133,11 @@ const EarningManagement = () => {
   const getAllDays = () => {
     const days = [];
     for (let i = 0; i < moment().daysInMonth(); i++) {
-      days.push(i + 1);
+      if(i + 1 < 10){
+        days.push("0"+(i + 1));
+      }else{
+        days.push(i + 1);
+      }
     }
     return days;
   };
@@ -152,9 +156,9 @@ const EarningManagement = () => {
   if(fromDateMonths < 10){
     fromDateMonths = "0" + fromDateMonths;
   }
-  if(fromCurrentDate < 10){
-    fromCurrentDate = "0" + fromCurrentDate;
-  }
+  // if(fromCurrentDate < 10){
+  //   fromCurrentDate = "0" + fromCurrentDate;
+  // }
   let fromDates = (fromYear + "-" + fromDateMonths + "-" + fromCurrentDate);
 
   
@@ -162,9 +166,9 @@ const EarningManagement = () => {
   if(toDateMonths < 10){
     toDateMonths = "0" + toDateMonths;
   }
-  if(toCurrentDate < 10){
-    toCurrentDate = "0" + toCurrentDate;
-  }
+  // if(toCurrentDate < 10){
+  //   toCurrentDate = "0" + toCurrentDate;
+  // }
   let toDates = (fromYear + "-" + toDateMonths + "-" + toCurrentDate);
 
   
