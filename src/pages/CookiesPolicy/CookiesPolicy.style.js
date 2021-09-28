@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2.2rem",
   },
   description: {
+    textAlign:"justify",
+    
     color: "#173050",
     fontSize: "1.6rem",
     lineHeight: "28px",
