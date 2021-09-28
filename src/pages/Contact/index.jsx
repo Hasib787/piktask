@@ -1,6 +1,7 @@
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Container, FormControl, TextareaAutosize, TextField, Typography } from '@material-ui/core';
+import axios from 'axios';
 import React, { useState } from 'react';
 import Spacing from '../../components/Spacing';
 import Footer from '../../components/ui/Footer';
@@ -21,6 +22,65 @@ const problemCategory = [
 export const Contact = () => {
     const classes = useStyles();
     const [isLoading, setLoading] = useState(false);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+
+  const handleSubmit =(e)=>{
+    // e.preventDefault();
+
+    // const formData = new FormData();
+    // formData.append("name", name.toString());
+    // formData.append("tags", tags.toString());
+    // formData.append("category", category);
+    // formData.append("item_for_sale", item_for_sale);
+    // formData.append("price", price);
+    // formData.append("usages", usages);
+    // formData.append("description", description);
+    // formData.append("preview", thumbImage);
+    // if (typeOfImage === "image") {
+    //   formData.append("original_file", imageFileSrc);
+    // } else if (typeOfImage === "zip") {
+    //   formData.append("isZip", true);
+    //   formData.append("zip_folder", archivedFileSrc);
+    // }
+    // const url = `${process.env.REACT_APP_API_URL}/images/upload`;
+    // axios({
+    //   method: "post",
+    //   url,
+    //   data: formData,
+    // })
+    //   .then((res) => {
+    //     if (res?.status === 200) {
+    //       toast.success(res.data.message);
+    //       setLoading(false);
+    //       setTitle("");
+    //       setDescription("");
+    //       setTags([]);
+    //       setCategory("");
+    //       setPrice("");
+    //       setUsages("");
+    //       setItem_for_sale("");
+    //       setFiles([]);
+    //       setTypeOfImage("");
+    //     }
+    //     if (res?.status === 401) {
+    //       localStorage.removeItem("token");
+    //       toast.success("Please login Again");
+    //       history.replace("/login");
+    //       setLoading(false);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     const { errors } = error.response.data;
+    //     for (let key in errors) {
+    //       toast.error(errors[key]);
+    //     }
+    //     setLoading(false);
+    //   });
+
+  }
     
     return (
       <Layout title={" Contact || Piktask"}>
@@ -49,7 +109,8 @@ export const Contact = () => {
                   <Typography variant="h2">Submit a request </Typography>
                 </div>
                 <Spacing space={{ height: "1rem" }} />
-                <div className={classes.contactForm}>
+
+                <form autoComplete="off" onSubmit={handleSubmit} className={classes.contactForm}>
                 <FormControl fullWidth className={classes.fieldWrapper}>
                     <label htmlFor="name">
                       Name <span>*</span>
@@ -126,7 +187,7 @@ export const Contact = () => {
                     />
                     {isLoading ? "Sending..." : "Send"}
                   </Button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
