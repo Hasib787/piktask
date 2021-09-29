@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "7rem",
     backgroundColor: "#fff",
-    // position: "fixed",
-    // zIndex: "9999",
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
   },
   root: {
