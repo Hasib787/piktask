@@ -58,11 +58,11 @@ const SingleBlogPost = () => {
   const handleCommentPost = (e) => {
     e.preventDefault();
 
-    if(!comment){
+    if (!comment) {
       toast.error("Comment field is required");
       return;
-    };
-    
+    }
+
     if (user?.token) {
       const formData = new FormData();
       formData.append("comment", comment);
@@ -72,20 +72,21 @@ const SingleBlogPost = () => {
         url,
         data: formData,
         headers: { Authorization: user.token },
-      }).then((res) => {
-        if (res?.status) {
-          toast.success(res.data.message);
-          setComment("")
-          setLoading(false);
-        }
       })
-      .catch((error) => {
-        const { errors } = error.response.data;
-        for (let key in errors) {
-          toast.error(errors[key]);
-        }
-        setLoading(false);
-      });
+        .then((res) => {
+          if (res?.status) {
+            toast.success(res.data.message);
+            setComment("");
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          const { errors } = error.response.data;
+          for (let key in errors) {
+            toast.error(errors[key]);
+          }
+          setLoading(false);
+        });
     }
   };
 
