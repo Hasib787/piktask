@@ -183,7 +183,7 @@ const useStyles = makeStyles((theme) => ({
     top: 59,
     width: "100%",
     left: 0,
-    zIndex: 99,
+    zIndex: 999999,
   },
   closeIcon: {
     position: "absolute",

@@ -36,12 +36,14 @@ const RelatedBlogs = ({blogID}) => {
 
   return (
     <div>
-      <SectionHeading title="Related Blog" large></SectionHeading>
       {isLoading}
       <Grid container spacing={2} className={classes.postsWrapper}>
         {relatedBlogs?.length > 0 &&
           relatedBlogs?.map((post) => (
-            <Post key={post?.id} post={post}/>
+            <>
+              <SectionHeading title="Related Blog" large></SectionHeading>
+              <Post key={post?.id} post={post}/>
+            </>
           ))}
       </Grid>
     </div>
