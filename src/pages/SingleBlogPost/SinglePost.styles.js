@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
     "& h2": {
       lineHeight: "4rem",
-      fontSize: "3.5rem",
+      fontSize: "3rem",
     },
 
     "& p": {
@@ -77,6 +77,10 @@ const useStyles = makeStyles((theme) => ({
     "& p": {
       lineHeight: "3rem",
     },
+  },
+  shareSocialMedia: {
+    display: "flex",
+    justifyContent: "space-between",
   },
   postsWrapper: {
     marginBottom: "2rem",

@@ -20,10 +20,25 @@ import Post from "../../components/ui/Blog/Post";
 import SectionHeading from "../../components/ui/Heading";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  EmailIcon,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+} from "react-share";
 
 const SingleBlogPost = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
   const [blogDetails, setBlogDetails] = useState([]);
@@ -103,7 +118,36 @@ const SingleBlogPost = () => {
 
             <Spacing space={{ height: "2rem" }} />
             <div className={classes.blogAuthorInfo}>
-              <Typography  variant="h2" style={{fontWeight: "500", fontSize: "2rem"}}>{blogDetails?.category}</Typography>
+              <div className={classes.shareSocialMedia}>
+                <div>
+                  <Typography  variant="h2" style={{fontWeight: "500", fontSize: "1.8rem"}}>{blogDetails?.category}</Typography>
+                </div>
+                <div style={{ display: "flex",}} >
+                  <EmailShareButton url={shareUrl}>
+                    <EmailIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </EmailShareButton>
+
+                  <FacebookShareButton url={shareUrl}>
+                    <FacebookIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </FacebookShareButton>
+
+                  <FacebookMessengerShareButton url={shareUrl}>
+                    <FacebookMessengerIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </FacebookMessengerShareButton>
+
+                  <TwitterShareButton url={shareUrl}>
+                    <TwitterIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </TwitterShareButton>
+
+                  <LinkedinShareButton url={shareUrl}>
+                    <LinkedinIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </LinkedinShareButton>
+
+                  <TelegramShareButton url={shareUrl}>
+                    <TelegramIcon size={25} style={{margin: "0.4rem"}} round={true} />
+                  </TelegramShareButton>
+                </div>
+              </div>
               <Typography variant="h2">{blogDetails?.title}</Typography>
               <Typography>
                 By {blogDetails?.username} <span>2 weeks ago</span>
