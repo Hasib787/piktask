@@ -143,7 +143,7 @@ const AdminDashboard = () => {
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
-            <AdminHeader />
+          <AdminHeader />
           <div className={classes.dashboardGridContainer}>
             <div className={classes.totalStatus}>
               <Heading tag="h2">Current Month</Heading>

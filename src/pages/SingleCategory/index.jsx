@@ -60,8 +60,6 @@ const SingleCategory = () => {
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
-  console.log("location", location.pathname.split('=').pop());
-
   const imageID = location.pathname.split('=').pop();
 
   const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);

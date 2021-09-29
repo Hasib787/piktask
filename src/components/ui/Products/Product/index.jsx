@@ -100,15 +100,28 @@ const Product = ({ photo }) => {
           )}
         </div>
 
-        <div className={classes.itemContainer}>
-          <Link
-            className={classes.singlePageLink}
-            to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
-          />
-          <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
-            <img className={classes.image} src={photo?.thumbnail} alt="" />
-          </Link>
-        </div>
+        {photo?.extension === "png" ? (
+          <div className={classes.itemTransparent}>
+            <Link
+              className={classes.singlePageLink}
+              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
+            />
+            <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
+              <img className={classes.image} src={photo?.thumbnail} alt="" />
+            </Link>
+          </div>
+        ) : (
+          <div className={classes.itemContainer}>
+            <Link
+              className={classes.singlePageLink}
+              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
+            />
+            <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
+              <img className={classes.image} src={photo?.thumbnail} alt="" />
+            </Link>
+          </div>
+        )}
+
 
         <div className={classes.itemFooter}>
           <CardContent className={classes.productTitle}>

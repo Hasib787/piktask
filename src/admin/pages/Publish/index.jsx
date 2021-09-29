@@ -56,7 +56,7 @@ const Publish = () => {
     // Author last file API
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images?limit=20`,
+      .get(`${process.env.REACT_APP_API_URL}/user/earning/images`,
       {
         headers: { Authorization: user.token },
       })

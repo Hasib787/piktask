@@ -58,6 +58,7 @@ const Search = ({ mobileView }) => {
 
   const expandContainer = () => { setIsExpanded(true); };
   const handleSearchToggle = () => { SearchCategory((prevOpen) => !prevOpen); };
+  const handleCloseCatSearch = () => { SearchCategory(false) };
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef?.current.contains(e.target)) {
@@ -78,6 +79,7 @@ const Search = ({ mobileView }) => {
     setLoading(false);
     setSearchQuery("");
     setSearchResults([]);
+    setCategories([]);
     setNoSearchResults(false);
     if (searchRef.current) searchRef.current.value = "";
   };
@@ -95,7 +97,6 @@ const Search = ({ mobileView }) => {
       url = `${process.env.REACT_APP_API_URL}/client/search/?title=${query}&limit=12`;
     }
 
-    // search/?title=nature&category_id=22&limit=30&page=1
     return encodeURI(url);
   };
 
@@ -251,6 +252,7 @@ const Search = ({ mobileView }) => {
                                 className={classes.categoryList}
                                 onClick={(e) => {
                                   handleCategoryItem(e);
+                                  handleCloseCatSearch()
                                 }}
                               >
                                 {category?.name}

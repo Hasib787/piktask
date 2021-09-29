@@ -20,7 +20,7 @@ import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -53,6 +53,7 @@ import UserProfile from "./userDashboard/pages/UserProfile";
 
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -100,8 +101,25 @@ const App = () => {
         console.log(error);
       })
 
+      // Author last file API
+    if(user?.token){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/earning/images`,
+      {
+        headers: { Authorization: user.token },
+      })
+      .then(({data}) => {
+        if(data?.status) {
+          dispatch({
+            type: "TOTAL_IMAGE_EARNING",
+            payload: [...data?.images],
+          });
+        }
+      })
+    }
+
     return () => unsubscribe();
-  }, [dispatch]);
+  }, [dispatch, user?.token]);
 
   return (
     <ThemeProvider theme={theme}>
