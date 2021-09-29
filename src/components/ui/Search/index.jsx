@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import useStyles from "./Search.styles";
 import SearchItem from "./SearchItem";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const containerVariants = {
   expanded: {
@@ -144,7 +145,10 @@ const Search = ({ mobileView }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!searchQuery) return;
+    if (!searchQuery) {
+      toast.error("The search field is required");
+      return
+    };
 
     searchPhotos();
     setSearchQuery("");
