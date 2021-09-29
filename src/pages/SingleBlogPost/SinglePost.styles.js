@@ -62,11 +62,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   blogAuthorInfo: {
-    color: "#000"
+    color: "#000",
+
+    "& h2": {
+      lineHeight: "4rem",
+      fontSize: "3.5rem",
+    },
+
+    "& p": {
+      lineHeight: "3rem",
+    },
   },
   blogContent: {
     "& p": {
-      lineHeight: "4rem",
+      lineHeight: "3rem",
     },
   },
   postsWrapper: {

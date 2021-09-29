@@ -78,7 +78,7 @@ const Search = ({ mobileView }) => {
     setLoading(false);
     setSearchQuery("");
     setSearchResults([]);
-    setCategories([]);
+    setSearchCategoryName("All Resources");
     setNoSearchResults(false);
     if (searchRef.current) searchRef.current.value = "";
   };

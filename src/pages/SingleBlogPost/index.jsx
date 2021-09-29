@@ -103,15 +103,14 @@ const SingleBlogPost = () => {
 
             <Spacing space={{ height: "2rem" }} />
             <div className={classes.blogAuthorInfo}>
-              <Typography variant="h2">{blogDetails?.category}</Typography>
-              <Typography>{blogDetails?.title}</Typography>
-              <Typography>{blogDetails?.description}</Typography>
+              <Typography  variant="h2" style={{fontWeight: "500", fontSize: "2rem"}}>{blogDetails?.category}</Typography>
+              <Typography variant="h2">{blogDetails?.title}</Typography>
               <Typography>
                 By {blogDetails?.username} <span>2 weeks ago</span>
               </Typography>
             </div>
 
-            <Spacing space={{ height: "4rem" }} />
+            <Spacing space={{ height: "3rem" }} />
             <div className={classes.blogContent}>
               <Typography>{blogDetails?.description}</Typography>
             </div>
