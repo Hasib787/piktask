@@ -17,8 +17,13 @@ export const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  itemContainer: {
+  itemTransparent: {
     background: `url(${photoBackground})`,
+    position: "relative",
+    height: 240,
+  },
+  itemContainer: {
+    // background: `url(${photoBackground})`,
     position: "relative",
     height: 240,
   },

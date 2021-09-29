@@ -73,6 +73,8 @@ const Products = (props) => {
     }
   }, [dispatch, category, user]);
 
+  console.log("images", images);
+
   return (
     <>
       {images.length !== 0 && showHeading && (
