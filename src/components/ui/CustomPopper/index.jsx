@@ -1,5 +1,4 @@
 import {
-  Button,
   ClickAwayListener,
   Grid,
   Grow,
@@ -11,12 +10,11 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-// import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
+// import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
 import useStyles from "./Popper.styles";
 
 const CustomPopper = ({
@@ -47,22 +45,6 @@ const CustomPopper = ({
           token:"",
         },
       });
-
-      // firebase
-      //   .auth()
-      //   .signOut()
-      //   .then(() => {
-      //     toast.success("You successfully signed out");
-      //     // window.location.reload(history.replace("/"));
-      //     // window.location.reload("/");
-      //     user.isLogged=false;
-      //     history.push("/")
-      //     localStorage.clear();
-
-      //   })
-      //   .catch((error) => {
-      //     console.log("Signout error", error.message);
-      //   });
     }
   };
 
@@ -165,6 +147,15 @@ const CustomPopper = ({
                   to="/contributor/upload"
                 >
                   <span>Go Upload</span>
+                  <ArrowForwardIosIcon />
+                </MenuItem>
+                <MenuItem
+                  className={classes.userMenuItem}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/user/userProfile"
+                >
+                  <span>User Profile</span>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
