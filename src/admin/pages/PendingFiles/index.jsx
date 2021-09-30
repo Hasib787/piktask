@@ -79,7 +79,7 @@ const PendingFiles = () => {
                 <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
                   Delete File
                 </Button>
-                <Button to={`/admin/upload`} component={Link} className={`${classes.actionBtn} ${classes.addFileBtn}`}>
+                <Button to={`/contributor/upload`} component={Link} className={`${classes.actionBtn} ${classes.addFileBtn}`}>
                   Add File
                 </Button>
                 <Button className={`${classes.actionBtn} ${classes.workInfoBtn}`}>

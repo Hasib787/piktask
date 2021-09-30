@@ -153,7 +153,7 @@ const CustomPopper = ({
                   className={classes.userMenuItem}
                   onClick={handleClose}
                   component={Link}
-                  to="/admin/settings"
+                  to="/contributor/settings"
                 >
                   <span>My Profile</span>
                   <ArrowForwardIosIcon />
@@ -162,7 +162,7 @@ const CustomPopper = ({
                   className={classes.userMenuItem}
                   // onClick={handleClose}
                   component={Link}
-                  to="/admin/upload"
+                  to="/contributor/upload"
                 >
                   <span>Go Upload</span>
                   <ArrowForwardIosIcon />

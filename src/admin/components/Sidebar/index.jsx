@@ -20,35 +20,35 @@ const Sidebar = () => {
   const totalPublishFile = useSelector((state) => state.totalPublishFile);
 
   useEffect(() => {
-    if (window.location.pathname === "/admin/dashboard" && value !== 0) {
+    if (window.location.pathname === "/contributor/dashboard" && value !== 0) {
       setValue(0);
-    } else if (window.location.pathname === "/admin/upload" && value !== 1) {
+    } else if (window.location.pathname === "/contributor/upload" && value !== 1) {
       setOpen(true);
       setValue(1);
       setSelectedItem(1);
-    } else if (window.location.pathname === "/admin/pending" && value !== 2) {
+    } else if (window.location.pathname === "/contributor/pending" && value !== 2) {
       setOpen(true);
       setValue(1);
       setSelectedItem(2);
-    } else if (window.location.pathname === "/admin/revision" && value !== 3) {
+    } else if (window.location.pathname === "/contributor/revision" && value !== 3) {
       setOpen(true);
       setValue(1);
       setSelectedItem(3);
-    } else if (window.location.pathname === "/admin/reject" && value !== 4) {
+    } else if (window.location.pathname === "/contributor/reject" && value !== 4) {
       setOpen(true);
       setValue(1);
       setSelectedItem(4);
-    } else if (window.location.pathname === "/admin/publish" && value !== 5) {
+    } else if (window.location.pathname === "/contributor/publish" && value !== 5) {
       setOpen(true);
       setValue(1);
       setSelectedItem(5);
-    } else if (window.location.pathname === "/admin/earnings" && value !== 6) {
+    } else if (window.location.pathname === "/contributor/earnings" && value !== 6) {
       setValue(6);
     } else if (window.location.pathname === "/admin/plan" && value !== 7) {
       setValue(7);
-    } else if (window.location.pathname === "/admin/guidline" && value !== 8) {
+    } else if (window.location.pathname === "/contributor/guidLine" && value !== 8) {
       setValue(8);
-    }else if (window.location.pathname === "/admin/settings" && value !== 9) {
+    }else if (window.location.pathname === "/contributor/settings" && value !== 9) {
       setValue(9);
     }
      
@@ -81,7 +81,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/dashboard"
+          to="/contributor/dashboard"
           selected={value === 0}
         >
           <DashboardIcon />
@@ -95,7 +95,7 @@ const Sidebar = () => {
           className={classes.dropdownMenu}
           onClick={handleClick}
           component={Link}
-          to="/admin/upload"
+          to="/contributor/upload"
           selected={value === 1}
         >
           <CloudUploadIcon />
@@ -111,7 +111,7 @@ const Sidebar = () => {
           >
             <ListItem
               component={Link}
-              to="/admin/pending"
+              to="/contributor/pending"
               className={classes.nested}
               selected={value === 1 && selectedItem === 2}
             >
@@ -119,7 +119,7 @@ const Sidebar = () => {
             </ListItem>
             <ListItem
               component={Link}
-              to="/admin/revision"
+              to="/contributor/revision"
               className={classes.nested}
               selected={value === 1 && selectedItem === 3}
             >
@@ -127,7 +127,7 @@ const Sidebar = () => {
             </ListItem>
             <ListItem
               component={Link}
-              to="/admin/reject"
+              to="/contributor/reject"
               className={classes.nested}
               selected={value === 1 && selectedItem === 4}
             >
@@ -135,7 +135,7 @@ const Sidebar = () => {
             </ListItem>
             <ListItem
               component={Link}
-              to="/admin/publish"
+              to="/contributor/publish"
               className={classes.nested}
               selected={value === 1 && selectedItem === 5}
             >
@@ -150,7 +150,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/earnings"
+          to="/contributor/earnings"
           selected={value === 6}
         >
           <EuroIcon />
@@ -174,7 +174,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/guidLine"
+          to="/contributor/guidLine"
           selected={value === 8}
         >
           <HelpOutlineIcon />
@@ -186,7 +186,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/settings"
+          to="/contributor/settings"
           selected={value === 9}
         >
           <AccountCircleIcon />
