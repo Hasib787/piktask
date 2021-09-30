@@ -150,7 +150,7 @@ const AdminDashboard = () => {
               <Button 
                 className={classes.loadMoreBtn}
                 component={Link}
-                to={`/admin/earnings`}
+                to={`/contributor/earnings`}
               >More status</Button>
             </div>
             <Grid container>
@@ -231,7 +231,7 @@ const AdminDashboard = () => {
                     <Button 
                       className={classes.loadMoreBtn}
                       component={Link}
-                      to={`/admin/publish`}
+                      to={`/contributor/publish`}
                     >
                       Load more
                     </Button>

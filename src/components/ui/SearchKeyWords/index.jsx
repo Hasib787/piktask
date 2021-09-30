@@ -1,7 +1,6 @@
 import {  Typography } from "@material-ui/core";
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./SearchKeyWords.styles";
-// import { PropTypes } from "../Hero";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -20,7 +19,7 @@ const SearchKeyWords = (props) => {
             setPopularSearchKeywords(popularKeyword.filter((e) => e));
           }
         });
-    } catch (error) {}
+    } catch (error) { console.log(error);}
   }, []);
 
   return (
@@ -28,7 +27,7 @@ const SearchKeyWords = (props) => {
       {popularKeywords && (
         <div className={classes.popularSearch}>
           <Typography variant="h5" className={classes.searchTitle}>
-            Example :
+            Popular Search :
           </Typography>
           {popularSearchKeywords?.map((keyWord, index) => (
             <Link key={index} to={`/tag/${keyWord}`}>

@@ -36,7 +36,7 @@ const containerTransition = {
   stiffness: 150,
 };
 
-const Search = ({ mobileView }) => {
+const Search = () => {
   const classes = useStyles();
   const history = useHistory();
   const searchRef = useRef("");
@@ -55,6 +55,21 @@ const Search = ({ mobileView }) => {
   const [isLoading, setLoading] = useState(false);
 
   const isEmpty = !searchResults || searchResults.length === 0;
+
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+
+    const setResponsiveness = () => {
+      return window.innerWidth < 576
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   const expandContainer = () => { setIsExpanded(true); };
   const handleSearchToggle = () => { SearchCategory((prevOpen) => !prevOpen); };

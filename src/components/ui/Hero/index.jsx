@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Container, Typography } from "@material-ui/core";
 import heroBG from "../../../assets/banner/lucas-wesney-s-y2HJElONo-unsplash.jpg";
 import SearchKeyWords from "../SearchKeyWords";
@@ -28,8 +28,8 @@ const HeroSection = (props) => {
     contact,
   } = props;
 
-  const [menuSate, setMenuSate] = useState({ mobileView: false });
-  const { mobileView } = menuSate;
+  // const [menuSate, setMenuSate] = useState({ mobileView: false });
+  // const { mobileView } = menuSate;
 
   useEffect(() => {
     const recentImage = recentButtonRef?.current?.baseURI.split("/").pop();
@@ -39,14 +39,14 @@ const HeroSection = (props) => {
       popularButtonRef?.current?.classList?.add("active");
     }
 
-    const setResponsiveness = () => {
-      return window.innerWidth < 576
-        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
-        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
-    };
+    // const setResponsiveness = () => {
+    //   return window.innerWidth < 576
+    //     ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+    //     : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    // };
 
-    setResponsiveness();
-    window.addEventListener("resize", () => setResponsiveness());
+    // setResponsiveness();
+    // window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
   return (
@@ -126,7 +126,7 @@ const HeroSection = (props) => {
             </Typography>
           )}
 
-          {!isSearch && <Search mobileView={mobileView} />}
+          {!isSearch && <Search />}
           <SearchKeyWords
             popularKeywords={popularKeywords}
             heroButton={heroButton}

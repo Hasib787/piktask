@@ -3,9 +3,9 @@ import {
   ClickAwayListener,
   Container,
   Dialog,
-  DialogActions,
+  // DialogActions,
   DialogContent,
-  DialogContentText,
+  // DialogContentText,
   DialogTitle,
   Grid,
   IconButton,
@@ -62,7 +62,7 @@ const SingleCategory = () => {
 
   const imageID = location.pathname.split('=').pop();
 
-  const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+  // const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [openCopyLink, setOpenCopyLink] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
@@ -76,12 +76,12 @@ const SingleCategory = () => {
   const [isLike, setLike] = useState(false);
   const [downloadCount, setDownloadCount] = useState();
 
-  const handleDialogOpen = () => {
-    setDownloadLicenseDialog(true);
-  };
-  const handleDialogClose = () => {
-    setDownloadLicenseDialog(false);
-  };
+  // const handleDialogOpen = () => {
+  //   setDownloadLicenseDialog(true);
+  // };
+  // const handleDialogClose = () => {
+  //   setDownloadLicenseDialog(false);
+  // };
   const handleTooltipClose = () => {
     setOpenCopyLink(false);
   };
@@ -440,7 +440,7 @@ const SingleCategory = () => {
                 </Grid>
               </Grid>
 
-              <div className={classes.premiumInfo}>
+              {/* <div className={classes.premiumInfo}>
                 <Typography variant="h4">
                   Premium User:
                   <Button
@@ -497,7 +497,7 @@ const SingleCategory = () => {
                   </Dialog>
                 </div>
                 <Typography>&copy; Copyright : Piktask</Typography>
-              </div>
+              </div> */}
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>

@@ -6,6 +6,8 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: "#F8F8F8",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+    zIndex: 0,
+    
     "&:hover": {
       "& $singlePageLink, $favouriteIcon, $favouriteIconBtn": {
         opacity: 1,

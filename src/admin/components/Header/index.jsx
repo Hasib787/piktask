@@ -168,7 +168,7 @@ const AdminHeader = () => {
                   <Button
                     className={classes.uploadBtn}
                     component={Link}
-                    to="/admin/upload"
+                    to="/contributor/upload"
                   >
                     <img
                       className={classes.ButtoncrownIcon}

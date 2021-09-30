@@ -9,7 +9,7 @@ import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import downloadIcon from "../../../../assets/download.svg";
-import crownIcon from "../../../../assets/icons/crown.svg";
+// import crownIcon from "../../../../assets/icons/crown.svg";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -66,7 +66,7 @@ const Product = ({ photo }) => {
     <>
       <CardWrapper className={classes.container}>
         <div className={classes.buttonsWrapper}>
-          {photo?.item_for_sale === "sale" && (
+          {/* {photo?.item_for_sale === "sale" && (
             <IconButton
               disableRipple
               classes={{ root: classes.premiumIcon }}
@@ -77,7 +77,7 @@ const Product = ({ photo }) => {
             >
               <img src={crownIcon} alt="Premium" />
             </IconButton>
-          )}
+          )} */}
 
           {!photo?.isLike && !isLike ? (
             <IconButton
