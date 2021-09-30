@@ -50,6 +50,11 @@ import GuidLine from "./pages/GuidLine";
 import SingleBlogPost from "./pages/SingleBlogPost";
 import AllBlogs from "./pages/AllBlogs";
 import UserProfile from "./userDashboard/pages/UserProfile";
+import FavoriteItems from "./userDashboard/pages/FavoriteItems";
+import DownloadItems from "./userDashboard/pages/DownloadItems";
+import UserFollowing from "./userDashboard/pages/UserFollowing";
+import DeviceActivity from "./userDashboard/pages/DeviceActivity";
+import UserSubscription from "./userDashboard/pages/UserSubscription";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -148,11 +153,11 @@ const App = () => {
 
         {/* user Dashboard */}
         <Route exact path="/user/userProfile" component={UserProfile} />
-        <Route exact path="/user/favorites" component={UploadFiles} />
-        <Route exact path="/user/downloads" component={PendingFiles} />
-        <Route exact path="/user/following" component={Revision} />
-        <Route exact path="/user/devices" component={RejectFiles} />
-        <Route exact path="/user/mySubscription" component={Publish} />
+        <Route exact path="/user/favorites" component={FavoriteItems} />
+        <Route exact path="/user/downloads" component={DownloadItems} />
+        <Route exact path="/user/following" component={UserFollowing} />
+        <Route exact path="/user/devices" component={DeviceActivity} />
+        <Route exact path="/user/mySubscription" component={UserSubscription} />
 
 
         <Route exact path="/termsConditions" component={TermsConditions} />
