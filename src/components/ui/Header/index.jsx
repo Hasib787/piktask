@@ -44,6 +44,10 @@ const customStyles = makeStyles({
     fontSize: "4rem",
     cursor: "pointer",
     color: "#FFF",
+
+    "@media (max-width: 577px)": {
+      fontSize: "3rem",
+    },
   },
   closeIcon: {
     fontSize: "3rem",
