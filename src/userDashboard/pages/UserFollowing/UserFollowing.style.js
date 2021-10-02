@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  cardItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   followerProfileContent: {
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
   },

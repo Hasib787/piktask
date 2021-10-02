@@ -57,10 +57,10 @@ const FavoriteItems = () => {
       <Spacing space={{ height: "5rem" }} />
       <Container>
         <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12}>
+          <Grid item md={3} sm={3} xm={12} className={classes.productItem}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12}>
+          <Grid item md={9} sm={9} xm={12} className={classes.productItem}>
             <SectionHeading title="Favorite" large />
             <Grid
               classes={{ container: classes.container }}

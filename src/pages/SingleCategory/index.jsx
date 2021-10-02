@@ -60,7 +60,7 @@ const SingleCategory = () => {
   const shareUrl = window.location.href;
   const user = useSelector((state) => state.user);
 
-  const imageID = location.pathname.split('=').pop();
+  const imageID = location.pathname.split("=").pop();
 
   // const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
@@ -118,7 +118,7 @@ const SingleCategory = () => {
                   setFollowing(true);
                 } else {
                   setFollowing(false);
-                } 
+                }
               });
           }
         }
@@ -143,13 +143,12 @@ const SingleCategory = () => {
     }
 
     // related product API
-    
     let relatedImageURL;
 
-    if(user && user?.id){
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`
+    if (user && user?.id) {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
     } else {
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
     }
     axios
       .get(relatedImageURL)
@@ -216,13 +215,9 @@ const SingleCategory = () => {
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => { setOpen(true); };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => { setOpen(false); };
 
   //Handle download image
   const handleDownload = (e) => {
@@ -264,19 +259,23 @@ const SingleCategory = () => {
             .catch((error) => {
               console.log("error", error);
             });
-          }
-        })
-        .catch((error) => {
-          console.log("catch", error.response);
-          toast.error(error.response.data.message);
-          setOpenAuthModal(true);
-        });
+        }
+      })
+      .catch((error) => {
+        console.log("catch", error.response);
+        toast.error(error.response.data.message);
+        setOpenAuthModal(true);
+      });
   };
 
   const intToString = (value) => {
     var suffixes = ["", "k", "m", "b", "t"];
     var suffixNum = Math.floor(("" + value).length / 3);
-    var shortValue = parseFloat((suffixNum !== 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(2));
+    var shortValue = parseFloat(
+      (suffixNum !== 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(
+        2
+      )
+    );
     if (shortValue % 1 !== 0) {
       shortValue = shortValue.toFixed(1);
     }
@@ -516,11 +515,9 @@ const SingleCategory = () => {
                     </Button>
                   )}
                   <div className={classes.downloadedImage}>
-                    {downloadCount ? (
-                      intToString(downloadCount)
-                    ) : (
-                      intToString(imageDetails?.user?.images?.total_downloads)
-                    )}
+                    {downloadCount
+                      ? intToString(downloadCount)
+                      : intToString(imageDetails?.user?.images?.total_downloads)}
                   </div>
                 </div>
                 {user.id !== imageDetails?.user_id && (

@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  cardItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   headingWrapper: {
     marginBottom: "3.5rem",
   },
