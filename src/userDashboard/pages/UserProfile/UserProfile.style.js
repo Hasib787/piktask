@@ -16,18 +16,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     padding: "3rem",
   },
-  personalInfoTitle: {
-    color: "#114960",
-    fontWeight: 700,
-    padding: "0 0 3rem 3rem",
-  },
-  cardRoot: {
-    marginBottom: "2.5rem",
-    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+  userProfileRoot: {
+    backgroundColor: "white",
   },
   cardWrapper: {
     padding: ".6rem 2rem 0rem",
   },
+  personalInfoTitle: {
+    color: "#114960",
+    fontWeight: 700,
+    padding: "0 0 3rem 1rem",
+  },
+  accountInfoTitle: {
+    color: "#114960",
+    fontWeight: 700,
+    padding: "0 0 3rem 1rem",
+  },
+  cardRoot: {
+    paddingBottom:"1rem",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+  },
+
   srOnly: {
     position: "absolute",
     width: "1px",
@@ -54,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       flexDirection: "column",
       marginBottom: "2rem",
-
     },
   },
   linkField: {
@@ -66,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   fullWidth: {
+    marginBottom: "1rem",
     marginRight: "1rem",
     marginLeft: "1rem",
     "@media (max-width: 960px)": {
@@ -85,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
-  numberWrapper:{
+  numberWrapper: {
     display: "flex",
     "& legend": {
       display: "none",
@@ -97,14 +106,13 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       flexDirection: "column",
       marginBottom: "2rem",
-
     },
   },
-  telephoneNumber:{
-    width:"51rem",
-    marginLeft:"1rem",
+  telephoneNumber: {
+    // width: "51rem",
+    marginLeft: "1rem",
   },
-  dataChangeBtn:{
+  dataChangeBtn: {
     marginLeft: "2rem",
     marginTop: "-0.5rem",
     display: "flex",
@@ -129,16 +137,16 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "underline",
     },
     "@media (max-width: 768px)": {
-       top: "-.6rem",
+      top: "-.6rem",
     },
   },
-  profileInfoSaveBtn:{  
-    marginLeft:"9rem",
-    height:"6rem",
-    width:"28rem",
-    color:"#B5B5B5",
+  profileInfoSaveBtn: {
+    marginLeft: "9rem",
+    height: "6rem",
+    width: "28rem",
+    color: "#B5B5B5",
     backgroundColor: "white",
-    border:"0.5px solid rgb(0 0 0 / 23%)",
+    border: "0.5px solid rgb(0 0 0 / 23%)",
   },
 
   // Portfolio Links
@@ -174,7 +182,7 @@ const useStyles = makeStyles((theme) => ({
   buttonGroup: {
     display: "flex",
     justifyContent: "flex-end",
-    padding:" 0 3rem 2rem 0",
+    padding: " 0 3rem 2rem 0",
   },
   settingsBtn: {
     // ...theme.typography.button,
@@ -204,35 +212,34 @@ const useStyles = makeStyles((theme) => ({
       top: "5px",
     },
   },
-  notification:{
+  notification: {
     padding: "0 0 0 3rem",
   },
-  getNews:{
-    display:"flex",
-    margin:"3rem",
-    padding:"2rem 3rem",
+  getNews: {
+    display: "flex",
+    margin: "3rem",
+    padding: "2rem 3rem",
     alignItems: "center",
     justifyContent: "space-between",
-    border:"0.5px solid rgb(0 0 0 / 23%)",
+    border: "0.5px solid rgb(0 0 0 / 23%)",
   },
-  getNewsTitle:{
-    fontWeight:"500"
-    
+  getNewsTitle: {
+    fontWeight: "500",
   },
-  basicInfo:{
-      backgroundColor:"#d7d7d76e",
-      margin:"3rem",
-      padding:"2rem",
-      borderRadius: "4px",
-      lineHeight: "26px",
-      textAlign: "justify",
+  basicInfo: {
+    backgroundColor: "#d7d7d76e",
+    margin: "3rem",
+    padding: "2rem",
+    borderRadius: "4px",
+    lineHeight: "26px",
+    textAlign: "justify",
   },
-  moreInfo:{
-    marginLeft:"0.5rem",
-    fontSize:"1.5rem",
-    fontWeight:"700",
-    color:"#5b5bf1",
-    textDecoration:"none",
+  moreInfo: {
+    marginLeft: "0.5rem",
+    fontSize: "1.5rem",
+    fontWeight: "700",
+    color: "#5b5bf1",
+    textDecoration: "none",
   },
 
   lastField: {
