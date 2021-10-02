@@ -315,7 +315,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem 1.5rem",
     backgroundColor: "#E1E3EB",
     "& svg": {
-      color: "#117A00",
+      color: "#0088f2",
       fontSize: "2.9rem",
     },
 
@@ -327,12 +327,12 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "-15px",
     right: "25px",
-    color: "#117A00",
+    color: "#0088f2",
     fontSize: "1.2rem",
     padding: ".3rem 1.2rem",
     borderRadius: "3rem",
     background: "#fff",
-    border: "2px solid #117A00",
+    border: "2px solid #0088f2",
     "@media (max-width: 768px)": {
       right: "12px",
     },
