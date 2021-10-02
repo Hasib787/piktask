@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
       height: "3.5rem",
     },
   },
-  heroButtonWrapper:{
+  heroButtonWrapper: {
     display: "flex",
     textAlign: "center",
     justifyContent: "center",
     [theme.breakpoints.down("480")]: {
       paddingBottom: "3rem",
-    }
+    },
   },
   popularButton: {
     marginRight: "1rem",
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     borderRadius: 30,
     transition: "all 0.3s linear",
-    "&.active":{
+    "&.active": {
       backgroundColor: "#0088f2",
       border: "2px solid #0088f2",
     },
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-  recentButton:{
+  recentButton: {
     border: "2px solid #fff",
     padding: "0.4rem 2.5rem",
     fontSize: "14px",
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     borderRadius: 30,
     transition: "all 0.3s linear",
-    "&.active":{
+    "&.active": {
       backgroundColor: "#0088f2",
       border: "2px solid #0088f2",
     },
@@ -99,6 +99,42 @@ const useStyles = makeStyles((theme) => ({
   selected: {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white,
+  },
+  contributorContent: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+    maxWidth: "60rem",
+    margin: "0 auto",
+    position: "relative",
+    zIndex: 1,
+
+    "& h2": {
+      color: "#fff",
+      textAlign: "center",
+      marginBottom: "1rem",
+    },
+    "& h1": {
+      color: "#fff",
+      textAlign: "center",
+      marginBottom: "2rem",
+    }
+  },
+  joinNowBtn: {
+    padding: "0.5rem 2.5rem",
+    fontSize: "14px",
+    fontWeight: 500,
+    color: "#fff",
+    borderRadius: 30,
+    transition: "all 0.3s linear",
+    backgroundColor: "#0088f2",
+    border: "2px solid #0088f2",
+
+    "&:hover": {
+      backgroundColor: "#0773c5",
+      borderColor: "#0773c5",
+    },
   },
 }));
 

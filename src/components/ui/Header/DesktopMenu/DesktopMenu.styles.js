@@ -120,19 +120,21 @@ const useStyles = makeStyles((theme) => ({
   },
   sellContentBtn: {
     ...theme.typography.button,
-    border: `.2rem solid`,
-    borderColor: theme.palette.secondary.light,
+    fontSize: "1.4rem",
     padding: "0.3rem 1rem",
+    borderColor: "#0088f2",
+    marginLeft: "1rem",
     marginRight: "1rem",
-    fontSize: "1.3rem",
+    border: ".2rem solid #0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: theme.palette.secondary.light,
+      backgroundColor: "#0088f2",
+      borderColor: "#0088f2",
     },
-    [theme.breakpoints.down(1100)]: {
-      width: "11rem",
-      fontSize: "1.1rem",
-      paddingLeft: "0.7rem",
-      paddingRight: "0.7rem",
+    "@media (max-width: 1024px)": {
+      paddingRight: "1rem",
+      paddingLeft: "1rem",
+      fontSize: "1.4rem",
     },
   },
 

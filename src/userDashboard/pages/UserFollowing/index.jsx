@@ -16,7 +16,7 @@ const UserFollowing = () => {
   const classes = useStyles();
 
   return (
-    <Layout title="Favorite Items || Piktask">
+    <Layout title="Followings || Piktask">
       <Header />
 
       <Spacing space={{ height: "5rem" }} />

@@ -55,6 +55,7 @@ import DownloadItems from "./userDashboard/pages/DownloadItems";
 import UserFollowing from "./userDashboard/pages/UserFollowing";
 import DeviceActivity from "./userDashboard/pages/DeviceActivity";
 import UserSubscription from "./userDashboard/pages/UserSubscription";
+import JoinNow from "./admin/pages/JoinNow";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -149,6 +150,7 @@ const App = () => {
         <Route exact path="/contributor/earnings" component={EarningManagement} />
         <Route exact path="/contributor/guidLine" component={GuidLine} />
         <Route exact path="/contributor/settings" component={AccountSettings} />
+        <Route exact path="/contributor/joinNow" component={JoinNow} />
 
 
         {/* user Dashboard */}

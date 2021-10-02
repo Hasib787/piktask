@@ -23,7 +23,7 @@ import { useSelector } from "react-redux";
 export const Category = () => {
   const classes = useStyles();
   const { catName } = useParams();
-  const user = useSelector(state => state.user);
+  const user = useSelector((state) => state.user);
 
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
@@ -34,37 +34,35 @@ export const Category = () => {
   const categoryItem = categories.find((item) => item?.slug === catName);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     getCategories();
     getCategoriesWithId();
     popularKeyWords();
   }, [categoryItem?.id]);
 
-
   const getCategoriesWithId = () => {
     if (categoryItem?.id) {
-
       let relatedImageURL;
 
-      if(user && user?.id){
-        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}`
+      if (user && user?.id) {
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}`;
       } else {
-        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`;
       }
-      
+
       axios
-      .get(relatedImageURL)
-      .then(({ data }) => {
-        if (data?.status) {
-          setCategoryProducts(data?.category_image);
-          setTotalImageCount(data?.total_image_count?.total_image);
+        .get(relatedImageURL)
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategoryProducts(data?.category_image);
+            setTotalImageCount(data?.total_image_count?.total_image);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
           setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+        });
     } else {
       setLoading(false);
     }
@@ -72,31 +70,33 @@ export const Category = () => {
 
   const popularKeyWords = () => {
     axios
-    .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`)
-    .then(({ data }) => {
-      if (data?.status) {
-        const popularSearch = (data?.keywords);
-        setPopularSearchKeywords(popularSearch.filter((e) => e));
-      }
-    })
-    .catch((error) => {
-      console.log("Popular search keywords", error);
-      setLoading(false);
-    });
+      .get(
+        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          const popularSearch = data?.keywords;
+          setPopularSearchKeywords(popularSearch.filter((e) => e));
+        }
+      })
+      .catch((error) => {
+        console.log("Popular search keywords", error);
+        setLoading(false);
+      });
   };
 
   const getCategories = () => {
     axios
-    .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
-    .then(({ data }) => {
-      if (data?.status) {
-        setCategories(data.categories);
-      }
-    })
-    .catch((error) => {
-      console.log("Categories error:", error);
-      setLoading(false);
-    });
+      .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
+      .then(({ data }) => {
+        if (data?.status) {
+          setCategories(data.categories);
+        }
+      })
+      .catch((error) => {
+        console.log("Categories error:", error);
+        setLoading(false);
+      });
   };
 
   //Fetch api to get data for the category page by sorting by popularity
@@ -104,19 +104,19 @@ export const Category = () => {
     const product = e.target.value;
     if (categoryItem?.id) {
       axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
-      )
-      .then(({ data }) => {
-        if (data?.status) {
-          setCategoryProducts(data?.category_image);
-          setTotalImageCount(data?.total_image_count?.total_image);
-        }
-      })
-      .catch((error) => {
-        console.log("Category products error:", error);
-        setLoading(false);
-      });
+        .get(
+          `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
+        )
+        .then(({ data }) => {
+          if (data?.status) {
+            setCategoryProducts(data?.category_image);
+            setTotalImageCount(data?.total_image_count?.total_image);
+          }
+        })
+        .catch((error) => {
+          console.log("Category products error:", error);
+          setLoading(false);
+        });
     } else {
       setLoading(false);
     }
@@ -180,7 +180,7 @@ export const Category = () => {
                   </Grid>
                 ))
               ) : (
-                <ProductNotFound/>
+                <ProductNotFound />
               )}
             </>
           )}
@@ -221,4 +221,3 @@ export const Category = () => {
     </Layout>
   );
 };
-

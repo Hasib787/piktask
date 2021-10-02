@@ -8,7 +8,7 @@ import UserSideBar from "../../components/UserSideBar";
 
 const DeviceActivity = () => {
   return (
-    <Layout title="Favorite Items || Piktask">
+    <Layout title="Device Activity || Piktask">
       <Header />
       
       <Spacing space={{ height: "5rem" }} />
