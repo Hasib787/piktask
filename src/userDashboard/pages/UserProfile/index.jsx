@@ -61,13 +61,13 @@ const UserProfile = () => {
       <Spacing space={{ height: "5rem" }} />
       <Container>
         <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12} className={classes.cardItem}>
+          <Grid className={classes.cardItem} item md={3} sm={3} xm={12}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12} className={classes.cardItem}>
-            <div>
+          <Grid className={classes.cardItem} item md={9} sm={9} xm={12}>
+            <div className={classes.userProfileRoot}>
               <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
-                <Card className={classes.cardRoot}>
+                <div className={classes.cardRoot}>
                   <div className={classes.headingWrapper}>
                     <Typography
                       className={classes.settingsFormTitle}
@@ -77,14 +77,124 @@ const UserProfile = () => {
                     </Typography>
                     <hr className={classes.seperator} />
                   </div>
-                  <Typography
-                    className={classes.personalInfoTitle}
-                    variant="h4"
-                  >
-                    Personal data
-                  </Typography>
-                  <div className={classes.cardWrapper}>
-                    <div className={classes.fieldsGroup}>
+
+                  <Grid className={classes.profileInfoField} container item spacing={2}>
+                    <Grid
+                      sm={12}
+                      md={6}
+                      lg={6}
+                    >
+                      <Typography
+                        className={classes.personalInfoTitle}
+                        variant="h4"
+                      >
+                        Personal data
+                      </Typography>
+                      <div  className={classes.personalDataField}>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Real Name"
+                        className={classes.formControl}
+                        name="realName"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Location"
+                        className={classes.formControl}
+                        name="location"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Job Position"
+                        className={classes.formControl}
+                        name="jobPosition"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Telephone Number"
+                        className={classes.formControl}
+                        name="username"
+                        type="number"
+                        inputProps={{
+                          inputMode: "numeric",
+                          pattern: "[0-9]*",
+                        }}
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      </div>
+                    </Grid>
+                    <Grid
+                      sm={12}
+                      md={6}
+                      lg={6}
+                    >
+                      <Typography
+                        className={classes.accountInfoTitle}
+                        variant="h4"
+                      >
+                        Account Information
+                      </Typography>
+                      <div  className={classes.personalDataField}>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="User Name"
+                        className={classes.formControl}
+                        name="username"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Email"
+                        className={classes.formControl}
+                        name="email"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Password"
+                        className={classes.formControl}
+                        name="password"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                       <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Password"
+                        className={classes.formControl}
+                        name="password"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      
+                      </div>
+                      
+                    </Grid>
+                  </Grid>
+                  {/* <div  className={classes.userProfileInfo}>
+                    <div className={classes.personalInfoWrapper}>
+                      <Typography
+                        className={classes.personalInfoTitle}
+                        variant="h4"
+                      >
+                        Personal data
+                      </Typography>
                       <FormControl
                         fullWidth
                         classes={{ fullWidth: classes.fullWidth }}
@@ -99,25 +209,57 @@ const UserProfile = () => {
                       <FormControl
                         fullWidth
                         classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.lastField}
                       >
                         <TextField
-                          id="username"
-                          label="User Name"
+                          id="location"
+                          label="Location"
                           variant="outlined"
                           className={`${classes.inputField}`}
                         />
                       </FormControl>
-                    </div>
-
-                    <div className={classes.fieldsGroup}>
                       <FormControl
                         fullWidth
                         classes={{ fullWidth: classes.fullWidth }}
                       >
                         <TextField
-                          id="location"
-                          label="Location"
+                          id="jobPosition"
+                          label="Job Position"
+                          variant="outlined"
+                          className={`${classes.inputField}`}
+                        />
+                      </FormControl>
+                        <FormControl 
+                           fullWidth
+                           classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            id="teleNumber"
+                            label="Telephone Number"
+                            variant="outlined"
+                            type="number"
+                            className={`${classes.inputField}`}
+                            inputProps={{
+                              inputMode: "numeric",
+                              pattern: "[0-9]*",
+                            }}
+                          />
+                        </FormControl>
+                    </div>
+                    <div className={classes.accountInfoWrapper}>
+                      <Typography
+                        className={classes.accountInfoTitle}
+                        variant="h4"
+                      >
+                        Account Information
+                      </Typography>
+                      <FormControl
+                        fullWidth
+                        classes={{ fullWidth: classes.fullWidth }}
+                        className={classes.lastField}
+                      >
+                        <TextField
+                          id="username"
+                          label="User Name"
                           variant="outlined"
                           className={`${classes.inputField}`}
                         />
@@ -130,20 +272,6 @@ const UserProfile = () => {
                         <TextField
                           id="email"
                           label="Email"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                    </div>
-
-                    <div className={classes.fieldsGroup}>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="jobPosition"
-                          label="Job Position"
                           variant="outlined"
                           className={`${classes.inputField}`}
                         />
@@ -161,24 +289,6 @@ const UserProfile = () => {
                           className={`${classes.inputField}`}
                         />
                       </FormControl>
-                    </div>
-
-                    <div className={classes.numberWrapper}>
-                      <div>
-                        <FormControl className={classes.telephoneNumber}>
-                          <TextField
-                            id="teleNumber"
-                            label="Telephone Number"
-                            variant="outlined"
-                            type="number"
-                            className={`${classes.inputField}`}
-                            inputProps={{
-                              inputMode: "numeric",
-                              pattern: "[0-9]*",
-                            }}
-                          />
-                        </FormControl>
-                      </div>
                       <div className={classes.dataChangeBtn}>
                         <Link
                           to="/reset-password"
@@ -194,7 +304,7 @@ const UserProfile = () => {
                         </Button>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Professional Portfolio section start  */}
                   <div className={classes.headingWrapper}>
@@ -448,7 +558,7 @@ const UserProfile = () => {
                       </Link>
                     </Typography>
                   </div>
-                </Card>
+                </div>
                 {/* Card Wrapper ends */}
               </form>
             </div>
