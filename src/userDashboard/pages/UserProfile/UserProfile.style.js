@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardRoot: {
     marginBottom: "2.5rem",
-    boxShadow:
-      "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
   },
   cardWrapper: {
     padding: ".6rem 2rem 0rem",
@@ -78,13 +77,39 @@ const useStyles = makeStyles((theme) => ({
   },
   inputField: {
     "& label": {
-      color: "#114960",
+      color: "#B5B5B5",
       fontSize: "1.6rem",
     },
     "& .MuiInputLabel-shrink": {
       transform: "translate(14px, 2px) scale(0.90)",
       backgroundColor: "transparent",
     },
+  },
+  numberWrapper:{
+    display: "flex",
+    "& legend": {
+      display: "none",
+      width: 0,
+      height: 0,
+    },
+
+    "@media (max-width: 960px)": {
+      width: "100%",
+      flexDirection: "column",
+      marginBottom: "2rem",
+
+    },
+  },
+  telephoneNumber:{
+    width:"51rem",
+    marginLeft:"1rem",
+  },
+  dataChangeBtn:{
+    marginLeft: "2rem",
+    marginTop: "-0.5rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputImage: {
     position: "relative",
@@ -93,6 +118,27 @@ const useStyles = makeStyles((theme) => ({
       right: "1rem",
       top: 0,
     },
+  },
+  passwordResetLink: {
+    fontSize: 17,
+    color: "#959595",
+    textAlign: "center",
+    display: "block",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    "@media (max-width: 768px)": {
+       top: "-.6rem",
+    },
+  },
+  profileInfoSaveBtn:{  
+    marginLeft:"9rem",
+    height:"6rem",
+    width:"28rem",
+    color:"#B5B5B5",
+    backgroundColor: "white",
+    border:"0.5px solid rgb(0 0 0 / 23%)",
   },
 
   // Portfolio Links
@@ -128,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
   buttonGroup: {
     display: "flex",
     justifyContent: "flex-end",
-    padding:" 0 2rem 2rem 0",
+    padding:" 0 3rem 2rem 0",
   },
   settingsBtn: {
     // ...theme.typography.button,
@@ -157,6 +203,36 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "4rem",
       top: "5px",
     },
+  },
+  notification:{
+    padding: "0 0 0 3rem",
+  },
+  getNews:{
+    display:"flex",
+    margin:"3rem",
+    padding:"2rem 3rem",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border:"0.5px solid rgb(0 0 0 / 23%)",
+  },
+  getNewsTitle:{
+    fontWeight:"500"
+    
+  },
+  basicInfo:{
+      backgroundColor:"#d7d7d76e",
+      margin:"3rem",
+      padding:"2rem",
+      borderRadius: "4px",
+      lineHeight: "26px",
+      textAlign: "justify",
+  },
+  moreInfo:{
+    marginLeft:"0.5rem",
+    fontSize:"1.5rem",
+    fontWeight:"700",
+    color:"#5b5bf1",
+    textDecoration:"none",
   },
 
   lastField: {

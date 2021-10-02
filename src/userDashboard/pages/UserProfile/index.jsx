@@ -1,11 +1,12 @@
-import { 
-  Button, 
-  Card, 
-  Container, 
-  FormControl, 
-  Grid, 
-  Select, 
-  TextField, 
+import {
+  Button,
+  Card,
+  Container,
+  FormControl,
+  Grid,
+  Switch,
+  Select,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
@@ -24,12 +25,18 @@ import facebook from "../../../assets/icons/facebook.svg";
 import twitter from "../../../assets/icons/twitter.svg";
 import linkedin from "../../../assets/icons/linkedin.svg";
 import instagram from "../../../assets/icons/instagram.svg";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const classes = useStyles();
   const [payment, setPayment] = useState("Paypal");
   const [country, setCountry] = useState("Bangladesh");
   const [state, setState] = useState("Chittagong");
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -71,11 +78,11 @@ const UserProfile = () => {
                     <hr className={classes.seperator} />
                   </div>
                   <Typography
-                      className={classes.personalInfoTitle}
-                      variant="h4"
-                    >
-                      Personal data
-                    </Typography>
+                    className={classes.personalInfoTitle}
+                    variant="h4"
+                  >
+                    Personal data
+                  </Typography>
                   <div className={classes.cardWrapper}>
                     <div className={classes.fieldsGroup}>
                       <FormControl
@@ -156,33 +163,36 @@ const UserProfile = () => {
                       </FormControl>
                     </div>
 
-                    <div className={classes.fieldsGroup}>
-                    <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="teleNumber"
-                          label="Telephone Number"
-                          variant="outlined"
-                          type="number"
-                          className={`${classes.inputField}`}
-                          inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} 
-                        />
-                      </FormControl>
-
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.lastField}
-                      >
-                        <TextField
-                          id="postalcode"
-                          label="Zip/Postal Code"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
+                    <div className={classes.numberWrapper}>
+                      <div>
+                        <FormControl className={classes.telephoneNumber}>
+                          <TextField
+                            id="teleNumber"
+                            label="Telephone Number"
+                            variant="outlined"
+                            type="number"
+                            className={`${classes.inputField}`}
+                            inputProps={{
+                              inputMode: "numeric",
+                              pattern: "[0-9]*",
+                            }}
+                          />
+                        </FormControl>
+                      </div>
+                      <div className={classes.dataChangeBtn}>
+                        <Link
+                          to="/reset-password"
+                          className={classes.passwordResetLink}
+                        >
+                          Forget Password?
+                        </Link>
+                        <Button
+                          type="submit"
+                          className={classes.profileInfoSaveBtn}
+                        >
+                          Save Changes
+                        </Button>
+                      </div>
                     </div>
                   </div>
 
@@ -401,20 +411,45 @@ const UserProfile = () => {
                     </div>
                   </div>
                   <div className={classes.buttonGroup}>
-                  <Button
-                    className={`${classes.settingsBtn} ${classes.restoreBtn}`}
-                  >
-                    Restore All Attributes
-                  </Button>
-                  <Button
-                    type="submit"
-                    className={`${classes.settingsBtn} ${classes.saveBtn}`}
-                  >
-                    Save All Changes
-                  </Button>
-                </div>
+                    <Button
+                      className={`${classes.settingsBtn} ${classes.restoreBtn}`}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      className={`${classes.settingsBtn} ${classes.saveBtn}`}
+                    >
+                      Save Changes
+                    </Button>
+                  </div>
+                  <Typography className={classes.notification} variant="h4">
+                    Notifications
+                  </Typography>
+                  <div className={classes.getNews}>
+                    <Typography className={classes.getNewsTitle}>
+                      I wish to receive newsletters,promotions and news from
+                      Piktask Company
+                    </Typography>
+                    <Switch
+                      checked={checked}
+                      onChange={handleChange}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  </div>
+                  <div className={classes.basicInfo}>
+                    <Typography>
+                      Basic information on Data Protection: Piktask Company
+                      stores your data to improve the service and, with your
+                      consent, offers news, promotions and raffles, as well as
+                      projects and releases from Piktask Company.
+                      <Link to="#" className={classes.moreInfo}>
+                        More information
+                      </Link>
+                    </Typography>
+                  </div>
                 </Card>
-                  {/* Card Wrapper ends */}    
+                {/* Card Wrapper ends */}
               </form>
             </div>
           </Grid>
