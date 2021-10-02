@@ -73,8 +73,6 @@ const Products = (props) => {
     }
   }, [dispatch, category, user]);
 
-  console.log("images", images);
-
   return (
     <>
       {images.length !== 0 && showHeading && (
@@ -97,14 +95,18 @@ const Products = (props) => {
             {images.length ? (
               images?.slice(0, count).map((photo) => (
                 <Grid
-                  key={photo.image_id}
+                  key={photo?.image_id}
                   item
                   xs={6}
                   sm={4}
                   md={3}
                   className={classes.productItem}
                 >
-                  <Product catId={category?.id} photo={photo} />
+                  <Product
+                    key={photo?.image_id}
+                    catId={category?.id}
+                    photo={photo}
+                  />
                 </Grid>
               ))
             ) : (

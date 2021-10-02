@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "700",
       color: "#E21313",
       textAlign: "center",
-      marginBottom: "-1rem",
+      marginBottom: "-0.3rem",
     },
   },
 }));

@@ -79,7 +79,12 @@ const UserProfile = () => {
                   </div>
 
                   <Grid container item spacing={2}>
-                    <Grid  className={classes.personalDataField} sm={12} md={6} lg={6}>
+                    <Grid
+                      className={classes.personalDataField}
+                      sm={12}
+                      md={6}
+                      lg={6}
+                    >
                       <Typography
                         className={classes.personalInfoTitle}
                         variant="h4"
@@ -123,7 +128,12 @@ const UserProfile = () => {
                         // onChange={(e) => setUsername(e.target.value)}
                       />
                     </Grid>
-                    <Grid className={classes.accountDataField} sm={12} md={6} lg={6}>
+                    <Grid
+                      className={classes.accountDataField}
+                      sm={12}
+                      md={6}
+                      lg={6}
+                    >
                       <Typography
                         className={classes.accountInfoTitle}
                         variant="h4"

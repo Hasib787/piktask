@@ -1,10 +1,4 @@
-import {
-  Button,
-  Container,
-  Tab,
-  Tabs,
-  Toolbar,
-} from "@material-ui/core";
+import { Button, Container, Tab, Tabs, Toolbar } from "@material-ui/core";
 // import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -18,12 +12,11 @@ import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
 import { useSelector } from "react-redux";
 
-
 const DesktopMenu = ({ history }) => {
   const classes = useStyles();
   const anchorRef = useRef(null);
   const user = useSelector((state) => state.user);
-  
+
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
@@ -34,9 +27,13 @@ const DesktopMenu = ({ history }) => {
     };
   }, [user, history]);
 
-  const handleChange = (event, index) => { setValue(index); };
+  const handleChange = (event, index) => {
+    setValue(index);
+  };
 
-  const handleToggle = () => { setOpen((prevState) => !prevState); };
+  const handleToggle = () => {
+    setOpen((prevState) => !prevState);
+  };
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -110,6 +107,15 @@ const DesktopMenu = ({ history }) => {
             {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
+            {user?.token ? (
+              <Button
+                className={classes.sellContentBtn}
+                component={Link}
+                to="/contributor/dashboard"
+              >
+                Sell Your Content
+              </Button>
+            ) : (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
@@ -117,6 +123,14 @@ const DesktopMenu = ({ history }) => {
               >
                 Sell Your Content
               </Button>
+            )}
+            {/* <Button
+              className={classes.sellContentBtn}
+              component={Link}
+              to="/contributor/joinNow"
+            >
+              Sell Your Content
+            </Button> */}
 
             {/* <Button disableRipple className={classes.enterprise}>
               <img
@@ -126,7 +140,7 @@ const DesktopMenu = ({ history }) => {
               />
               Enterprise
             </Button> */}
-            
+
             {/* <Button className={classes.premium}>
               <img className={classes.crownIcon} src={crownIcon} alt="Crown" />
               Premium

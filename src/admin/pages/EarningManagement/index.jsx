@@ -127,7 +127,7 @@ const EarningManagement = () => {
   const toMonths = moment.months();
   let [toYear, setToYear] = useState(moment().year());
   let [toMonth, setToMonth] = useState(moment().format("MMMM"));
-  let [toCurrentDate, setToCurrentDate] = useState(moment().date());
+  let [toCurrentDate, setToCurrentDate] = useState("0" + moment().date());
 
 
   const getAllDays = () => {
