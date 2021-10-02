@@ -22,6 +22,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     padding: "3rem",
   },
+  profileInfoField: {
+    padding: "3rem",
+  },
+  personalDataField: {
+    padding: "1rem",
+  },
+  formControl: {
+    marginBottom: "1rem",
+  },
   userProfileRoot: {
     backgroundColor: "white",
   },
@@ -31,15 +40,15 @@ const useStyles = makeStyles((theme) => ({
   personalInfoTitle: {
     color: "#114960",
     fontWeight: 700,
-    padding: "0 0 3rem 1rem",
+    padding: "0 0 2rem 1rem",
   },
   accountInfoTitle: {
     color: "#114960",
     fontWeight: 700,
-    padding: "0 0 3rem 1rem",
+    padding: "0 0 2rem 1rem",
   },
   cardRoot: {
-    paddingBottom:"1rem",
+    paddingBottom: "1rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
   },
 
@@ -119,12 +128,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "1rem",
   },
   dataChangeBtn: {
-    marginLeft: "2rem",
-    marginTop: "-0.5rem",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    [theme.breakpoints.down(426)]:{
+      flexDirection:"column",
+    },
   },
+
   inputImage: {
     position: "relative",
     "& img": {
@@ -147,9 +158,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   profileInfoSaveBtn: {
-    marginLeft: "9rem",
-    height: "6rem",
-    width: "28rem",
+    height: "5.5rem",
+    width: "24rem",
     color: "#B5B5B5",
     backgroundColor: "white",
     border: "0.5px solid rgb(0 0 0 / 23%)",

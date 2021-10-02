@@ -61,10 +61,10 @@ const UserProfile = () => {
       <Spacing space={{ height: "5rem" }} />
       <Container>
         <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12}>
+          <Grid className={classes.cardItem} item md={3} sm={3} xm={12}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12}>
+          <Grid className={classes.cardItem} item md={9} sm={9} xm={12}>
             <div className={classes.userProfileRoot}>
               <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
                 <div className={classes.cardRoot}>
@@ -78,9 +78,8 @@ const UserProfile = () => {
                     <hr className={classes.seperator} />
                   </div>
 
-                  <Grid container item spacing={2}>
+                  <Grid className={classes.profileInfoField} container item spacing={2}>
                     <Grid
-                      className={classes.personalDataField}
                       sm={12}
                       md={6}
                       lg={6}
@@ -91,45 +90,51 @@ const UserProfile = () => {
                       >
                         Personal data
                       </Typography>
+                      <div  className={classes.personalDataField}>
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Real Name"
                         className={classes.formControl}
-                        name="username"
+                        name="realName"
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Location"
                         className={classes.formControl}
-                        name="username"
+                        name="location"
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Job Position"
                         className={classes.formControl}
-                        name="username"
+                        name="jobPosition"
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Telephone Number"
                         className={classes.formControl}
                         name="username"
+                        type="number"
+                        inputProps={{
+                          inputMode: "numeric",
+                          pattern: "[0-9]*",
+                        }}
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
+                      </div>
                     </Grid>
                     <Grid
-                      className={classes.accountDataField}
                       sm={12}
                       md={6}
                       lg={6}
@@ -140,10 +145,11 @@ const UserProfile = () => {
                       >
                         Account Information
                       </Typography>
+                      <div  className={classes.personalDataField}>
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="User Name"
                         className={classes.formControl}
                         name="username"
                         // value={username}
@@ -152,21 +158,33 @@ const UserProfile = () => {
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Email"
                         className={classes.formControl}
-                        name="username"
+                        name="email"
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
                       <TextField
                         fullWidth
                         variant="outlined"
-                        label="User name"
+                        label="Password"
                         className={classes.formControl}
-                        name="username"
+                        name="password"
                         // value={username}
                         // onChange={(e) => setUsername(e.target.value)}
                       />
+                       <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Password"
+                        className={classes.formControl}
+                        name="password"
+                        // value={username}
+                        // onChange={(e) => setUsername(e.target.value)}
+                      />
+                      
+                      </div>
+                      
                     </Grid>
                   </Grid>
                   {/* <div  className={classes.userProfileInfo}>
