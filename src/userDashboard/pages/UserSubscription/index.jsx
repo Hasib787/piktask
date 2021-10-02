@@ -8,7 +8,7 @@ import UserSideBar from "../../components/UserSideBar";
 
 const UserSubscription = () => {
   return (
-    <Layout title="Favorite Items || Piktask">
+    <Layout title="Subscription || Piktask">
       <Header />
       
       <Spacing space={{ height: "5rem" }} />

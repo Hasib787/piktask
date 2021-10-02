@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#676767",
     borderRadius: "1rem",
     marginBottom: "1.2rem",
-    // border: "1px solid #F4F7FF",
+    cursor: "pointer",
     transition: "all 0.3s linear",
 
     "&:hover": {
@@ -76,7 +76,11 @@ const useStyles = makeStyles((theme) => ({
   closedAccount: {
     marginTop: "1rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
+    cursor: "pointer",
 
+    "& a": {
+      textDecoration: "none",
+    },
     "& p": {
       fontSize: "1.6rem",
       fontWeight: "700",

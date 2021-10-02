@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: "99",
     backgroundColor: "#ffffff",
     color: "#333333",
-    fontSize: "1.9rem",
+    fontSize: "1.7rem",
     height: "50px",
     width: "100%",
     borderRadius: 0,

@@ -26,6 +26,7 @@ const HeroSection = (props) => {
     blogsTitle,
     guidLine,
     contact,
+    contributor,
   } = props;
 
   // const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -101,7 +102,7 @@ const HeroSection = (props) => {
               Support
             </Typography>
           )}
-           {contact && (
+          {contact && (
             <Typography
               style={{ color: "white", fontSize: "3rem", fontWeight: "600" }}
               variant="h1"
@@ -149,6 +150,15 @@ const HeroSection = (props) => {
                 to="/images/recent_images"
               >
                 Recent
+              </Button>
+            </div>
+          )}
+          {contributor && (
+            <div className={classes.contributorContent}>
+              <Typography variant="h2">Become a Contributor</Typography>
+              <Typography variant="h1">Share your creations and earn money doing what you love</Typography>
+              <Button className={classes.joinNowBtn} component={Link} to="#!">
+                JOIN NOW
               </Button>
             </div>
           )}

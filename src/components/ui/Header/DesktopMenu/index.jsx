@@ -5,13 +5,13 @@ import {
   Tabs,
   Toolbar,
 } from "@material-ui/core";
-import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
+// import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import signInIcon from "../../../../assets/icons/signInIcon.svg";
 import React, { useEffect, useRef, useState } from "react";
-import crownIcon from "../../../../assets/icons/crown.svg";
+// import crownIcon from "../../../../assets/icons/crown.svg";
 import logo from "../../../../assets/Logo/piktask-6.png";
 import { Link, NavLink } from "react-router-dom";
 import CustomPopper from "../../CustomPopper";
@@ -110,15 +110,13 @@ const DesktopMenu = ({ history }) => {
             {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {/* {user && user?.token && (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
-                to="#!"
+                to="/contributor/joinNow"
               >
                 Sell Your Content
               </Button>
-            )} */}
 
             {/* <Button disableRipple className={classes.enterprise}>
               <img

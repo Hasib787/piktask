@@ -154,7 +154,7 @@ const UserSideBar = () => {
         </CardContent>
       </Card>
       <Card className={classes.closedAccount}>
-        <CardContent>
+        <CardContent component={Link} to="#!">
           <Typography>Close My Account</Typography>
         </CardContent>
       </Card>

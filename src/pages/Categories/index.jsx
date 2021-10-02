@@ -40,7 +40,7 @@ const Categories = () => {
         size="large"
         popularKeywords
       />
-      <Spacing space={{ height: "6rem" }} />
+      <Spacing space={{ height: "4rem" }} />
       <Container>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
@@ -84,6 +84,7 @@ const Categories = () => {
           )}
         </Grid>
       </Container>
+      <Spacing space={{ height: "4rem" }} />
       <CallToAction
         title="Join Piktask Designer team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
