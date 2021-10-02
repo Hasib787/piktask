@@ -8,7 +8,64 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   headingWrapper: {
-    marginBottom: "3.5rem",
+    display: "flex",
+    marginBottom: "2.5rem",
+    justifyContent: "space-between",
+    [theme.breakpoints.down(426)]:{
+      display: "block"
+    },
+  },
+  socialsButtons: {
+    display: "flex",
+    alignItems: "center",
+    paddingRight: "4rem",
+    [theme.breakpoints.down(426)]:{
+      padding: "0 1rem",
+    },
+  },
+  googleBtn: {
+    backgroundColor: "#fff !important",
+    fontSize: "25px !important",
+    textAlign: "center",
+    padding: "0.2rem 3rem !important",
+    borderRadius: 0,
+    "&:hover": {
+      backgroundColor: "rgb(28 81 103)",
+    },
+    "@media (max-width: 768px)": {
+      padding: "1.5rem",
+      "& img": {
+        width: "8rem",
+      },
+    },
+  },
+  facebookBtn: {
+    backgroundColor: "#425993",
+    borderRadius: 0,
+
+    "& .kep-login-facebook": {
+      fontWeight: 700,
+      fontSize: 13,
+    },
+
+    "&:hover": {
+      backgroundColor: "rgb(48 72 132)",
+    },
+    [theme.breakpoints.up(2000)]: {
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
+      },
+    },
+    [theme.breakpoints.down(1025)]: {
+      "& .kep-login-facebook": {
+        fontWeight: 700,
+        fontSize: 13,
+      },
+    },
+    [theme.breakpoints.up(2039)]: {
+      padding: "14px !important",
+    },
   },
   seperator: {
     marginLeft: "3%",
@@ -21,9 +78,15 @@ const useStyles = makeStyles((theme) => ({
     color: "#114960",
     fontWeight: 700,
     padding: "3rem",
+    [theme.breakpoints.down(426)]: {
+      padding: "1.5rem",
+    },
   },
   profileInfoField: {
     padding: "3rem",
+    [theme.breakpoints.down(426)]: {
+      padding: "1.5rem",
+    },
   },
   personalDataField: {
     padding: "1rem",
@@ -131,8 +194,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    [theme.breakpoints.down(426)]:{
-      flexDirection:"column",
+    [theme.breakpoints.down(426)]: {
+      flexDirection: "column",
     },
   },
 
@@ -156,6 +219,9 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width: 768px)": {
       top: "-.6rem",
     },
+    [theme.breakpoints.down(426)]: {
+      paddingBottom: "1rem",
+    },
   },
   profileInfoSaveBtn: {
     height: "5.5rem",
@@ -174,6 +240,9 @@ const useStyles = makeStyles((theme) => ({
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
       borderLeftColor: "transparent",
+    },
+    [theme.breakpoints.down(769)]: {
+      paddingBottom: "1.7rem",
     },
   },
   portfolioIconWrapper: {
