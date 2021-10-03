@@ -23,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "4.5rem",
   },
   profileImage: {
-    height: "12rem",
-    Width: "12rem",
-    borderRadius: "50%",
     "& img": {
-      height: "100%",
-      Width: "100%",
+      height: "12rem",
+      Width: "12rem",
+      borderRadius: "50%",
       margin: "0 auto",
       display: "flex",
     },
@@ -62,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#4A7AFF",
     },
     "& svg": {
-      fontSize: "2.2rem"
+      fontSize: "2.2rem",
     },
     "& span": {
       fontSize: "1.5rem",

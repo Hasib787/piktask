@@ -25,9 +25,9 @@ const AuthorItems = ({ imageSummery, userId }) => {
       let authorResourcesURL;
 
       if(user && user?.id){
-        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}?userId=${user?.id}`
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/contributor/${userId}/images/${imageSummery[0]?.extension}?userId=${user?.id}`
       } else {
-        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${imageSummery[0]?.extension}`
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/contributor/${userId}/images/${imageSummery[0]?.extension}`
       }
 
       try {
@@ -49,9 +49,9 @@ const AuthorItems = ({ imageSummery, userId }) => {
       let authorResourcesURL;
 
       if(user && user?.id){
-        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}?userId=${user?.id}`
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/contributor/${userId}/images/${tag}?userId=${user?.id}`
       } else {
-        authorResourcesURL = `${process.env.REACT_APP_API_URL}/user/${userId}/images/${tag}`
+        authorResourcesURL = `${process.env.REACT_APP_API_URL}/contributor/${userId}/images/${tag}`
       }
 
       try {

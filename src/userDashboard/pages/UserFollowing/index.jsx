@@ -1,5 +1,12 @@
-import { Button, Card, CardContent, Container, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Typography,
+} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
@@ -8,12 +15,38 @@ import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
 import authorImg from "../../../assets/user/userProfile.jpg";
 import useStyles from "./UserFollowing.style";
-import image1 from "../../../assets/image6.jpg"
-import image2 from "../../../assets/image7.jpg"
-
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const UserFollowing = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
+
+  const [followersItem, setFollowersItem] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/user/following_list?limit=10&page=1`,
+        {
+          headers: { Authorization: user?.token },
+        }
+      )
+      .then(({ data }) => {
+        if (data?.status) {
+          setFollowersItem(data?.following);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Category products error:", error);
+        setLoading(false);
+      });
+  }, [user]);
 
   return (
     <Layout title="Followings || Piktask">
@@ -27,97 +60,82 @@ const UserFollowing = () => {
           </Grid>
           <Grid item md={9} sm={9} xm={12} className={classes.cardItem}>
             <SectionHeading title="My Follower" large />
-            <Grid
-            // classes={{ container: classes.container }}
-            >
-              <Grid item xs={12} sm={12} md={12}>
-                <Card className={classes.followerProfileContent}>
-                  <CardContent>
-                    <div className={classes.followerProfile}>
-                      <div className={classes.viewFollowerInfo}>
-                        <div className={classes.followerImage}>
-                          {/* {profileInfo?.avatar ? (
-                            <img
-                              src={profileInfo?.avatar}
-                              alt={profileInfo?.username}
-                            />
-                          ) : (
-                            <img src={authorImg} alt={"author"} />
-                            // )} */}
-                            <img src={authorImg} alt={"author"} />
-                        </div>
-                        <div className={classes.followerInfo}>
-                          <Typography
-                            className={classes.followerName}
-                            variant="h3"
-                          >
-                            Piktask
-                            {/* {profileInfo?.username} */}
-                          </Typography>
-                          <div className={classes.followerDetails}>
-                            <Typography
-                              className={classes.followerInfoItem}
-                              variant="body2"
-                            >
-                              Resources
-                              {/* <span>{profileInfo?.total_images}</span> */}
-                              <span>100</span>
-                            </Typography>
-                            <Typography
-                              className={classes.followerInfoItem}
-                              variant="body2"
-                            >
-                              Followers
-                              {/* <span>{profileInfo?.total_followers}</span> */}
-                              <span>24</span>
-                            </Typography>
-                            <Typography
-                              className={classes.followerInfoItem}
-                              variant="body2"
-                            >
-                              Downloads
-                              {/* <span>{profileInfo?.total_downloads}</span> */}
-                              <span>150</span>
-                            </Typography>
+            <Grid>
+              {isLoading || followersItem?.map((followItem) => (
+                <Grid key={followItem?.user_id} item xs={12} sm={12} md={12}>
+                  <Card className={classes.followerProfileContent}>
+                    <CardContent>
+                      <div className={classes.followerProfile}>
+                        <div className={classes.viewFollowerInfo}>
+                          <div className={classes.followerImage}>
+                            {followItem?.avatar ? (
+                              <img
+                                src={followItem?.avatar}
+                                alt={followItem?.username}
+                              />
+                            ) : (
+                              <img src={authorImg} alt={"author"} />
+                            )}
                           </div>
-                          {/* <div className={classes.authorSocials}>
-                            {profileInfo.facebook ||
-                            profileInfo.instagram ||
-                            profileInfo.twitter ? (
-                              <>
-                                <SocialShare
-                                  title="Follow this author:"
-                                  profileInfo={profileInfo}
-                                />
-                              </>
-                            ) : null}
-                          </div> */}
+                          <div className={classes.followerInfo}>
+                            <Typography
+                              className={classes.followerName}
+                              variant="h3"
+                            >
+                              {followItem?.username}
+                            </Typography>
+                            <div className={classes.followerDetails}>
+                              <Typography
+                                className={classes.followerInfoItem}
+                                variant="body2"
+                              >
+                                Resources
+                                <span>{followItem?.total_images}</span>
+                              </Typography>
+                              <Typography
+                                className={classes.followerInfoItem}
+                                variant="body2"
+                              >
+                                Followers
+                                <span>{followItem?.total_follower}</span>
+                              </Typography>
+                              <Typography
+                                className={classes.followerInfoItem}
+                                variant="body2"
+                              >
+                                Downloads
+                                <span>{followItem?.total_download}</span>
+                              </Typography>
+                            </div>
+                          </div>
+                        </div>
+                        <div className={classes.viewProfileBtn}>
+                          <Button
+                            component={Link}
+                            to={`/${followItem?.username}`}
+                            className={classes.viewMoreBtn}
+                          >
+                            View Profile
+                          </Button>
                         </div>
                       </div>
-                      <div className={classes.viewProfileBtn}>
-                        <Button className={classes.viewMoreBtn}>View Profile</Button>
+                      <Spacing space={{ height: "2rem" }} />
+                      <div className={classes.followerContent}>
+                        <div className={classes.followerResources}>
+                          {followItem?.images.map((followerResource) => (
+                            <Card
+                              key={followerResource?.id}
+                              className={classes.followerFiles}
+                            >
+                              <img src={followerResource?.thumbnail} alt="" />
+                            </Card>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <Spacing space={{ height: "2rem" }} />
-                    <div className={classes.followerContent}>
-                      <div className={classes.followerResources}>
-                        <Card className={classes.followerFiles}>
-                          <img src={image1} alt="" />
-                        </Card>
-                        <Card className={classes.followerFiles}>
-                          <img src={image2} alt="" />
-                        </Card>
-                        <Card className={classes.followerFiles}>
-                          <img src={image1} alt="" />
-                        </Card>
-                        <Card className={classes.followerFiles}>
-                          <img src={image2} alt="" />
-                        </Card>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>

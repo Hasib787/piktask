@@ -109,7 +109,7 @@ const SignUpModal = (props) => {
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
         password: authData.password,
-        role: authData.role,
+        role: user.role,
       })
       .then((res) => {
         if (res.data.status) {

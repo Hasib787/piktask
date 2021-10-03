@@ -35,7 +35,6 @@ const DownloadItems = () => {
         headers: {Authorization:user.token},
       })
       .then(({ data }) => {
-        console.log("data",data);
         if (data?.status) {
           setDownloadsItem(data?.downloads);
           setLoading(false);
