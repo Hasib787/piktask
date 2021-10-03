@@ -4,10 +4,11 @@ import {
   Container,
   FormControl,
   Grid,
-  Switch,
   Select,
   TextField,
   Typography,
+  FormControlLabel,
+  styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import FacebookLogin from "react-facebook-login";
@@ -31,9 +32,14 @@ import instagram from "../../../assets/icons/instagram.svg";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { ToggleButton } from "@material-ui/lab";
+import Switch from '@material-ui/core/Switch';
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
+
+
+
 
 const UserProfile = () => {
   const classes = useStyles();
@@ -47,9 +53,15 @@ const UserProfile = () => {
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+    const [switchToggle, setSwitchToggle] = useState(false)
+  
+   const handleChange = name => event => {
+    setSwitchToggle({ [name]: event.target.checked });
+    };
+
+  // const handleChange = (event) => {
+  //   setChecked(event.target.checked);
+  // };
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -321,10 +333,10 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="shutterstock"
-                          label="Your Shutterstock Account"
+                          label="https://www.shutterstock.com/"
                           variant="outlined"
                           className={`${classes.inputField}`}
-                          placeholder="Your Shutterstock Account"
+                          placeholder="https://www.shutterstock.com/"
                         />
                       </FormControl>
                     </div>
@@ -528,10 +540,16 @@ const UserProfile = () => {
                       I wish to receive newsletters,promotions and news from
                       Piktask Company
                     </Typography>
-                    <Switch
-                      checked={checked}
-                      onChange={handleChange}
-                      inputProps={{ "aria-label": "controlled" }}
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={switchToggle}
+                          onChange={handleChange}
+                          value="checkedB"
+                          color="primary"
+                        />
+                      }
+                      label="Primary"
                     />
                   </div>
                   <div className={classes.basicInfo}>
