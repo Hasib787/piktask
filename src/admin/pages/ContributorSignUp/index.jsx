@@ -56,7 +56,7 @@ const ContributorSignUp = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { openAuthModal, setOpenAuthModal } = props;
-  const user = useSelector((state) => state.user);
+  const contributor = useSelector((state) => state.contributor);
 
   const [passwordValue, setPasswordValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
@@ -107,15 +107,14 @@ const ContributorSignUp = (props) => {
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        role: authData.role,
+        role: contributor.role,
         username: authData.userName,
         password: authData.password,
-        role: authData.role,
       })
       .then((res) => {
         if (res.data.status) {
           setOpenAuthModal(false);
-          user.isLogged = true;
+          contributor.isLogged = true;
           const token = res.data.token;
           localStorage.setItem("token", token);
           const decodedToken = jwt_decode(token.split(" ")[1]);
@@ -197,7 +196,6 @@ const ContributorSignUp = (props) => {
         email: authData.email,
         password: authData.password,
         confirmPassword: authData.password,
-        role: authData.role,
       })
       .then(async (res) => {
         if (res?.status === 200) {

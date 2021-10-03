@@ -37,7 +37,7 @@ const FavoriteItems = () => {
       })
       .then(({ data }) => {
         if (data?.status) {
-          setFavoriteProducts(data?.like_images);
+          setFavoriteProducts(data?.images);
           setLoading(false);
         }
       })
