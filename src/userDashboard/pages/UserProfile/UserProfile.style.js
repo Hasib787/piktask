@@ -11,15 +11,23 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginBottom: "2.5rem",
     justifyContent: "space-between",
-    [theme.breakpoints.down(426)]:{
-      display: "block"
+    [theme.breakpoints.down(426)]: {
+      display: "block",
     },
+  },
+  portfolioHeadingWrapper: {
+    marginBottom: "2.5rem",
+    justifyContent: "space-between",
+  },
+  socialHeadingWrapper: {
+    marginBottom: "2.5rem",
+    justifyContent: "space-between",
   },
   socialsButtons: {
     display: "flex",
     alignItems: "center",
     paddingRight: "4rem",
-    [theme.breakpoints.down(426)]:{
+    [theme.breakpoints.down(426)]: {
       padding: "0 1rem",
     },
   },
