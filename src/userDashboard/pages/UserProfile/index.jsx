@@ -294,7 +294,7 @@ const UserProfile = () => {
                   </Grid>
 
                   {/* Professional Portfolio section start  */}
-                  <div className={classes.headingWrapper}>
+                  <div className={classes.portfolioHeadingWrapper}>
                     <Typography
                       className={classes.settingsFormTitle}
                       variant="h4"
@@ -399,7 +399,7 @@ const UserProfile = () => {
                     </div>
                   </div>
                   {/* Social link section start */}
-                  <div className={classes.headingWrapper}>
+                  <div className={classes.socialHeadingWrapper}>
                     <Typography
                       className={classes.settingsFormTitle}
                       variant="h4"

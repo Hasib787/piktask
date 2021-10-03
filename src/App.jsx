@@ -92,6 +92,21 @@ const App = () => {
       }
     }
 
+      // Check username/password auth state
+      const setContributorToken = window.localStorage.getItem("token") || "";
+      if (setContributorToken) {
+        const decode = jwt_decode(setContributorToken.split(" ")[1]);
+        if (decode.email) {
+          dispatch({
+            type: "SET_CONTRIBUTOR",
+            payload: {
+              ...decode,
+              token: setContributorToken,
+            },
+          });
+        }
+      }
+
     // Popular categories API integration
     axios
       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
