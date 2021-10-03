@@ -109,7 +109,7 @@ const SignUpModal = (props) => {
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
         password: authData.password,
-        role: authData.role,
+        role: user.role,
       })
       .then((res) => {
         if (res.data.status) {
@@ -190,24 +190,24 @@ const SignUpModal = (props) => {
     // }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-        role: authData.role,
-        username: authData.userName,
-        email: authData.email,
-        password: authData.password,
-        confirmPassword: authData.password,
-      })
-      .then(async (res) => {
-        if (res?.status === 200) {
-          await auth.sendSignInLinkToEmail(authData.email, {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-            handleCodeInApp: true,
-          });
-
-          // Show success message to the user
-          toast.success(
-            `An email has been sent to ${authData.email}. Please check and confirm your registration`
-          );
+    .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+      username: authData.userName,
+      email: authData.email,
+      password: authData.password,
+      confirmPassword: authData.password,
+      role: authData.role,
+    })
+    .then(async (res) => {
+      if (res?.status === 200) {
+        await auth.sendSignInLinkToEmail(authData.email, {
+          url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+          handleCodeInApp: true,
+        });
+    
+        // Show success message to the user
+        toast.success(
+          `An email has been sent to ${authData.email}. Please check and confirm your registration`
+        );
 
           authData.userName = "";
           authData.email = "";

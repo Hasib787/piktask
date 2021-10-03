@@ -28,47 +28,47 @@ const AuthorProfile = () => {
   const [isFollowing, setFollowing] = useState(false);
   const [profileInfo, setProfileInfo] = useState({});
 
-
   useEffect(() => {
     setLoading(true);
     try {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/${username}/statistics`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setProfileInfo(data?.profile);
-          setImageSummery(data?.images_summary);
-          setLoading(false);
+        .get(
+          `${process.env.REACT_APP_API_URL}/contributor/${username}/statistics`
+        )
+        .then(({ data }) => {
+          if (data?.status) {
+            setProfileInfo(data?.profile);
+            setImageSummery(data?.images_summary);
+            setLoading(false);
 
-          if (user?.token) {
-            axios
-              .get(
-                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
-                {
-                  headers: { Authorization: user.token },
-                }
-              )
-              .then((response) => {
-                if (response.data.status) {
-                  setFollowing(true);
-                } else {
-                  setFollowing(false);
-                }
-              });
+            if (user?.token) {
+              axios
+                .get(
+                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
+                  {
+                    headers: { Authorization: user.token },
+                  }
+                )
+                .then((response) => {
+                  if (response.data.status) {
+                    setFollowing(true);
+                  } else {
+                    setFollowing(false);
+                  }
+                });
+            }
           }
-
-        }
-      })
+        });
     } catch (error) {
       console.log(error);
     }
-  }, [username, user])
+  }, [username, user]);
 
-  const handleJoinUsButton = () =>{
+  const handleJoinUsButton = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     }
-  }
+  };
 
   const handleFollower = () => {
     if (!user.token && window.innerWidth > 900) {
@@ -96,7 +96,6 @@ const AuthorProfile = () => {
 
   console.log("profileInfo", profileInfo?.id);
 
-  
   return (
     <Layout title={`${profileInfo?.username} | Piktask`}>
       <Header />
@@ -113,7 +112,10 @@ const AuthorProfile = () => {
                 <Grid container className={classes.profileWrapper}>
                   <div className={classes.authorImg}>
                     {profileInfo?.avatar ? (
-                      <img src={profileInfo?.avatar} alt={profileInfo?.username} />
+                      <img
+                        src={profileInfo?.avatar}
+                        alt={profileInfo?.username}
+                      />
                     ) : (
                       <img src={authorImg} alt={profileInfo?.username} />
                     )}
@@ -147,34 +149,34 @@ const AuthorProfile = () => {
                       )}
                     </div>
                     <div className={classes.authorSocials}>
-                      {profileInfo.facebook || profileInfo.instagram || profileInfo.twitter ? (
+                      {profileInfo.facebook ||
+                      profileInfo.instagram ||
+                      profileInfo.twitter ? (
                         <>
                           <SocialShare
                             title="Follow this author:"
                             profileInfo={profileInfo}
                           />
                         </>
-                      ) : ( null )}
+                      ) : null}
                     </div>
                   </div>
                 </Grid>
-                ) : (
-                  <h1>No information found</h1>
-                )
-              }
+              ) : (
+                <h1>No information found</h1>
+              )}
             </>
-          )
-        }
+          )}
         </Container>
       </div>
       <AuthorItems userId={profileInfo.id} imageSummery={imageSummery} />
-      
+
       {!user.token ? (
         <CallToAction
           title="Join Piktask team"
           subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
           buttonText="Join Us"
-          buttonClicked={()=>handleJoinUsButton()}
+          buttonClicked={() => handleJoinUsButton()}
         />
       ) : (
         <CallToAction
@@ -184,9 +186,9 @@ const AuthorProfile = () => {
           buttonText="See Plans"
         />
       )}
-      
+
       {/* Sign up modal section*/}
-        <SignUpModal
+      <SignUpModal
         openAuthModal={openAuthModal}
         setOpenAuthModal={setOpenAuthModal}
       />

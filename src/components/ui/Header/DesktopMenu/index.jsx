@@ -124,13 +124,6 @@ const DesktopMenu = ({ history }) => {
                 Sell Your Content
               </Button>
             )}
-            {/* <Button
-              className={classes.sellContentBtn}
-              component={Link}
-              to="/contributor/joinNow"
-            >
-              Sell Your Content
-            </Button> */}
 
             {/* <Button disableRipple className={classes.enterprise}>
               <img

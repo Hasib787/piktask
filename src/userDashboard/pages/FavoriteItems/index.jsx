@@ -26,21 +26,18 @@ const FavoriteItems = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
-  const [popularProducts, setPopularProducts] = useState({});
+  const [favoriteProducts, setFavoriteProducts] = useState({});
 
   useEffect(() => {
     setLoading(true);
-    let recentUrl;
-    if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&user_id=${user.id}&limit=6`;
-    } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&limit=6`;
-    }
     axios
-      .get(recentUrl)
+      .get(`${process.env.REACT_APP_API_URL}/user/favourite_image/?limit=20&page=1`, 
+      {
+        headers: {Authorization: user.token},
+      })
       .then(({ data }) => {
         if (data?.status) {
-          setPopularProducts(data?.images);
+          setFavoriteProducts(data?.images);
           setLoading(false);
         }
       })
@@ -71,8 +68,8 @@ const FavoriteItems = () => {
                 <Loader />
               ) : (
                 <>
-                  {popularProducts?.length ? (
-                    popularProducts?.map((photo) => (
+                  {favoriteProducts?.length ? (
+                    favoriteProducts?.map((photo) => (
                       <Grid
                         key={photo.image_id}
                         item

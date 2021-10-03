@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
       height: 70,
     },
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       height: 60,
     },
   },
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
       },
     },
-    "@media (max-width: 425px)": {
+    "@media (max-width: 426px)": {
       width: "10rem",
 
       "& img": {
@@ -67,21 +67,21 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "0.6rem",
       },
     },
-    "@media (max-width: 425px)": {
-      width: "12rem",
+    "@media (max-width: 577px)": {
+      width: "11rem",
 
       "& img": {
         width: "100%",
-        marginTop: "1.2rem",
+        marginTop: "1rem",
       },
     },
 
-    [theme.breakpoints.down(357)]: {
-      width: "12rem",
+    [theme.breakpoints.down(325)]: {
+      width: "9rem",
       
       "& img": {
         width: "100%",
-        marginTop: "1.2rem",
+        marginTop: "1.4rem",
         
       },
     },
@@ -108,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
       background: "transparent",
     },
   },
-  mobileTabWrapper: {},
   navItems: {
     width: "100%",
 
@@ -140,6 +139,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingTop: "0.4rem",
+
+    [theme.breakpoints.down(426)]: {
+      paddingTop: "0.8rem",
+    },
   },
 
   loginBtn: {
@@ -148,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     marginRight: "16px",
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       fontSize: "13px",
       marginRight: "8px",
     },
@@ -161,13 +165,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "16px",
     padding: "0px 14px",
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       fontSize: "13px",
-      marginRight: "8px",
       padding: "0px 8px",
     },
+    [theme.breakpoints.down(325)]: {
+      fontSize: "10px",
+      padding: "0px 8px",
+      marginRight: "10px",
+    },
   },
-
   userAvatarArea: {
     cursor: "pointer",
     display: "flex",

@@ -13,11 +13,11 @@ import { toast } from "react-toastify";
 import useStyles from "./UserSideBar.style";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import UserProfile from "../../../assets/user/userProfile.jpg";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 // import DevicesIcon from "@material-ui/icons/Devices";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import authorPhoto from "../../../assets/author.png";
 
 const UserSideBar = () => {
   const classes = useStyles();
@@ -69,12 +69,18 @@ const UserSideBar = () => {
     <>
       <Card className={classes.userProfile}>
         <div className={classes.userProfileContent}>
-          <div className={classes.profileImage}>
-            <img src={UserProfile} alt="UserProfile" />
-          </div>
+          {user?.avatar ? (
+            <div className={classes.profileImage}>
+              <img src={user?.avatar} alt="UserProfile" />
+            </div>
+          ) : (
+            <div className={classes.profileImage}>
+              <img src={authorPhoto} alt="UserProfile" />
+            </div>
+          )}
           <div className={classes.profileInfo}>
-            <Typography variant="h2">Digital Studio</Typography>
-            <Typography>digitalstudio@gmail.com</Typography>
+            <Typography variant="h2">{user?.username}</Typography>
+            <Typography>{user?.email}</Typography>
           </div>
         </div>
       </Card>
