@@ -110,6 +110,7 @@ const ContributorSignUp = (props) => {
         role: authData.role,
         username: authData.userName,
         password: authData.password,
+        role: authData.role,
       })
       .then((res) => {
         if (res.data.status) {
@@ -196,6 +197,7 @@ const ContributorSignUp = (props) => {
         email: authData.email,
         password: authData.password,
         confirmPassword: authData.password,
+        role: authData.role,
       })
       .then(async (res) => {
         if (res?.status === 200) {
