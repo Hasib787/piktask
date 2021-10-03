@@ -18,7 +18,7 @@ const Sellers = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/sellers/top/`)
+        .get(`${process.env.REACT_APP_API_URL}/contributor/top/`)
         .then(({ data }) => {
           if (data?.success) {
             setTopSeller(data.sellers);

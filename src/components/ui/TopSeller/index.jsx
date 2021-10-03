@@ -16,7 +16,7 @@ export const TopSeller = (props) => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/sellers/top/?limit=4`)
+        .get(`${process.env.REACT_APP_API_URL}/contributor/top/?limit=4`)
         .then(({ data }) => {
           if (data?.success) {
             setTopSeller(data.sellers);

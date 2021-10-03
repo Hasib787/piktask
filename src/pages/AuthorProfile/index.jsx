@@ -30,37 +30,37 @@ const AuthorProfile = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (user?.role === "user") {
-      try {
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/contributor/${username}/statistics`)
-          .then(({ data }) => {
-            if (data?.status) {
-              setProfileInfo(data?.profile);
-              setImageSummery(data?.images_summary);
-              setLoading(false);
+    try {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/contributor/${username}/statistics`
+        )
+        .then(({ data }) => {
+          if (data?.status) {
+            setProfileInfo(data?.profile);
+            setImageSummery(data?.images_summary);
+            setLoading(false);
 
-              if (user?.token) {
-                axios
-                  .get(
-                    `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
-                    {
-                      headers: { Authorization: user.token },
-                    }
-                  )
-                  .then((response) => {
-                    if (response.data.status) {
-                      setFollowing(true);
-                    } else {
-                      setFollowing(false);
-                    }
-                  });
-              }
+            if (user?.token) {
+              axios
+                .get(
+                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
+                  {
+                    headers: { Authorization: user.token },
+                  }
+                )
+                .then((response) => {
+                  if (response.data.status) {
+                    setFollowing(true);
+                  } else {
+                    setFollowing(false);
+                  }
+                });
             }
-          });
-      } catch (error) {
-        console.log(error);
-      }
+          }
+        });
+    } catch (error) {
+      console.log(error);
     }
   }, [username, user]);
 
