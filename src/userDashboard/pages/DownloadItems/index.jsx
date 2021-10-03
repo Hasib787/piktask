@@ -25,21 +25,19 @@ const DownloadItems = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
-  const [popularProducts, setPopularProducts] = useState({});
+  const [downloadsItem, setDownloadsItem] = useState({});
 
   useEffect(() => {
     setLoading(true);
-    let recentUrl;
-    if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&user_id=${user.id}&limit=3`;
-    } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=popular&limit=3`;
-    }
+  
     axios
-      .get(recentUrl)
+      .get(`${process.env.REACT_APP_API_URL}/user/downloads?&limit=20&page=2`,{
+        headers: {Authorization:user.token},
+      })
       .then(({ data }) => {
+        console.log("data",data);
         if (data?.status) {
-          setPopularProducts(data?.images);
+          setDownloadsItem(data?.downloads);
           setLoading(false);
         }
       })
@@ -70,8 +68,8 @@ const DownloadItems = () => {
                 <Loader />
               ) : (
                 <>
-                  {popularProducts?.length ? (
-                    popularProducts?.map((photo) => (
+                  {downloadsItem?.length ? (
+                    downloadsItem?.map((photo) => (
                       <Grid
                         key={photo.image_id}
                         item
