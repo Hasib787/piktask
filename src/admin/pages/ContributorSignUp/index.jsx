@@ -68,6 +68,7 @@ const ContributorSignUp = (props) => {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "contributor",
   });
 
   //Handle the password show and hide
@@ -108,6 +109,7 @@ const ContributorSignUp = (props) => {
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: authData.userName,
         password: authData.password,
+        role: authData.role,
       })
       .then((res) => {
         if (res.data.status) {
@@ -193,6 +195,7 @@ const ContributorSignUp = (props) => {
         email: authData.email,
         password: authData.password,
         confirmPassword: authData.password,
+        role: authData.role,
       })
       .then(async (res) => {
         if (res?.status === 200) {

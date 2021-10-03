@@ -1,11 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  // WorkingSteps
-  contentWrapper: {
-    padding: "5rem 13rem",
-  },
-  
   // Instruction
   instructionArea: {
     backgroundColor: "#fff",
