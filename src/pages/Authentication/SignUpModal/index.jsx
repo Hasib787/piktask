@@ -1,30 +1,30 @@
-import { 
-  Tab, 
-  Tabs, 
-  Grid, 
-  Dialog, 
-  Checkbox, 
+import {
+  Tab,
+  Tabs,
+  Grid,
+  Dialog,
+  Checkbox,
   Typography,
-  DialogContent, 
-  FormControlLabel, 
-} from '@material-ui/core';
-import { CustomBtn, InputField } from '../../../components/InputField';
-import { Redirect, useHistory, useLocation } from 'react-router';
+  DialogContent,
+  FormControlLabel,
+} from "@material-ui/core";
+import { CustomBtn, InputField } from "../../../components/InputField";
+import { Redirect, useHistory, useLocation } from "react-router";
 import logoWhite from "../../../assets/logo-white.png";
 import lockIcon from "../../../assets/password.png";
-import React, { useEffect, useState } from 'react';
-import Spacing from '../../../components/Spacing';
+import React, { useEffect, useState } from "react";
+import Spacing from "../../../components/Spacing";
 import FacebookLogin from "react-facebook-login";
 import authImage from "../../../assets/auth.png";
-import CloseIcon from '@material-ui/icons/Close';
-import GoogleLogin from 'react-google-login';
+import CloseIcon from "@material-ui/icons/Close";
+import GoogleLogin from "react-google-login";
 import useStyles from "./SignUpModal.styles";
-import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../../../database';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../../database";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
-import axios from 'axios';
+import axios from "axios";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -57,7 +57,7 @@ const SignUpModal = (props) => {
   const dispatch = useDispatch();
   const { openAuthModal, setOpenAuthModal } = props;
   const user = useSelector((state) => state.user);
-  
+
   const [passwordValue, setPasswordValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -72,7 +72,9 @@ const SignUpModal = (props) => {
   });
 
   //Handle the password show and hide
-  const handleShowHidePassword = () => { setPasswordValue((value) => !value); };
+  const handleShowHidePassword = () => {
+    setPasswordValue((value) => !value);
+  };
 
   //Redirect to home page when user logs in
   const history = useHistory();
@@ -90,7 +92,9 @@ const SignUpModal = (props) => {
     setAuthData({ ...authData, [name]: value });
   };
 
-  const handleCloseAuthModal = () => { setOpenAuthModal(false); };
+  const handleCloseAuthModal = () => {
+    setOpenAuthModal(false);
+  };
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
@@ -102,41 +106,41 @@ const SignUpModal = (props) => {
     setLoading(true);
 
     axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-      username: authData.userName,
-      password: authData.password,
-      role: authData.role,
-    })
-    .then((res) => {
-      if (res.data.status) {
-        setOpenAuthModal(false);
-        user.isLogged = true;
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        const decodedToken = jwt_decode(token.split(" ")[1]);
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        username: authData.userName,
+        password: authData.password,
+        role: authData.role,
+      })
+      .then((res) => {
+        if (res.data.status) {
+          setOpenAuthModal(false);
+          user.isLogged = true;
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          const decodedToken = jwt_decode(token.split(" ")[1]);
 
-        if (decodedToken.email) {
-          dispatch({
-            type: "SET_USER",
-            payload: {
-              ...decodedToken,
-              token,
-            },
-          });
+          if (decodedToken.email) {
+            dispatch({
+              type: "SET_USER",
+              payload: {
+                ...decodedToken,
+                token,
+              },
+            });
+          }
+          if (location.pathname) {
+            history.push(location.pathname);
+          } else {
+            history.replace(from);
+          }
         }
-        if(location.pathname) {
-          history.push(location.pathname)
-        } else {
-          history.replace(from);
-        }
-      }
-    })
-    .catch((error) => {
-      toast.error(error.response.data?.message);
+      })
+      .catch((error) => {
+        toast.error(error.response.data?.message);
         authData.userName = "";
         authData.password = "";
-        setLoading(false);  
-    });
+        setLoading(false);
+      });
   };
 
   //Handle signUp form
@@ -205,22 +209,22 @@ const SignUpModal = (props) => {
           `An email has been sent to ${authData.email}. Please check and confirm your registration`
         );
 
+          authData.userName = "";
+          authData.email = "";
+          authData.password = "";
+          setLoading(false);
+          setRedirectTo(true);
+        } else {
+          console.warn("Something went wrong with signup");
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
         authData.userName = "";
         authData.email = "";
         authData.password = "";
         setLoading(false);
-        setRedirectTo(true);
-      } else {
-        console.warn("Something went wrong with signup");
-      }
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message);
-      authData.userName = "";
-      authData.email = "";
-      authData.password = "";
-      setLoading(false);
-    });
+      });
   };
 
   //login with google
@@ -255,8 +259,8 @@ const SignUpModal = (props) => {
           },
         });
       }
-      if(location.pathname) {
-        history.push(location.pathname)
+      if (location.pathname) {
+        history.push(location.pathname);
       } else {
         history.replace(from);
       }
@@ -295,8 +299,8 @@ const SignUpModal = (props) => {
           },
         });
       }
-      if(location.pathname) {
-        history.push(location.pathname)
+      if (location.pathname) {
+        history.push(location.pathname);
       } else {
         history.replace(from);
       }
@@ -315,8 +319,7 @@ const SignUpModal = (props) => {
         className={classes.dialogModal}
         // maxWidth="sm"
       >
-        
-        <DialogContent style={{ padding: 0, overflow: "hidden", }}>
+        <DialogContent style={{ padding: 0, overflow: "hidden" }}>
           <Grid container spacing={3}>
             <Grid item sm={5}>
               <div className={classes.leftPanel}>
@@ -328,7 +331,9 @@ const SignUpModal = (props) => {
                 <Typography>Enjoy Free Download Now!</Typography>
                 <Typography>*Get 50% OFF Discount for Premium Plan</Typography>
                 <Typography>*Download 6 Images for Free Everyday</Typography>
-                <Typography>*2,600,000+ Images to energize your Design</Typography>
+                <Typography>
+                  *2,600,000+ Images to energize your Design
+                </Typography>
 
                 <Spacing space={{ height: 30 }} />
 
@@ -337,12 +342,12 @@ const SignUpModal = (props) => {
             </Grid>
             <Grid item sm={7}>
               <div className={classes.rightPanel}>
-              <div className={classes.closeModal}>
-                <CloseIcon 
-                  fontSize="large"
-                  onClick={() => setOpenAuthModal(false)}
-                />
-              </div>
+                <div className={classes.closeModal}>
+                  <CloseIcon
+                    fontSize="large"
+                    onClick={() => setOpenAuthModal(false)}
+                  />
+                </div>
                 <Tabs
                   value={tabIndex}
                   onChange={handleChangeTab}

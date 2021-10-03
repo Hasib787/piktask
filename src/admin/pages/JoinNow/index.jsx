@@ -12,7 +12,7 @@ const JoinNow = () => {
   const classes = useStyles();
   return (
     <Layout title={"Join Now || Piktask"}>
-      <HeroSection size="large" contributor isSearch />
+      <HeroSection size="large" contributorUser isSearch />
       <Spacing space={{ height: "2.5rem" }} />
       {/* Instruction  */}
       <div className={classes.instructionArea}>

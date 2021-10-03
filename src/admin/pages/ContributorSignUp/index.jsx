@@ -107,6 +107,7 @@ const ContributorSignUp = (props) => {
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        role: authData.role,
         username: authData.userName,
         password: authData.password,
         role: authData.role,
@@ -121,7 +122,7 @@ const ContributorSignUp = (props) => {
 
           if (decodedToken.email) {
             dispatch({
-              type: "SET_USER",
+              type: "SET_CONTRIBUTOR",
               payload: {
                 ...decodedToken,
                 token,
@@ -191,6 +192,7 @@ const ContributorSignUp = (props) => {
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        role: authData.role,
         username: authData.userName,
         email: authData.email,
         password: authData.password,
