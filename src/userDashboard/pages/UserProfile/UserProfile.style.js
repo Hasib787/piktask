@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   socialsButtons: {
     display: "flex",
     alignItems: "center",
-    paddingRight: "4rem",
+    paddingRight: "3rem",
     [theme.breakpoints.down(426)]: {
       padding: "0 1rem",
     },
@@ -76,11 +76,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   seperator: {
-    marginLeft: "3%",
     borderWidth: 0,
+    marginLeft: "3%",
+    width: "94%",
     height: ".1rem",
     backgroundColor: "rgb(112 112 112 / 38%)",
-    width: "94%",
   },
   settingsFormTitle: {
     color: "#114960",
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   profileInfoField: {
-    padding: "3rem",
+    padding: "2rem",
     [theme.breakpoints.down(426)]: {
       padding: "1.5rem",
     },

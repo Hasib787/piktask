@@ -33,13 +33,10 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { ToggleButton } from "@material-ui/lab";
-import Switch from '@material-ui/core/Switch';
+import Switch from "@material-ui/core/Switch";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
-
-
-
 
 const UserProfile = () => {
   const classes = useStyles();
@@ -52,11 +49,11 @@ const UserProfile = () => {
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
-    const [switchToggle, setSwitchToggle] = useState(false)
+  const [switchToggle, setSwitchToggle] = useState(false);
 
-   const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     setSwitchToggle({ [name]: event.target.checked });
-    };
+  };
 
   // const handleChange = (event) => {
   //   setChecked(event.target.checked);
@@ -163,9 +160,16 @@ const UserProfile = () => {
                     </div>
                     <div className={classes.socialsButtons}>
                       <GoogleLogin
-                        clientId={clientId}
-                        buttonText="Google"
-                        className={classes.googleBtn}
+                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                        render={(renderProps) => (
+                          <button
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          >
+                             Google
+                          </button>
+                        )}
+                        buttonText="Login"
                         onSuccess={handleGoogleLogin}
                         onFailure={handleGoogleLogin}
                         cookiePolicy={"single_host_origin"}
@@ -187,7 +191,7 @@ const UserProfile = () => {
                   <Grid
                     className={classes.profileInfoField}
                     container
-                    spacing={2}
+                    spacing={0}
                   >
                     <Grid item xs={12} md={6} sm={6}>
                       <Typography
@@ -320,10 +324,10 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="shutterstock"
-                          label="https://www.shutterstock.com/"
+                          label="Your Shutterstock Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
-                          placeholder="https://www.shutterstock.com/"
+                          placeholder="Your Shutterstock Account"
                         />
                       </FormControl>
                     </div>
