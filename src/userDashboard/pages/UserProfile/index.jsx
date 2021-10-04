@@ -11,6 +11,9 @@ import {
   styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
+import jwt_decode from "jwt-decode";
 import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
@@ -44,14 +47,13 @@ const UserProfile = () => {
   const [country, setCountry] = useState("Bangladesh");
   const [state, setState] = useState("Chittagong");
   const [checked, setChecked] = useState(false);
-
   const dispatch = useDispatch();
   const pathHistory = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
     const [switchToggle, setSwitchToggle] = useState(false)
-  
+
    const handleChange = name => event => {
     setSwitchToggle({ [name]: event.target.checked });
     };
@@ -62,23 +64,81 @@ const UserProfile = () => {
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
-
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
-
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
-  
+  //login with google
+  const handleGoogleLogin = async (googleData) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/auth/google_login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          token: googleData.tokenId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    // store returned user somehow
+    if (data.status) {
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
+      if (decodedToken.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decodedToken,
+            token,
+          },
+        });
+      }
+      toast.success(data.message);
+      pathHistory.replace(from);
+    }
+  };
+  //login with facebook
+  const handleFacebookLogin = async (facebookData) => {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/facebook_login`, {
+      method: "POST",
+      body: JSON.stringify({
+        token: facebookData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    // store returned user somehow
+    if (data.status) {
+      const token = data.token;
+      localStorage.setItem("token", token);
+      const decodedToken = jwt_decode(token.split(" ")[1]);
+      if (decodedToken.email) {
+        dispatch({
+          type: "SET_USER",
+          payload: {
+            ...decodedToken,
+            token,
+          },
+        });
+      }
+      toast.success(data.message);
+      pathHistory.replace(from);
+    }
+  };
   return (
     <Layout title={"UserProfile | piktask"}>
       <Header />
@@ -93,245 +153,148 @@ const UserProfile = () => {
               <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
                 <div className={classes.cardRoot}>
                   <div className={classes.headingWrapper}>
-                    <Typography
-                      className={classes.settingsFormTitle}
-                      variant="h4"
-                    >
-                      Connect
-                    </Typography>
-                    <hr className={classes.seperator} />
+                    <div>
+                      <Typography
+                        className={classes.settingsFormTitle}
+                        variant="h4"
+                      >
+                        Connect
+                      </Typography>
+                    </div>
+                    <div className={classes.socialsButtons}>
+                      <GoogleLogin
+                        clientId={clientId}
+                        buttonText="Google"
+                        className={classes.googleBtn}
+                        onSuccess={handleGoogleLogin}
+                        onFailure={handleGoogleLogin}
+                        cookiePolicy={"single_host_origin"}
+                      />
+                      <Spacing space={{ margin: "0 0.5rem" }} />
+                      <div className={classes.facebookBtn}>
+                        <FacebookLogin
+                          // className={classes.facebookBtn}
+                          appId="168140328625744"
+                          autoLoad={false}
+                          fields="name,email,picture"
+                          onClick={handleFacebookLogin}
+                          callback={handleFacebookLogin}
+                        />
+                      </div>
+                    </div>
                   </div>
-
-                  <Grid className={classes.profileInfoField} container item spacing={2}>
-                    <Grid
-                      sm={12}
-                      md={6}
-                      lg={6}
-                    >
+                  <hr className={classes.seperator} />
+                  <Grid
+                    className={classes.profileInfoField}
+                    container
+                    spacing={2}
+                  >
+                    <Grid item xs={12} md={6} sm={6}>
                       <Typography
                         className={classes.personalInfoTitle}
                         variant="h4"
                       >
                         Personal data
                       </Typography>
-                      <div  className={classes.personalDataField}>
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Real Name"
-                        className={classes.formControl}
-                        name="realName"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Location"
-                        className={classes.formControl}
-                        name="location"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Job Position"
-                        className={classes.formControl}
-                        name="jobPosition"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Telephone Number"
-                        className={classes.formControl}
-                        name="username"
-                        type="number"
-                        inputProps={{
-                          inputMode: "numeric",
-                          pattern: "[0-9]*",
-                        }}
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
+                      <div className={classes.personalDataField}>
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Real Name"
+                          className={classes.formControl}
+                          name="realName"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Location"
+                          className={classes.formControl}
+                          name="location"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Job Position"
+                          className={classes.formControl}
+                          name="jobPosition"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Telephone Number"
+                          className={classes.formControl}
+                          name="username"
+                          type="number"
+                          inputProps={{
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                          }}
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
                       </div>
                     </Grid>
-                    <Grid
-                      sm={12}
-                      md={6}
-                      lg={6}
-                    >
+                    <Grid item xs={12} md={6} sm={6}>
                       <Typography
                         className={classes.accountInfoTitle}
                         variant="h4"
                       >
                         Account Information
                       </Typography>
-                      <div  className={classes.personalDataField}>
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="User Name"
-                        className={classes.formControl}
-                        name="username"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Email"
-                        className={classes.formControl}
-                        name="email"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Password"
-                        className={classes.formControl}
-                        name="password"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                       <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Password"
-                        className={classes.formControl}
-                        name="password"
-                        // value={username}
-                        // onChange={(e) => setUsername(e.target.value)}
-                      />
-                      
+                      <div className={classes.personalDataField}>
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="User Name"
+                          className={classes.formControl}
+                          name="username"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Email"
+                          className={classes.formControl}
+                          name="email"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <TextField
+                          fullWidth
+                          variant="outlined"
+                          label="Password"
+                          className={classes.formControl}
+                          name="password"
+                          type="password"
+                          // value={username}
+                          // onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <div className={classes.dataChangeBtn}>
+                          <Link
+                            to="/reset-password"
+                            className={classes.passwordResetLink}
+                          >
+                            Forget Password?
+                          </Link>
+                          <Button
+                            type="submit"
+                            className={classes.profileInfoSaveBtn}
+                          >
+                            Save Changes
+                          </Button>
+                        </div>
                       </div>
-                      
                     </Grid>
                   </Grid>
-                  {/* <div  className={classes.userProfileInfo}>
-                    <div className={classes.personalInfoWrapper}>
-                      <Typography
-                        className={classes.personalInfoTitle}
-                        variant="h4"
-                      >
-                        Personal data
-                      </Typography>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="name"
-                          label="Name"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="location"
-                          label="Location"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="jobPosition"
-                          label="Job Position"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                        <FormControl 
-                           fullWidth
-                           classes={{ fullWidth: classes.fullWidth }}
-                        >
-                          <TextField
-                            id="teleNumber"
-                            label="Telephone Number"
-                            variant="outlined"
-                            type="number"
-                            className={`${classes.inputField}`}
-                            inputProps={{
-                              inputMode: "numeric",
-                              pattern: "[0-9]*",
-                            }}
-                          />
-                        </FormControl>
-                    </div>
-                    <div className={classes.accountInfoWrapper}>
-                      <Typography
-                        className={classes.accountInfoTitle}
-                        variant="h4"
-                      >
-                        Account Information
-                      </Typography>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.lastField}
-                      >
-                        <TextField
-                          id="username"
-                          label="User Name"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.lastField}
-                      >
-                        <TextField
-                          id="email"
-                          label="Email"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.lastField}
-                      >
-                        <TextField
-                          type="password"
-                          id="password"
-                          label="Password"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                        />
-                      </FormControl>
-                      <div className={classes.dataChangeBtn}>
-                        <Link
-                          to="/reset-password"
-                          className={classes.passwordResetLink}
-                        >
-                          Forget Password?
-                        </Link>
-                        <Button
-                          type="submit"
-                          className={classes.profileInfoSaveBtn}
-                        >
-                          Save Changes
-                        </Button>
-                      </div>
-                    </div>
-                  </div> */}
-
                   {/* Professional Portfolio section start  */}
-                  <div className={classes.headingWrapper}>
+                  <div className={classes.portfolioHeadingWrapper}>
                     <Typography
                       className={classes.settingsFormTitle}
                       variant="h4"
@@ -340,7 +303,6 @@ const UserProfile = () => {
                     </Typography>
                     <hr className={classes.seperator} />
                   </div>
-
                   <div className={classes.cardWrapper}>
                     <div
                       className={`${classes.fieldsGroup} ${classes.linkField}`}
@@ -436,7 +398,7 @@ const UserProfile = () => {
                     </div>
                   </div>
                   {/* Social link section start */}
-                  <div className={classes.headingWrapper}>
+                  <div className={classes.socialHeadingWrapper}>
                     <Typography
                       className={classes.settingsFormTitle}
                       variant="h4"
@@ -445,7 +407,6 @@ const UserProfile = () => {
                     </Typography>
                     <hr className={classes.seperator} />
                   </div>
-
                   <div className={classes.cardWrapper}>
                     <div
                       className={`${classes.fieldsGroup} ${classes.linkField}`}
