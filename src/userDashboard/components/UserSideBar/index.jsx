@@ -30,7 +30,7 @@ const UserSideBar = () => {
   // const [selectedItem, setSelectedItem] = useState(0);
 
   useEffect(() => {
-    if (window.location.pathname === "/user/userProfile" && value !== 0) {
+    if (window.location.pathname === "/user/profile" && value !== 0) {
       setValue(0);
     } else if (window.location.pathname === "/user/favorites" && value !== 1) {
       setValue(1);
@@ -41,7 +41,7 @@ const UserSideBar = () => {
     } else if (window.location.pathname === "/user/devices" && value !== 4) {
       setValue(4);
     } else if (
-      window.location.pathname === "/user/mySubscription" &&
+      window.location.pathname === "/user/subscription" &&
       value !== 5
     ) {
       setValue(5);
@@ -91,7 +91,7 @@ const UserSideBar = () => {
               className={classes.userMenuItem}
               classes={{ selected: classes.selectedItem }}
               component={Link}
-              to="/user/userProfile"
+              to="/user/profile"
               selected={value === 0}
             >
               <PersonOutlineIcon />
@@ -146,7 +146,7 @@ const UserSideBar = () => {
               className={classes.userMenuItem}
               classes={{ selected: classes.selectedItem }}
               component={Link}
-              to="/user/mySubscription"
+              to="/user/subscription"
               selected={value === 5}
             >
               <span>My Subscription</span>
