@@ -56,7 +56,7 @@ const Publish = () => {
     // Author last file API
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`,
       {
         headers: { Authorization: user.token },
       })
@@ -133,7 +133,7 @@ const Publish = () => {
      // Current date wise publish product
      if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images/?start=${fromDates}&end=${toDates}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images/?start=${fromDates}&end=${toDates}`,
       {
         headers: {Authorization: user.token},
       })

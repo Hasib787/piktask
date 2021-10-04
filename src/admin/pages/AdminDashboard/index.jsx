@@ -70,7 +70,7 @@ const AdminDashboard = () => {
       var todayCurrentMonth = newDate.toISOString().substring(0, 10);
       
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
       {
         headers: {Authorization: user.token},
       })
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
       var previousFirstDay = previousMonthLastDay.toISOString().substring(0, 10);
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
       {
         headers: {Authorization: user.token},
       })
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
     // Author last file API
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images?limit=5`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images?limit=5`,
       {
         headers: { Authorization: user.token },
       })
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
     // Piktask top file API 
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/top_files?limit=5`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/top_files?limit=5`,
       {
         headers: { Authorization: user.token },
       })

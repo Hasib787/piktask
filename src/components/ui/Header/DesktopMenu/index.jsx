@@ -119,7 +119,7 @@ const DesktopMenu = ({ history }) => {
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
-                to="/contributor/joinNow"
+                to="/contributor/join"
               >
                 Sell Your Content
               </Button>

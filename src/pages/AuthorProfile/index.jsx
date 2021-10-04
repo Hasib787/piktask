@@ -44,7 +44,7 @@ const AuthorProfile = () => {
             if (user?.token) {
               axios
                 .get(
-                  `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.profile.id}`,
+                  `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.profile.id}`,
                   {
                     headers: { Authorization: user.token },
                   }
@@ -78,7 +78,7 @@ const AuthorProfile = () => {
     } else if (user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/sellers/followers/${profileInfo?.id}`,
+          `${process.env.REACT_APP_API_URL}/contributor/followers/${profileInfo?.id}`,
           {},
           {
             headers: { Authorization: user.token },

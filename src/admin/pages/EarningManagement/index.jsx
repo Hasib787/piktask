@@ -51,7 +51,7 @@ const EarningManagement = () => {
     // Total earning summary API integration
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/summary`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/summary`,
       {
         headers: {Authorization: user.token},
       })
@@ -76,7 +76,7 @@ const EarningManagement = () => {
 
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
       {
         headers: {Authorization: user.token},
       })
@@ -156,9 +156,7 @@ const EarningManagement = () => {
   if(fromDateMonths < 10){
     fromDateMonths = "0" + fromDateMonths;
   }
-  // if(fromCurrentDate < 10){
-  //   fromCurrentDate = "0" + fromCurrentDate;
-  // }
+ 
   let fromDates = (fromYear + "-" + fromDateMonths + "-" + fromCurrentDate);
 
   
@@ -166,9 +164,7 @@ const EarningManagement = () => {
   if(toDateMonths < 10){
     toDateMonths = "0" + toDateMonths;
   }
-  // if(toCurrentDate < 10){
-  //   toCurrentDate = "0" + toCurrentDate;
-  // }
+  
   let toDates = (fromYear + "-" + toDateMonths + "-" + toCurrentDate);
 
   
@@ -181,7 +177,7 @@ const EarningManagement = () => {
       let labelCount = [];
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectName}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectName}`,
       {
         headers: {Authorization: user.token},
       })
@@ -220,7 +216,7 @@ const EarningManagement = () => {
       let labelCount = [];
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectedName}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectedName}`,
       {
         headers: {Authorization: user.token},
       })
