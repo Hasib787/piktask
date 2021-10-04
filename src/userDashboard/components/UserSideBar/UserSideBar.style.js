@@ -23,12 +23,16 @@ const useStyles = makeStyles((theme) => ({
     padding: "4.5rem",
   },
   profileImage: {
+    height: "12rem",
+    Width: "12rem",
     "& img": {
       height: "12rem",
       Width: "12rem",
       borderRadius: "50%",
       margin: "0 auto",
       display: "flex",
+      padding: "0.3rem",
+      backgroundColor: "#707070",
     },
   },
   profileInfo: {

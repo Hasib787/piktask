@@ -1,6 +1,6 @@
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import EarningManagement from "./admin/pages/EarningManagement";
-// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import AccountSettings from "./admin/pages/AccountSettings";
 import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
@@ -60,6 +60,7 @@ import JoinNow from "./admin/pages/JoinNow";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const contributor = useSelector((state) => state.contributor);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -123,10 +124,10 @@ const App = () => {
       });
 
     // Author last file API
-    if (user?.token) {
+    if (contributor?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/user/earning/images`, {
-          headers: { Authorization: user.token },
+        .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`, {
+          headers: { Authorization: contributor?.token },
         })
         .then(({ data }) => {
           if (data?.status) {
@@ -139,7 +140,7 @@ const App = () => {
     }
 
     return () => unsubscribe();
-  }, [dispatch, user?.token]);
+  }, [dispatch, user?.token, contributor?.token]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -171,7 +172,8 @@ const App = () => {
         <Route exact path="/contributor/join" component={JoinNow} />
 
         {/* user Dashboard */}
-        <Route exact path="/user/profile" component={UserProfile} />
+        <PrivateRoute exact path="/user/profile" component={UserProfile} />
+        {/* <Route exact path="/user/profile" component={UserProfile} /> */}
         <Route exact path="/user/favorites" component={FavoriteItems} />
         <Route exact path="/user/downloads" component={DownloadItems} />
         <Route exact path="/user/following" component={UserFollowing} />

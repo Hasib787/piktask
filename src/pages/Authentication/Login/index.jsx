@@ -20,8 +20,6 @@ import Layout from "../../../Layout";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
-// const clientId =
-//   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
@@ -29,6 +27,7 @@ export const Login = ({ history }) => {
   const location = useLocation();
   const pathHistory = useHistory();
   const user = useSelector((state) => state.user);
+  // const contributor = useSelector((state) => state.contributor);
 
   const previousLocation = location.search;
   const params = new URLSearchParams(previousLocation);
@@ -40,6 +39,7 @@ export const Login = ({ history }) => {
   const [value, setValue] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const role = "user";
 
   useEffect(() => {
     return () => {
@@ -57,6 +57,7 @@ export const Login = ({ history }) => {
     .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
       username,
       password,
+      role,
     })
     .then((res) => {
       if (res.data.status) {
