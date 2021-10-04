@@ -25,14 +25,14 @@ const DownloadItems = () => {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
-  const [downloadsItem, setDownloadsItem] = useState({});
+  const [downloadsItem, setDownloadsItem] = useState([]);
 
   useEffect(() => {
     setLoading(true);
-  
+
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/downloads?&limit=20&page=2`,{
-        headers: {Authorization:user.token},
+      .get(`${process.env.REACT_APP_API_URL}/user/downloads?&limit=20&page=1`, {
+        headers: { Authorization: user.token },
       })
       .then(({ data }) => {
         if (data?.status) {
@@ -45,6 +45,7 @@ const DownloadItems = () => {
         setLoading(false);
       });
   }, [user]);
+
 
   return (
     <Layout title="Downloads || Piktask">

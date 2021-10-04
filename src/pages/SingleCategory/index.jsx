@@ -108,7 +108,7 @@ const SingleCategory = () => {
           if (user?.token) {
             axios
               .get(
-                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.detail.user_id}`,
                 {
                   headers: { Authorization: user.token },
                 }
@@ -125,22 +125,22 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
-    if (user?.token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
-          headers: { Authorization: user.token },
-        })
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
-    }
+      if (user?.token) {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
+            headers: { Authorization: user.token },
+          })
+          .then(({ data }) => {
+            if (!data?.status) {
+              setLike(false);
+            } else if (data?.status) {
+              setLike(true);
+            } else {
+              console.log("Image like status error");
+            }
+          })
+          .catch((error) => console.log("Like status error: ", error));
+      }
 
     // related product API
     let relatedImageURL;
@@ -169,7 +169,7 @@ const SingleCategory = () => {
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
+          `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
           {},
           {
             headers: { Authorization: user.token },
@@ -215,9 +215,13 @@ const SingleCategory = () => {
     }
   };
 
-  const handleClickOpen = () => { setOpen(true); };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  const handleClose = () => { setOpen(false); };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   //Handle download image
   const handleDownload = (e) => {
@@ -517,7 +521,9 @@ const SingleCategory = () => {
                   <div className={classes.downloadedImage}>
                     {downloadCount
                       ? intToString(downloadCount)
-                      : intToString(imageDetails?.user?.images?.total_downloads)}
+                      : intToString(
+                          imageDetails?.user?.images?.total_downloads
+                        )}
                   </div>
                 </div>
                 {user.id !== imageDetails?.user_id && (
