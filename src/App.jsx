@@ -171,13 +171,12 @@ const App = () => {
         <Route exact path="/contributor/join" component={JoinNow} />
 
         {/* user Dashboard */}
-        {/* <PrivateRoute exact path="/user/userProfile" component={UserProfile} /> */}
-        <Route exact path="/user/userProfile" component={UserProfile} />
+        <Route exact path="/user/profile" component={UserProfile} />
         <Route exact path="/user/favorites" component={FavoriteItems} />
         <Route exact path="/user/downloads" component={DownloadItems} />
         <Route exact path="/user/following" component={UserFollowing} />
         <Route exact path="/user/devices" component={DeviceActivity} />
-        <Route exact path="/user/mySubscription" component={UserSubscription} />
+        <Route exact path="/user/subscription" component={UserSubscription} />
 
         <Route exact path="/termsConditions" component={TermsConditions} />
         <Route exact path="/copyrightInformation" component={CopyrightInfo} />
