@@ -1,6 +1,12 @@
 import {
+  Button,
   Card,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   List,
   ListItem,
   Typography,
@@ -18,6 +24,7 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import authorPhoto from "../../../assets/author.png";
+import axios from "axios";
 
 const UserSideBar = () => {
   const classes = useStyles();
@@ -26,8 +33,40 @@ const UserSideBar = () => {
   const user = useSelector((state) => state.user);
 
   const [value, setValue] = useState(0);
+  const [deleteAccountDialog, setDeleteAccountDialog] = useState(false);
   // const [open, setOpen] = useState(false);
   // const [selectedItem, setSelectedItem] = useState(0);
+
+  const handleDialogOpen = () => {
+    setDeleteAccountDialog(true);
+  };
+  const handleDialogClose = () => {
+    setDeleteAccountDialog(false);
+  };
+
+  const handleCloseAccount = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}/user/delete/${user.id}`, {
+        headers: { Authorization: user.token },
+      })
+      .then((res) => {
+        if (res.status) {
+          toast.success("Your account are successfully deleted");
+          history.push("/");
+          localStorage.clear();
+          dispatch({
+            type: "LOGOUT",
+            payload: {
+              email: "",
+              token: "",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data?.message);
+      });
+  };
 
   useEffect(() => {
     if (window.location.pathname === "/user/profile" && value !== 0) {
@@ -160,9 +199,42 @@ const UserSideBar = () => {
         </CardContent>
       </Card>
       <Card className={classes.closedAccount}>
-        <CardContent component={Link} to="#!">
-          <Typography>Close My Account</Typography>
+        <CardContent>
+          <Typography onClick={handleDialogOpen}>Close My Account</Typography>
         </CardContent>
+        <Dialog
+          className={classes.closeAccountDialog}
+          open={deleteAccountDialog}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle className={classes.closeAccountTitle}>
+            {"Are you sure?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Note that you will close your Piktask accounts! Your premium
+              subscription will also be canceled with no refund.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleDialogClose}
+              className={classes.keepAccountBtn}
+              autoFocus
+            >
+              keep Account
+            </Button>
+            <Button
+              onClick={handleCloseAccount}
+              className={classes.closeAccountBtn}
+              autoFocus
+            >
+              Close Account
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Card>
     </>
   );

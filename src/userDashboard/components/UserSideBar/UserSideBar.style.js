@@ -81,11 +81,40 @@ const useStyles = makeStyles((theme) => ({
     },
     "& p": {
       fontSize: "1.6rem",
-      fontWeight: "700",
+      fontWeight: "400",
       color: "#E21313",
       textAlign: "center",
       marginBottom: "-0.3rem",
     },
+  },
+  closeAccountDialog: {
+   "& div div":{
+    width: "50rem",
+    [theme.breakpoints.down(480)] :{
+      width: "100%",
+    },
+   },
+  },
+  closeAccountTitle: {
+    "& h2":{
+      fontSize: "1.8rem !important",
+    },
+  },
+  keepAccountBtn:{
+    color:"white",
+    backgroundColor:theme.palette.primary.light,
+    transition:"all 0.3s linier",
+    "&:hover":{
+      backgroundColor: "#0773c5",
+    }
+  },
+  closeAccountBtn:{
+    color:"white",
+    backgroundColor:"#f91c0c",
+    transition:"all 0.3s linier",
+    "&:hover":{
+      backgroundColor:"#b71c1c",
+    }
   },
 }));
 
