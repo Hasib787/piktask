@@ -1,6 +1,6 @@
 import CompleteRegistration from "./pages/Authentication/EmailVerification";
 import EarningManagement from "./admin/pages/EarningManagement";
-// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import AccountSettings from "./admin/pages/AccountSettings";
 import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
@@ -60,6 +60,7 @@ import JoinNow from "./admin/pages/JoinNow";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const contributor = useSelector((state) => state.contributor);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,20 +93,20 @@ const App = () => {
       }
     }
 
-      // Check username/password auth state
-      const setContributorToken = window.localStorage.getItem("token") || "";
-      if (setContributorToken) {
-        const decode = jwt_decode(setContributorToken.split(" ")[1]);
-        if (decode.email) {
-          dispatch({
-            type: "SET_CONTRIBUTOR",
-            payload: {
-              ...decode,
-              token: setContributorToken,
-            },
-          });
-        }
+    // Check username/password auth state
+    const setContributorToken = window.localStorage.getItem("token") || "";
+    if (setContributorToken) {
+      const decode = jwt_decode(setContributorToken.split(" ")[1]);
+      if (decode.email) {
+        dispatch({
+          type: "SET_CONTRIBUTOR",
+          payload: {
+            ...decode,
+            token: setContributorToken,
+          },
+        });
       }
+    }
 
     // Popular categories API integration
     axios
@@ -120,27 +121,26 @@ const App = () => {
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
 
-      // Author last file API
-    if(user?.token){
+    // Author last file API
+    if (contributor?.token) {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images`,
-      {
-        headers: { Authorization: user.token },
-      })
-      .then(({data}) => {
-        if(data?.status) {
-          dispatch({
-            type: "TOTAL_IMAGE_EARNING",
-            payload: [...data?.images],
-          });
-        }
-      })
+        .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`, {
+          headers: { Authorization: contributor?.token },
+        })
+        .then(({ data }) => {
+          if (data?.status) {
+            dispatch({
+              type: "TOTAL_IMAGE_EARNING",
+              payload: [...data?.images],
+            });
+          }
+        });
     }
 
     return () => unsubscribe();
-  }, [dispatch, user?.token]);
+  }, [dispatch, user?.token, contributor?.token]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -162,20 +162,23 @@ const App = () => {
         <Route exact path="/contributor/revision" component={Revision} />
         <Route exact path="/contributor/reject" component={RejectFiles} />
         <Route exact path="/contributor/publish" component={Publish} />
-        <Route exact path="/contributor/earnings" component={EarningManagement} />
+        <Route
+          exact
+          path="/contributor/earnings"
+          component={EarningManagement}
+        />
         <Route exact path="/contributor/guidLine" component={GuidLine} />
         <Route exact path="/contributor/settings" component={AccountSettings} />
-        <Route exact path="/contributor/joinNow" component={JoinNow} />
-
+        <Route exact path="/contributor/join" component={JoinNow} />
 
         {/* user Dashboard */}
-        <Route exact path="/user/profile" component={UserProfile} />
+        <PrivateRoute exact path="/user/profile" component={UserProfile} />
+        {/* <Route exact path="/user/profile" component={UserProfile} /> */}
         <Route exact path="/user/favorites" component={FavoriteItems} />
         <Route exact path="/user/downloads" component={DownloadItems} />
         <Route exact path="/user/following" component={UserFollowing} />
         <Route exact path="/user/devices" component={DeviceActivity} />
         <Route exact path="/user/subscription" component={UserSubscription} />
-
 
         <Route exact path="/termsConditions" component={TermsConditions} />
         <Route exact path="/copyrightInformation" component={CopyrightInfo} />
@@ -183,7 +186,6 @@ const App = () => {
         <Route exact path="/cookiesPolicy" component={CookiesPolicy} />
         <Route exact path="/support" component={Support} />
         <Route exact path="/contact" component={Contact} />
-        
 
         {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
@@ -209,7 +211,11 @@ const App = () => {
         <Route exact path="/subscription" component={Subscription} />
         <Route exact path="/sellers" component={Sellers} />
         <Route exact path="/categories" component={Categories} />
-        <Route exact path="/search/trending_search" component={TrendingSearch}/>
+        <Route
+          exact
+          path="/search/trending_search"
+          component={TrendingSearch}
+        />
 
         <Route exact path="/images/recent_images" component={Recent} />
         <Route exact path="/images/popular_images" component={PopularImages} />
