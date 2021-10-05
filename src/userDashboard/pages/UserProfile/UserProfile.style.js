@@ -31,50 +31,88 @@ const useStyles = makeStyles((theme) => ({
       padding: "0 1rem",
     },
   },
-  googleBtn: {
-    backgroundColor: "#fff !important",
-    fontSize: "25px !important",
-    textAlign: "center",
-    padding: "0.2rem 3rem !important",
-    borderRadius: 0,
+  googleButton: {
+    display: "flex",
+    alignItems: "center",
+    padding: "1.2rem 3rem",
+    border: "1px solid #C74C37",
+    borderRadius: "4px",
+    color: "white",
+    backgroundColor: "#C74C37",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "rgb(28 81 103)",
-    },
-    "@media (max-width: 768px)": {
-      padding: "1.5rem",
-      "& img": {
-        width: "8rem",
-      },
+      backgroundColor: "#ab311d",
     },
   },
-  facebookBtn: {
+  googleIcon: {
+    color: "white",
+    width: "2rem",
+    height: "2.5rem",
+    marginRight: "0.8rem",
+  },
+  facebookBtn:{
+    display: "flex",
+    alignItems: "center",
+    padding: "1.2rem 3rem",
+    border: "1px solid #425993",
+    borderRadius: "4px",
+    color: "white",
     backgroundColor: "#425993",
-    borderRadius: 0,
-
-    "& .kep-login-facebook": {
-      fontWeight: 700,
-      fontSize: 13,
-    },
-
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: "rgb(48 72 132)",
-    },
-    [theme.breakpoints.up(2000)]: {
-      "& .kep-login-facebook": {
-        fontWeight: 700,
-        fontSize: 13,
-      },
-    },
-    [theme.breakpoints.down(1025)]: {
-      "& .kep-login-facebook": {
-        fontWeight: 700,
-        fontSize: 13,
-      },
-    },
-    [theme.breakpoints.up(2039)]: {
-      padding: "14px !important",
+      backgroundColor: "#213567",
     },
   },
+  facebookIcon:{
+    color: "white",
+    width: "2rem",
+    height: "2.5rem",
+    marginRight: "0.8rem",
+  },
+  // googleBtn: {
+  //   backgroundColor: "#fff !important",
+  //   fontSize: "25px !important",
+  //   textAlign: "center",
+  //   padding: "0.2rem 3rem !important",
+  //   borderRadius: 0,
+  //   "&:hover": {
+  //     backgroundColor: "rgb(28 81 103)",
+  //   },
+  //   "@media (max-width: 768px)": {
+  //     padding: "1.5rem",
+  //     "& img": {
+  //       width: "8rem",
+  //     },
+  //   },
+  // },
+  // facebookBtn: {
+  //   backgroundColor: "#425993",
+  //   borderRadius: 0,
+
+  //   "& .kep-login-facebook": {
+  //     fontWeight: 700,
+  //     fontSize: 13,
+  //   },
+
+  //   "&:hover": {
+  //     backgroundColor: "rgb(48 72 132)",
+  //   },
+  //   [theme.breakpoints.up(2000)]: {
+  //     "& .kep-login-facebook": {
+  //       fontWeight: 700,
+  //       fontSize: 13,
+  //     },
+  //   },
+  //   [theme.breakpoints.down(1025)]: {
+  //     "& .kep-login-facebook": {
+  //       fontWeight: 700,
+  //       fontSize: 13,
+  //     },
+  //   },
+  //   [theme.breakpoints.up(2039)]: {
+  //     padding: "14px !important",
+  //   },
+  // },
   seperator: {
     borderWidth: 0,
     marginLeft: "3%",

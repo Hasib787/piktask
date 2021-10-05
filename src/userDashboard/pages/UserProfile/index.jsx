@@ -11,7 +11,8 @@ import {
   styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import FacebookLogin from "react-facebook-login";
+// import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
 import Spacing from "../../../components/Spacing";
@@ -34,6 +35,9 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { ToggleButton } from "@material-ui/lab";
 import Switch from "@material-ui/core/Switch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -160,14 +164,19 @@ const UserProfile = () => {
                     </div>
                     <div className={classes.socialsButtons}>
                       <GoogleLogin
-                        clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                        clientId={clientId}
                         render={(renderProps) => (
-                          <button
+                          <Button
+                            className={classes.googleButton}
                             onClick={renderProps.onClick}
                             disabled={renderProps.disabled}
                           >
-                             Google
-                          </button>
+                            <FontAwesomeIcon
+                              className={classes.googleIcon}
+                              icon={faGoogle}
+                            />
+                            Connect Google
+                          </Button>
                         )}
                         buttonText="Login"
                         onSuccess={handleGoogleLogin}
@@ -175,16 +184,27 @@ const UserProfile = () => {
                         cookiePolicy={"single_host_origin"}
                       />
                       <Spacing space={{ margin: "0 0.5rem" }} />
-                      <div className={classes.facebookBtn}>
-                        <FacebookLogin
-                          // className={classes.facebookBtn}
-                          appId="168140328625744"
-                          autoLoad={false}
-                          fields="name,email,picture"
-                          onClick={handleFacebookLogin}
-                          callback={handleFacebookLogin}
-                        />
-                      </div>
+
+                      <FacebookLogin
+                        appId="168140328625744"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        onClick={handleFacebookLogin}
+                        callback={handleFacebookLogin}
+                        render={(renderProps) => (
+                          <Button
+                            className={classes.facebookBtn}
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          >
+                            <FontAwesomeIcon
+                              className={classes.facebookIcon}
+                              icon={faFacebookF}
+                            />
+                            Connect Facebook
+                          </Button>
+                        )}
+                      />
                     </div>
                   </div>
                   <hr className={classes.seperator} />
@@ -273,10 +293,9 @@ const UserProfile = () => {
                         <TextField
                           fullWidth
                           variant="outlined"
-                          label="Password"
+                          label="Website"
                           className={classes.formControl}
-                          name="password"
-                          type="password"
+                          name="website"
                           // value={username}
                           // onChange={(e) => setUsername(e.target.value)}
                         />
