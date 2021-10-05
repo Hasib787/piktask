@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     paddingRight: "3rem",
     [theme.breakpoints.down(426)]: {
-      padding: "0 1rem",
+      justifyContent: "center",
+      padding:"0",
     },
   },
   googleButton: {
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   facebookBtn:{
     display: "flex",
     alignItems: "center",
-    padding: "1.2rem 3rem",
+    padding: "1.2rem 2rem",
     border: "1px solid #425993",
     borderRadius: "4px",
     color: "white",
@@ -63,11 +64,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#213567",
     },
   },
-  facebookIcon:{
+  facebookIconBtn:{
     color: "white",
-    width: "2rem",
-    height: "2.5rem",
-    marginRight: "0.8rem",
+    width: "1.7rem !important",
+    height: "2rem !important",
+    marginRight: "0.8rem !important",
   },
   // googleBtn: {
   //   backgroundColor: "#fff !important",
@@ -125,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     padding: "3rem",
     [theme.breakpoints.down(426)]: {
-      padding: "1.5rem",
+      padding: "1.5rem 2.5rem",
     },
   },
   profileInfoField: {
@@ -345,6 +346,11 @@ const useStyles = makeStyles((theme) => ({
   },
   notification: {
     padding: "0 0 0 3rem",
+    color: "#114960",
+    fontWeight: 700,
+    [theme.breakpoints.down(426)]: {
+      padding: "1.5rem",
+    },
   },
   getNews: {
     display: "flex",

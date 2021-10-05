@@ -172,8 +172,8 @@ const App = () => {
         <Route exact path="/contributor/join" component={JoinNow} />
 
         {/* user Dashboard */}
-        <PrivateRoute exact path="/user/profile" component={UserProfile} />
-        {/* <Route exact path="/user/profile" component={UserProfile} /> */}
+        {/* <PrivateRoute exact path="/user/profile" component={UserProfile} /> */}
+        <Route exact path="/user/profile" component={UserProfile} />
         <Route exact path="/user/favorites" component={FavoriteItems} />
         <Route exact path="/user/downloads" component={DownloadItems} />
         <Route exact path="/user/following" component={UserFollowing} />
