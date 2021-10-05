@@ -78,6 +78,7 @@ const App = () => {
         });
       }
     });
+    
     // Check username/password auth state
     const setUserToken = window.localStorage.getItem("token") || "";
     if (setUserToken) {
@@ -124,20 +125,20 @@ const App = () => {
       });
 
     // Author last file API
-    if (contributor?.token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`, {
-          headers: { Authorization: contributor?.token },
-        })
-        .then(({ data }) => {
-          if (data?.status) {
-            dispatch({
-              type: "TOTAL_IMAGE_EARNING",
-              payload: [...data?.images],
-            });
-          }
-        });
-    }
+    // if (contributor?.token) {
+    //   axios
+    //     .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`, {
+    //       headers: { Authorization: contributor?.token },
+    //     })
+    //     .then(({ data }) => {
+    //       if (data?.status) {
+    //         dispatch({
+    //           type: "TOTAL_IMAGE_EARNING",
+    //           payload: [...data?.images],
+    //         });
+    //       }
+    //     });
+    // }
 
     return () => unsubscribe();
   }, [dispatch, user?.token, contributor?.token]);
@@ -175,7 +176,7 @@ const App = () => {
         <PrivateRoute exact path="/user/profile" component={UserProfile} />
         {/* <Route exact path="/user/profile" component={UserProfile} /> */}
         <Route exact path="/user/favorites" component={FavoriteItems} />
-        <Route exact path="/user/downloads" component={DownloadItems} />
+        <PrivateRoute exact path="/user/downloads" component={DownloadItems} />
         <Route exact path="/user/following" component={UserFollowing} />
         <Route exact path="/user/devices" component={DeviceActivity} />
         <Route exact path="/user/subscription" component={UserSubscription} />
