@@ -37,7 +37,8 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const AdminDashboard = () => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const contributor = useSelector((state) => state.contributor);
 
   const [isLoading, setLoading] = useState(false);
   const [topFiles, setTopFiles] = useState([]);
@@ -63,16 +64,16 @@ const AdminDashboard = () => {
     setLoading(true);
 
     // Author current month earning
-    if(user?.token){
+    if(contributor?.token){
       var newDate = new Date();
       var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
       var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
       var todayCurrentMonth = newDate.toISOString().substring(0, 10);
       
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
       {
-        headers: {Authorization: user.token},
+        headers: {Authorization: contributor?.token},
       })
       .then(({data}) => {
         if(data?.status){
@@ -83,7 +84,7 @@ const AdminDashboard = () => {
     }
     
     // Author previous month earning
-    if(user?.token){
+    if(contributor?.token){
       var previousDate = new Date();
       var previousMonthFirstDay = new Date(previousDate.getFullYear(), previousDate.getMonth() - 1, 2);
       var previousFirstDays = previousMonthFirstDay.toISOString().substring(0, 10);
@@ -92,9 +93,9 @@ const AdminDashboard = () => {
       var previousFirstDay = previousMonthLastDay.toISOString().substring(0, 10);
 
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
       {
-        headers: {Authorization: user.token},
+        headers: {Authorization: contributor?.token},
       })
       .then(({data}) => {
         if(data?.status){
@@ -105,11 +106,11 @@ const AdminDashboard = () => {
     }
 
     // Author last file API
-    if(user?.token){
+    if(contributor?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/earning/images?limit=5`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images?limit=5`,
       {
-        headers: { Authorization: user.token },
+        headers: { Authorization: contributor?.token },
       })
       .then(({data}) => {
         if(data?.status) {
@@ -120,11 +121,11 @@ const AdminDashboard = () => {
     }
 
     // Piktask top file API 
-    if(user?.token){
+    if(contributor?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/user/dashboard/top_files?limit=5`,
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/top_files?limit=5`,
       {
-        headers: { Authorization: user.token },
+        headers: { Authorization: contributor?.token },
       })
       .then(({data}) => {
         if(data?.status) {
@@ -134,7 +135,7 @@ const AdminDashboard = () => {
       })
     }
 
-  }, [user.token])
+  }, [contributor?.token])
 
 
   return (

@@ -108,18 +108,16 @@ const UserSideBar = () => {
     <>
       <Card className={classes.userProfile}>
         <div className={classes.userProfileContent}>
-          {user?.avatar ? (
-            <div className={classes.profileImage}>
+          <div className={classes.profileImage}>
+            {user?.avatar ? (
               <img src={user?.avatar} alt="UserProfile" />
-            </div>
-          ) : (
-            <div className={classes.profileImage}>
+            ) : (
               <img src={authorPhoto} alt="UserProfile" />
+            )}
+            <div className={classes.profileInfo}>
+              <Typography variant="h2">{user?.username}</Typography>
+              <Typography>{user?.email}</Typography>
             </div>
-          )}
-          <div className={classes.profileInfo}>
-            <Typography variant="h2">{user?.username}</Typography>
-            <Typography>{user?.email}</Typography>
           </div>
         </div>
       </Card>

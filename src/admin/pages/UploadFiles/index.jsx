@@ -70,7 +70,8 @@ const img = {
 const UploadFiles = () => {
   const classes = useStyles();
   const history = useHistory();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const contributor = useSelector((state) => state.contributor);
 
   const [item_for_sale, setItem_for_sale] = useState("free");
   const [archivedFileSrc, setArchivedFileSrc] = useState("");
@@ -236,7 +237,7 @@ const UploadFiles = () => {
     setLoading(true);
     setTitleError(false);
 
-    if (!user.token) {
+    if (!contributor?.token) {
       toast.error("You have no authorizatoin");
       return;
     }
@@ -308,7 +309,7 @@ const UploadFiles = () => {
       url,
       data: formData,
       headers: {
-        Authorization: user.token,
+        Authorization: contributor?.token,
         "Content-Type": "multipart/form-data",
       },
     })
