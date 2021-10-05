@@ -37,6 +37,18 @@ const UserSideBar = () => {
   // const [open, setOpen] = useState(false);
   // const [selectedItem, setSelectedItem] = useState(0);
 
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
   const handleDialogOpen = () => {
     setDeleteAccountDialog(true);
   };
@@ -106,69 +118,127 @@ const UserSideBar = () => {
 
   return (
     <>
-      <Card className={classes.userProfile}>
-        <div className={classes.userProfileContent}>
-          <div className={classes.profileImage}>
-            {user?.avatar ? (
-              <img src={user?.avatar} alt="UserProfile" />
-            ) : (
-              <img src={authorPhoto} alt="UserProfile" />
-            )}
-            <div className={classes.profileInfo}>
-              <Typography variant="h2">{user?.username}</Typography>
-              <Typography>{user?.email}</Typography>
-            </div>
-          </div>
+      {mobileView ? (
+        <div>
+          <Button component={Link} to="/user/profile">
+            <PersonOutlineIcon />
+          </Button>
+          <Button component={Link} to="/user/favorites">
+            <FavoriteBorderIcon />
+          </Button>
+          <Button component={Link} to="/user/downloads">
+            <GetAppIcon />
+          </Button>
+          <Button component={Link} to="/user/following">
+            <PeopleOutlineIcon />
+          </Button>
         </div>
-      </Card>
-      <Card className={classes.userMenuList}>
-        <CardContent>
-          <List component="nav" aria-labelledby="nested-sidebar-nav">
-            <ListItem
-              className={classes.userMenuItem}
-              classes={{ selected: classes.selectedItem }}
-              component={Link}
-              to="/user/profile"
-              selected={value === 0}
-            >
-              <PersonOutlineIcon />
-              <span>Edit Profile</span>
-            </ListItem>
+      ) : (
+        // <List style={{display: "flex", justifyContent: "space-between", alignItems: "center"}} component="nav" aria-labelledby="nested-sidebar-nav">
+        //   <ListItem
+        //     className={classes.userMenuItem}
+        //     classes={{ selected: classes.selectedItem }}
+        //     component={Link}
+        //     to="/user/profile"
+        //     selected={value === 0}
+        //   >
+        //     <PersonOutlineIcon />
+        //   </ListItem>
 
-            <ListItem
-              className={classes.userMenuItem}
-              classes={{ selected: classes.selectedItem }}
-              component={Link}
-              to="/user/favorites"
-              selected={value === 1}
-            >
-              <FavoriteBorderIcon />
-              <span>Favorite</span>
-            </ListItem>
+        //   <ListItem
+        //     className={classes.userMenuItem}
+        //     classes={{ selected: classes.selectedItem }}
+        //     component={Link}
+        //     to="/user/favorites"
+        //     selected={value === 1}
+        //   >
+        //     <FavoriteBorderIcon />
+        //   </ListItem>
 
-            <ListItem
-              className={classes.userMenuItem}
-              classes={{ selected: classes.selectedItem }}
-              component={Link}
-              to="/user/downloads"
-              selected={value === 2}
-            >
-              <GetAppIcon />
-              <span>Downloads(0/10)</span>
-            </ListItem>
+        //   <ListItem
+        //     className={classes.userMenuItem}
+        //     classes={{ selected: classes.selectedItem }}
+        //     component={Link}
+        //     to="/user/downloads"
+        //     selected={value === 2}
+        //   >
+        //     <GetAppIcon />
+        //   </ListItem>
 
-            <ListItem
-              className={classes.userMenuItem}
-              classes={{ selected: classes.selectedItem }}
-              component={Link}
-              to="/user/following"
-              selected={value === 3}
-            >
-              <PeopleOutlineIcon />
-              <span>Following</span>
-            </ListItem>
+        //   <ListItem
+        //     className={classes.userMenuItem}
+        //     classes={{ selected: classes.selectedItem }}
+        //     component={Link}
+        //     to="/user/following"
+        //     selected={value === 3}
+        //   >
+        //     <PeopleOutlineIcon />
+        //   </ListItem>
+        // </List>
+        <>
+          <Card className={classes.userProfile}>
+            <div className={classes.userProfileContent}>
+              <div className={classes.profileImage}>
+                {user?.avatar ? (
+                  <img src={user?.avatar} alt="UserProfile" />
+                ) : (
+                  <img src={authorPhoto} alt="UserProfile" />
+                )}
+                <div className={classes.profileInfo}>
+                  <Typography variant="h2">{user?.username}</Typography>
+                  <Typography>{user?.email}</Typography>
+                </div>
+              </div>
+            </div>
+          </Card>
+          <Card className={classes.userMenuList}>
+            <CardContent>
+              <List component="nav" aria-labelledby="nested-sidebar-nav">
+                <ListItem
+                  className={classes.userMenuItem}
+                  classes={{ selected: classes.selectedItem }}
+                  component={Link}
+                  to="/user/profile"
+                  selected={value === 0}
+                >
+                  <PersonOutlineIcon />
+                  <span>Edit Profile</span>
+                </ListItem>
 
-            {/* <ListItem
+                <ListItem
+                  className={classes.userMenuItem}
+                  classes={{ selected: classes.selectedItem }}
+                  component={Link}
+                  to="/user/favorites"
+                  selected={value === 1}
+                >
+                  <FavoriteBorderIcon />
+                  <span>Favorite</span>
+                </ListItem>
+
+                <ListItem
+                  className={classes.userMenuItem}
+                  classes={{ selected: classes.selectedItem }}
+                  component={Link}
+                  to="/user/downloads"
+                  selected={value === 2}
+                >
+                  <GetAppIcon />
+                  <span>Downloads(0/10)</span>
+                </ListItem>
+
+                <ListItem
+                  className={classes.userMenuItem}
+                  classes={{ selected: classes.selectedItem }}
+                  component={Link}
+                  to="/user/following"
+                  selected={value === 3}
+                >
+                  <PeopleOutlineIcon />
+                  <span>Following</span>
+                </ListItem>
+
+                {/* <ListItem
               className={classes.userMenuItem}
               classes={{ selected: classes.selectedItem }}
               component={Link}
@@ -189,51 +259,58 @@ const UserSideBar = () => {
               <span>My Subscription</span>
             </ListItem> */}
 
-            <ListItem className={classes.userMenuItem} onClick={handleSignout}>
-              <PowerSettingsNewIcon />
-              <span>Logout</span>
-            </ListItem>
-          </List>
-        </CardContent>
-      </Card>
-      <Card className={classes.closedAccount}>
-        <CardContent>
-          <Typography onClick={handleDialogOpen}>Close My Account</Typography>
-        </CardContent>
-        <Dialog
-          className={classes.closeAccountDialog}
-          open={deleteAccountDialog}
-          onClose={handleDialogClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle className={classes.closeAccountTitle}>
-            {"Are you sure?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Note that you will close your Piktask accounts! Your premium
-              subscription will also be canceled with no refund.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleDialogClose}
-              className={classes.keepAccountBtn}
-              autoFocus
+                <ListItem
+                  className={classes.userMenuItem}
+                  onClick={handleSignout}
+                >
+                  <PowerSettingsNewIcon />
+                  <span>Logout</span>
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+          <Card className={classes.closedAccount}>
+            <CardContent>
+              <Typography onClick={handleDialogOpen}>
+                Close My Account
+              </Typography>
+            </CardContent>
+            <Dialog
+              className={classes.closeAccountDialog}
+              open={deleteAccountDialog}
+              onClose={handleDialogClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
             >
-              keep Account
-            </Button>
-            <Button
-              onClick={handleCloseAccount}
-              className={classes.closeAccountBtn}
-              autoFocus
-            >
-              Close Account
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Card>
+              <DialogTitle className={classes.closeAccountTitle}>
+                {"Are you sure?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Note that you will close your Piktask accounts! Your premium
+                  subscription will also be canceled with no refund.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={handleDialogClose}
+                  className={classes.keepAccountBtn}
+                  autoFocus
+                >
+                  keep Account
+                </Button>
+                <Button
+                  onClick={handleCloseAccount}
+                  className={classes.closeAccountBtn}
+                  autoFocus
+                >
+                  Close Account
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Card>
+        </>
+      )}
     </>
   );
 };

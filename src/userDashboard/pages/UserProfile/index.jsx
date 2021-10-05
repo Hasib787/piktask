@@ -1,16 +1,16 @@
 import {
   Button,
-  Card,
+  // Card,
   Container,
   FormControl,
   Grid,
-  Select,
+  // Select,
   TextField,
   Typography,
   FormControlLabel,
-  styled,
+  // styled,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
@@ -20,7 +20,7 @@ import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
 import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useStyles from "./UserProfile.style";
 import shutterstock from "../../../assets/icons/shutterstock.svg";
 import freepikIcon from "../../../assets/icons/freepik.svg";
@@ -33,7 +33,7 @@ import instagram from "../../../assets/icons/instagram.svg";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { ToggleButton } from "@material-ui/lab";
+// import { ToggleButton } from "@material-ui/lab";
 import Switch from "@material-ui/core/Switch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -44,10 +44,10 @@ const clientId =
 
 const UserProfile = () => {
   const classes = useStyles();
-  const [payment, setPayment] = useState("Paypal");
-  const [country, setCountry] = useState("Bangladesh");
-  const [state, setState] = useState("Chittagong");
-  const [checked, setChecked] = useState(false);
+  // const [payment, setPayment] = useState("Paypal");
+  // const [country, setCountry] = useState("Bangladesh");
+  // const [state, setState] = useState("Chittagong");
+  // const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
   const pathHistory = useHistory();
   const location = useLocation();
@@ -63,17 +63,7 @@ const UserProfile = () => {
   //   setChecked(event.target.checked);
   // };
 
-  const [menuSate, setMenuSate] = useState({ mobileView: false });
-  const { mobileView } = menuSate;
-  useEffect(() => {
-    const setResponsiveness = () => {
-      return window.innerWidth < 900
-        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
-        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
-    };
-    setResponsiveness();
-    window.addEventListener("resize", () => setResponsiveness());
-  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -140,16 +130,17 @@ const UserProfile = () => {
       pathHistory.replace(from);
     }
   };
+  
   return (
     <Layout title={"UserProfile | piktask"}>
       <Header />
       <Spacing space={{ height: "5rem" }} />
       <Container>
-        <Grid container spacing={4}>
-          <Grid className={classes.cardItem} item md={3} sm={3} xm={12}>
+        <Grid container spacing={2}>
+          <Grid item md={3} sm={3} xs={12} className={classes.cardItem}>
             <UserSideBar />
           </Grid>
-          <Grid className={classes.cardItem} item md={9} sm={9} xm={12}>
+          <Grid item md={9} sm={9} xs={12} className={classes.cardItem}>
             <div className={classes.userProfileRoot}>
               <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
                 <div className={classes.cardRoot}>
@@ -207,7 +198,7 @@ const UserProfile = () => {
                       />
                     </div>
                   </div>
-                  <hr className={classes.seperator} />
+                  <hr className={classes.separator} />
                   <Grid
                     className={classes.profileInfoField}
                     container
@@ -324,7 +315,7 @@ const UserProfile = () => {
                     >
                       Professional Portfolio
                     </Typography>
-                    <hr className={classes.seperator} />
+                    <hr className={classes.separator} />
                   </div>
                   <div className={classes.cardWrapper}>
                     <div
@@ -428,7 +419,7 @@ const UserProfile = () => {
                     >
                       Social Link
                     </Typography>
-                    <hr className={classes.seperator} />
+                    <hr className={classes.separator} />
                   </div>
                   <div className={classes.cardWrapper}>
                     <div

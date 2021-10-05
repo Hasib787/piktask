@@ -51,91 +51,91 @@ const UserFollowing = () => {
   return (
     <Layout title="Followings || Piktask">
       <Header />
-
       <Spacing space={{ height: "5rem" }} />
       <Container>
-        <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12} className={classes.cardItem}>
+        <Grid container spacing={2}>
+          <Grid item md={3} sm={3} xs={12} className={classes.cardItem}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12} className={classes.cardItem}>
+          <Grid item md={9} sm={9} xs={12} className={classes.cardItem}>
             <SectionHeading title="My Follower" large />
             <Grid>
-              {isLoading || followersItem?.map((followItem) => (
-                <Grid key={followItem?.user_id} item xs={12} sm={12} md={12}>
-                  <Card className={classes.followerProfileContent}>
-                    <CardContent>
-                      <div className={classes.followerProfile}>
-                        <div className={classes.viewFollowerInfo}>
-                          <div className={classes.followerImage}>
-                            {followItem?.avatar ? (
-                              <img
-                                src={followItem?.avatar}
-                                alt={followItem?.username}
-                              />
-                            ) : (
-                              <img src={authorImg} alt={"author"} />
-                            )}
-                          </div>
-                          <div className={classes.followerInfo}>
-                            <Typography
-                              className={classes.followerName}
-                              variant="h3"
-                            >
-                              {followItem?.username}
-                            </Typography>
-                            <div className={classes.followerDetails}>
+              {isLoading ||
+                followersItem?.map((followItem) => (
+                  <Grid key={followItem?.user_id} item xs={12} sm={12} md={12}>
+                    <Card className={classes.followerProfileContent}>
+                      <CardContent>
+                        <div className={classes.followerProfile}>
+                          <div className={classes.viewFollowerInfo}>
+                            <div className={classes.followerImage}>
+                              {followItem?.avatar ? (
+                                <img
+                                  src={followItem?.avatar}
+                                  alt={followItem?.username}
+                                />
+                              ) : (
+                                <img src={authorImg} alt={"author"} />
+                              )}
+                            </div>
+                            <div className={classes.followerInfo}>
                               <Typography
-                                className={classes.followerInfoItem}
-                                variant="body2"
+                                className={classes.followerName}
+                                variant="h3"
                               >
-                                Resources
-                                <span>{followItem?.total_images}</span>
+                                {followItem?.username}
                               </Typography>
-                              <Typography
-                                className={classes.followerInfoItem}
-                                variant="body2"
-                              >
-                                Followers
-                                <span>{followItem?.total_follower}</span>
-                              </Typography>
-                              <Typography
-                                className={classes.followerInfoItem}
-                                variant="body2"
-                              >
-                                Downloads
-                                <span>{followItem?.total_download}</span>
-                              </Typography>
+                              <div className={classes.followerDetails}>
+                                <Typography
+                                  className={classes.followerInfoItem}
+                                  variant="body2"
+                                >
+                                  Resources
+                                  <span>{followItem?.total_images}</span>
+                                </Typography>
+                                <Typography
+                                  className={classes.followerInfoItem}
+                                  variant="body2"
+                                >
+                                  Followers
+                                  <span>{followItem?.total_follower}</span>
+                                </Typography>
+                                <Typography
+                                  className={classes.followerInfoItem}
+                                  variant="body2"
+                                >
+                                  Downloads
+                                  <span>{followItem?.total_download}</span>
+                                </Typography>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className={classes.viewProfileBtn}>
-                          <Button
-                            component={Link}
-                            to={`/${followItem?.username}`}
-                            className={classes.viewMoreBtn}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                      <Spacing space={{ height: "2rem" }} />
-                      <div className={classes.followerContent}>
-                        <div className={classes.followerResources}>
-                          {followItem?.images.map((followerResource) => (
-                            <Card
-                              key={followerResource?.id}
-                              className={classes.followerFiles}
+                          <div className={classes.viewProfileBtn}>
+                            <Button
+                              component={Link}
+                              to={`/${followItem?.username}`}
+                              className={classes.viewMoreBtn}
                             >
-                              <img src={followerResource?.thumbnail} alt="" />
-                            </Card>
-                          ))}
+                              View Profile
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+                        <Spacing space={{ height: "2rem" }} />
+                        <div className={classes.followerContent}>
+                          <div className={classes.followerResources}>
+                            {followItem?.images.map((followerResource) => (
+                              <Card
+                                key={followerResource?.id}
+                                className={classes.followerFiles}
+                              >
+                                <img src={followerResource?.thumbnail} alt="" />
+                              </Card>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
             </Grid>
           </Grid>
         </Grid>
