@@ -13,7 +13,7 @@ import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
 
 const useStyles = makeStyles({
-  productItem: {
+  cardItem: {
     "@media (max-width: 576px)": {
       maxWidth: "100%",
       flexBasis: "100%",
@@ -46,18 +46,16 @@ const DownloadItems = () => {
       });
   }, [user]);
 
-
   return (
     <Layout title="Downloads || Piktask">
       <Header />
-
       <Spacing space={{ height: "5rem" }} />
       <Container>
-        <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12} className={classes.productItem}>
+        <Grid container spacing={2}>
+          <Grid item md={3} sm={3} xs={12} className={classes.cardItem}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12} className={classes.productItem}>
+          <Grid item md={9} sm={9} xs={12} className={classes.cardItem}>
             <SectionHeading title="Download" large />
             <Grid
               classes={{ container: classes.container }}

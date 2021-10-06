@@ -13,14 +13,14 @@ import Product from "../../../components/ui/Products/Product";
 import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
 
-const useStyles = makeStyles(({
-  productItem: {
+const useStyles = makeStyles({
+  cardItem: {
     "@media (max-width: 576px)": {
       maxWidth: "100%",
       flexBasis: "100%",
     },
   },
-}));
+});
 
 const FavoriteItems = () => {
   const classes = useStyles();
@@ -31,10 +31,12 @@ const FavoriteItems = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/favourite_image/?limit=20&page=1`, 
-      {
-        headers: {Authorization: user.token},
-      })
+      .get(
+        `${process.env.REACT_APP_API_URL}/user/favourite_image/?limit=20&page=1`,
+        {
+          headers: { Authorization: user.token },
+        }
+      )
       .then(({ data }) => {
         if (data?.status) {
           setFavoriteProducts(data?.images);
@@ -50,14 +52,13 @@ const FavoriteItems = () => {
   return (
     <Layout title="Favorite Items || Piktask">
       <Header />
-
       <Spacing space={{ height: "5rem" }} />
       <Container>
-        <Grid container spacing={4}>
-          <Grid item md={3} sm={3} xm={12} className={classes.productItem}>
+        <Grid container spacing={2}>
+          <Grid item md={3} sm={3} xs={12} className={classes.cardItem}>
             <UserSideBar />
           </Grid>
-          <Grid item md={9} sm={9} xm={12} className={classes.productItem}>
+          <Grid item md={9} sm={9} xs={12} className={classes.cardItem}>
             <SectionHeading title="Favorite" large />
             <Grid
               classes={{ container: classes.container }}

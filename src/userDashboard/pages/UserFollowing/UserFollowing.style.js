@@ -126,8 +126,8 @@ const useStyles = makeStyles((theme) => ({
   },
   followerResources: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   followerFiles: {
     height: "16rem",
