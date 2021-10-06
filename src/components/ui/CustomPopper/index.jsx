@@ -16,6 +16,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 // import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
 import useStyles from "./Popper.styles";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+// import DevicesIcon from "@material-ui/icons/Devices";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 const CustomPopper = ({
   open,
@@ -30,19 +36,17 @@ const CustomPopper = ({
   const user = useSelector((state) => state.user);
 
   const handleSignout = () => {
-
     if (user && user?.token) {
-
       toast.success("You successfully signed out");
       user.isLogged = false;
-      history.push("/")
+      history.push("/");
       localStorage.clear();
 
       dispatch({
         type: "LOGOUT",
         payload: {
-          email:"",
-          token:"",
+          email: "",
+          token: "",
         },
       });
     }
@@ -135,48 +139,49 @@ const CustomPopper = ({
                   className={classes.userMenuItem}
                   onClick={handleClose}
                   component={Link}
-                  to="/contributor/settings"
-                >
-                  <span>My Profile</span>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  // onClick={handleClose}
-                  component={Link}
-                  to="/contributor/upload"
-                >
-                  <span>Go Upload</span>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  // onClick={handleClose}
-                  component={Link}
                   to="/user/profile"
                 >
-                  <span>User Profile</span>
+                  <div className={classes.userMenuIcon}>
+                    <PersonOutlineIcon />
+                    <span>Edit Profile</span>
+                  </div>
+                  <ArrowForwardIosIcon />
+                </MenuItem>
+                <MenuItem
+                  className={classes.userMenuItem}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/user/favorites"
+                >
+                  <div className={classes.userMenuIcon}>
+                    <FavoriteBorderIcon />
+                    <span>Favorite</span>
+                  </div>
+                  <ArrowForwardIosIcon />
+                </MenuItem>
+                <MenuItem
+                  className={classes.userMenuItem}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/user/downloads"
+                >
+                  <div className={classes.userMenuIcon}>
+                    <GetAppIcon />
+                    <span>Downloads(0/10)</span>
+                  </div>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
                   onClick={handleClose}
+                  component={Link}
+                  to="/user/following"
                 >
-                  <span>Subscriptions</span>
+                  <div className={classes.userMenuIcon}>
+                    <PeopleOutlineIcon />
+                    <span>Following</span>
+                  </div>
                   <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                >
-                  <span>My Download</span>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                >
-                  Followers
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
@@ -185,7 +190,10 @@ const CustomPopper = ({
                     handleSignout();
                   }}
                 >
-                  Logout
+                  <div className={classes.userMenuIcon}>
+                    <PowerSettingsNewIcon />
+                    <span>Logout</span>
+                  </div>
                 </MenuItem>
               </MenuList>
             </ClickAwayListener>

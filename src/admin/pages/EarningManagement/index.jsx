@@ -22,8 +22,7 @@ import TabPanel from "./TabPanel";
 const EarningManagement = () => {
   const refChart = useRef();
   const classes = useStyles();
-  // const user = useSelector((state) => state.user);
-  const contributor = useSelector((state) => state.contributor);
+  const user = useSelector((state) => state.user);
 
   const [earningData, setEarningData] = useState(0);
   const [onClickEvent, setOnClickEvent] = useState(true);
@@ -48,10 +47,10 @@ const EarningManagement = () => {
     window.addEventListener("resize", () => setResponsiveness());
 
     // Total earning summary API integration
-    if (contributor?.token) {
+    if (user?.token) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/contributor/earning/summary`, {
-          headers: { Authorization: contributor?.token },
+          headers: { Authorization: user?.token },
         })
         .then(({ data }) => {
           if (data?.status) {
@@ -62,7 +61,7 @@ const EarningManagement = () => {
     }
 
     // Total earning management statistics API integrate
-    if (contributor?.token) {
+    if (user?.token) {
       let totalCount = [];
       let labelCount = [];
 
@@ -79,7 +78,7 @@ const EarningManagement = () => {
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
           {
-            headers: { Authorization: contributor?.token },
+            headers: { Authorization: user?.token },
           }
         )
         .then(({ data }) => {
@@ -104,7 +103,7 @@ const EarningManagement = () => {
           }
         });
     }
-  }, [contributor?.token]);
+  }, [user?.token]);
 
   const handleChange = (e, newValue) => {
     setEarningData(newValue);
@@ -167,7 +166,7 @@ const EarningManagement = () => {
   const handleDateSubmit = (e) => {
     e.preventDefault();
 
-    if (contributor?.token) {
+    if (user?.token) {
       let totalCount = [];
       let labelCount = [];
 
@@ -175,7 +174,7 @@ const EarningManagement = () => {
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectName}`,
           {
-            headers: { Authorization: contributor?.token },
+            headers: { Authorization: user?.token },
           }
         )
         .then(({ data }) => {
@@ -206,7 +205,7 @@ const EarningManagement = () => {
     var selectedName = e.target.name;
     setSelectName(e.target.name);
 
-    if (contributor?.token) {
+    if (user?.token) {
       let totalCount = [];
       let labelCount = [];
 
@@ -214,7 +213,7 @@ const EarningManagement = () => {
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectedName}`,
           {
-            headers: { Authorization: contributor?.token },
+            headers: { Authorization: user?.token },
           }
         )
         .then(({ data }) => {

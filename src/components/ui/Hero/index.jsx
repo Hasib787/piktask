@@ -37,8 +37,7 @@ const HeroSection = (props) => {
     contributorUser,
   } = props;
 
-  // const user = useSelector((state) => state.user);
-  const contributor = useSelector((state) => state.contributor);
+  const user = useSelector((state) => state.user);
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -100,7 +99,7 @@ const HeroSection = (props) => {
                 <img src={contributorLogo} alt="contributorLogo" />
               </Button>
 
-              {contributor && contributor?.isLogged ? (
+              {user && user?.isLogged ? (
                 <div
                   className={classes.userAvatarArea}
                   onClick={handleToggle}
@@ -108,10 +107,10 @@ const HeroSection = (props) => {
                   aria-haspopup="true"
                   ref={anchorRef}
                 >
-                  {contributor && contributor?.avatar ? (
+                  {user && user?.avatar ? (
                     <img
                       className={classes.avatar}
-                      src={contributor?.avatar}
+                      src={user?.avatar}
                       alt="UserPhoto"
                     />
                   ) : (

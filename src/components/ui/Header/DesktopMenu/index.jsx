@@ -1,4 +1,12 @@
-import { Button, Container, Tab, Tabs, Toolbar } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  // Menu,
+  // MenuItem,
+  Tab,
+  Tabs,
+  Toolbar,
+} from "@material-ui/core";
 // import enterpriseCrownIcon from "../../../../assets/icons/crownEnterpriseIcon.svg";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -49,6 +57,19 @@ const DesktopMenu = ({ history }) => {
     }
   };
 
+  // const [anchorEl, setAnchorEl] = useState(null);
+
+  // const handleHoverMenu = (event) => {
+  //   if (anchorEl !== event.currentTarget) {
+  //     setAnchorEl(event.currentTarget);
+  //   }
+  //   // setAnchorEl(event.currentTarget);/
+  // };
+
+  // const handleCloseSubMenu = () => {
+  //   setAnchorEl(null);
+  // };
+
   return (
     <>
       <Container className={classes.container}>
@@ -75,14 +96,54 @@ const DesktopMenu = ({ history }) => {
               component={NavLink}
               to={`/category/sports`}
               label="Sports"
+
+              // aria-owns={anchorEl ? "Sports" : undefined}
+              // aria-haspopup="true"
+              // onClick={handleHoverMenu}
+              // onMouseOver={handleHoverMenu}
             />
+
+            {/* <Menu
+              id="Sports"
+              anchorEl={anchorEl}
+              open={anchorEl}
+              onClose={handleCloseSubMenu}
+              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
+            >
+              <div className={classes.subMenuItem}>
+                <MenuItem onClick={handleCloseSubMenu}>Profile</MenuItem>
+                <MenuItem onClick={handleCloseSubMenu}>My account</MenuItem>
+                <MenuItem onClick={handleCloseSubMenu}>Logout</MenuItem>
+              </div>
+            </Menu> */}
+
             <Tab
               className={classes.menuItem}
               disableRipple
               component={NavLink}
               to="/category/travel"
               label="Travel"
+
+              // aria-owns={anchorEl ? "Travel" : undefined}
+              // aria-haspopup="true"
+              // onClick={handleHoverMenu}
+              // onMouseOver={handleHoverMenu}
             />
+
+            {/* <Menu
+              id="Travel"
+              anchorEl={anchorEl}
+              open={anchorEl}
+              onClose={handleCloseSubMenu}
+              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
+            >
+              <div className={classes.subMenuItem}>
+                <MenuItem onClick={handleCloseSubMenu}>Profile account</MenuItem>
+                <MenuItem onClick={handleCloseSubMenu}>My Favorite</MenuItem>
+                <MenuItem onClick={handleCloseSubMenu}>Downloads</MenuItem>
+              </div>
+            </Menu> */}
+
             <Tab
               className={classes.menuItem}
               disableRipple
