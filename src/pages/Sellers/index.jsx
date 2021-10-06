@@ -16,7 +16,6 @@ const Sellers = () => {
 
   //data loading
   useEffect(() => {
-    try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/contributor/top/`)
         .then(({ data }) => {
@@ -24,10 +23,9 @@ const Sellers = () => {
             setTopSeller(data.sellers);
             setIsLoading(false);
           }
-        });
-    } catch (error) {
+        }).catch((error)=>{
       console.log(error.message);
-    }
+    })
   }, []);
 
   return (

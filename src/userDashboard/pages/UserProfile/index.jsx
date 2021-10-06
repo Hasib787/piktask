@@ -22,38 +22,53 @@ import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useStyles from "./UserProfile.style";
-import shutterstock from "../../../assets/icons/shutterstock.svg";
+import shutterstockLogo from "../../../assets/icons/shutterstock.svg";
 import freepikIcon from "../../../assets/icons/freepik.svg";
 import behanceIcon from "../../../assets/icons/behance.svg";
 import dribbbleIcon from "../../../assets/icons/dribble.svg";
-import facebook from "../../../assets/icons/facebook.svg";
-import twitter from "../../../assets/icons/twitter.svg";
-import linkedin from "../../../assets/icons/linkedin.svg";
-import instagram from "../../../assets/icons/instagram.svg";
+import facebookLogo from "../../../assets/icons/facebook.svg";
+import twitterLogo from "../../../assets/icons/twitter.svg";
+import linkedinLogo from "../../../assets/icons/linkedin.svg";
+import instagramLogo from "../../../assets/icons/instagram.svg";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ToggleButton } from "@material-ui/lab";
 import Switch from "@material-ui/core/Switch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import axios from "axios";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 const UserProfile = () => {
   const classes = useStyles();
-  const [payment, setPayment] = useState("Paypal");
-  const [country, setCountry] = useState("Bangladesh");
-  const [state, setState] = useState("Chittagong");
   const [checked, setChecked] = useState(false);
+  const [switchToggle, setSwitchToggle] = useState(false);
+
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+  const [job_position, setJob_position] = useState("");
+  const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
+  const [shutterstock, setShutterstock] = useState("");
+  const [freepik, setFreepik] = useState("");
+  const [behance, setBehance] = useState("");
+  const [dribble, setDribble] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [linkedin, setLinkedin] = useState("");
+  const [instagram, setInstagram] = useState("");
+
   const dispatch = useDispatch();
   const pathHistory = useHistory();
-  const location = useLocation();
+  const Location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
-
-  const [switchToggle, setSwitchToggle] = useState(false);
+  const user = useSelector((state) => state.user);
 
   const handleChange = (name) => (event) => {
     setSwitchToggle({ [name]: event.target.checked });
@@ -63,20 +78,93 @@ const UserProfile = () => {
   //   setChecked(event.target.checked);
   // };
 
+  //mobile view
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
   useEffect(() => {
     const setResponsiveness = () => {
-      return window.innerWidth < 900
+      return window.innerWidth < 577
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
+
+  // get user information
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/profile`, {
+        headers: { Authorization: user.token },
+      })
+      .then(({ data }) => {
+        console.log("data", data.user);
+        if (data?.status) {
+          setName(data.user.name);
+          setUsername(data.user.username);
+          setEmail (data.user.email);
+          setLocation(data.user.location);
+          setJob_position(data.user.job_position);
+          setPhone(data.user.phone);
+          setWebsite(data.user.website);
+          setShutterstock(data.user.shutterstock);
+          setFreepik(data.user.freepik);
+          setBehance(data.user.behance);
+          setDribble(data.user.dribble);
+          setFacebook(data.user.facebook);
+          setTwitter(data.user.twitter);
+          setLinkedin(data.user.linkedin);
+          setInstagram(data.user.instagram);
+         
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [user.token]);
+
+  //Update user profile
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("location", location);
+    formData.append("job_position", job_position);
+    formData.append("phone", phone);
+    formData.append("website", website);
+    formData.append("shutterstock", shutterstock);
+    formData.append("freepik", freepik);
+    formData.append("behance", behance);
+    formData.append("dribble", dribble);
+    formData.append("facebook", facebook);
+    formData.append("twitter", twitter);
+    formData.append("instagram", instagram);
+    formData.append("linkedin", linkedin);
+
+    const url = `${process.env.REACT_APP_API_URL}/profile`;
+    axios({
+      method: "put",
+      url,
+      headers: {
+        Authorization: user.token,
+        "Content-Type": "application/json",
+      },
+      data: formData,
+    })
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => {
+        const { errors } = error.response.data;
+        for (let key in errors) {
+          toast.error(errors[key]);
+        }
+      });
   };
+
   //login with google
   const handleGoogleLogin = async (googleData) => {
     const res = await fetch(
@@ -122,7 +210,6 @@ const UserProfile = () => {
       },
     });
     const data = await res.json();
-    // store returned user somehow
     if (data.status) {
       const token = data.token;
       localStorage.setItem("token", token);
@@ -151,63 +238,66 @@ const UserProfile = () => {
           </Grid>
           <Grid className={classes.cardItem} item md={9} sm={9} xm={12}>
             <div className={classes.userProfileRoot}>
-              <form onClick={handleSubmit} className={classes.selectPeriodFrom}>
-                <div className={classes.cardRoot}>
-                  <div className={classes.headingWrapper}>
-                    <div>
-                      <Typography
-                        className={classes.settingsFormTitle}
-                        variant="h4"
+              <div className={classes.headingWrapper}>
+                <div>
+                  <Typography
+                    className={classes.settingsFormTitle}
+                    variant="h4"
+                  >
+                    Connect
+                  </Typography>
+                </div>
+                <div className={classes.socialsButtons}>
+                  <GoogleLogin
+                    clientId={clientId}
+                    render={(renderProps) => (
+                      <Button
+                        className={classes.googleButton}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
                       >
-                        Connect
-                      </Typography>
-                    </div>
-                    <div className={classes.socialsButtons}>
-                      <GoogleLogin
-                        clientId={clientId}
-                        render={(renderProps) => (
-                          <Button
-                            className={classes.googleButton}
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          >
-                            <FontAwesomeIcon
-                              className={classes.googleIcon}
-                              icon={faGoogle}
-                            />
-                            Connect Google
-                          </Button>
-                        )}
-                        buttonText="Login"
-                        onSuccess={handleGoogleLogin}
-                        onFailure={handleGoogleLogin}
-                        cookiePolicy={"single_host_origin"}
-                      />
-                      <Spacing space={{ margin: "0 0.5rem" }} />
+                        <FontAwesomeIcon
+                          className={classes.googleIcon}
+                          icon={faGoogle}
+                        />
+                        {!mobileView && "Connect"} Google
+                      </Button>
+                    )}
+                    buttonText="Login"
+                    onSuccess={handleGoogleLogin}
+                    onFailure={handleGoogleLogin}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                  <Spacing space={{ margin: "0 0.5rem" }} />
 
-                      <FacebookLogin
-                        appId="168140328625744"
-                        autoLoad={false}
-                        fields="name,email,picture"
-                        onClick={handleFacebookLogin}
-                        callback={handleFacebookLogin}
-                        render={(renderProps) => (
-                          <Button
-                            className={classes.facebookBtn}
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          >
-                            <FontAwesomeIcon
-                              className={classes.facebookIcon}
-                              icon={faFacebookF}
-                            />
-                            Connect Facebook
-                          </Button>
-                        )}
-                      />
-                    </div>
-                  </div>
-                  <hr className={classes.seperator} />
+                  <FacebookLogin
+                    appId="168140328625744"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={handleFacebookLogin}
+                    callback={handleFacebookLogin}
+                    render={(renderProps) => (
+                      <Button
+                        className={classes.facebookBtn}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <FontAwesomeIcon
+                          className={classes.facebookIconBtn}
+                          icon={faFacebookF}
+                        />
+                        {!mobileView && "Connect"} Facebook
+                      </Button>
+                    )}
+                  />
+                </div>
+              </div>
+              <hr className={classes.separator} />
+              <form
+                onSubmit={handleSubmit}
+                className={classes.selectPeriodFrom}
+              >
+                <div className={classes.cardRoot}>
                   <Grid
                     className={classes.profileInfoField}
                     container
@@ -226,9 +316,10 @@ const UserProfile = () => {
                           variant="outlined"
                           label="Real Name"
                           className={classes.formControl}
-                          name="realName"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          name="name"
+                          value={name}
+                          defaultValue={name}
+                          onChange={(e) => setName(e.target.value)}
                         />
                         <TextField
                           fullWidth
@@ -236,8 +327,8 @@ const UserProfile = () => {
                           label="Location"
                           className={classes.formControl}
                           name="location"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
                         />
                         <TextField
                           fullWidth
@@ -245,22 +336,22 @@ const UserProfile = () => {
                           label="Job Position"
                           className={classes.formControl}
                           name="jobPosition"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={job_position}
+                          onChange={(e) => setJob_position(e.target.value)}
                         />
                         <TextField
                           fullWidth
                           variant="outlined"
                           label="Telephone Number"
                           className={classes.formControl}
-                          name="username"
+                          name="telephoneNumber"
                           type="number"
                           inputProps={{
                             inputMode: "numeric",
                             pattern: "[0-9]*",
                           }}
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
                         />
                       </div>
                     </Grid>
@@ -278,8 +369,7 @@ const UserProfile = () => {
                           label="User Name"
                           className={classes.formControl}
                           name="username"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={username}
                         />
                         <TextField
                           fullWidth
@@ -287,8 +377,7 @@ const UserProfile = () => {
                           label="Email"
                           className={classes.formControl}
                           name="email"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={email}
                         />
                         <TextField
                           fullWidth
@@ -296,8 +385,8 @@ const UserProfile = () => {
                           label="Website"
                           className={classes.formControl}
                           name="website"
-                          // value={username}
-                          // onChange={(e) => setUsername(e.target.value)}
+                          value={website}
+                          onChange={(e) => setWebsite(e.target.value)}
                         />
                         <div className={classes.dataChangeBtn}>
                           <Link
@@ -324,7 +413,7 @@ const UserProfile = () => {
                     >
                       Professional Portfolio
                     </Typography>
-                    <hr className={classes.seperator} />
+                    <hr className={classes.separator} />
                   </div>
                   <div className={classes.cardWrapper}>
                     <div
@@ -339,7 +428,7 @@ const UserProfile = () => {
                           htmlFor="shutterstock"
                           className={classes.portfolioIconWrapper}
                         >
-                          <img src={shutterstock} alt="Shutterstock Icon" />
+                          <img src={shutterstockLogo} alt="Shutterstock Icon" />
                         </label>
                         <TextField
                           id="shutterstock"
@@ -347,6 +436,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Shutterstock Account"
+                          value={shutterstock}
+                          onChange={(e) => setShutterstock(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -370,6 +461,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Freepik Account"
+                          value={freepik}
+                          onChange={(e) => setFreepik(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -393,6 +486,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Behance Account"
+                          value={behance}
+                          onChange={(e) => setBehance(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -416,6 +511,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Dribbble Account"
+                          value={dribble}
+                          onChange={(e) => setDribble(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -428,7 +525,7 @@ const UserProfile = () => {
                     >
                       Social Link
                     </Typography>
-                    <hr className={classes.seperator} />
+                    <hr className={classes.separator} />
                   </div>
                   <div className={classes.cardWrapper}>
                     <div
@@ -444,7 +541,7 @@ const UserProfile = () => {
                           className={classes.portfolioIconWrapper}
                         >
                           <img
-                            src={facebook}
+                            src={facebookLogo}
                             className={classes.facebookIcon}
                             alt="Facebook Icon"
                           />
@@ -455,6 +552,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Facebook Account"
+                          value={facebook}
+                          onChange={(e) => setFacebook(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -470,7 +569,7 @@ const UserProfile = () => {
                           htmlFor="twitter"
                           className={classes.portfolioIconWrapper}
                         >
-                          <img src={twitter} alt="Twitter Icon" />
+                          <img src={twitterLogo} alt="Twitter Icon" />
                         </label>
                         <TextField
                           id="twitter"
@@ -478,6 +577,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Twitter Account"
+                          value={twitter}
+                          onChange={(e) => setTwitter(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -493,7 +594,7 @@ const UserProfile = () => {
                           htmlFor="linkedin"
                           className={classes.portfolioIconWrapper}
                         >
-                          <img src={linkedin} alt="Linkedin Icon" />
+                          <img src={linkedinLogo} alt="Linkedin Icon" />
                         </label>
                         <TextField
                           id="linkedin"
@@ -501,6 +602,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Linkedin Account"
+                          value={linkedin}
+                          onChange={(e) => setLinkedin(e.target.value)}
                         />
                       </FormControl>
                     </div>
@@ -516,7 +619,7 @@ const UserProfile = () => {
                           htmlFor="instagram"
                           className={classes.portfolioIconWrapper}
                         >
-                          <img src={instagram} alt="Instagram Icon" />
+                          <img src={instagramLogo} alt="Instagram Icon" />
                         </label>
                         <TextField
                           id="instagram"
@@ -524,6 +627,8 @@ const UserProfile = () => {
                           variant="outlined"
                           className={`${classes.inputField}`}
                           placeholder="Your Instagram Account"
+                          value={instagram}
+                          onChange={(e) => setInstagram(e.target.value)}
                         />
                       </FormControl>
                     </div>
