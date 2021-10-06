@@ -11,7 +11,6 @@ import {
   styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-// import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
