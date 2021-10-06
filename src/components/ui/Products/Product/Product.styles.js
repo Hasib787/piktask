@@ -140,20 +140,20 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow:"rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
 
     "&:hover": {
-      backgroundColor: "#469439",
+      backgroundColor: "#0088f2",
       color: "#ffffff",
-      borderColor: "#469439",
+      borderColor: "#0088f2",
     },
 
     "&.disabled": {
-      backgroundColor: "#469439",
+      backgroundColor: "#0088f2",
       color: "#fff",
-      borderColor: "#469439",
+      borderColor: "#0088f2",
       opacity: "0.5 !important",
     },
   },
   favouriteIconBtn: {
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: "#0088f2",
     fontSize: "16px",
     display: "flex",
     alignItems: "center",
@@ -165,8 +165,8 @@ export const useStyles = makeStyles((theme) => ({
     color: "#ffffff",
 
     "&:hover": {
-      backgroundColor: "#469439",
-      borderColor: "#469439",
+      backgroundColor: "#0773c5",
+      borderColor: "#0773c5",
     },
   },
   premiumIcon: {

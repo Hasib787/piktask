@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   productDownloadCount: {
-    backgroundColor: "rgb(17 122 0 / 15%)",
+    backgroundColor: "#e7f5ff",
     textAlign: "center",
     padding: "0.8rem",
     "@media (max-width: 576px)": {
@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   totalAmount: {
-    color: "#76C71A",
+    color: "#0088f2",
     fontSize: "2.8rem",
     lineHeight: 1,
     "@media (max-width: 576px)": {
