@@ -9,10 +9,12 @@ import {
   DialogTitle,
   List,
   ListItem,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import lockIcon from "../../../assets/password.png";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,18 +27,47 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import authorPhoto from "../../../assets/author.png";
 import axios from "axios";
+import { CustomBtn, InputField } from "../../../components/InputField";
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`authentication-tabpanel-${index}`}
+      aria-labelledby={`authentication-tab-${index}`}
+      {...other}
+    >
+      {value === index && children}
+    </div>
+  );
+};
+
+function a11yProps(index) {
+  return {
+    id: `user-authentication-tab-${index}`,
+    "aria-controls": `user-authentication-tabpanel-${index}`,
+  };
+}
 
 const UserSideBar = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [tabIndex, setTabIndex] = useState(0);
+  const [password, setPassword] = useState("");
+  const [passwordValue, setPasswordValue] = useState(false);
   const user = useSelector((state) => state.user);
 
   const [value, setValue] = useState(0);
   const [deleteAccountDialog, setDeleteAccountDialog] = useState(false);
+  const [alartDialog, setAlartDialog] = useState(false);
   // const [open, setOpen] = useState(false);
   // const [selectedItem, setSelectedItem] = useState(0);
 
+  //mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
   useEffect(() => {
@@ -49,20 +80,39 @@ const UserSideBar = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
+  //close account modal
   const handleDialogOpen = () => {
-    setDeleteAccountDialog(true);
+    setAlartDialog(true);
   };
   const handleDialogClose = () => {
+    setAlartDialog(false);
+  };
+
+  //close and open modal
+  const handleCloseModalOpen = () => {
+    setDeleteAccountDialog(true);
+  };
+  const handleCloseModalClose = () => {
     setDeleteAccountDialog(false);
   };
 
+  //Handle the password show and hide
+  const handleShowHidePassword = () => {
+    setPasswordValue((value) => !value);
+  };
 
-  const handleCloseAccount = () => {
+  const handleChangeTab = () => {
+    return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
+  };
+
+  const handleCloseAccount = (e) => {
+    e.preventDefault();
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user.token, password },
       })
       .then((res) => {
+        console.log("res",res);
         if (res.status) {
           toast.success("Your account are successfully deleted");
           history.push("/");
@@ -270,45 +320,132 @@ const UserSideBar = () => {
               </List>
             </CardContent>
           </Card>
+
           <Card className={classes.closedAccount}>
             <CardContent>
               <Typography onClick={handleDialogOpen}>
                 Close My Account
               </Typography>
             </CardContent>
+            {/* close account modal */}
             <Dialog
+              className={classes.closeAccountDialog}
+              open={alartDialog}
+              onClose={handleDialogClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <TabPanel {...a11yProps(0)} value={tabIndex} index={0}>
+                <DialogTitle className={classes.closeAccountTitle}>
+                  {"Are you sure?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Note that you will close your Piktask accounts! Your premium
+                    subscription will also be canceled with no refund.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={handleDialogClose}
+                    className={classes.keepAccountBtn}
+                    autoFocus
+                  >
+                    keep Account
+                  </Button>
+                  <Button
+                    onClick={handleChangeTab}
+                    className={classes.closeAccountBtn}
+                    autoFocus
+                  >
+                    Close Account
+                  </Button>
+                </DialogActions>
+              </TabPanel>
+
+              <TabPanel {...a11yProps(1)} value={tabIndex} index={1}>
+                <div style={{ padding: "2rem", width: "60rem" }}>
+                  <form onSubmit={handleCloseAccount}>
+                    <DialogTitle className={classes.closeAccountTitle}>
+                      {"Are you sure?"}
+                    </DialogTitle>
+                    <TextField
+                      className={classes.passwordField}
+                      fullWidth
+                      variant="outlined"
+                      label="Password"
+                      type="password"
+                      name="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <DialogActions>
+                      <Button
+                        onClick={handleCloseModalClose}
+                        className={classes.keepAccountBtn}
+                        autoFocus
+                      >
+                        keep Account
+                      </Button>
+                      <Button
+                        className={classes.closeAccountBtn}
+                        autoFocus
+                        type="submit"
+                      >
+                        Close Account
+                      </Button>
+                    </DialogActions>
+                    {/* <CustomBtn type="submit" text="Sign In" color="green" /> */}
+                  </form>
+                </div>
+              </TabPanel>
+            </Dialog>
+
+            {/* <Dialog
               className={classes.closeAccountDialog}
               open={deleteAccountDialog}
               onClose={handleDialogClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
-              <DialogTitle className={classes.closeAccountTitle}>
-                {"Are you sure?"}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  Note that you will close your Piktask accounts! Your premium
-                  subscription will also be canceled with no refund.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={handleDialogClose}
-                  className={classes.keepAccountBtn}
-                  autoFocus
-                >
-                  keep Account
-                </Button>
-                <Button
-                  onClick={handleCloseAccount}
-                  className={classes.closeAccountBtn}
-                  autoFocus
-                >
-                  Close Account
-                </Button>
-              </DialogActions>
-            </Dialog>
+              {/* <TabPanel  {...a11yProps(0)} value={tabIndex} index={0}> */}
+            {/* <DialogTitle className={classes.closeAccountTitle}>
+                  {"Are you sure?"}
+                </DialogTitle>
+                <DialogContent>
+                <div className={classes.passwordField}>
+                    <InputField
+                      label="Password"
+                      type={passwordValue ? "text" : "password"}
+                      name="password"
+                      value={password}
+                      onChange={(e)=>setPassword(e.target.value)}
+                    />
+                    <img
+                      src={lockIcon}
+                      alt="Show or hide password"
+                      onClick={handleShowHidePassword}
+                    />
+                  </div>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={handleCloseModalClose}
+                    className={classes.keepAccountBtn}
+                    autoFocus
+                  >
+                    keep Account
+                  </Button>
+                  <Button
+                    onClick={handleChangeTab}
+                    className={classes.closeAccountBtn}
+                    autoFocus
+                  >
+                    Close Account
+                  </Button>
+                </DialogActions>
+                </Dialog> */}
           </Card>
         </>
       )}

@@ -46,11 +46,11 @@ const UserProfile = () => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [switchToggle, setSwitchToggle] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [locationAddress, setLocationAddress] = useState("");
   const [job_position, setJob_position] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
@@ -65,7 +65,7 @@ const UserProfile = () => {
 
   const dispatch = useDispatch();
   const pathHistory = useHistory();
-  const Location = useLocation();
+  const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
   const user = useSelector((state) => state.user);
 
@@ -101,8 +101,8 @@ const UserProfile = () => {
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);
-          setEmail (data.user.email);
-          setLocation(data.user.location);
+          setEmail(data.user.email);
+          setLocationAddress(data.user.location);
           setJob_position(data.user.job_position);
           setPhone(data.user.phone);
           setWebsite(data.user.website);
@@ -114,7 +114,6 @@ const UserProfile = () => {
           setTwitter(data.user.twitter);
           setLinkedin(data.user.linkedin);
           setInstagram(data.user.instagram);
-         
         }
       })
       .catch((error) => {
@@ -128,7 +127,7 @@ const UserProfile = () => {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("location", location);
+    formData.append("location", locationAddress);
     formData.append("job_position", job_position);
     formData.append("phone", phone);
     formData.append("website", website);
@@ -154,13 +153,12 @@ const UserProfile = () => {
       .then((res) => {
         if (res?.status === 200) {
           toast.success(res.data.message);
+          setErrors({});
         }
       })
       .catch((error) => {
         const { errors } = error.response.data;
-        for (let key in errors) {
-          toast.error(errors[key]);
-        }
+        setErrors(errors);
       });
   };
 
@@ -226,7 +224,7 @@ const UserProfile = () => {
       pathHistory.replace(from);
     }
   };
-  
+
   return (
     <Layout title={"UserProfile | piktask"}>
       <Header />
@@ -327,8 +325,8 @@ const UserProfile = () => {
                           label="Location"
                           className={classes.formControl}
                           name="location"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
+                          value={locationAddress}
+                          onChange={(e) => setLocationAddress(e.target.value)}
                         />
                         <TextField
                           fullWidth
@@ -380,6 +378,8 @@ const UserProfile = () => {
                           value={email}
                         />
                         <TextField
+                          error={!!errors.website}
+                          helperText={errors.website}
                           fullWidth
                           variant="outlined"
                           label="Website"
@@ -432,6 +432,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="shutterstock"
+                          error={!!errors.shutterstock}
+                          helperText={errors.shutterstock}
                           label="Your Shutterstock Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -457,6 +459,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="freepik"
+                          error={!!errors.freepik}
+                          helperText={errors.freepik}
                           label="Your Freepik Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -482,6 +486,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="behance"
+                          error={!!errors.behance}
+                          helperText={errors.behance}
                           label="Your Behance Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -507,6 +513,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="dribbble"
+                          error={!!errors.dribble}
+                          helperText={errors.dribble}
                           label="Your Dribbble Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -548,6 +556,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="facebook"
+                          error={!!errors.facebook}
+                          helperText={errors.facebook}
                           label="Your Facebook Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -573,6 +583,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="twitter"
+                          error={!!errors.twitter}
+                          helperText={errors.twitter}
                           label="Your Twitter Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -598,6 +610,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="linkedin"
+                          error={!!errors.linkedin}
+                          helperText={errors.linkedin}
                           label="Your Linkedin Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -623,6 +637,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="instagram"
+                          error={!!errors.instagram}
+                          helperText={errors.instagram}
                           label="Your Instagram Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
