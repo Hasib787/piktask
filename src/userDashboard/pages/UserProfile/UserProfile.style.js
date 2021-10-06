@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
   //     padding: "14px !important",
   //   },
   // },
-  seperator: {
+  separator: {
     borderWidth: 0,
     marginLeft: "3%",
     width: "94%",

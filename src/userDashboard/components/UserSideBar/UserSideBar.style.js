@@ -4,7 +4,7 @@ import userBackground from "../../../assets/user/user-background.png";
 const useStyles = makeStyles((theme) => ({
   userProfile: {
     padding: "0",
-    marginBottom: "1rem",
+    marginBottom: "1.6rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     position: "relative",
 
@@ -20,11 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   userProfileContent: {
-    padding: "4.5rem",
+    padding: "4rem",
   },
   profileImage: {
-    height: "12rem",
-    Width: "12rem",
     "& img": {
       height: "12rem",
       Width: "12rem",
@@ -76,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#4A7AFF",
   },
   closedAccount: {
-    marginTop: "1rem",
+    marginTop: "1.6rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     cursor: "pointer",
 
