@@ -56,9 +56,10 @@ const UserSideBar = () => {
     setDeleteAccountDialog(false);
   };
 
+
   const handleCloseAccount = () => {
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/user/delete/${user.id}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/user`, {
         headers: { Authorization: user.token },
       })
       .then((res) => {
