@@ -235,6 +235,7 @@ const ContributorSignUp = (props) => {
         method: "POST",
         body: JSON.stringify({
           token: googleData.tokenId,
+          role: "contributor"
         }),
         headers: {
           "Content-Type": "application/json",
@@ -275,6 +276,7 @@ const ContributorSignUp = (props) => {
         method: "POST",
         body: JSON.stringify({
           token: facebookData.tokenId,
+          role: "contributor"
         }),
         headers: {
           "Content-Type": "application/json",

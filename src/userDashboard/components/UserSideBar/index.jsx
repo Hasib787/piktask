@@ -315,13 +315,23 @@ const UserSideBar = () => {
                   >
                     keep Account
                   </Button>
-                  <Button
-                    onClick={handleChangeTab}
-                    className={classes.closeAccountBtn}
-                    autoFocus
-                  >
-                    Close Account
-                  </Button>
+                  {user.signupBy !== "email" ? (
+                    <Button
+                      onClick={handleCloseAccount}
+                      className={classes.closeAccountBtn}
+                      autoFocus
+                    >
+                      Close Account
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleChangeTab}
+                      className={classes.closeAccountBtn}
+                      autoFocus
+                    >
+                      Close Account
+                    </Button>
+                  )}
                 </DialogActions>
               </TabPanel>
 

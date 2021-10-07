@@ -80,7 +80,7 @@ const DownloadItems = () => {
                       </Grid>
                     ))
                   ) : (
-                    <ProductNotFound />
+                    <ProductNotFound noCollection="Downloads" />
                   )}
                 </>
               )}

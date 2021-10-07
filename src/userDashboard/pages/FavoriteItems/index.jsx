@@ -83,7 +83,7 @@ const FavoriteItems = () => {
                       </Grid>
                     ))
                   ) : (
-                    <ProductNotFound />
+                    <ProductNotFound noCollection="Favorite" />
                   )}
                 </>
               )}

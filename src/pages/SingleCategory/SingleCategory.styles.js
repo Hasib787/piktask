@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
     height: "4.5rem",
     borderRadius: "50%",
     padding: "0.2rem",
-    backgroundColor: "#1B3F4E",
+    boxShadow: "0px 0px 5px #ddd",
     marginRight: "1.4rem",
     objectFit: "cover",
     color: "#000",

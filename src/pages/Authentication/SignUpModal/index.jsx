@@ -235,6 +235,7 @@ const SignUpModal = (props) => {
         method: "POST",
         body: JSON.stringify({
           token: googleData.tokenId,
+          role: "user"
         }),
         headers: {
           "Content-Type": "application/json",
@@ -275,6 +276,7 @@ const SignUpModal = (props) => {
         method: "POST",
         body: JSON.stringify({
           token: facebookData.tokenId,
+          role: "user"
         }),
         headers: {
           "Content-Type": "application/json",
