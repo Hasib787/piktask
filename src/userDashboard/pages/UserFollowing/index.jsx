@@ -19,7 +19,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductNotFound from "../../../components/ui/ProductNotFound";
-// import { Pagination } from "@material-ui/lab";
+import { Pagination } from "@material-ui/lab";
 
 const UserFollowing = () => {
   const classes = useStyles();
@@ -27,13 +27,14 @@ const UserFollowing = () => {
 
   const [followersItem, setFollowersItem] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
     setLoading(true);
 
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/user/following_list?limit=10&page=1`,
+        `${process.env.REACT_APP_API_URL}/user/following_list?limit=2&page=${pageCount}`,
         {
           headers: { Authorization: user?.token },
         }
@@ -48,7 +49,11 @@ const UserFollowing = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, [user]);
+  }, [user, pageCount]);
+
+  const handleChangeData = (e) => {
+    console.log(e.currentTarget);
+  };
 
   return (
     <Layout title="Followings || Piktask">
@@ -143,9 +148,18 @@ const UserFollowing = () => {
               )}
             </Grid>
             <Spacing space={{ height: "2rem" }} />
-            {/* <div style={{display: "flex", justifyContent: "flex-end"}}>
-              <Pagination count={100} variant="outlined" shape="rounded" color="primary" />
-            </div> */}
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Pagination
+                onClick={(e) => {
+                  setPageCount(pageCount + 1);
+                  handleChangeData(e.target.value);
+                }}
+                count={100}
+                variant="outlined"
+                shape="rounded"
+                color="primary"
+              />
+            </div>
           </Grid>
         </Grid>
       </Container>
