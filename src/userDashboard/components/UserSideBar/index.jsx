@@ -226,7 +226,7 @@ const UserSideBar = () => {
                   selected={value === 1}
                 >
                   <FavoriteBorderIcon />
-                  <span>Favorite</span>
+                  <span>Favourite</span>
                 </ListItem>
 
                 <ListItem
