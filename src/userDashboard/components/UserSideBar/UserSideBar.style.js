@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
   closeAccountDialog: {
    "& div div":{
-    width: "50rem",
+    maxWidth: "100%",
     [theme.breakpoints.down(480)] :{
       width: "100%",
     },
@@ -100,6 +100,14 @@ const useStyles = makeStyles((theme) => ({
   closeAccountTitle: {
     "& h2":{
       fontSize: "1.8rem !important",
+    },
+  },
+  closeAccountsTitle: {
+    padding: "1rem 0rem",
+
+    "& h2":{
+      fontSize: "1.8rem !important",
+      paddingLeft: "0rem"
     },
   },
   keepAccountBtn:{
@@ -117,6 +125,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover":{
       backgroundColor:"#b71c1c",
     }
+  },
+
+  passwordField: {
+  //  padding: "2rem",
   },
 }));
 

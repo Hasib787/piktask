@@ -47,7 +47,7 @@ const UserProfile = () => {
   const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const [switchToggle, setSwitchToggle] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -114,7 +114,6 @@ const UserProfile = () => {
           setTwitter(data.user.twitter);
           setLinkedin(data.user.linkedin);
           setInstagram(data.user.instagram);
-         
         }
       })
       .catch((error) => {
@@ -154,13 +153,12 @@ const UserProfile = () => {
       .then((res) => {
         if (res?.status === 200) {
           toast.success(res.data.message);
+          setErrors({});
         }
       })
       .catch((error) => {
         const { errors } = error.response.data;
-        for (let key in errors) {
-          toast.error(errors[key]);
-        }
+        setErrors(errors);
       });
   };
 
@@ -226,7 +224,7 @@ const UserProfile = () => {
       pathHistory.replace(from);
     }
   };
-  
+
   return (
     <Layout title={"UserProfile | piktask"}>
       <Header />
@@ -380,6 +378,8 @@ const UserProfile = () => {
                           value={email}
                         />
                         <TextField
+                          error={!!errors.website}
+                          helperText={errors.website}
                           fullWidth
                           variant="outlined"
                           label="Website"
@@ -432,6 +432,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="shutterstock"
+                          error={!!errors.shutterstock}
+                          helperText={errors.shutterstock}
                           label="Your Shutterstock Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -457,6 +459,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="freepik"
+                          error={!!errors.freepik}
+                          helperText={errors.freepik}
                           label="Your Freepik Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -482,6 +486,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="behance"
+                          error={!!errors.behance}
+                          helperText={errors.behance}
                           label="Your Behance Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -507,6 +513,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="dribbble"
+                          error={!!errors.dribble}
+                          helperText={errors.dribble}
                           label="Your Dribbble Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -548,6 +556,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="facebook"
+                          error={!!errors.facebook}
+                          helperText={errors.facebook}
                           label="Your Facebook Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -573,6 +583,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="twitter"
+                          error={!!errors.twitter}
+                          helperText={errors.twitter}
                           label="Your Twitter Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -598,6 +610,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="linkedin"
+                          error={!!errors.linkedin}
+                          helperText={errors.linkedin}
                           label="Your Linkedin Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -623,6 +637,8 @@ const UserProfile = () => {
                         </label>
                         <TextField
                           id="instagram"
+                          error={!!errors.instagram}
+                          helperText={errors.instagram}
                           label="Your Instagram Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
