@@ -109,7 +109,7 @@ const Footer = () => {
             </Typography>
 
             <List className={classes.menuWrapper}>
-              <ListItem className={classes.navItem}>
+              {/* <ListItem className={classes.navItem}>
                 <Link className={classes.navLink} to="#">
                   Plans &amp; pricing
                 </Link>
@@ -118,9 +118,9 @@ const Footer = () => {
                 <Link className={classes.navLink} to="#">
                   Affiliate
                 </Link>
-              </ListItem>
+              </ListItem> */}
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/aboutUs">
                   About us
                 </Link>
               </ListItem>

@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     supportWrapper: {
-    padding: "0rem 30rem",
+    padding: "0rem 20rem",
     [theme.breakpoints.down("769")]:{
         padding: "0 2rem",
     },

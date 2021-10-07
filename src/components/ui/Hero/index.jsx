@@ -35,6 +35,7 @@ const HeroSection = (props) => {
     guidLine,
     contact,
     contributorUser,
+    aboutUs,
   } = props;
 
   const user = useSelector((state) => state.user);
@@ -219,6 +220,18 @@ const HeroSection = (props) => {
                   variant="h1"
                 >
                   Cookies Policy
+                </Typography>
+              )}
+              {aboutUs && (
+                <Typography
+                  style={{
+                    color: "white",
+                    fontSize: "3rem",
+                    fontWeight: "600",
+                  }}
+                  variant="h1"
+                >
+                  About Us
                 </Typography>
               )}
               {support && (

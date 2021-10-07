@@ -354,7 +354,7 @@ const UserSideBar = () => {
 
                     <DialogActions>
                       <Button
-                        onClick={handleCloseModalClose}
+                        onClick={handleDialogClose}
                         className={classes.keepAccountBtn}
                         autoFocus
                       >
