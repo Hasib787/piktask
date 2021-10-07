@@ -11,6 +11,7 @@ import {
   // styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+// import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
@@ -100,8 +101,8 @@ const UserProfile = () => {
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);
-          setEmail(data.user.email);
-          setLocationAddress(data.user.location);
+          setEmail (data.user.email);
+          setLocationAddress(data.user.locationAddress);
           setJob_position(data.user.job_position);
           setPhone(data.user.phone);
           setWebsite(data.user.website);
@@ -126,7 +127,7 @@ const UserProfile = () => {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("location", locationAddress);
+    formData.append("locationAddress", locationAddress);
     formData.append("job_position", job_position);
     formData.append("phone", phone);
     formData.append("website", website);
@@ -323,7 +324,7 @@ const UserProfile = () => {
                           variant="outlined"
                           label="Location"
                           className={classes.formControl}
-                          name="location"
+                          name="locationAddress"
                           value={locationAddress}
                           onChange={(e) => setLocationAddress(e.target.value)}
                         />

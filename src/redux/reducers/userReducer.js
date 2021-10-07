@@ -1,5 +1,5 @@
 const initialValue ={
-  role: "user",
+  role: "",
   email : "",
   token: "", 
   isLogged: false,

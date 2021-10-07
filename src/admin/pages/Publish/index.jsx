@@ -32,8 +32,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 const Publish = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
-  const contributor = useSelector((state) => state.contributor);
+  const user = useSelector((state) => state.user);
 
   const [isLoading, setLoading] = useState(false);
   const [allPublishProduct, setAllPublishProduct] = useState([]);
@@ -55,11 +54,11 @@ const Publish = () => {
 
 
     // Author last file API
-    if(contributor?.token){
+    if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`,
       {
-        headers: { Authorization: contributor?.token },
+        headers: { Authorization: user?.token },
       })
       .then(({data}) => {
         if(data?.status) {
@@ -73,7 +72,7 @@ const Publish = () => {
         }
       })
     }
-  }, [contributor?.token, dispatch]);
+  }, [user?.token, dispatch]);
 
   
   // Date wise API integration
@@ -132,11 +131,11 @@ const Publish = () => {
 
 
      // Current date wise publish product
-     if(contributor?.token){
+     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images/?start=${fromDates}&end=${toDates}`,
       {
-        headers: {Authorization: contributor?.token},
+        headers: {Authorization: user?.token},
       })
       .then(({data}) => {
         if(data?.status){
