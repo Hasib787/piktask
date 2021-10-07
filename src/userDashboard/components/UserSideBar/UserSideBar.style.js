@@ -102,6 +102,14 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.8rem !important",
     },
   },
+  closeAccountsTitle: {
+    padding: "1rem 0rem",
+
+    "& h2":{
+      fontSize: "1.8rem !important",
+      paddingLeft: "0rem"
+    },
+  },
   keepAccountBtn:{
     color:"white",
     backgroundColor:theme.palette.primary.light,

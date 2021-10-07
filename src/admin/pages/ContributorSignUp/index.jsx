@@ -107,7 +107,7 @@ const ContributorSignUp = (props) => {
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        role: contributor.role,
+        role: authData.role,
         username: authData.userName,
         password: authData.password,
       })

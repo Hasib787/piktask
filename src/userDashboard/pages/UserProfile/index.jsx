@@ -97,7 +97,6 @@ const UserProfile = () => {
         headers: { Authorization: user.token },
       })
       .then(({ data }) => {
-        console.log("data", data.user);
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);

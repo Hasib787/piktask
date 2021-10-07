@@ -58,7 +58,7 @@ const UserSideBar = () => {
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
   const [password, setPassword] = useState("");
-  const [passwordValue, setPasswordValue] = useState(false);
+  // const [passwordValue, setPasswordValue] = useState(false);
   const user = useSelector((state) => state.user);
 
   const [value, setValue] = useState(0);
@@ -97,38 +97,12 @@ const UserSideBar = () => {
   };
 
   //Handle the password show and hide
-  const handleShowHidePassword = () => {
-    setPasswordValue((value) => !value);
-  };
+  // const handleShowHidePassword = () => {
+  //   setPasswordValue((value) => !value);
+  // };
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
-  };
-
-  const handleCloseAccount = (e) => {
-    e.preventDefault();
-    axios
-      .delete(`${process.env.REACT_APP_API_URL}/user`, {
-        headers: { Authorization: user.token, password },
-      })
-      .then((res) => {
-        console.log("res",res);
-        if (res.status) {
-          toast.success("Your account are successfully deleted");
-          history.push("/");
-          localStorage.clear();
-          dispatch({
-            type: "LOGOUT",
-            payload: {
-              email: "",
-              token: "",
-            },
-          });
-        }
-      })
-      .catch((error) => {
-        toast.error(error.response.data?.message);
-      });
   };
 
   useEffect(() => {
@@ -167,6 +141,35 @@ const UserSideBar = () => {
     }
   };
 
+  const handleCloseAccount = (e) => {
+    e.preventDefault();
+
+    const URL = `${process.env.REACT_APP_API_URL}/user`;
+    axios
+      .delete(URL, {
+        headers: { Authorization: user.token },
+        data: { password: password },
+      })
+      .then((res) => {
+        console.log("res", res);
+        if (res.status) {
+          toast.success("Your account are successfully deleted");
+          history.push("/");
+          localStorage.clear();
+          dispatch({
+            type: "LOGOUT",
+            payload: {
+              email: "",
+              token: "",
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data?.message);
+      });
+  };
+
   return (
     <>
       {mobileView ? (
@@ -185,47 +188,6 @@ const UserSideBar = () => {
           </Button>
         </div>
       ) : (
-        // <List style={{display: "flex", justifyContent: "space-between", alignItems: "center"}} component="nav" aria-labelledby="nested-sidebar-nav">
-        //   <ListItem
-        //     className={classes.userMenuItem}
-        //     classes={{ selected: classes.selectedItem }}
-        //     component={Link}
-        //     to="/user/profile"
-        //     selected={value === 0}
-        //   >
-        //     <PersonOutlineIcon />
-        //   </ListItem>
-
-        //   <ListItem
-        //     className={classes.userMenuItem}
-        //     classes={{ selected: classes.selectedItem }}
-        //     component={Link}
-        //     to="/user/favorites"
-        //     selected={value === 1}
-        //   >
-        //     <FavoriteBorderIcon />
-        //   </ListItem>
-
-        //   <ListItem
-        //     className={classes.userMenuItem}
-        //     classes={{ selected: classes.selectedItem }}
-        //     component={Link}
-        //     to="/user/downloads"
-        //     selected={value === 2}
-        //   >
-        //     <GetAppIcon />
-        //   </ListItem>
-
-        //   <ListItem
-        //     className={classes.userMenuItem}
-        //     classes={{ selected: classes.selectedItem }}
-        //     component={Link}
-        //     to="/user/following"
-        //     selected={value === 3}
-        //   >
-        //     <PeopleOutlineIcon />
-        //   </ListItem>
-        // </List>
         <>
           <Card className={classes.userProfile}>
             <div className={classes.userProfileContent}>
@@ -365,10 +327,10 @@ const UserSideBar = () => {
 
               <TabPanel {...a11yProps(1)} value={tabIndex} index={1}>
                 <div style={{ padding: "2rem", width: "60rem" }}>
+                  <DialogTitle className={classes.closeAccountsTitle}>
+                    {"Are you sure?"}
+                  </DialogTitle>
                   <form onSubmit={handleCloseAccount}>
-                    <DialogTitle className={classes.closeAccountTitle}>
-                      {"Are you sure?"}
-                    </DialogTitle>
                     <TextField
                       className={classes.passwordField}
                       fullWidth
