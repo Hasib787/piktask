@@ -370,8 +370,8 @@ const SingleCategory = () => {
                   </div>
                   <div className={classes.singleItem}>
                     <Typography>
-                      <strong>Copyright Information Copyright:</strong>
-                      Designhill
+                      <strong>Copyright Information: </strong><br />
+                      Piktask
                     </Typography>
                   </div>
                 </Grid>

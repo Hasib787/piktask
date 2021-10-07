@@ -93,16 +93,18 @@ const UserProfile = () => {
 
   // get user information
   useEffect(() => {
-    axios
+    if(user?.token){
+      axios
       .get(`${process.env.REACT_APP_API_URL}/profile`, {
         headers: { Authorization: user.token },
       })
       .then(({ data }) => {
+        console.log("data", data);
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);
           setEmail (data.user.email);
-          setLocationAddress(data.user.locationAddress);
+          setLocationAddress(data.user.location);
           setJob_position(data.user.job_position);
           setPhone(data.user.phone);
           setWebsite(data.user.website);
@@ -119,6 +121,7 @@ const UserProfile = () => {
       .catch((error) => {
         console.log(error.message);
       });
+    }
   }, [user.token]);
 
   //Update user profile
@@ -127,7 +130,7 @@ const UserProfile = () => {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("locationAddress", locationAddress);
+    formData.append("location", locationAddress);
     formData.append("job_position", job_position);
     formData.append("phone", phone);
     formData.append("website", website);
@@ -171,9 +174,7 @@ const UserProfile = () => {
         body: JSON.stringify({
           token: googleData.tokenId,
         }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json",},
       }
     );
     const data = await res.json();

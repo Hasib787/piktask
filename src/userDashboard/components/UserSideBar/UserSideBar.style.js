@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "50%",
       margin: "0 auto",
       display: "flex",
-      padding: "0.3rem",
-      backgroundColor: "#707070",
+      padding: "0.2rem",
+      boxShadow: "0px 0px 5px #ddd",
     },
   },
   profileInfo: {

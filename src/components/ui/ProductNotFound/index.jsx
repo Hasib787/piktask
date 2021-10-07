@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useStyles from "./ProductNotFound.style";
 
-const ProductNotFound = ({ keywords }) => {
+const ProductNotFound = ({ keywords, noCollection }) => {
   const classes = useStyles();
 
   return (
@@ -12,7 +12,12 @@ const ProductNotFound = ({ keywords }) => {
         <Typography className={classes.title} variant="body1">
           {keywords
             ? `Sorry, did not find the "${keywords}" related images.`
-            : `Sorry, did not find the related images.`
+            : <>
+              {noCollection 
+                ? `Sorry, did not find the "${noCollection}".`
+                : `Sorry, did not find the related images.`
+              }
+            </>
             }
         </Typography>
         <Typography className={classes.helperText} variant="body1">

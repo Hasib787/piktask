@@ -18,6 +18,8 @@ import useStyles from "./UserFollowing.style";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ProductNotFound from "../../../components/ui/ProductNotFound";
+// import { Pagination } from "@material-ui/lab";
 
 const UserFollowing = () => {
   const classes = useStyles();
@@ -60,7 +62,7 @@ const UserFollowing = () => {
           <Grid item md={9} sm={9} xs={12} className={classes.cardItem}>
             <SectionHeading title="My Follower" large />
             <Grid>
-              {isLoading ||
+              {isLoading || followersItem?.length ? (
                 followersItem?.map((followItem) => (
                   <Grid key={followItem?.user_id} item xs={12} sm={12} md={12}>
                     <Card className={classes.followerProfileContent}>
@@ -135,8 +137,15 @@ const UserFollowing = () => {
                       </CardContent>
                     </Card>
                   </Grid>
-                ))}
+                ))
+              ) : (
+                <ProductNotFound noCollection="User Following" />
+              )}
             </Grid>
+            <Spacing space={{ height: "2rem" }} />
+            {/* <div style={{display: "flex", justifyContent: "flex-end"}}>
+              <Pagination count={100} variant="outlined" shape="rounded" color="primary" />
+            </div> */}
           </Grid>
         </Grid>
       </Container>
