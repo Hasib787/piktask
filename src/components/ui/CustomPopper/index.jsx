@@ -155,7 +155,7 @@ const CustomPopper = ({
                 >
                   <div className={classes.userMenuIcon}>
                     <FavoriteBorderIcon />
-                    <span>Favorite</span>
+                    <span>Favourite</span>
                   </div>
                   <ArrowForwardIosIcon />
                 </MenuItem>
