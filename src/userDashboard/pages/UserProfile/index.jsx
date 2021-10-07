@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   // styled,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
@@ -51,7 +51,7 @@ const UserProfile = () => {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [locationAddress, setLocationAddress] = useState("");
   const [job_position, setJob_position] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState("");
@@ -66,7 +66,7 @@ const UserProfile = () => {
 
   const dispatch = useDispatch();
   const pathHistory = useHistory();
-  const Location = useLocation();
+  const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
   const user = useSelector((state) => state.user);
 
@@ -98,12 +98,11 @@ const UserProfile = () => {
         headers: { Authorization: user.token },
       })
       .then(({ data }) => {
-        console.log("data", data.user);
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);
           setEmail (data.user.email);
-          setLocation(data.user.location);
+          setLocationAddress(data.user.locationAddress);
           setJob_position(data.user.job_position);
           setPhone(data.user.phone);
           setWebsite(data.user.website);
@@ -129,7 +128,7 @@ const UserProfile = () => {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("location", location);
+    formData.append("locationAddress", locationAddress);
     formData.append("job_position", job_position);
     formData.append("phone", phone);
     formData.append("website", website);
@@ -327,9 +326,9 @@ const UserProfile = () => {
                           variant="outlined"
                           label="Location"
                           className={classes.formControl}
-                          name="location"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
+                          name="locationAddress"
+                          value={locationAddress}
+                          onChange={(e) => setLocationAddress(e.target.value)}
                         />
                         <TextField
                           fullWidth

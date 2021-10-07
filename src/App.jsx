@@ -60,7 +60,6 @@ import JoinNow from "./admin/pages/JoinNow";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const contributor = useSelector((state) => state.contributor);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -94,20 +93,6 @@ const App = () => {
       }
     }
 
-    // Check username/password auth state
-    const setContributorToken = window.localStorage.getItem("token") || "";
-    if (setContributorToken) {
-      const decode = jwt_decode(setContributorToken.split(" ")[1]);
-      if (decode.email) {
-        dispatch({
-          type: "SET_CONTRIBUTOR",
-          payload: {
-            ...decode,
-            token: setContributorToken,
-          },
-        });
-      }
-    }
 
     // Popular categories API integration
     axios
@@ -125,10 +110,10 @@ const App = () => {
       });
 
     // Author last file API
-    // if (contributor?.token) {
+    // if (user?.token) {
     //   axios
     //     .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`, {
-    //       headers: { Authorization: contributor?.token },
+    //       headers: { Authorization: user?.token },
     //     })
     //     .then(({ data }) => {
     //       if (data?.status) {
@@ -141,7 +126,7 @@ const App = () => {
     // }
 
     return () => unsubscribe();
-  }, [dispatch, user?.token, contributor?.token]);
+  }, [dispatch, user?.token]);
 
   return (
     <ThemeProvider theme={theme}>

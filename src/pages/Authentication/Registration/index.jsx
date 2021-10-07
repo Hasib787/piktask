@@ -34,7 +34,7 @@ export const Registration = ({ history }) => {
   const { from } = location.state || { from: { pathname: "/" } };
   const user = useSelector((state) => state.user);
 
-  const [confirmValue, setConfirmValue] = useState(false);
+  // const [confirmValue, setConfirmValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(false);
@@ -45,9 +45,9 @@ export const Registration = ({ history }) => {
   const handleShowHidePassword = () => {
     setValue((value) => !value);
   };
-  const handleShowHideConfirmPassword = () => {
-    setConfirmValue((value) => !value);
-  };
+  // const handleShowHideConfirmPassword = () => {
+  //   setConfirmValue((value) => !value);
+  // };
 
   useEffect(() => {
     if (user.token) history.push("/");
