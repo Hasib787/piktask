@@ -14,7 +14,6 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import lockIcon from "../../../assets/password.png";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -22,12 +21,10 @@ import useStyles from "./UserSideBar.style";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
-// import DevicesIcon from "@material-ui/icons/Devices";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import authorPhoto from "../../../assets/author.png";
 import axios from "axios";
-import { CustomBtn, InputField } from "../../../components/InputField";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -58,14 +55,13 @@ const UserSideBar = () => {
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
   const [password, setPassword] = useState("");
-  // const [passwordValue, setPasswordValue] = useState(false);
   const user = useSelector((state) => state.user);
 
   const [value, setValue] = useState(0);
-  const [deleteAccountDialog, setDeleteAccountDialog] = useState(false);
   const [alartDialog, setAlartDialog] = useState(false);
-  // const [open, setOpen] = useState(false);
-  // const [selectedItem, setSelectedItem] = useState(0);
+  const [downloadCount, setDownloadCount] = useState("");
+  const [downloadLimit, setDownloadLimit] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   //mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -80,6 +76,23 @@ const UserSideBar = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
+  useEffect(() => {
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
+          headers: { Authorization: user?.token },
+        })
+        .then(({data}) => {
+          if (data.status) {
+            setDownloadCount(data?.downloads);
+            setDownloadLimit(data?.daily_limit - data?.downloads);
+            setLoading(false);
+          }
+        })
+        .catch((error) => { console.log(error);});
+    }
+  }, [user?.token]);
+
   //close account modal
   const handleDialogOpen = () => {
     setAlartDialog(true);
@@ -88,18 +101,6 @@ const UserSideBar = () => {
     setAlartDialog(false);
   };
 
-  //close and open modal
-  const handleCloseModalOpen = () => {
-    setDeleteAccountDialog(true);
-  };
-  const handleCloseModalClose = () => {
-    setDeleteAccountDialog(false);
-  };
-
-  //Handle the password show and hide
-  // const handleShowHidePassword = () => {
-  //   setPasswordValue((value) => !value);
-  // };
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
@@ -237,7 +238,7 @@ const UserSideBar = () => {
                   selected={value === 2}
                 >
                   <GetAppIcon />
-                  <span>Downloads(0/10)</span>
+                  <span>Downloads({downloadCount}/{downloadLimit})</span>
                 </ListItem>
 
                 <ListItem

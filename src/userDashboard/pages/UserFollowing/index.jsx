@@ -28,16 +28,15 @@ const UserFollowing = () => {
   const [followersItem, setFollowersItem] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(1);
+  var followerItem = 10;
 
   useEffect(() => {
     setLoading(true);
 
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/user/following_list?limit=2&page=${pageCount}`,
-        {
-          headers: { Authorization: user?.token },
-        }
+        `${process.env.REACT_APP_API_URL}/user/following_list?limit=${followerItem}&page=${pageCount}`,
+        { headers: { Authorization: user?.token } }
       )
       .then(({ data }) => {
         if (data?.status) {
@@ -49,11 +48,7 @@ const UserFollowing = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, [user, pageCount]);
-
-  const handleChangeData = (e) => {
-    console.log(e.currentTarget);
-  };
+  }, [user, pageCount, followerItem]);
 
   return (
     <Layout title="Followings || Piktask">
@@ -134,7 +129,7 @@ const UserFollowing = () => {
                                 key={followerResource?.id}
                                 className={classes.followerFiles}
                               >
-                                <img src={followerResource?.thumbnail} alt="" />
+                                <img src={followerResource?.preview} alt="" />
                               </Card>
                             ))}
                           </div>
@@ -146,24 +141,27 @@ const UserFollowing = () => {
               ) : (
                 <ProductNotFound noCollection="User Following" />
               )}
+              {followersItem.length > 9 && (
+                <>
+                  <Spacing space={{ height: "3rem" }} />
+                  <div className={classes.pagination}>
+                    <Pagination
+                      onChange={(event, value) => setPageCount(value)}
+                      count={10}
+                      variant="outlined"
+                      shape="rounded"
+                      color="primary"
+                      size="medium"
+                      pageCount={pageCount}
+                    />
+                  </div>
+                </>
+              )}
             </Grid>
-            <Spacing space={{ height: "2rem" }} />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Pagination
-                onClick={(e) => {
-                  setPageCount(pageCount + 1);
-                  handleChangeData(e.target.value);
-                }}
-                count={100}
-                variant="outlined"
-                shape="rounded"
-                color="primary"
-              />
-            </div>
           </Grid>
         </Grid>
       </Container>
-      <Spacing space={{ height: "5rem" }} />
+      <Spacing space={{ height: "3rem" }} />
       <Footer />
     </Layout>
   );
