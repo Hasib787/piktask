@@ -79,6 +79,15 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.3rem",
     },
   },
+  socialShareWrapper:{
+    display: "flex", 
+    justifyContent: "space-between",
+  },
+  socialShareTitle:{
+    "& h2":{
+      fontSize: "1.7rem !important",
+    },
+  },
   detailsContainer: {
     width: "55rem",
     marginTop: "2rem",
@@ -364,11 +373,11 @@ const useStyles = makeStyles((theme) => ({
    },
   },
   closeButton: {
-    float: "right",
-
+    height:"50%",
+    margin: "0.5rem",
     "& span svg": {
       fontSize: "2.5rem",
-    }
+    },
   },
 }));
 

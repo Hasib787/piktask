@@ -143,7 +143,7 @@ const Search = () => {
   const loadCategories = () => {
     if (categories.length === 0) {
       axios
-      .get(`${process.env.REACT_APP_API_URL}/categories`)
+      .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
       .then(({ data }) => {
         if (data?.status) {
           const sortedData = data?.categories.sort((a, b) => a.id - b.id);

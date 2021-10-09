@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
+    justifyContent:"center",
   },
   title: {
     color: theme.palette.common.white,

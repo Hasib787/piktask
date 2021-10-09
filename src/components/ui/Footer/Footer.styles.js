@@ -5,6 +5,9 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
   root: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingBottom: "5rem",
     paddingTop: "5rem",
   },
@@ -60,14 +63,5 @@ export const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
-  gridRoot: {
-    display: "flex",
-    marginLeft: "-2.8rem",
-    alignItems: "flex-start",
-    height: "100%",
-
-    "@media (max-width: 768px)": {
-      flexDirection: "column",
-    },
-  },
+ 
 }));

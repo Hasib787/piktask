@@ -51,7 +51,7 @@ export const AboutUs = () => {
               <Spacing space={{ height: "2rem" }} />
 
               <Typography variant="h3">
-                1.Can I use the content for My Business?{" "}
+                1.Can I use the content for My Business?
               </Typography>
               <Spacing space={{ height: "1rem" }} />
               <Typography className={classes.description}>
