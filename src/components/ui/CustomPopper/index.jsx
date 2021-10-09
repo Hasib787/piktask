@@ -22,6 +22,8 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 // import DevicesIcon from "@material-ui/icons/Devices";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CustomPopper = ({
   open,
@@ -34,6 +36,29 @@ const CustomPopper = ({
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+
+  const [downloadCount, setDownloadCount] = useState("");
+  const [downloadLimit, setDownloadLimit] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
+          headers: { Authorization: user?.token },
+        })
+        .then(({data}) => {
+          if (data.status) {
+            setDownloadCount(data?.downloads);
+            setDownloadLimit(data?.daily_limit - data?.downloads);
+            setLoading(false);
+          }
+        })
+        .catch((error) => { console.log(error);});
+    }
+  }, [user.token]);
 
   const handleSignout = () => {
     if (user && user?.token) {
@@ -119,7 +144,7 @@ const CustomPopper = ({
                 <Grid container className={classes.productDownloadCount}>
                   <Grid item xs={6} className={classes.productDownloadGrid}>
                     <Typography variant="h2" className={classes.totalAmount}>
-                      5
+                      {downloadCount}
                     </Typography>
                     <Typography variant="h3" className={classes.totalText}>
                       Daily Downloads
@@ -127,7 +152,7 @@ const CustomPopper = ({
                   </Grid>
                   <Grid item xs={6} className={classes.productDownloadGrid}>
                     <Typography variant="h2" className={classes.totalAmount}>
-                      5
+                      {downloadLimit}
                     </Typography>
                     <Typography variant="h3" className={classes.totalText}>
                       Remaining Downloads
@@ -167,7 +192,7 @@ const CustomPopper = ({
                 >
                   <div className={classes.userMenuIcon}>
                     <GetAppIcon />
-                    <span>Downloads(0/10)</span>
+                    <span>Downloads({downloadCount}/{downloadLimit})</span>
                   </div>
                   <ArrowForwardIosIcon />
                 </MenuItem>

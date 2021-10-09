@@ -1,8 +1,20 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  blogsItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   blogContainer: {
     padding: "0rem 15rem",
+    "@media (max-width: 769px)": {
+      padding: "0rem 2rem",
+    },
+    "@media (max-width: 576px)": {
+      padding: "0rem 0rem",
+    },
   },
   blogImageWrapper:{
     height: 400,

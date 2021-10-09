@@ -107,7 +107,7 @@ const Product = ({ photo }) => {
               to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
             />
             <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
-              <img className={classes.image} src={photo?.thumbnail} alt="" />
+              <img className={classes.image} src={photo?.preview} alt="" />
             </Link>
           </div>
         ) : (
@@ -117,7 +117,7 @@ const Product = ({ photo }) => {
               to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
             />
             <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
-              <img className={classes.image} src={photo?.thumbnail} alt="" />
+              <img className={classes.image} src={photo?.preview} alt="" />
             </Link>
           </div>
         )}

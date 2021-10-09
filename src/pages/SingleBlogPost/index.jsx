@@ -115,7 +115,7 @@ const SingleBlogPost = () => {
       <Spacing space={{ height: "5rem" }} />
       <Container>
         <Grid container spacing={3} className={classes.blogContainer}>
-          <Grid item sm={8}>
+          <Grid item sm={8} md={8} xs={12} className={classes.blogsItem}>
             <div className={classes.blogImageWrapper}>
               <img src={blogDetails?.thumbnail} alt={blogDetails?.category} />
             </div>
@@ -232,7 +232,7 @@ const SingleBlogPost = () => {
             </div>
           </Grid>
 
-          <Grid item sm={4}>
+          <Grid item sm={4} md={4} xs={12} className={classes.blogsItem}>
             <Grid container spacing={0} className={classes.postsWrapper}>
               <SectionHeading title="Recent Blog" large></SectionHeading>
               {recentBlogsPost?.length > 0 &&

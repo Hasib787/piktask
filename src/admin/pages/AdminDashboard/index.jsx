@@ -25,8 +25,8 @@ import useStyles from "./admin.styles";
 import React, { useEffect, useState } from "react";
 import Layout from "../../../Layout";
 import Blog from "../../../components/ui/Blog";
-import { TopSeller } from "../../../components/ui/TopSeller";
-import SectionHeading from "../../../components/ui/Heading";
+// import { TopSeller } from "../../../components/ui/TopSeller";
+// import SectionHeading from "../../../components/ui/Heading";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -382,7 +382,7 @@ const AdminDashboard = () => {
 
           <Spacing space={{height: "2rem"}} />
 
-          <Container>
+          {/* <Container>
             <SectionHeading title="Top Selling Author" large>
               <Button
                 className={classes.headingButton}
@@ -393,7 +393,7 @@ const AdminDashboard = () => {
               </Button>
             </SectionHeading>
           </Container>
-          <TopSeller adminDashBoard />
+          <TopSeller adminDashBoard /> */}
           <Blog />
           <Footer />
         </main>
