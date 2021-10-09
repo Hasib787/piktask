@@ -16,23 +16,6 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   const classes = useStyles();
-  // const socialMedias = [
-  //   {
-  //     name: "Instagram",
-  //     url: "https://www.instagram.com/",
-  //     image: instagram,
-  //   },
-  //   {
-  //     name: "Twitter",
-  //     url: "https://twitter.com/",
-  //     image: twitter,
-  //   },
-  //   {
-  //     name: "Facebook",
-  //     url: "https://www.facebook.com/",
-  //     image: facebook,
-  //   },
-  // ];
   return (
     <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
@@ -167,14 +150,6 @@ const Footer = () => {
                   Cookies policy
                 </Link>
               </ListItem>
-              {/* <Grid className={classes.gridRoot}>
-                <Grid item xs={12}>
-                  <SocialShare
-                    socialMedias={socialMedias}
-                    position="left"
-                  />
-                </Grid>
-              </Grid> */}
             </List>
           </Grid>
         </Grid>
