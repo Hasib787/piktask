@@ -598,9 +598,9 @@ const SingleCategory = () => {
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <DialogTitle id="customized-dialog-title">
-              Use image social link
+          <div className={classes.socialShareWrapper}>
+            <DialogTitle className={classes.socialShareTitle}>
+              {"Use image social link"}
             </DialogTitle>
             <IconButton
               aria-label="close"

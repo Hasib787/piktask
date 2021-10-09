@@ -74,11 +74,11 @@ export const Home = () => {
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
-        buttonLink="/subscription"
+        // buttonLink="/subscription"
         buttonText="Get Started"
       />
       <Spacing space={{ height: "2.5rem" }} />
-      <Container>
+      {/* <Container>
         <SectionHeading title="Top Selling Author" large>
           <Button
             className={classes.headingButton}
@@ -89,8 +89,8 @@ export const Home = () => {
           </Button>
         </SectionHeading>
       </Container>
-      {/* Top selling author */}
-      <TopSeller homeTopSeller />
+      Top selling author 
+      <TopSeller homeTopSeller /> */}
       {/* BLOG SECTION */}
       <Blog />
       <Footer />

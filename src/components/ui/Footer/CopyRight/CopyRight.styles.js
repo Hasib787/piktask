@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   copyrightWrapper: {
     // background: theme.palette.primary.main,
-    
+    padding: "1.8rem 0rem",
     backgroundPosition: "center center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   gridRoot: {
     display: "flex",
     alignItems: "center",
+    justifyContent:"space-between",
     height: "100%",
 
     "@media (max-width: 768px)": {
@@ -40,13 +41,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logoWrapper: {
+    display:"flex",
+    justifyContent:"center",
     "@media (max-width: 992px)": {
       marginRight: "2rem",
     },
   },
   logo: {
     width: "13.5rem",
-    display: "block",
   },
   copyRightText: {
     fontSize: "1.6rem",

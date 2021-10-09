@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   postsWrapper: {
     marginBottom: "2rem",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flexWrap: "wrap",
     "@media (max-width: 768)": {
       justifyContent: "flex-start",

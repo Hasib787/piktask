@@ -13,10 +13,6 @@ const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) =
   return (
     <div
       className={classes.container}
-      style={{
-        justifyContent: position === "left" ? "flex-start" : "flex-start",
-        display: "flex",
-      }}
     >
       <Typography
         className={classes.title}
