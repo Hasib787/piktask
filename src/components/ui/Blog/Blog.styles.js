@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     // backgroundColor: "#F8FCFF",
     backgroundColor: "#f3f3f3",
-    marginTop: "5rem",
+    marginTop: "4rem",
     padding: "3rem 0rem",
   },
   headingWrapepr: {
