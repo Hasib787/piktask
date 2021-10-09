@@ -10,7 +10,6 @@ const SearchKeyWords = (props) => {
   const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
 
   useEffect(() => {
-    try {
       axios
         .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword`)
         .then(({ data }) => {
@@ -18,8 +17,10 @@ const SearchKeyWords = (props) => {
             const popularKeyword = data.keywords;
             setPopularSearchKeywords(popularKeyword.filter((e) => e));
           }
-        });
-    } catch (error) { console.log(error);}
+        })
+        .catch((error) => {
+          console.log(error);
+        })
   }, []);
 
   return (
