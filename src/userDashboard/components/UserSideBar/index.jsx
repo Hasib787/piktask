@@ -22,6 +22,14 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import facebookIcon from "../../../assets/icons/facebook.svg";
+import twitterIcon from "../../../assets/icons/twitter.svg";
+import linkedinIcon from "../../../assets/icons/linkedin.svg";
+import instagramIcon from "../../../assets/icons/instagram.svg";
+import shutterstockIcon from "../../../assets/icons/shutterstock.svg";
+import freepikIcon from "../../../assets/icons/freepik.svg";
+import behanceIcon from "../../../assets/icons/behance.svg";
+import dribbleIcon from "../../../assets/icons/dribble.svg";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import authorPhoto from "../../../assets/author.png";
 import axios from "axios";
@@ -49,18 +57,20 @@ function a11yProps(index) {
   };
 }
 
-const UserSideBar = () => {
+const UserSideBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { facebook } = props;
   const [tabIndex, setTabIndex] = useState(0);
   const [password, setPassword] = useState("");
-  const user = useSelector((state) => state.user);
 
   const [value, setValue] = useState(0);
-  const [alartDialog, setAlartDialog] = useState(false);
+  const [alertDialog, setAlertDialog] = useState(false);
   const [downloadCount, setDownloadCount] = useState("");
   const [downloadLimit, setDownloadLimit] = useState("");
+  const [userSocialMedia, setSocialMedia] = useState("");
   const [isLoading, setLoading] = useState(false);
 
   //mobile responsive
@@ -77,30 +87,52 @@ const UserSideBar = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+
     if (user?.token) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
           headers: { Authorization: user?.token },
         })
-        .then(({data}) => {
+        .then(({ data }) => {
           if (data.status) {
             setDownloadCount(data?.downloads);
             setDownloadLimit(data?.daily_limit - data?.downloads);
             setLoading(false);
           }
         })
-        .catch((error) => { console.log(error);});
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    // get user information
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/profile`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (data?.status) {
+            setSocialMedia(data.user);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
   }, [user?.token]);
 
+  console.log("userSocialMedia", userSocialMedia);
+
   //close account modal
   const handleDialogOpen = () => {
-    setAlartDialog(true);
+    setAlertDialog(true);
   };
   const handleDialogClose = () => {
-    setAlartDialog(false);
+    setAlertDialog(false);
   };
-
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
@@ -152,7 +184,6 @@ const UserSideBar = () => {
         data: { password: password },
       })
       .then((res) => {
-        console.log("res", res);
         if (res.status) {
           toast.success("Your account are successfully deleted");
           history.push("/");
@@ -203,6 +234,112 @@ const UserSideBar = () => {
                   <Typography>{user?.email}</Typography>
                 </div>
               </div>
+              <div className={classes.socialMedia}>
+                {userSocialMedia?.facebook !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.facebook}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={facebookIcon}
+                      className={classes.facebookIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.twitter !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.twitter}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={twitterIcon}
+                      className={classes.twitterIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.linkedin !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.linkedin}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={linkedinIcon}
+                      className={classes.linkedinIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.instagram !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.instagram}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={instagramIcon}
+                      className={classes.instagramIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.shutterstock !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.shutterstock}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={shutterstockIcon}
+                      className={classes.shutterstockIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.freepik !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.freepik}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={freepikIcon}
+                      className={classes.freepikIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.behance !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.behance}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={behanceIcon}
+                      className={classes.behanceIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+                {userSocialMedia?.dribble !== "" && (
+                  <Button
+                    component={Link}
+                    to={`${userSocialMedia?.dribble}`}
+                    target="_blank"
+                  >
+                    <img
+                      src={dribbleIcon}
+                      className={classes.dribbleIcon}
+                      alt=""
+                    />
+                  </Button>
+                )}
+              </div>
             </div>
           </Card>
           <Card className={classes.userMenuList}>
@@ -238,7 +375,9 @@ const UserSideBar = () => {
                   selected={value === 2}
                 >
                   <GetAppIcon />
-                  <span>Downloads({downloadCount}/{downloadLimit})</span>
+                  <span>
+                    Downloads({downloadCount}/{downloadLimit})
+                  </span>
                 </ListItem>
 
                 <ListItem
@@ -293,7 +432,7 @@ const UserSideBar = () => {
             {/* close account modal */}
             <Dialog
               className={classes.closeAccountDialog}
-              open={alartDialog}
+              open={alertDialog}
               onClose={handleDialogClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"

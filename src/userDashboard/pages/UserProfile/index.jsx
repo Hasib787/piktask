@@ -67,8 +67,9 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const pathHistory = useHistory();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
   const user = useSelector((state) => state.user);
+  const { from } = location.state || { from: { pathname: "/" } };
+  const [isLoading, setLoading] = useState(false);
 
   const handleChange = (name) => (event) => {
     setSwitchToggle({ [name]: event.target.checked });
@@ -93,13 +94,14 @@ const UserProfile = () => {
 
   // get user information
   useEffect(() => {
+    setLoading(true);
+
     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/profile`, {
         headers: { Authorization: user.token },
       })
       .then(({ data }) => {
-        console.log("data", data);
         if (data?.status) {
           setName(data.user.name);
           setUsername(data.user.username);
@@ -116,6 +118,7 @@ const UserProfile = () => {
           setTwitter(data.user.twitter);
           setLinkedin(data.user.linkedin);
           setInstagram(data.user.instagram);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -225,6 +228,7 @@ const UserProfile = () => {
       pathHistory.replace(from);
     }
   };
+
 
   return (
     <Layout title={"UserProfile | piktask"}>

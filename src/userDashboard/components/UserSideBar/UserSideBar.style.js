@@ -46,6 +46,70 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "0.2rem",
     },
   },
+  socialMedia: {
+    textAlign: "center",
+    marginTop: "1.5rem",
+    cursor: "pointer",
+
+    "& a": {
+      padding: "0rem",
+      minWidth: "0rem",
+      transition: "all 0.3s linear",
+      "&:hover": {
+        backgroundColor: "transparent",
+        transform: "translateY(-0.7rem)",
+      }
+    },
+  },
+  facebookIcon: {
+    width: "0.8rem",
+    height: "auto",
+    cursor: "pointer",
+  },
+  twitterIcon: {
+    width: "1.8rem",
+    height: "auto",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  linkedinIcon: {
+    width: "1.7rem",
+    height: "auto",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  instagramIcon: {
+    width: "1.6rem",
+    height: "auto",
+    marginBottom: "-0.1rem",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  shutterstockIcon: {
+    width: "1.4rem",
+    height: "auto",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  freepikIcon: {
+    width: "1.5rem",
+    height: "auto",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  behanceIcon: {
+    width: "2rem",
+    height: "auto",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
+  dribbleIcon: {
+    width: "1.6rem",
+    height: "auto",
+    marginBottom: "-0.1rem",
+    marginLeft: "1.2rem",
+    cursor: "pointer",
+  },
   userMenuList: {
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
   },
