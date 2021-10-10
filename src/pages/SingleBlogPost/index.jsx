@@ -35,6 +35,7 @@ import {
   TwitterShareButton,
 } from "react-share";
 import SignUpModal from "../Authentication/SignUpModal";
+import moment from "moment";
 
 const SingleBlogPost = () => {
   const classes = useStyles();
@@ -183,7 +184,7 @@ const SingleBlogPost = () => {
               </div>
               <Typography variant="h2">{blogDetails?.title}</Typography>
               <Typography>
-                By {blogDetails?.username} <span>2 weeks ago</span>
+                By {blogDetails?.username} <span>{moment(blogDetails?.createdAt).format("LL")}</span>
               </Typography>
             </div>
 
