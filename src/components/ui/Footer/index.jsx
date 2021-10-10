@@ -6,12 +6,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import SocialShare from "../SocialShare";
 import Copyright from "./CopyRight";
 import { useStyles } from "./Footer.styles";
-import facebook from "../../../assets/icons/facebook-round.svg";
-import twitter from "../../../assets/icons/twitter-round.svg";
-import instagram from "../../../assets/icons/instagram-round.svg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -27,33 +23,23 @@ const Footer = () => {
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Graphics &amp; Design
+                <Link className={classes.navLink} to="/category/sports">
+                  Graphic Template 
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Digital Marketing
+                <Link className={classes.navLink} to="/category/travel">
+                Social Media Banner
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Writing &amp; Translation
+                <Link className={classes.navLink} to="/category/education">
+                  Logo Mockup
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Video &amp; Animation
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Music &amp; Audio
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Programming &amp; Tech
+                <Link className={classes.navLink} to="/category/music">
+                  Abstract Background
                 </Link>
               </ListItem>
             </List>
