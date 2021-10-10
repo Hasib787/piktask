@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { getWords } from "../../../../helpers";
 import useStyles from "./Post.styles";
+import moment from "moment";
 
 
 const Post = ({ post, recentBlog }) => {
@@ -26,7 +27,7 @@ const Post = ({ post, recentBlog }) => {
               </Link>
               {/* <Typography className={classes.description} variant="h2">{getWords(4, post?.title)}...</Typography> */}
               <Typography className={classes.description} variant="h2">{post?.title} Lorem ipsum dolor sit amet.</Typography>
-              <Typography className={classes.authorInfo}>By {post?.username} <span>2 weeks ago</span></Typography>
+              <Typography className={classes.authorInfo}>By {post?.username} <span>{moment(post?.createdAt).format("LL")}</span></Typography>
             </div>
           </div>
         </Grid>
@@ -45,7 +46,7 @@ const Post = ({ post, recentBlog }) => {
               </Typography>
             </Link>
             <Typography className={classes.description} variant="h2">{getWords(10, post?.title)}...</Typography>
-            <Typography className={classes.authorInfo}>By {post?.username} <span>2 weeks ago</span></Typography>
+            <Typography className={classes.authorInfo}>By {post?.username} <span>{moment(post?.createdAt).format("LL")}</span></Typography>
           </div>
         </div>
       </Grid>
