@@ -88,14 +88,31 @@ export const AboutUs = () => {
               <div className={classes.bdtaskMembersImage}>
                 <img src={bdtaskMembers} alt="Bdtask members " />
               </div>
-              
+
               <Spacing space={{ height: "2rem" }} />
-              
+
+              <Grid spacing={3} container>
+                <Grid item xs={12} sm={6} md={6}>
+                  <Typography variant="h2">Mission</Typography>
+                  <Typography className={classes.missionVisionDescription}>
+                    Making quality products with reasonable pricing and
+                    establish trust in digital products among the mass people.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <Typography variant="h2">Vision</Typography>
+                  <Typography  className={classes.missionVisionDescription}>
+                    The vision of Bdtask is to introduce technology to mass
+                    people to help them improve their lifestyle and solve
+                    problems in their daily life through digitalization.
+                  </Typography>
+                </Grid>
+              </Grid>
             </div>
           </div>
         </div>
       </Container>
-      <Spacing space={{ height: "4rem" }} />
+      <Spacing space={{ height: "6rem" }} />
       <Footer />
     </Layout>
   );
