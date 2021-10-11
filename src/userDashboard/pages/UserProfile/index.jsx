@@ -181,7 +181,6 @@ const UserProfile = () => {
       }
     );
     const data = await res.json();
-    // store returned user somehow
     if (data.status) {
       const token = data.token;
       localStorage.setItem("token", token);

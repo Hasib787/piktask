@@ -140,9 +140,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "1rem",
     "@media (max-width: 960px)": {
       marginBottom: "2rem",
-      "&:last-child": {
-        marginBottom: 0,
-      },
     },
   },
   inputField: {
@@ -168,6 +165,25 @@ const useStyles = makeStyles((theme) => ({
   },
   cvcIcon: {
     width: "6rem",
+  },
+  forgetPassword:{
+    
+  },
+  passwordResetLink: {
+    fontSize: 17,
+    color: "#959595",
+    textAlign: "right",
+    display: "block",
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+    "@media (max-width: 768px)": {
+      top: "-.6rem",
+    },
+    [theme.breakpoints.down(426)]: {
+      paddingBottom: "1rem",
+    },
   },
 
   // Portfolio Links
