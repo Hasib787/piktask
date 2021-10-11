@@ -7,6 +7,7 @@ import {
   Typography,
   DialogContent,
   FormControlLabel,
+  Button,
 } from "@material-ui/core";
 import { CustomBtn, InputField } from "../../../components/InputField";
 import { Redirect, useHistory, useLocation } from "react-router";
@@ -14,10 +15,10 @@ import logoWhite from "../../../assets/logo-white.png";
 import lockIcon from "../../../assets/password.png";
 import React, { useEffect, useState } from "react";
 import Spacing from "../../../components/Spacing";
-import FacebookLogin from "react-facebook-login";
 import authImage from "../../../assets/auth.png";
 import CloseIcon from "@material-ui/icons/Close";
 import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import useStyles from "./SignUpModal.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../../database";
@@ -25,6 +26,9 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -387,24 +391,46 @@ const SignUpModal = (props) => {
                 <div className={classes.socialsButtons}>
                   <GoogleLogin
                     clientId={clientId}
-                    className={classes.googleBtn}
-                    buttonText="Google"
+                    render={(renderProps) => (
+                      <Button
+                        className={classes.googleButton}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <FontAwesomeIcon
+                          className={classes.googleIcon}
+                          icon={faGoogle}
+                        />
+                        <span>Google</span>
+                      </Button>
+                    )}
+                    buttonText="Login"
                     onSuccess={handleGoogleLogin}
                     onFailure={handleGoogleLogin}
                     cookiePolicy={"single_host_origin"}
                   />
-
                   <Spacing space={{ margin: "0 0.5rem" }} />
 
-                  <div className={classes.facebookBtn}>
-                    <FacebookLogin
-                      appId="168140328625744"
-                      autoLoad={false}
-                      fields="name,email,picture"
-                      onClick={handleFacebookLogin}
-                      callback={handleFacebookLogin}
-                    />
-                  </div>
+                  <FacebookLogin
+                    appId="168140328625744"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    onClick={handleFacebookLogin}
+                    callback={handleFacebookLogin}
+                    render={(renderProps) => (
+                      <Button
+                        className={classes.facebookBtn}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <FontAwesomeIcon
+                          className={classes.facebookIconBtn}
+                          icon={faFacebookF}
+                        />
+                        <span>Facebook</span>
+                      </Button>
+                    )}
+                  />
                 </div>
 
                 <Spacing space={{ height: "1rem" }} />
