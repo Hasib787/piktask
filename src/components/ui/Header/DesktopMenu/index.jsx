@@ -1,8 +1,8 @@
 import {
   Button,
   Container,
-  // Menu,
-  // MenuItem,
+  Menu,
+  MenuItem,
   Tab,
   Tabs,
   Toolbar,
@@ -57,18 +57,18 @@ const DesktopMenu = ({ history }) => {
     }
   };
 
-  // const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openSubMenu = Boolean(anchorEl);
+  const handleHoverMenu = (event) => {
+    // if (anchorEl !== event.currentTarget) {
+    //   setAnchorEl(event.currentTarget);
+    // }
+    setAnchorEl(event.currentTarget);
+  };
 
-  // const handleHoverMenu = (event) => {
-  //   if (anchorEl !== event.currentTarget) {
-  //     setAnchorEl(event.currentTarget);
-  //   }
-  //   // setAnchorEl(event.currentTarget);/
-  // };
-
-  // const handleCloseSubMenu = () => {
-  //   setAnchorEl(null);
-  // };
+  const handleCloseSubMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -97,25 +97,27 @@ const DesktopMenu = ({ history }) => {
               to={`/category/sports`}
               label="Sports"
 
-              // aria-owns={anchorEl ? "Sports" : undefined}
-              // aria-haspopup="true"
-              // onClick={handleHoverMenu}
-              // onMouseOver={handleHoverMenu}
+              id="Sports"
+              aria-controls="Sports"
+              aria-haspopup="true"
+              aria-expanded={openSubMenu ? 'true' : undefined}              
+              onClick={handleHoverMenu}
+              onMouseOver={handleHoverMenu}
             />
 
-            {/* <Menu
+            <Menu
               id="Sports"
               anchorEl={anchorEl}
-              open={anchorEl}
+              open={openSubMenu}
+              MenuListProps={{ 'aria-labelledby': 'Sports', onMouseLeave: handleCloseSubMenu }}
               onClose={handleCloseSubMenu}
-              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
             >
               <div className={classes.subMenuItem}>
                 <MenuItem onClick={handleCloseSubMenu}>Profile</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>My account</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>Logout</MenuItem>
               </div>
-            </Menu> */}
+            </Menu>
 
             <Tab
               className={classes.menuItem}
@@ -124,25 +126,27 @@ const DesktopMenu = ({ history }) => {
               to="/category/travel"
               label="Travel"
 
-              // aria-owns={anchorEl ? "Travel" : undefined}
-              // aria-haspopup="true"
-              // onClick={handleHoverMenu}
-              // onMouseOver={handleHoverMenu}
+              id="Travel"
+              aria-controls="Travel"
+              aria-haspopup="true"
+              aria-expanded={openSubMenu ? 'true' : undefined}              
+              onClick={handleHoverMenu}
+              onMouseOver={handleHoverMenu}
             />
 
-            {/* <Menu
+            <Menu
               id="Travel"
               anchorEl={anchorEl}
-              open={anchorEl}
+              open={openSubMenu}
+              MenuListProps={{ 'aria-labelledby': 'Travel', onMouseLeave: handleCloseSubMenu }}
               onClose={handleCloseSubMenu}
-              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
             >
               <div className={classes.subMenuItem}>
                 <MenuItem onClick={handleCloseSubMenu}>Profile account</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>My Favorite</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>Downloads</MenuItem>
               </div>
-            </Menu> */}
+            </Menu>
 
             <Tab
               className={classes.menuItem}
