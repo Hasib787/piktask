@@ -12,26 +12,27 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import useStyles from "./UserSideBar.style";
+import React, { useEffect, useState } from "react";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import facebookIcon from "../../../assets/icons/facebook.svg";
-import twitterIcon from "../../../assets/icons/twitter.svg";
-import linkedinIcon from "../../../assets/icons/linkedin.svg";
-import instagramIcon from "../../../assets/icons/instagram.svg";
 import shutterstockIcon from "../../../assets/icons/shutterstock.svg";
+import instagramIcon from "../../../assets/icons/instagram.svg";
+import facebookIcon from "../../../assets/icons/facebook.svg";
+import linkedinIcon from "../../../assets/icons/linkedin.svg";
+import twitterIcon from "../../../assets/icons/twitter.svg";
 import freepikIcon from "../../../assets/icons/freepik.svg";
 import behanceIcon from "../../../assets/icons/behance.svg";
 import dribbleIcon from "../../../assets/icons/dribble.svg";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import authorPhoto from "../../../assets/author.png";
+import useStyles from "./UserSideBar.style";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const TabPanel = (props) => {
@@ -57,21 +58,21 @@ function a11yProps(index) {
   };
 }
 
-const UserSideBar = (props) => {
+const UserSideBar = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const { facebook } = props;
-  const [tabIndex, setTabIndex] = useState(0);
-  const [password, setPassword] = useState("");
-
-  const [value, setValue] = useState(0);
-  const [alertDialog, setAlertDialog] = useState(false);
+  
   const [downloadCount, setDownloadCount] = useState("");
   const [downloadLimit, setDownloadLimit] = useState("");
-  const [userSocialMedia, setSocialMedia] = useState("");
+  const [alertDialog, setAlertDialog] = useState(false);
+  const [userProfile, setUserProfile] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [tabIndex, setTabIndex] = useState(0);
+  const [value, setValue] = useState(0);
+  const [profilePicture, setProfilePicture] = useState("");
 
   //mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -114,7 +115,8 @@ const UserSideBar = (props) => {
         })
         .then(({ data }) => {
           if (data?.status) {
-            setSocialMedia(data.user);
+            setUserProfile(data.user);
+            setProfilePicture(data.user.avatar);
             setLoading(false);
           }
         })
@@ -124,15 +126,9 @@ const UserSideBar = (props) => {
     }
   }, [user?.token]);
 
-  console.log("userSocialMedia", userSocialMedia);
-
   //close account modal
-  const handleDialogOpen = () => {
-    setAlertDialog(true);
-  };
-  const handleDialogClose = () => {
-    setAlertDialog(false);
-  };
+  const handleDialogOpen = () => { setAlertDialog(true);};
+  const handleDialogClose = () => { setAlertDialog(false);};
 
   const handleChangeTab = () => {
     return tabIndex === 0 ? setTabIndex(1) : tabIndex === 1 && setTabIndex(0);
@@ -149,10 +145,7 @@ const UserSideBar = (props) => {
       setValue(3);
     } else if (window.location.pathname === "/user/devices" && value !== 4) {
       setValue(4);
-    } else if (
-      window.location.pathname === "/user/subscription" &&
-      value !== 5
-    ) {
+    } else if (window.location.pathname === "/user/subscription" && value !== 5) {
       setValue(5);
     }
   }, [value]);
@@ -163,7 +156,6 @@ const UserSideBar = (props) => {
       user.isLogged = false;
       history.push("/");
       localStorage.clear();
-
       dispatch({
         type: "LOGOUT",
         payload: {
@@ -176,7 +168,6 @@ const UserSideBar = (props) => {
 
   const handleCloseAccount = (e) => {
     e.preventDefault();
-
     const URL = `${process.env.REACT_APP_API_URL}/user`;
     axios
       .delete(URL, {
@@ -202,141 +193,117 @@ const UserSideBar = (props) => {
       });
   };
 
+  const handleUpdateImage = (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file?.name?.match(/\.(jpg|jpeg|png|gif)$/) && file !== undefined) {
+      toast.error("You can only upload .jpg, .jpeg, .png, .gif etc");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("profile_picture", file);
+
+    const url = `${process.env.REACT_APP_API_URL}/profile/profile_picture`;
+    axios({
+      method: "put",
+      url,
+      headers: {
+        Authorization: user.token,
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    })
+      .then((res) => {
+        if (res.status) {
+          toast.success(res.data.message);
+          setProfilePicture(res.data.image);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       {mobileView ? (
         <div>
-          <Button component={Link} to="/user/profile">
-            <PersonOutlineIcon />
-          </Button>
-          <Button component={Link} to="/user/favorites">
-            <FavoriteBorderIcon />
-          </Button>
-          <Button component={Link} to="/user/downloads">
-            <GetAppIcon />
-          </Button>
-          <Button component={Link} to="/user/following">
-            <PeopleOutlineIcon />
-          </Button>
+          <Button component={Link} to="/user/profile"><PersonOutlineIcon /></Button>
+          <Button component={Link} to="/user/favorites"><FavoriteBorderIcon /></Button>
+          <Button component={Link} to="/user/downloads"><GetAppIcon /></Button>
+          <Button component={Link} to="/user/following"><PeopleOutlineIcon /></Button>
         </div>
       ) : (
         <>
           <Card className={classes.userProfile}>
             <div className={classes.userProfileContent}>
               <div className={classes.profileImage}>
-                {user?.avatar ? (
-                  <img src={user?.avatar} alt="UserProfile" />
+                {profilePicture ? (
+                  <img src={profilePicture} alt="UserProfile" />
                 ) : (
                   <img src={authorPhoto} alt="UserProfile" />
                 )}
-                <div className={classes.profileInfo}>
-                  <Typography variant="h2">{user?.username}</Typography>
-                  <Typography>{user?.email}</Typography>
-                </div>
+              </div>
+              <div className={classes.avatarOverlay}>
+                <Button className={classes.uploadButton}>
+                  <label htmlFor="image" for="upload-photo">
+                    <PhotoCameraIcon />
+                    <input
+                      type="file"
+                      name="profile_picture"
+                      accept="image/*"
+                      id="upload-photo"
+                      style={{ display: "none" }}
+                      onChange={handleUpdateImage}
+                    />
+                  </label>
+                </Button>
+              </div>
+              <div className={classes.profileInfo}>
+                <Typography variant="h2">{user?.username}</Typography>
+                <Typography>{user?.email}</Typography>
               </div>
               <div className={classes.socialMedia}>
-                {userSocialMedia?.facebook !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.facebook}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={facebookIcon}
-                      className={classes.facebookIcon}
-                      alt=""
-                    />
+                {userProfile?.facebook !== "" && (
+                  <Button component={Link} to={`${userProfile?.facebook}`} target="_blank">
+                    <img src={facebookIcon} className={classes.facebookIcon} alt="facebookIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.twitter !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.twitter}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={twitterIcon}
-                      className={classes.twitterIcon}
-                      alt=""
-                    />
+                {userProfile?.twitter !== "" && (
+                  <Button component={Link} to={`${userProfile?.twitter}`} target="_blank">
+                    <img src={twitterIcon} className={classes.twitterIcon} alt="twitterIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.linkedin !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.linkedin}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={linkedinIcon}
-                      className={classes.linkedinIcon}
-                      alt=""
-                    />
+                {userProfile?.linkedin !== "" && (
+                  <Button component={Link} to={`${userProfile?.linkedin}`} target="_blank">
+                    <img src={linkedinIcon} className={classes.linkedinIcon} alt="linkedinIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.instagram !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.instagram}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={instagramIcon}
-                      className={classes.instagramIcon}
-                      alt=""
-                    />
+                {userProfile?.instagram !== "" && (
+                  <Button component={Link} to={`${userProfile?.instagram}`} target="_blank">
+                    <img src={instagramIcon} className={classes.instagramIcon} alt="instagramIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.shutterstock !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.shutterstock}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={shutterstockIcon}
-                      className={classes.shutterstockIcon}
-                      alt=""
-                    />
+                {userProfile?.shutterstock !== "" && (
+                  <Button component={Link} to={`${userProfile?.shutterstock}`} target="_blank">
+                    <img src={shutterstockIcon} className={classes.shutterstockIcon} alt="shutterstockIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.freepik !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.freepik}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={freepikIcon}
-                      className={classes.freepikIcon}
-                      alt=""
-                    />
+                {userProfile?.freepik !== "" && (
+                  <Button component={Link} to={`${userProfile?.freepik}`} target="_blank">
+                    <img src={freepikIcon} className={classes.freepikIcon} alt="freepikIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.behance !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.behance}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={behanceIcon}
-                      className={classes.behanceIcon}
-                      alt=""
-                    />
+                {userProfile?.behance !== "" && (
+                  <Button component={Link} to={`${userProfile?.behance}`} target="_blank">
+                    <img src={behanceIcon} className={classes.behanceIcon} alt="behanceIcon"/>
                   </Button>
                 )}
-                {userSocialMedia?.dribble !== "" && (
-                  <Button
-                    component={Link}
-                    to={`${userSocialMedia?.dribble}`}
-                    target="_blank"
-                  >
-                    <img
-                      src={dribbleIcon}
-                      className={classes.dribbleIcon}
-                      alt=""
-                    />
+                {userProfile?.dribble !== "" && (
+                  <Button component={Link} to={`${userProfile?.dribble}`} target="_blank">
+                    <img src={dribbleIcon} className={classes.dribbleIcon} alt="dribbleIcon"/>
                   </Button>
                 )}
               </div>
@@ -508,56 +475,10 @@ const UserSideBar = (props) => {
                         Close Account
                       </Button>
                     </DialogActions>
-                    {/* <CustomBtn type="submit" text="Sign In" color="green" /> */}
                   </form>
                 </div>
               </TabPanel>
             </Dialog>
-
-            {/* <Dialog
-              className={classes.closeAccountDialog}
-              open={deleteAccountDialog}
-              onClose={handleDialogClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              {/* <TabPanel  {...a11yProps(0)} value={tabIndex} index={0}> */}
-            {/* <DialogTitle className={classes.closeAccountTitle}>
-                  {"Are you sure?"}
-                </DialogTitle>
-                <DialogContent>
-                <div className={classes.passwordField}>
-                    <InputField
-                      label="Password"
-                      type={passwordValue ? "text" : "password"}
-                      name="password"
-                      value={password}
-                      onChange={(e)=>setPassword(e.target.value)}
-                    />
-                    <img
-                      src={lockIcon}
-                      alt="Show or hide password"
-                      onClick={handleShowHidePassword}
-                    />
-                  </div>
-                </DialogContent>
-                <DialogActions>
-                  <Button
-                    onClick={handleCloseModalClose}
-                    className={classes.keepAccountBtn}
-                    autoFocus
-                  >
-                    keep Account
-                  </Button>
-                  <Button
-                    onClick={handleChangeTab}
-                    className={classes.closeAccountBtn}
-                    autoFocus
-                  >
-                    Close Account
-                  </Button>
-                </DialogActions>
-                </Dialog> */}
           </Card>
         </>
       )}
