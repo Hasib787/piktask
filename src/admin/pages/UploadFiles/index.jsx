@@ -221,8 +221,8 @@ const UploadFiles = () => {
   const handleArchivedFile = (e) => {
     const archivedFile = e.target.files[0];
 
-    if (!archivedFile?.name?.match(/\.(zip)$/)) {
-      toast.error("You can only upload .zip");
+    if (!archivedFile?.name?.match(/\.(zip|ai|eps|psd|svg)$/)) {
+      toast.error("You can only upload .ai, .eps, .psd, .svg, .zip, .rar");
       setArchivedFile(false);
       return;
     } else {
@@ -479,7 +479,7 @@ const UploadFiles = () => {
                       className={classes.input}
                       type="text"
                       onKeyDown={(event) => {
-                        if (event.code === "Space" || event.key === ",") {
+                        if ( event.key === ",") {
                           addTags(event);
                         }
                       }}
@@ -637,14 +637,14 @@ const UploadFiles = () => {
                         id="zipFolder"
                         name="zipFolder"
                         type="file"
-                        accept=".zip, .rar"
+                        accept=".ai, .eps, .psd, .svg, .zip, .rar"
                         onChange={handleArchivedFile}
                       />
 
                       <FontAwesomeIcon icon={faCloudUploadAlt} />
 
                       <p className={classes.selectFileText}>
-                        Select a file (AI,EPS,PSD,SVG)
+                        Select a file (AI,EPS,PSD,SVG,ZIP)
                       </p>
                     </div>
                   </label>
