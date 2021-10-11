@@ -11,6 +11,7 @@ import {
   ListItem,
   TextField,
   Typography,
+  Link as MuiLink
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
@@ -68,7 +69,7 @@ const UserSideBar = () => {
   const [downloadCount, setDownloadCount] = useState("");
   const [downloadLimit, setDownloadLimit] = useState("");
   const [alertDialog, setAlertDialog] = useState(false);
-  const [userProfile, setUserProfile] = useState("");
+  const [userProfile, setUserProfile] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
@@ -241,25 +242,29 @@ const UserSideBar = () => {
             <div className={classes.userProfileContent}>
               <div className={classes.profileImage}>
                 {profilePicture ? (
-                  <img src={profilePicture} alt="UserProfile" />
+                  <div>
+                    <img src={profilePicture} alt="UserProfile" />
+                  </div>
                 ) : (
                   <img src={authorPhoto} alt="UserProfile" />
                 )}
-              </div>
-              <div className={classes.avatarOverlay}>
-                <Button className={classes.uploadButton}>
-                  <label htmlFor="image" for="upload-photo">
-                    <PhotoCameraIcon />
-                    <input
-                      type="file"
-                      name="profile_picture"
-                      accept="image/*"
-                      id="upload-photo"
-                      style={{ display: "none" }}
-                      onChange={handleUpdateImage}
-                    />
-                  </label>
-                </Button>
+                <div className={classes.avatarOverlay}>
+                  <div className={classes.bgOverlay}>
+                    {/* <Button className={classes.uploadButton}> */}
+                      <label htmlFor="image" for="upload-photo">
+                        <PhotoCameraIcon className={classes.uploadIcon} />
+                        <input
+                          type="file"
+                          name="profile_picture"
+                          accept="image/*"
+                          id="upload-photo"
+                          style={{ display: "none" }}
+                          onChange={handleUpdateImage}
+                        />
+                      </label>
+                    {/* </Button> */}
+                  </div>
+                </div>
               </div>
               <div className={classes.profileInfo}>
                 <Typography variant="h2">{user?.username}</Typography>
@@ -267,44 +272,44 @@ const UserSideBar = () => {
               </div>
               <div className={classes.socialMedia}>
                 {userProfile?.facebook !== "" && (
-                  <Button component={Link} to={`${userProfile?.facebook}`} target="_blank">
+                  <MuiLink href={`${userProfile?.facebook}`} target="_blank">
                     <img src={facebookIcon} className={classes.facebookIcon} alt="facebookIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.twitter !== "" && (
-                  <Button component={Link} to={`${userProfile?.twitter}`} target="_blank">
+                  <MuiLink href={`${userProfile?.twitter}`} target="_blank">
                     <img src={twitterIcon} className={classes.twitterIcon} alt="twitterIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.linkedin !== "" && (
-                  <Button component={Link} to={`${userProfile?.linkedin}`} target="_blank">
+                  <MuiLink href={`${userProfile?.linkedin}`} target="_blank">
                     <img src={linkedinIcon} className={classes.linkedinIcon} alt="linkedinIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.instagram !== "" && (
-                  <Button component={Link} to={`${userProfile?.instagram}`} target="_blank">
+                  <MuiLink href={`${userProfile?.instagram}`} target="_blank">
                     <img src={instagramIcon} className={classes.instagramIcon} alt="instagramIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.shutterstock !== "" && (
-                  <Button component={Link} to={`${userProfile?.shutterstock}`} target="_blank">
+                  <MuiLink href={`${userProfile?.shutterstock}`} target="_blank">
                     <img src={shutterstockIcon} className={classes.shutterstockIcon} alt="shutterstockIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.freepik !== "" && (
-                  <Button component={Link} to={`${userProfile?.freepik}`} target="_blank">
+                  <MuiLink href={`${userProfile?.freepik}`} target="_blank">
                     <img src={freepikIcon} className={classes.freepikIcon} alt="freepikIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.behance !== "" && (
-                  <Button component={Link} to={`${userProfile?.behance}`} target="_blank">
+                  <MuiLink href={`${userProfile?.behance}`} target="_blank">
                     <img src={behanceIcon} className={classes.behanceIcon} alt="behanceIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
                 {userProfile?.dribble !== "" && (
-                  <Button component={Link} to={`${userProfile?.dribble}`} target="_blank">
+                  <MuiLink href={`${userProfile?.dribble}`} target="_blank">
                     <img src={dribbleIcon} className={classes.dribbleIcon} alt="dribbleIcon"/>
-                  </Button>
+                  </MuiLink>
                 )}
               </div>
             </div>

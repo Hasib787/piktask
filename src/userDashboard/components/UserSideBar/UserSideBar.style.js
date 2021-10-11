@@ -22,49 +22,58 @@ const useStyles = makeStyles((theme) => ({
   userProfileContent: {
     paddingTop: "4rem",
     paddingBottom: "4rem",
+    position: "relative",
   },
   profileImage: {
-    // position: "relative",
-    // "&::before": {
-    //   background: "rgba(0, 28, 48, 0.6)",
-    //   content: '""',
-    //   position: "absolute",
-    //   top: 0,
-    //   left: 0,
-    //   width: "50%",
-    //   height: "50%",
-    //   borderRadius: "50%",
-    //   margin: "0 auto",
-    //   zIndex: 1,
-    // },
+    position: "relative",
+    overflow: "hidden",
     "& img": {
       height: "12rem",
+      display: "flex",
       Width: "12rem",
       borderRadius: "50%",
       margin: "0 auto",
-      display: "flex",
       padding: "0.2rem",
       boxShadow: "0px 0px 5px #ddd",
-      // position: "relative",
     },
-
-    // "&:hover": {
-    //   "& $avatarOverlay": {
-    //     opacity: 1,
-    //     visibility: "visible",
-    //   },
-    // },
+    
+    "&:hover": {
+      "& $avatarOverlay": {
+        opacity: 1,
+        visibility: "visible",
+        transition: "all 0.3s linear",
+      },
+    },
   },
   avatarOverlay: {
-    // right: "1rem",
-    // top: "1rem",
-    // position: "absolute",
+    bottom: "0",
+    left: "50%",
+    position: "absolute",
+    transform: "translateX(-50%)",
+    opacity: 0,
+    visibility: "hidden",
+  },
+  bgOverlay: {
+    // padding: "4rem 1.2rem",
+    height: "6rem",
+    width: "12rem",
+    padding: "0.2rem",
+    // borderRadius: "0 0 100% 100%",
+    borderBottomRightRadius: "90px",
+    borderBottomLeftRadius: "90px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    overflow: "hidden",
+  },
+  uploadIcon: {
+    fontSize: "2.5rem",
+    color: "#fff",
   },
   uploadButton: {
-    padding: "0.2rem 4rem",
+    // padding: "0.1rem 0.2rem",
+    
     color: "#fff",
     border: "0.5px solid #0088f2",
     backgroundColor: "#0088f2",
@@ -73,18 +82,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#0773c5",
     },
-  },
-  overlay: {
-    height: "12rem",
-    Width: "12rem",
-    borderRadius: "50%",
-    backgroundColor: "#ddd",
-    // opacity: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    // visibility: "hidden",
   },
   profileInfo: {
     textAlign: "center",
@@ -109,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
       minWidth: "0rem",
       transition: "all 0.3s linear",
       "&:hover": {
-        backgroundColor: "transparent",
+        // backgroundColor: "transparent",
         transform: "translateY(-0.7rem)",
       },
     },

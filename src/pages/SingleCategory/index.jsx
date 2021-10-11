@@ -288,8 +288,8 @@ const SingleCategory = () => {
 
   return (
     <Layout
-      title={`${imageDetails?.title} | Piktask`}
-      description={`${imageDetails?.description} | Piktask`}
+      title={`${imageDetails?.title} || Piktask`}
+      description={`${imageDetails?.description} || Piktask`}
     >
       <Header />
       <HeroSection size="medium" />
@@ -399,7 +399,7 @@ const SingleCategory = () => {
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
-                    <Link to={`/${imageDetails?.user?.username}`}>
+                    <Link to={`/author/${imageDetails?.user?.username}`}>
                       {imageDetails?.user?.avatar ? (
                         <img
                           className={classes.authorImg}
@@ -420,7 +420,7 @@ const SingleCategory = () => {
                         className={classes.profileName}
                         variant="h3"
                         component={Link}
-                        to={`/${imageDetails?.user?.username}`}
+                        to={`/author/${imageDetails?.user?.username}`}
                       >
                         {imageDetails?.user?.username}
                       </Typography>

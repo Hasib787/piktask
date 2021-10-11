@@ -221,7 +221,7 @@ const UserProfile = () => {
 
 
   return (
-    <Layout title={"UserProfile || piktask"}>
+    <Layout title={"UserProfile || Piktask"}>
       <Header />
       <Spacing space={{ height: "5rem" }} />
       <Container>
