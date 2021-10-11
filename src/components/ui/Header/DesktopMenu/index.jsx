@@ -172,7 +172,7 @@ const DesktopMenu = ({ history }) => {
             {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {/* {user?.token ? (
+            {user?.token ? (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
@@ -188,7 +188,7 @@ const DesktopMenu = ({ history }) => {
               >
                 Sell Your Content
               </Button>
-            )} */}
+            )}
 
             {/* <Button disableRipple className={classes.enterprise}>
               <img

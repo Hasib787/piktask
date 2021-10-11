@@ -42,18 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
   historyTitle: {
     display: "flex",
+    justifyContent: "space-between",
+    paddingRight: "3rem",
     color: "black !important",
     fontSize: "2.2rem",
   },
   borderLine: {
     height: "26.5rem",
     marginTop: "0.7rem",
-    paddingLeft: "16rem",
-    borderRight: "0.7rem solid #8bc34a",
-    [theme.breakpoints.down("1200")]: {
-      paddingLeft: "8rem",
-    },
-    [theme.breakpoints.down(769)]: {
+    borderRight: "0.7rem solid #0088f2",
+    [theme.breakpoints.down(900)]: {
       display: "none",
     },
   },
@@ -74,7 +72,14 @@ const useStyles = makeStyles((theme) => ({
       height: "100%",
       objectFit: "cover",
     },
+  },
+  missionDescription:{
+    textAlign: "justify",
+    color: "#173050",
+    fontSize: "1.6rem",
+    lineHeight: "28px",
   }
+  
 }));
 
 export default useStyles;
