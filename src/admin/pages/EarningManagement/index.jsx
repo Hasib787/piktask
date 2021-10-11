@@ -66,11 +66,7 @@ const EarningManagement = () => {
       let labelCount = [];
 
       var newDate = new Date();
-      var firstDayCurrentMonth = new Date(
-        newDate.getFullYear(),
-        newDate.getMonth(),
-        2
-      );
+      var firstDayCurrentMonth = new Date( newDate.getFullYear(), newDate.getMonth(),2 );
       var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
       var todayCurrentMonth = newDate.toISOString().substring(0, 10);
 
@@ -127,7 +123,7 @@ const EarningManagement = () => {
   const toMonths = moment.months();
   let [toYear, setToYear] = useState(moment().year());
   let [toMonth, setToMonth] = useState(moment().format("MMMM"));
-  let [toCurrentDate, setToCurrentDate] = useState("0" + moment().date());
+  let [toCurrentDate, setToCurrentDate] = useState(moment().date());
 
   const getAllDays = () => {
     const days = [];
