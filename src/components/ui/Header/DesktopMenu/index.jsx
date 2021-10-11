@@ -1,8 +1,8 @@
 import {
   Button,
   Container,
-  Menu,
-  MenuItem,
+  // Menu,
+  // MenuItem,
   Tab,
   Tabs,
   Toolbar,
@@ -57,18 +57,18 @@ const DesktopMenu = ({ history }) => {
     }
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openSubMenu = Boolean(anchorEl);
-  const handleHoverMenu = (event) => {
-    // if (anchorEl !== event.currentTarget) {
-    //   setAnchorEl(event.currentTarget);
-    // }
-    setAnchorEl(event.currentTarget);
-  };
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const openSubMenu = Boolean(anchorEl);
+  // const handleHoverMenu = (event) => {
+  //   // if (anchorEl !== event.currentTarget) {
+  //   //   setAnchorEl(event.currentTarget);
+  //   // }
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleCloseSubMenu = () => {
-    setAnchorEl(null);
-  };
+  // const handleCloseSubMenu = () => {
+  //   setAnchorEl(null);
+  // };
 
   return (
     <>
@@ -97,15 +97,15 @@ const DesktopMenu = ({ history }) => {
               to={`/category/sports`}
               label="Sports"
 
-              id="Sports"
-              aria-controls="Sports"
-              aria-haspopup="true"
-              aria-expanded={openSubMenu ? 'true' : undefined}              
-              onClick={handleHoverMenu}
-              onMouseOver={handleHoverMenu}
+              // id="Sports"
+              // aria-controls="Sports"
+              // aria-haspopup="true"
+              // aria-expanded={openSubMenu ? 'true' : undefined}              
+              // onClick={handleHoverMenu}
+              // onMouseOver={handleHoverMenu}
             />
 
-            <Menu
+            {/* <Menu
               id="Sports"
               anchorEl={anchorEl}
               open={openSubMenu}
@@ -117,7 +117,7 @@ const DesktopMenu = ({ history }) => {
                 <MenuItem onClick={handleCloseSubMenu}>My account</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>Logout</MenuItem>
               </div>
-            </Menu>
+            </Menu> */}
 
             <Tab
               className={classes.menuItem}
@@ -126,15 +126,15 @@ const DesktopMenu = ({ history }) => {
               to="/category/travel"
               label="Travel"
 
-              id="Travel"
-              aria-controls="Travel"
-              aria-haspopup="true"
-              aria-expanded={openSubMenu ? 'true' : undefined}              
-              onClick={handleHoverMenu}
-              onMouseOver={handleHoverMenu}
+              // id="Travel"
+              // aria-controls="Travel"
+              // aria-haspopup="true"
+              // aria-expanded={openSubMenu ? 'true' : undefined}              
+              // onClick={handleHoverMenu}
+              // onMouseOver={handleHoverMenu}
             />
 
-            <Menu
+            {/* <Menu
               id="Travel"
               anchorEl={anchorEl}
               open={openSubMenu}
@@ -146,7 +146,7 @@ const DesktopMenu = ({ history }) => {
                 <MenuItem onClick={handleCloseSubMenu}>My Favorite</MenuItem>
                 <MenuItem onClick={handleCloseSubMenu}>Downloads</MenuItem>
               </div>
-            </Menu>
+            </Menu> */}
 
             <Tab
               className={classes.menuItem}

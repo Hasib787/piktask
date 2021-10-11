@@ -64,6 +64,7 @@ const UserSideBar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   
+  const [profilePicture, setProfilePicture] = useState("");
   const [downloadCount, setDownloadCount] = useState("");
   const [downloadLimit, setDownloadLimit] = useState("");
   const [alertDialog, setAlertDialog] = useState(false);
@@ -72,7 +73,6 @@ const UserSideBar = () => {
   const [password, setPassword] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
   const [value, setValue] = useState(0);
-  const [profilePicture, setProfilePicture] = useState("");
 
   //mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -110,7 +110,7 @@ const UserSideBar = () => {
     // get user information
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/profile`, {
+        .get(`${process.env.REACT_APP_API_URL}/user/profile`, {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
