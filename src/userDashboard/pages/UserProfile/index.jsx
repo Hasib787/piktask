@@ -1,17 +1,13 @@
 import {
   Button,
-  // Card,
   Container,
   FormControl,
   Grid,
-  // Select,
   TextField,
   Typography,
   FormControlLabel,
-  // styled,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-// import FacebookLogin from "react-facebook-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
@@ -20,7 +16,6 @@ import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
 import Layout from "../../../Layout";
 import UserSideBar from "../../components/UserSideBar";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useStyles from "./UserProfile.style";
 import shutterstockLogo from "../../../assets/icons/shutterstock.svg";
 import freepikIcon from "../../../assets/icons/freepik.svg";
@@ -33,7 +28,6 @@ import instagramLogo from "../../../assets/icons/instagram.svg";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// import { ToggleButton } from "@material-ui/lab";
 import Switch from "@material-ui/core/Switch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -74,10 +68,6 @@ const UserProfile = () => {
   const handleChange = (name) => (event) => {
     setSwitchToggle({ [name]: event.target.checked });
   };
-
-  // const handleChange = (event) => {
-  //   setChecked(event.target.checked);
-  // };
 
   //mobile view
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -263,7 +253,7 @@ const UserProfile = () => {
                           className={classes.googleIcon}
                           icon={faGoogle}
                         />
-                        {!mobileView && "Connect"} Google
+                        <span>{!mobileView && "Connect"} Google</span>
                       </Button>
                     )}
                     buttonText="Login"
@@ -289,7 +279,7 @@ const UserProfile = () => {
                           className={classes.facebookIconBtn}
                           icon={faFacebookF}
                         />
-                        {!mobileView && "Connect"} Facebook
+                        <span>{!mobileView && "Connect"} Facebook</span>
                       </Button>
                     )}
                   />
