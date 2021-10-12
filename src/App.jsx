@@ -83,16 +83,31 @@ const App = () => {
     const setUserToken = window.localStorage.getItem("token") || "";
     if (setUserToken) {
       const decode = jwt_decode(setUserToken.split(" ")[1]);
-      if (decode.email) {
+      const setUserProfileImage = localStorage.getItem("userProfileImage") || "";
+      if (decode.email || setUserProfileImage) {
         dispatch({
           type: "SET_USER",
           payload: {
             ...decode,
             token: setUserToken,
+            userProfileImage: setUserProfileImage,
           },
         });
       }
     }
+
+    // if (setUserProfileImage) {
+    //   const decode = jwt_decode(setUserToken.split(" ")[1]);
+    //   if (decode.email) {
+    //     dispatch({
+    //       type: "SET_USER",
+    //       payload: {
+    //         ...decode,
+    //         token: setUserToken,
+    //       },
+    //     });
+    //   }
+    // }
 
 
     // Popular categories API integration
