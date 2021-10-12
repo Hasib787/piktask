@@ -58,12 +58,12 @@ const DesktopMenu = ({ history }) => {
   };
 
   // const [anchorEl, setAnchorEl] = useState(null);
-
+  // const openSubMenu = Boolean(anchorEl);
   // const handleHoverMenu = (event) => {
-  //   if (anchorEl !== event.currentTarget) {
-  //     setAnchorEl(event.currentTarget);
-  //   }
-  //   // setAnchorEl(event.currentTarget);/
+  //   // if (anchorEl !== event.currentTarget) {
+  //   //   setAnchorEl(event.currentTarget);
+  //   // }
+  //   setAnchorEl(event.currentTarget);
   // };
 
   // const handleCloseSubMenu = () => {
@@ -97,8 +97,10 @@ const DesktopMenu = ({ history }) => {
               to={`/category/sports`}
               label="Sports"
 
-              // aria-owns={anchorEl ? "Sports" : undefined}
+              // id="Sports"
+              // aria-controls="Sports"
               // aria-haspopup="true"
+              // aria-expanded={openSubMenu ? 'true' : undefined}              
               // onClick={handleHoverMenu}
               // onMouseOver={handleHoverMenu}
             />
@@ -106,9 +108,9 @@ const DesktopMenu = ({ history }) => {
             {/* <Menu
               id="Sports"
               anchorEl={anchorEl}
-              open={anchorEl}
+              open={openSubMenu}
+              MenuListProps={{ 'aria-labelledby': 'Sports', onMouseLeave: handleCloseSubMenu }}
               onClose={handleCloseSubMenu}
-              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
             >
               <div className={classes.subMenuItem}>
                 <MenuItem onClick={handleCloseSubMenu}>Profile</MenuItem>
@@ -124,8 +126,10 @@ const DesktopMenu = ({ history }) => {
               to="/category/travel"
               label="Travel"
 
-              // aria-owns={anchorEl ? "Travel" : undefined}
+              // id="Travel"
+              // aria-controls="Travel"
               // aria-haspopup="true"
+              // aria-expanded={openSubMenu ? 'true' : undefined}              
               // onClick={handleHoverMenu}
               // onMouseOver={handleHoverMenu}
             />
@@ -133,9 +137,9 @@ const DesktopMenu = ({ history }) => {
             {/* <Menu
               id="Travel"
               anchorEl={anchorEl}
-              open={anchorEl}
+              open={openSubMenu}
+              MenuListProps={{ 'aria-labelledby': 'Travel', onMouseLeave: handleCloseSubMenu }}
               onClose={handleCloseSubMenu}
-              MenuListProps={{ onMouseLeave: handleCloseSubMenu }}
             >
               <div className={classes.subMenuItem}>
                 <MenuItem onClick={handleCloseSubMenu}>Profile account</MenuItem>

@@ -78,46 +78,53 @@ const useStyles = makeStyles((theme) => ({
   },
   socialsButtons: {
     display: "flex",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: "1.5rem",
   },
-  googleBtn: {
-    backgroundColor: "#fff !important",
-    fontSize: "25px !important",
-    textAlign: "center",
-    padding: "0.1rem 3rem 0.1rem 3.5rem !important",
+  googleButton: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0.8rem 6rem",
+    border: "1px solid #C74C37",
+    borderRadius: "4px",
+    color: "white",
+    backgroundColor: "#C74C37",
+    transition: "all 0.3s linear",
+    "& span": {
+      fontSize: "1.8rem",
+      color: "#fff",
+    },
     "&:hover": {
-      backgroundColor: "rgb(28 81 103)",
+      backgroundColor: "#ab311d",
     },
   },
-  facebookBtn: {
+  googleIcon: {
+    color: "white",
+    fontSize: "1.6rem",
+    marginRight: "0.8rem",
+  },
+  facebookBtn:{
+    display: "flex",
+    alignItems: "center",
+    padding: "0.8rem 5rem",
+    border: "1px solid #425993",
+    borderRadius: "4px",
+    color: "white",
     backgroundColor: "#425993",
-    borderRadius: 0,
-
-    "& .kep-login-facebook": {
-      fontWeight: 700,
-      fontSize: 13,
+    transition: "all 0.3s linear",
+    "& span": {
+      fontSize: "1.8rem",
+      color: "#fff",
     },
-
     "&:hover": {
-      backgroundColor: "rgb(48 72 132)",
+      backgroundColor: "#213567",
     },
-    [theme.breakpoints.up(2000)]: {
-      "& .kep-login-facebook": {
-        fontWeight: 700,
-        fontSize: 13,
-      },
-     },
-    [theme.breakpoints.down(1025)]: {
-      "& .kep-login-facebook": {
-        fontWeight: 700,
-        fontSize: 13,
-      },
-     },
-    [theme.breakpoints.up(2039)]: {
-      padding: "14px !important",
-     },
+  },
+  facebookIconBtn:{
+    color: "white",
+    fontSize: "1.6rem",
+    marginRight: "0.8rem !important",
   },
   closeModal: {
     float: "right",
@@ -125,28 +132,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#0088f2",
     cursor: "pointer",
   },
-  // socialLoginBtns: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-  // socialLogin: {
-  //   flex: 1,
-  //   height: 48,
-  // },
-  // googleBtn: {
-  //   backgroundColor: "#1B3F4E",
-  //   "&:hover": {
-  //     backgroundColor: "#214e61",
-  //   },
-  // },
-  // facebookBtn: {
-  //   backgroundColor: "#425993",
-  //   "&:hover": {
-  //     backgroundColor: "#374b7d",
-  //   },
-  // },
-
   horizontalLine: {
     backgroundColor: "#CBCBCB",
     height: 1,
@@ -164,7 +149,6 @@ const useStyles = makeStyles((theme) => ({
   authText: {
     fontSize: 17,
     color: "#0088f2",
-    // color: "#469439",
     textAlign: "center",
     cursor: "pointer",
     marginTop: "1rem",
@@ -180,7 +164,6 @@ const useStyles = makeStyles((theme) => ({
       width: "2rem",
       cursor: "pointer",
     },
-
     "@media (max-width: 768px)": {
       "& img": {
         width: "2rem",
@@ -193,7 +176,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     "& span": {
       cursor: "pointer",
-      // color: "#469439",
       color: "#0088f2",
     },
   },
