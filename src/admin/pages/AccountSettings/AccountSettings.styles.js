@@ -86,10 +86,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#114960",
     fontWeight: 700,
     padding: "3rem",
-  },
-  settingsFormWrapper: {
-    padding: "3rem",
-  },
+ },
+ 
   cardRoot: {
     marginBottom: "2.5rem",
     boxShadow:
