@@ -35,85 +35,45 @@ const useStyles = makeStyles((theme) => ({
   googleButton: {
     display: "flex",
     alignItems: "center",
-    padding: "1.2rem 3rem",
+    padding: "1rem 3rem",
     border: "1px solid #C74C37",
     borderRadius: "4px",
-    color: "white",
+    color: "#fff",
     backgroundColor: "#C74C37",
     transition: "all 0.3s linear",
+    "& span": {
+      color: "#fff",
+    },
     "&:hover": {
       backgroundColor: "#ab311d",
     },
   },
   googleIcon: {
-    color: "white",
-    width: "2rem",
-    height: "2.5rem",
+    color: "#fff",
+    fontSize: "1.7rem",
     marginRight: "0.8rem",
   },
   facebookBtn:{
     display: "flex",
     alignItems: "center",
-    padding: "1.2rem 2rem",
+    padding: "1rem 2rem",
     border: "1px solid #425993",
     borderRadius: "4px",
     color: "white",
     backgroundColor: "#425993",
     transition: "all 0.3s linear",
+    "& span": {
+      color: "#fff",
+    },
     "&:hover": {
       backgroundColor: "#213567",
     },
   },
   facebookIconBtn:{
     color: "white",
-    width: "1.7rem !important",
-    height: "2rem !important",
+    fontSize: "1.7rem",
     marginRight: "0.8rem !important",
   },
-  // googleBtn: {
-  //   backgroundColor: "#fff !important",
-  //   fontSize: "25px !important",
-  //   textAlign: "center",
-  //   padding: "0.2rem 3rem !important",
-  //   borderRadius: 0,
-  //   "&:hover": {
-  //     backgroundColor: "rgb(28 81 103)",
-  //   },
-  //   "@media (max-width: 768px)": {
-  //     padding: "1.5rem",
-  //     "& img": {
-  //       width: "8rem",
-  //     },
-  //   },
-  // },
-  // facebookBtn: {
-  //   backgroundColor: "#425993",
-  //   borderRadius: 0,
-
-  //   "& .kep-login-facebook": {
-  //     fontWeight: 700,
-  //     fontSize: 13,
-  //   },
-
-  //   "&:hover": {
-  //     backgroundColor: "rgb(48 72 132)",
-  //   },
-  //   [theme.breakpoints.up(2000)]: {
-  //     "& .kep-login-facebook": {
-  //       fontWeight: 700,
-  //       fontSize: 13,
-  //     },
-  //   },
-  //   [theme.breakpoints.down(1025)]: {
-  //     "& .kep-login-facebook": {
-  //       fontWeight: 700,
-  //       fontSize: 13,
-  //     },
-  //   },
-  //   [theme.breakpoints.up(2039)]: {
-  //     padding: "14px !important",
-  //   },
-  // },
   separator: {
     borderWidth: 0,
     marginLeft: "3%",
@@ -226,7 +186,6 @@ const useStyles = makeStyles((theme) => ({
       width: 0,
       height: 0,
     },
-
     "@media (max-width: 960px)": {
       width: "100%",
       flexDirection: "column",
@@ -234,7 +193,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   telephoneNumber: {
-    // width: "51rem",
     marginLeft: "1rem",
   },
   dataChangeBtn: {
@@ -245,7 +203,6 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
     },
   },
-
   inputImage: {
     position: "relative",
     "& img": {
@@ -260,8 +217,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     display: "block",
     textDecoration: "none",
+    transition: "all 0.3s linear",
     "&:hover": {
+      color: "#0088f2",
       textDecoration: "underline",
+      transition: "all 0.3s linear",
     },
     "@media (max-width: 768px)": {
       top: "-.6rem",
@@ -273,11 +233,14 @@ const useStyles = makeStyles((theme) => ({
   profileInfoSaveBtn: {
     height: "5.5rem",
     width: "24rem",
-    color: "#B5B5B5",
-    backgroundColor: "white",
-    border: "0.5px solid rgb(0 0 0 / 23%)",
+    color: "#fff",
+    border: "0.5px solid #0088f2",
+    backgroundColor: "#0088f2",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      backgroundColor: "#0773c5",
+    },
   },
-
   // Portfolio Links
   portfolioLink: {
     position: "relative",
@@ -310,14 +273,12 @@ const useStyles = makeStyles((theme) => ({
   facebookIcon: {
     width: "1.6rem !important",
   },
-
   buttonGroup: {
     display: "flex",
     justifyContent: "flex-end",
     padding: " 0 3rem 2rem 0",
   },
   settingsBtn: {
-    // ...theme.typography.button,
     padding: "1rem 2rem",
     color: theme.palette.common.white,
     fontSize: "1.4rem",
@@ -378,7 +339,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#5b5bf1",
     textDecoration: "none",
   },
-
   lastField: {
     "@media (max-width: 960px)": {
       marginBottom: "2rem !important",

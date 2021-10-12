@@ -1,43 +1,37 @@
 import {
   Button,
-  // Card,
   Container,
   FormControl,
   Grid,
-  // Select,
   TextField,
   Typography,
   FormControlLabel,
-  // styled,
 } from "@material-ui/core";
+import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-// import FacebookLogin from "react-facebook-login";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import UserSideBar from "../../components/UserSideBar";
+import Footer from "../../../components/ui/Footer";
+import Header from "../../../components/ui/Header";
+import Spacing from "../../../components/Spacing";
+import Layout from "../../../Layout";
+import useStyles from "./UserProfile.style";
+import shutterstockLogo from "../../../assets/icons/shutterstock.svg";
+import instagramLogo from "../../../assets/icons/instagram.svg";
+import facebookLogo from "../../../assets/icons/facebook.svg";
+import linkedinLogo from "../../../assets/icons/linkedin.svg";
+import dribbbleIcon from "../../../assets/icons/dribble.svg";
+import freepikIcon from "../../../assets/icons/freepik.svg";
+import behanceIcon from "../../../assets/icons/behance.svg";
+import twitterLogo from "../../../assets/icons/twitter.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import Switch from "@material-ui/core/Switch";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
-import Spacing from "../../../components/Spacing";
-import Footer from "../../../components/ui/Footer";
-import Header from "../../../components/ui/Header";
-import Layout from "../../../Layout";
-import UserSideBar from "../../components/UserSideBar";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useStyles from "./UserProfile.style";
-import shutterstockLogo from "../../../assets/icons/shutterstock.svg";
-import freepikIcon from "../../../assets/icons/freepik.svg";
-import behanceIcon from "../../../assets/icons/behance.svg";
-import dribbbleIcon from "../../../assets/icons/dribble.svg";
-import facebookLogo from "../../../assets/icons/facebook.svg";
-import twitterLogo from "../../../assets/icons/twitter.svg";
-import linkedinLogo from "../../../assets/icons/linkedin.svg";
-import instagramLogo from "../../../assets/icons/instagram.svg";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-// import { ToggleButton } from "@material-ui/lab";
-import Switch from "@material-ui/core/Switch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 
 const clientId =
@@ -45,9 +39,12 @@ const clientId =
 
 const UserProfile = () => {
   const classes = useStyles();
-  const [checked, setChecked] = useState(false);
-  const [switchToggle, setSwitchToggle] = useState(false);
-  const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const pathHistory = useHistory();
+  const location = useLocation();
+  const user = useSelector((state) => state.user);
+  const { from } = location.state || { from: { pathname: "/" } };
+  
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -63,21 +60,14 @@ const UserProfile = () => {
   const [twitter, setTwitter] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [instagram, setInstagram] = useState("");
-
-  const dispatch = useDispatch();
-  const pathHistory = useHistory();
-  const location = useLocation();
-  const user = useSelector((state) => state.user);
-  const { from } = location.state || { from: { pathname: "/" } };
+  const [switchToggle, setSwitchToggle] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
 
   const handleChange = (name) => (event) => {
     setSwitchToggle({ [name]: event.target.checked });
   };
-
-  // const handleChange = (event) => {
-  //   setChecked(event.target.checked);
-  // };
 
   //mobile view
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -98,7 +88,7 @@ const UserProfile = () => {
 
     if(user?.token){
       axios
-      .get(`${process.env.REACT_APP_API_URL}/profile`, {
+      .get(`${process.env.REACT_APP_API_URL}/user/profile`, {
         headers: { Authorization: user.token },
       })
       .then(({ data }) => {
@@ -146,7 +136,7 @@ const UserProfile = () => {
     formData.append("instagram", instagram);
     formData.append("linkedin", linkedin);
 
-    const url = `${process.env.REACT_APP_API_URL}/profile`;
+    const url = `${process.env.REACT_APP_API_URL}/user/profile`;
     axios({
       method: "put",
       url,
@@ -230,7 +220,7 @@ const UserProfile = () => {
 
 
   return (
-    <Layout title={"UserProfile | piktask"}>
+    <Layout title={"UserProfile || Piktask"}>
       <Header />
       <Spacing space={{ height: "5rem" }} />
       <Container>
@@ -262,7 +252,7 @@ const UserProfile = () => {
                           className={classes.googleIcon}
                           icon={faGoogle}
                         />
-                        {!mobileView && "Connect"} Google
+                        <span>{!mobileView && "Connect"} Google</span>
                       </Button>
                     )}
                     buttonText="Login"
@@ -288,7 +278,7 @@ const UserProfile = () => {
                           className={classes.facebookIconBtn}
                           icon={faFacebookF}
                         />
-                        {!mobileView && "Connect"} Facebook
+                        <span>{!mobileView && "Connect"} Facebook</span>
                       </Button>
                     )}
                   />

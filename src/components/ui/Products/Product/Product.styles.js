@@ -19,6 +19,69 @@ export const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  buttonsWrapper: {
+    right: "1rem",
+    top: "1rem",
+    position: "absolute",
+  },
+  iconBtn: {
+    borderRadius: "50%",
+    width: "3rem",
+    height: "3rem",
+    zIndex: 1,
+    transition: "all 0.3s linear",
+  },
+  favouriteIcon: {
+    backgroundColor: "#ffffff",
+    fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    visibility: "hidden",
+    opacity: 0,
+    boxShadow:"rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+
+    "&:hover": {
+      backgroundColor: "#0088f2",
+      color: "#ffffff",
+      borderColor: "#0088f2",
+    },
+
+    "&.disabled": {
+      backgroundColor: "#0088f2",
+      color: "#fff",
+      borderColor: "#0088f2",
+      opacity: "0.5 !important",
+    },
+  },
+  favouriteIconBtn: {
+    backgroundColor: "#0088f2",
+    fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    visibility: "hidden",
+    opacity: 0,
+    borderColor: "#469439",
+    color: "#ffffff",
+
+    "&:hover": {
+      backgroundColor: "#0773c5",
+      borderColor: "#0773c5",
+    },
+  },
+  premiumIcon: {
+    backgroundColor: "#FDAF01",
+    marginBottom: "8px",
+    "&:hover": {
+      backgroundColor: "rgb(68 68 68 / 60%)",
+    },
+    "& img": {
+      width: "1.5rem",
+    },
+  },
   itemTransparent: {
     background: `url(${photoBackground})`,
     position: "relative",
@@ -115,69 +178,6 @@ export const useStyles = makeStyles((theme) => ({
     height: "3.5rem",
     fontSize: "1.2rem",
     transition: "all 0.3s linear",
-  },
-  buttonsWrapper: {
-    right: "1rem",
-    top: "1rem",
-    position: "absolute",
-  },
-  iconBtn: {
-    borderRadius: "50%",
-    width: "3rem",
-    height: "3rem",
-    zIndex: 1,
-    transition: "all 0.3s linear",
-  },
-  favouriteIcon: {
-    backgroundColor: "#ffffff",
-    fontSize: "16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    visibility: "hidden",
-    opacity: 0,
-    boxShadow:"rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
-
-    "&:hover": {
-      backgroundColor: "#0088f2",
-      color: "#ffffff",
-      borderColor: "#0088f2",
-    },
-
-    "&.disabled": {
-      backgroundColor: "#0088f2",
-      color: "#fff",
-      borderColor: "#0088f2",
-      opacity: "0.5 !important",
-    },
-  },
-  favouriteIconBtn: {
-    backgroundColor: "#0088f2",
-    fontSize: "16px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    visibility: "hidden",
-    opacity: 0,
-    borderColor: "#469439",
-    color: "#ffffff",
-
-    "&:hover": {
-      backgroundColor: "#0773c5",
-      borderColor: "#0773c5",
-    },
-  },
-  premiumIcon: {
-    backgroundColor: "#FDAF01",
-    marginBottom: "8px",
-    "&:hover": {
-      backgroundColor: "rgb(68 68 68 / 60%)",
-    },
-    "& img": {
-      width: "1.5rem",
-    },
   },
   singlePageLink: {
     backgroundColor: "rgba(0, 0, 0, 0.6)",

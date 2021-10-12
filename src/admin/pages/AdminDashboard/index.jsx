@@ -357,7 +357,7 @@ const AdminDashboard = () => {
                             <TableCell
                               className={`${classes.tableCell} ${classes.authorImgWrapper}`}
                             >
-                              <Link to={`/${topFile?.username}`}>
+                              <Link to={`/author/${topFile?.username}`}>
                                 <img
                                   className={classes.authorImg}
                                   src={topFile?.avatar}

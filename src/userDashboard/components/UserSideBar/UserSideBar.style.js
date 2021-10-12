@@ -20,17 +20,67 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   userProfileContent: {
-    padding: "4rem",
+    paddingTop: "4rem",
+    paddingBottom: "4rem",
+    position: "relative",
   },
   profileImage: {
+    position: "relative",
+    overflow: "hidden",
     "& img": {
       height: "12rem",
+      display: "flex",
       Width: "12rem",
       borderRadius: "50%",
       margin: "0 auto",
-      display: "flex",
       padding: "0.2rem",
       boxShadow: "0px 0px 5px #ddd",
+    },
+    
+    "&:hover": {
+      "& $avatarOverlay": {
+        opacity: 1,
+        visibility: "visible",
+        transition: "all 0.3s linear",
+      },
+    },
+  },
+  avatarOverlay: {
+    bottom: "0",
+    left: "50%",
+    position: "absolute",
+    transform: "translateX(-50%)",
+    opacity: 0,
+    visibility: "hidden",
+  },
+  bgOverlay: {
+    // padding: "4rem 1.2rem",
+    height: "6rem",
+    width: "12rem",
+    padding: "0.2rem",
+    // borderRadius: "0 0 100% 100%",
+    borderBottomRightRadius: "90px",
+    borderBottomLeftRadius: "90px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    overflow: "hidden",
+  },
+  uploadIcon: {
+    fontSize: "2.5rem",
+    color: "#fff",
+  },
+  uploadButton: {
+    // padding: "0.1rem 0.2rem",
+    
+    color: "#fff",
+    border: "0.5px solid #0088f2",
+    backgroundColor: "#0088f2",
+    marginTop: "1rem",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      backgroundColor: "#0773c5",
     },
   },
   profileInfo: {
@@ -56,9 +106,9 @@ const useStyles = makeStyles((theme) => ({
       minWidth: "0rem",
       transition: "all 0.3s linear",
       "&:hover": {
-        backgroundColor: "transparent",
+        // backgroundColor: "transparent",
         transform: "translateY(-0.7rem)",
-      }
+      },
     },
   },
   facebookIcon: {
@@ -154,45 +204,45 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   closeAccountDialog: {
-   "& div div":{
-    maxWidth: "100%",
-    [theme.breakpoints.down(480)] :{
-      width: "100%",
+    "& div div": {
+      maxWidth: "100%",
+      [theme.breakpoints.down(480)]: {
+        width: "100%",
+      },
     },
-   },
   },
   closeAccountTitle: {
-    "& h2":{
+    "& h2": {
       fontSize: "1.8rem !important",
     },
   },
   closeAccountsTitle: {
     padding: "1rem 0rem",
 
-    "& h2":{
+    "& h2": {
       fontSize: "1.8rem !important",
-      paddingLeft: "0rem"
+      paddingLeft: "0rem",
     },
   },
-  keepAccountBtn:{
-    color:"white",
-    backgroundColor:theme.palette.primary.light,
-    transition:"all 0.3s linier",
-    "&:hover":{
+  keepAccountBtn: {
+    color: "white",
+    backgroundColor: theme.palette.primary.light,
+    transition: "all 0.3s linier",
+    "&:hover": {
       backgroundColor: "#0773c5",
-    }
+    },
   },
-  closeAccountBtn:{
-    color:"white",
-    backgroundColor:"#f91c0c",
-    transition:"all 0.3s linier",
-    "&:hover":{
-      backgroundColor:"#b71c1c",
-    }
+  closeAccountBtn: {
+    color: "white",
+    backgroundColor: "#f91c0c",
+    transition: "all 0.3s linier",
+    "&:hover": {
+      backgroundColor: "#b71c1c",
+    },
   },
 
   passwordField: {
-  //  padding: "2rem",
+    //  padding: "2rem",
   },
 }));
 

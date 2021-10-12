@@ -204,7 +204,7 @@ const App = () => {
         <Route exact path="/allBlogs/blogs" component={AllBlogs} />
         <Route exact path="/blog/:id" component={SingleBlogPost} />
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
-        <Route exact path="/:username" component={AuthorProfile} />
+        <Route exact path="/author/:username" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
         <Route exact path="/images/:id" component={SingleCategory} />
 
