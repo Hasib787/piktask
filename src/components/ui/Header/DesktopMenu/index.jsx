@@ -28,6 +28,8 @@ const DesktopMenu = ({ history }) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
+  // const setUpdateProfileImage = window.localStorage.getItem("updateProfileImage") || [];
+  // const setUserProfileImage = window.localStorage.getItem("userProfileImage") || [];
 
   useEffect(() => {
     return () => {
@@ -204,7 +206,7 @@ const DesktopMenu = ({ history }) => {
               Premium
             </Button> */}
 
-            {user && user?.isLogged ? (
+            {user?.token && user?.isLogged ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}
@@ -212,7 +214,7 @@ const DesktopMenu = ({ history }) => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                {user && user?.avatar ? (
+                {user?.token && user?.avatar ? (
                   <img
                     className={classes.avatar}
                     src={user?.avatar}

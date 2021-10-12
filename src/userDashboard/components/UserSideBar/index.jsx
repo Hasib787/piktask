@@ -219,6 +219,13 @@ const UserSideBar = () => {
         if (res.status) {
           toast.success(res.data.message);
           setProfilePicture(res.data.image);
+          localStorage.setItem("profileImage", res.data.image);
+          dispatch({
+            type: "SET_USER",
+              payload: {
+                avatar: res.data.image,
+              },
+          });
         }
       })
       .catch((error) => {

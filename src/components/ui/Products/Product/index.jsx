@@ -162,7 +162,7 @@ const Product = ({ photo }) => {
                 paragraph
                 className={classes.profileName}
                 component={Link}
-                to={`/${photo?.username}`}
+                to={`/author/${photo?.username}`}
               >
                 {photo?.username}
               </Typography>

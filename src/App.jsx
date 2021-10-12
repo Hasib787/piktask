@@ -24,7 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { auth } from "./database";
 import axios from "axios";
 import {
   ConfirmSignup,
@@ -64,33 +63,19 @@ const App = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // Check firebase auth state
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
-      }
-    });
     
     // Check username/password auth state
     const setUserToken = window.localStorage.getItem("token") || "";
+    const avatar = window.localStorage.getItem("profileImage") || "";
     if (setUserToken) {
       const decode = jwt_decode(setUserToken.split(" ")[1]);
-      const setUserProfileImage = localStorage.getItem("userProfileImage") || "";
-      if (decode.email || setUserProfileImage) {
+      if (decode.email) {
         dispatch({
           type: "SET_USER",
           payload: {
             ...decode,
             token: setUserToken,
-            userProfileImage: setUserProfileImage,
+            avatar: avatar,
           },
         });
       }
@@ -141,7 +126,6 @@ const App = () => {
     //     });
     // }
 
-    return () => unsubscribe();
   }, [dispatch, user?.token]);
 
   return (
@@ -149,13 +133,6 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/popular" component={Home} /> */}
-        {/* Admin */}
-        {/* <PrivateRoute
-          exact
-          path="/contributor/dashboard"
-          component={AdminDashboard}
-        /> */}
 
         {/* Contributor Dashboard */}
         <Route exact path="/contributor/dashboard" component={AdminDashboard} />
@@ -186,7 +163,6 @@ const App = () => {
         <Route exact path="/contact" component={Contact} />
         <Route exact path="/aboutUs" component={AboutUs} />
 
-        {/* <Route exact path="/categories" component={Home} /> */}
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />
 

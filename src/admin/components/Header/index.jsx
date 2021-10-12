@@ -111,7 +111,6 @@ const AdminHeader = () => {
               container
               spacing={2}
               classes={{ container: classes.container }}
-              alignItems="center"
             >
               <Grid item xs={2}>
                 <Link to="/" className={classes.adminLogoLink}>
@@ -164,7 +163,7 @@ const AdminHeader = () => {
                 classes={{ container: classes.container }}
                 alignItems="center"
               >
-                <Grid item xs={2}>
+                <Grid item xs={3} md={3} sm={3}>
                   <Button
                     className={classes.uploadBtn}
                     component={Link}
@@ -179,7 +178,7 @@ const AdminHeader = () => {
                   </Button>
                 </Grid>
 
-                <Grid item xs={10} classes={{ item: classes.item }}>
+                <Grid item xs={7} md={7} sm={7} classes={{ item: classes.item }}>
                   <div className={classes.headerInfo}>
                     <div className={classes.notificationIcon}>
                       <NotificationsIcon />

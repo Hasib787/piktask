@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     padding: "0 !important",
     alignItems: "center",
+    marginLeft: "auto",
   },
   adminLogo: {
     width: "15rem",
@@ -39,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   headerInfo: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
     marginLeft: "auto",
   },
   notificationIcon: {
@@ -66,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     backgroundColor: "#0088f2",
     padding: "0.5rem 1.4rem",
-    marginLeft: "28rem",
-    marginRight: "2rem",
+    marginRight: "-2rem",
+    float: "right",
     fontSize: "1.4rem",
     border: "2px solid",
     borderColor: "transparent",
