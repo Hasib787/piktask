@@ -29,7 +29,6 @@ import Sidebar from "../../components/Sidebar";
 import useStyles from "./AccountSettings.styles";
 import allCountry from "../../../data/countryList.json";
 
-
 const AccountSettings = () => {
   const classes = useStyles();
 
@@ -68,7 +67,6 @@ const AccountSettings = () => {
   const [paypalAccount, setPaypalAccount] = useState("");
 
   const [countries, setCountries] = useState([]);
-  
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -110,10 +108,9 @@ const AccountSettings = () => {
   //   setCountries(allCountry.countries);
   // },[])
 
-  const handleCountries =()=>{
+  const handleCountries = () => {
     setCountries(allCountry.countries);
   };
-
 
   // get contributor information
   useEffect(() => {
@@ -133,7 +130,7 @@ const AccountSettings = () => {
             setPhone(data.user.phone);
             setWebsite(data.user.website);
             setCountryName(data.user.country_name);
-            setCity(data.user.city)
+            setCity(data.user.city);
             setZipCode(data.user.zip_code);
             setBillingsAddress(data.user.billings_address);
             setAccountName(data.user.account_name);
@@ -152,7 +149,6 @@ const AccountSettings = () => {
             setLinkedin(data.user.linkedin);
             setInstagram(data.user.instagram);
             setLoading(false);
-            console.log("country Name",data.user.country_name);
           }
         })
         .catch((error) => {
@@ -324,25 +320,29 @@ const AccountSettings = () => {
                         classes={{ fullWidth: classes.fullWidth }}
                       >
                         <TextField
-                           SelectProps={{
+                          SelectProps={{
                             native: true,
                           }}
                           select
                           variant="outlined"
                           label="Country"
-                          IconComponent={ExpandMoreIcon}
                           className={`${classes.inputField}`}
                           value={countryName}
                           onChange={(e) => setCountryName(e.target.value)}
                           onClick={handleCountries}
                         >
+                          {countries.length === 0 && (
+                            <>
+                              countryName ? ( )
+                              <option value={countryName}>{countryName}</option>{" "}
+                              :<option value="Bangladesh">Bangladesh</option>
+                            </>
+                          )}
                           {countries.map((option, index) => (
                             <option key={index} value={option.country}>
                               {option.country}
-                              {console.log(option.country)}
                             </option>
                           ))}
-                          
 
                           {/* {countries? (
                             countries?.map((country) => (
@@ -369,8 +369,7 @@ const AccountSettings = () => {
                           className={`${classes.inputField}`}
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                        >
-                        </TextField>
+                        ></TextField>
                       </FormControl>
 
                       <FormControl
@@ -445,7 +444,6 @@ const AccountSettings = () => {
                           value={payment}
                           onChange={(e) => setPayment(e.target.value)}
                           label="Name on Card"
-                          IconComponent={ExpandMoreIcon}
                           className={classes.selectArea}
                         >
                           <option value="Paypal">Paypal</option>
@@ -453,118 +451,142 @@ const AccountSettings = () => {
                           <option value="Bank">Bank</option>
                         </Select>
                       </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
+
+                      {payment === "Paypal" && (
+                        <FormControl
                           fullWidth
-                          variant="outlined"
-                          label="Paypal Email"
-                          name="paypalEmail"
-                          className={`${classes.inputField}`}
-                          value={paypalAccount}
-                          onChange={(e) => setPaypalAccount(e.target.value)}
-                        />
-                      </FormControl>
-                     
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            fullWidth
+                            variant="outlined"
+                            label="Paypal Email"
+                            name="paypalEmail"
+                            className={`${classes.inputField}`}
+                            value={paypalAccount}
+                            onChange={(e) => setPaypalAccount(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
+                      {payment === "Payoneer" && (
+                        <FormControl
+                          fullWidth
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            fullWidth
+                            variant="outlined"
+                            label="Payoneer Email"
+                            name="payoneerEmail"
+                            className={`${classes.inputField}`}
+                            value={paypalAccount}
+                            onChange={(e) => setPaypalAccount(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
+                      {payment === "Bank" && (
+                        <FormControl
+                          fullWidth
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            id="name"
+                            label="Account Name"
+                            variant="outlined"
+                            className={`${classes.inputField}`}
+                            placeholder="Account Name"
+                            value={accountName}
+                            onChange={(e) => setAccountName(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
                     </div>
-                    <div className={classes.fieldsGroup}>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="name"
-                          label="Account Name"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Account Name"
-                          value={accountName}
-                          onChange={(e) => setAccountName(e.target.value)}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.inputImage}
-                      >
-                        <TextField
-                          type="number"
-                          id="accountNumber"
-                          label="Account Number"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Account Number"
-                          value={accountNumber}
-                          onChange={(e) => setAccountNumber(e.target.value)}
-                        />
-                      </FormControl>
-                    </div>
-                    <div className={classes.fieldsGroup}>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="routingNumber"
-                          type="number"
-                          label="Routing Number"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Routing Number"
-                          value={routingNumber}
-                          onChange={(e) => setRoutingNumber(e.target.value)}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.inputImage}
-                      >
-                        <TextField
-                          type="number"
-                          id="swiftCode"
-                          label="Swift Code"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Swift Code"
-                          value={swiftCode}
-                          onChange={(e) => setSwiftCode(e.target.value)}
-                        />
-                      </FormControl>
-                    </div>
-                    <div className={classes.fieldsGroup}>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="branch"
-                          label="Branch"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Branch"
-                          value={branch}
-                          onChange={(e) => setBranch(e.target.value)}
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.inputImage}
-                      >
-                        <TextField
-                          id="bankCountry"
-                          label="Bank Country"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Bank Country"
-                          value={bankCountry}
-                          onChange={(e) => setBankCountry(e.target.value)}
-                        />
-                      </FormControl>
-                    </div>
+
+                    {payment === "Bank" && (
+                      <div>
+                        <div className={classes.fieldsGroup}>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                            className={classes.inputImage}
+                          >
+                            <TextField
+                              type="number"
+                              id="accountNumber"
+                              label="Account Number"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Account Number"
+                              value={accountNumber}
+                              onChange={(e) => setAccountNumber(e.target.value)}
+                            />
+                          </FormControl>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="routingNumber"
+                              type="number"
+                              label="Routing Number"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Routing Number"
+                              value={routingNumber}
+                              onChange={(e) => setRoutingNumber(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                        <div className={classes.fieldsGroup}>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                            className={classes.inputImage}
+                          >
+                            <TextField
+                              type="number"
+                              id="swiftCode"
+                              label="Swift Code"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Swift Code"
+                              value={swiftCode}
+                              onChange={(e) => setSwiftCode(e.target.value)}
+                            />
+                          </FormControl>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="branch"
+                              label="Branch"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Branch"
+                              value={branch}
+                              onChange={(e) => setBranch(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                        <div>
+                          <FormControl
+                            className={classes.bankCountryName}
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="bankCountry"
+                              label="Bank Country"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Bank Country"
+                              value={bankCountry}
+                              onChange={(e) => setBankCountry(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
                 {/* Add payment method ends */}
