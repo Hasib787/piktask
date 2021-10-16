@@ -33,9 +33,12 @@ const Product = ({ photo }) => {
   useEffect(() => {
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`, {
-          headers: { Authorization: user.token },
-        })
+        .get(
+          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`,
+          {
+            headers: { Authorization: user.token },
+          }
+        )
         .then(({ data }) => {
           if (!data?.status) {
             setLike(false);
@@ -47,36 +50,33 @@ const Product = ({ photo }) => {
         })
         .catch((error) => console.log("Like status error: ", error));
     }
-
-    
   }, [photo?.image_id, user.token]);
-
 
   const handleClick = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else if (user.id !== photo?.user_id && user.token) {
-      axios 
-        .post(`${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
           {},
           {
             headers: { Authorization: user.token },
           }
         )
-        .then(({data}) => {
+        .then(({ data }) => {
           if (data?.status) {
             setLike(true);
-            setLikeCount(prevState => prevState + 1);
+            setLikeCount((prevState) => prevState + 1);
           } else if (!data?.status) {
             toast.error(data.message);
             setLike(true);
           } else {
             console.log("Something wrong with the like");
           }
-        })
-    } 
+        });
+    }
   };
-
 
   return (
     <>

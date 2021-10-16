@@ -15,7 +15,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickOutside } from "react-click-outside-hook";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 import searchIcon from "../../../assets/search.svg";
 import { useDebounce } from "../../../lib/hooks/debounceHook";
 import useStyles from "./Search.styles";
@@ -41,14 +40,14 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
   const searchRef = useRef("");
   const anchorRef = useRef("");
   const history = useHistory();
-  
+
   const [parentRef, isClickedOutside] = useClickOutside();
   const [searchCategoryID, setSearchCategoryID] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("sports");
   const [searchCategoryName, setSearchCategoryName] = useState("All Resources");
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
-  
+
   const [openSearchCategory, SearchCategory] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -150,12 +149,17 @@ const Search = ({ mobileView }: { mobileView: boolean }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if(!searchQuery) return;
-  
+    if (!searchQuery) return;
+    console.log("isExpanded", isExpanded);
+
     searchPhotos();
+    setSearchQuery("");
+    setIsExpanded(false);
+    // setSearchResults([]);
+
     // window.location.reload(history.push(`/search/${searchQuery}`));
     history.push(`/search/title=${searchQuery}`);
-    // http://localhost:8000/api/client/search/?title=nature&category_id=22&limit=30&page=1 
+    // /search/?title=nature&category_id=22&limit=30&page=1
   };
 
   return (

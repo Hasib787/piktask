@@ -1,50 +1,101 @@
+import { Button, Container, Grid } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container, Button, Grid, Typography } from "@material-ui/core";
-import CallToAction from "../../components/ui/CallToAction";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import heroBanner from "../../assets/banner/banner-single-page.png";
-import Layout from "../../Layout";
 import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
+import CallToAction from "../../components/ui/CallToAction";
+import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
 import SectionHeading from "../../components/ui/Heading";
 import HeroSection from "../../components/ui/Hero";
-import { TopSeller } from "../../components/ui/TopSeller";
-import useStyles from "./Recent.style";
+import Loader from "../../components/ui/Loader";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 import Product from "../../components/ui/Products/Product";
-import axios from "axios";
-import Footer from "../../components/ui/Footer";
+import { TopSeller } from "../../components/ui/TopSeller";
+import Layout from "../../Layout";
+import useStyles from "./Recent.style";
 
-const Recent = () => {
+export const Recent = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [isLoading, setLoading] = useState(true);
-  const [recentProduct, setRecentProduct] = useState({});
+  const [recentProduct, setRecentProduct] = useState([]);
+  // const [items, setItems] = useState([]);
+  // const [newProduct, setNewProduct] = useState([]);
+  // let [pageCount, setPageCount] = useState(1);
+
+  // console.log("Page count", pageCount);
 
   //data load
-  useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/recent_images/by_date`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setRecentProduct(data?.images);
-            setLoading(false);
-          }
-        });
-    } catch (error) {
-      console.log("Category products error:", error);
-      setLoading(false);
+  const loadData = () => {
+    let recentUrl;
+    if (user && user?.id) {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}`;
+    } else {
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent`;
     }
+    axios
+      .get(recentUrl)
+      .then(({ data }) => {
+        if (data?.status) {
+          console.log("data image", data.images);
+          setRecentProduct(data?.images);
+          setLoading(false);
+          // recentProduct.push(recentProduct.concat(recentProduct));
+        }
+      })
+      .catch((error) => {
+        console.log("Category products error:", error);
+        setLoading(false);
+      });
+  };
+
+  //Load Initial value
+  useEffect(() => {
+    setLoading(true);
+    loadData();
   }, []);
 
+  //onScroll data load
+  // useEffect(() => {
+  //   setLoading(true);
+  //   window.onscroll = () => {
+  //     if (document.documentElement.scrollTop % 300 === 0) {
+  //       pageCount = pageCount + 1;
+  //       setPageCount(pageCount);
+  //       let recentUrl;
+  //       if (user && user?.id) {
+  //         recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=8&page=${pageCount}`;
+  //       } else {
+  //         recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=8&page=${pageCount}`;
+  //       }
+  //       axios
+  //         .get(recentUrl)
+  //         .then(({ data }) => {
+  //           if (data?.status) {
+  //             console.log("data image", data.images);
+  //             setRecentProduct([...recentProduct, ...data.images]);
+  //             setLoading(false);
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.log("Category products error:", error);
+  //           setLoading(false);
+  //         });
+  //     }
+  //   };
+  // }, []);
+
+  // newProduct.push(recentProduct.concat(items));
+
+  // console.log("recentProduct", recentProduct);
+  // console.log("items", items);
   return (
-    <Layout
-      title="Recent Images-Piktask"
-      description="Recent Images"
-    >
+    <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
       <HeroSection
-        background={heroBanner}
         size="large"
         popularKeywords
         heroButton
@@ -55,13 +106,13 @@ const Recent = () => {
         <SectionHeading title="Recent Images" large />
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader />
           ) : (
             <>
               {recentProduct?.length ? (
-                recentProduct?.map((photo) => (
+                recentProduct?.map((photo, index) => (
                   <Grid
-                    key={photo.image_id}
+                    key={index}
                     item
                     xs={6}
                     sm={4}
@@ -72,14 +123,15 @@ const Recent = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound />
               )}
             </>
           )}
         </Grid>
       </Container>
+
+      <Spacing space={{ height: "3.5rem" }} />
+
       <CallToAction
         title="Daily 10 image/photos Download"
         subtitle="Top website templates with the highest sales volume."
@@ -102,7 +154,7 @@ const Recent = () => {
       </Container>
 
       {/* Top selling author */}
-      <TopSeller />
+      <TopSeller homeTopSeller />
       {/* BLOG SECTION */}
       <Blog />
 
@@ -110,5 +162,3 @@ const Recent = () => {
     </Layout>
   );
 };
-
-export default Recent;
