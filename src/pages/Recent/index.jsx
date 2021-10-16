@@ -1,21 +1,21 @@
-import { Container, Button, Grid } from "@material-ui/core";
-import CallToAction from "../../components/ui/CallToAction";
-import Product from "../../components/ui/Products/Product";
-import { TopSeller } from "../../components/ui/TopSeller";
-import SectionHeading from "../../components/ui/Heading";
+import { Button, Container, Grid } from "@material-ui/core";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import HeroSection from "../../components/ui/Hero";
-import Header from "../../components/ui/Header";
-import Footer from "../../components/ui/Footer";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Spacing from "../../components/Spacing";
 import Blog from "../../components/ui/Blog";
-import { Link } from "react-router-dom";
-import useStyles from "./Recent.style";
-import Layout from "../../Layout";
-import axios from "axios";
+import CallToAction from "../../components/ui/CallToAction";
+import Footer from "../../components/ui/Footer";
+import Header from "../../components/ui/Header";
+import SectionHeading from "../../components/ui/Heading";
+import HeroSection from "../../components/ui/Hero";
 import Loader from "../../components/ui/Loader";
 import ProductNotFound from "../../components/ui/ProductNotFound";
-import { useSelector } from "react-redux";
+import Product from "../../components/ui/Products/Product";
+import { TopSeller } from "../../components/ui/TopSeller";
+import Layout from "../../Layout";
+import useStyles from "./Recent.style";
 
 export const Recent = () => {
   const classes = useStyles();
@@ -92,6 +92,8 @@ export const Recent = () => {
 
   // console.log("recentProduct", recentProduct);
   // console.log("items", items);
+  console.log("recentProduct", recentProduct);
+
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />
@@ -110,7 +112,7 @@ export const Recent = () => {
           ) : (
             <>
               {recentProduct?.length ? (
-                recentProduct?.map((photo, index) => (
+                recentProduct.slice(0, 16)?.map((photo, index) => (
                   <Grid
                     key={index}
                     item
