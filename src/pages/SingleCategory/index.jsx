@@ -302,8 +302,9 @@ const SingleCategory = () => {
           <Grid item md={7} sm={6} xs={12} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
               <img
+                title={imageDetails.title}
                 className={classes.image}
-                src={imageDetails?.preview}
+                src={encodeURI(imageDetails?.preview)}
                 alt={imageDetails?.original_name}
               />
             </div>
