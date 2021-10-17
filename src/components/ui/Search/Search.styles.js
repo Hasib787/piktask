@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     padding: "0.8rem 2rem",
     transition: "all 0.3s linear",
-    
+
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.04)",
     },
@@ -187,7 +187,23 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     zIndex: 1,
     opacity: 99,
+
+    "&::-webkit-scrollbar-track": {
+      "-webkitBoxShadow": "inset 0 0 6px rgba(0,0,0,0.3)",
+      borderRadius: 10,
+      backgroundColor: "#F5F5F5",
+    },
+    "&::-webkit-scrollbar": {
+      width: 10,
+      backgroundColor: "#F5F5F5",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      borderRadius: 10,
+      "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,.3)",
+      backgroundColor: "rgba(0, 28, 48, 0.6)",
+    },
   },
+
   closeIcon: {
     position: "absolute",
     right: "29%",

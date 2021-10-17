@@ -106,7 +106,7 @@ export const Recent = () => {
           ) : (
             <>
               {recentProduct?.length ? (
-                recentProduct.slice(0, 16)?.map((photo, index) => (
+                recentProduct?.map((photo, index) => (
                   <Grid
                     key={index}
                     item
