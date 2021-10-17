@@ -4,13 +4,13 @@ import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   // const user = useSelector((state) => state.user);
-  const setUserToken = window.localStorage.getItem("token") || "";
+  const token = window.localStorage.getItem("token") || "";
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        setUserToken ? (
+        token ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/login", state: { from: props.location } }} />

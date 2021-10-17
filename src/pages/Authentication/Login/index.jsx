@@ -61,10 +61,12 @@ export const Login = ({ history }) => {
       role,
     })
     .then((res) => {
+      console.log("res", res);
       if (res.data.status) {
         const token = res.data.token;
         localStorage.setItem("token", token);
         const decodedToken = jwt_decode(token.split(" ")[1]);
+        localStorage.setItem("profileImage", decodedToken.avatar);
 
         if (decodedToken.email) {
           dispatch({
@@ -160,7 +162,7 @@ export const Login = ({ history }) => {
   // };
 
   return (
-    <Layout title={"Login | Piktask"}>
+    <Layout title={"Login || Piktask"}>
       <Header />
       <div className={classes.rootContainer}>
         <Spacing space={{ height: "5rem" }} />

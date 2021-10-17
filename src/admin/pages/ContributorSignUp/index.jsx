@@ -126,7 +126,7 @@ const ContributorSignUp = (props) => {
 
           if (decodedToken.email) {
             dispatch({
-              type: "SET_CONTRIBUTOR",
+              type: "SET_USER",
               payload: {
                 ...decodedToken,
                 token,
