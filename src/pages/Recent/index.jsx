@@ -40,7 +40,6 @@ export const Recent = () => {
       .get(recentUrl)
       .then(({ data }) => {
         if (data?.status) {
-          console.log("data image", data.images);
           setRecentProduct(data?.images);
           setLoading(false);
           // recentProduct.push(recentProduct.concat(recentProduct));

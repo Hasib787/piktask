@@ -90,8 +90,9 @@ const AuthorProfile = () => {
     }
   };
 
+
   return (
-    <Layout title={`${profileInfo?.username} | Piktask`}>
+    <Layout title={`${profileInfo?.username} || Piktask`}>
       <Header />
       <div
         className={classes.authorHero}
