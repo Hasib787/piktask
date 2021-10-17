@@ -81,20 +81,6 @@ const App = () => {
       }
     }
 
-    // if (setUserProfileImage) {
-    //   const decode = jwt_decode(setUserToken.split(" ")[1]);
-    //   if (decode.email) {
-    //     dispatch({
-    //       type: "SET_USER",
-    //       payload: {
-    //         ...decode,
-    //         token: setUserToken,
-    //       },
-    //     });
-    //   }
-    // }
-
-
     // Popular categories API integration
     axios
       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)

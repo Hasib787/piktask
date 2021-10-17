@@ -29,7 +29,8 @@ const CallToAction = (props) => {
           </Button>
         ) : (
           <Link
-            to={buttonLink && `${buttonLink}`}
+            // to={buttonLink && `${buttonLink}`}
+            to="#!"
             className={classes.moreButton}
             style={{ textTransform: uppercase ? "uppercase" : "capitalize" }}
             onClick={buttonClicked}

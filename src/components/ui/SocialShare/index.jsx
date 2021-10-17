@@ -4,7 +4,6 @@ import useStyles from "./SocialShare.styles";
 import facebookLogo from '../../../assets/icons/facebook-round.svg';
 import instagramLogo from '../../../assets/icons/instagram-round.svg';
 import twitterLogo from '../../../assets/icons/twitter-round.svg';
-import { Link } from "react-router-dom";
 
 
 const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) => {
@@ -57,13 +56,13 @@ const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) =
 
       <List>
         {socialMedias && socialMedias.map((media, index) => (
-          <Link key={index} to={media.url} target="_blank">
+          <a key={index} href={media.url} target="_blank">
             <img
               className={classes.socialIcon}
               src={media.image}
               alt={media.name}
             />
-          </Link>
+          </a>
         ))}
       </List>
     </div>
