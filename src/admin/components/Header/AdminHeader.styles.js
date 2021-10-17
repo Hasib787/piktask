@@ -1,15 +1,28 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({ 
+const useStyles = makeStyles((theme) => ({
   paper: {
-    width: '45%',
+    width: "45%",
+    [theme.breakpoints.down(769)]: {
+      width: "50%",
+    },
     [theme.breakpoints.down(480)]: {
-      width: '70%',
-     },
+      width: "100%",
+    },
   },
   appbarHeader: {
     backgroundColor: "#fff",
     boxShadow: "none",
+    position: "fixed",
+    width: "100%",
+    height: "7rem",
+    zIndex: 99,
+    paddingRight: "28rem",
+    top: 0,
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      paddingRight: "0rem",
+    },
   },
   fullWidth: {
     width: "100%",
@@ -21,26 +34,31 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     paddingTop: "1rem",
   },
-  container: {
-    height: "100%",
-  },
   item: {
     height: "100%",
     display: "flex",
     padding: "0 !important",
     alignItems: "center",
+    marginLeft: "auto",
+    [theme.breakpoints.down(769)]: {
+      marginTop: "1.3rem",
+    },
   },
   adminLogo: {
     width: "15rem",
     marginTop: "0.6rem",
+    [theme.breakpoints.down(426)]: {
+      width: "11rem",
+      marginTop: "1rem",
+    },
   },
   logo: {
     width: "10rem",
   },
   headerInfo: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
     marginLeft: "auto",
   },
   notificationIcon: {
@@ -66,18 +84,17 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.button,
     backgroundColor: "#0088f2",
     padding: "0.5rem 1.4rem",
-    marginLeft: "28rem",
-    marginRight: "2rem",
+    float: "left",
     fontSize: "1.4rem",
     border: "2px solid",
     borderColor: "transparent",
     transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor:"#0773c5",
+      backgroundColor: "#0773c5",
     },
     [theme.breakpoints.down(769)]: {
       display: "none",
-     },
+    },
   },
   menuIcon: {
     fontSize: "4rem",
@@ -85,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFF",
     [theme.breakpoints.up(769)]: {
       display: "none",
-     },
+    },
   },
   ButtoncrownIcon: {
     width: "1.7rem",
@@ -95,30 +112,50 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     cursor: "pointer",
+    [theme.breakpoints.down(426)]: {
+      marginBottom: "-1rem",
+    },
   },
   adminPhoto: {
     width: "4rem",
     height: "4rem",
     borderRadius: "100%",
+    [theme.breakpoints.down(769)]: {
+      width: "3.5rem",
+      height: "3.5rem",
+    },
   },
   userName: {
     paddingLeft: "1rem",
     fontSize: "1.8rem",
     fontWeight: 500,
-    color: "#1B3F4E", 
+    color: "#1B3F4E",
+    [theme.breakpoints.down(426)]: {
+      fontSize: "1.4rem",
+      paddingLeft: "0.8rem",
+    },
   },
   avatar: {
     fontSize: "4.8rem",
-    width: "4.8rem",
-    height: "4.8rem",
+    // width: "4.8rem",
+    // height: "4.8rem",
     borderRadius: "100%",
     position: "relative",
     right: "-0.6rem",
     color: "#000",
-}, 
+    [theme.breakpoints.down(769)]: {
+      fontSize: "4.2rem",
+    },
+    [theme.breakpoints.down(426)]: {
+      fontSize: "3.5rem",
+    },
+  },
   arrowDown: {
     fontSize: "3.5rem",
     color: "#376579",
+    [theme.breakpoints.down(426)]: {
+      fontSize: "2rem",
+    },
   },
   loginBtn: {
     color: "#fff",
@@ -138,15 +175,12 @@ const useStyles = makeStyles((theme) => ({
     border: ".2rem solid #fff",
     marginRight: "16px",
     padding: "0px 14px",
-
     [theme.breakpoints.down(425)]: {
       fontSize: "13px",
       marginRight: "8px",
       padding: "0px 8px",
     },
   },
-
-
 }));
 
 export default useStyles;

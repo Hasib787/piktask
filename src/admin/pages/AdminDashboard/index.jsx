@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   CardContent,
-  Container,
   Grid,
   Paper,
   Table,
@@ -54,7 +53,6 @@ const AdminDashboard = () => {
         ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
         : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
-
     setResponsiveness();
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
@@ -71,9 +69,8 @@ const AdminDashboard = () => {
       
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
-      {
-        headers: {Authorization: user?.token},
-      })
+        { headers: {Authorization: user?.token},}
+      )
       .then(({data}) => {
         if(data?.status){
           setEarnCurrentMonth(data?.user_statistics);
@@ -93,9 +90,8 @@ const AdminDashboard = () => {
 
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
-      {
-        headers: {Authorization: user?.token},
-      })
+        { headers: {Authorization: user?.token},}
+      )
       .then(({data}) => {
         if(data?.status){
           setEarnPreviousMonth(data?.user_statistics);
@@ -108,9 +104,8 @@ const AdminDashboard = () => {
     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images?limit=5`,
-      {
-        headers: { Authorization: user?.token },
-      })
+        { headers: { Authorization: user?.token },}
+      )
       .then(({data}) => {
         if(data?.status) {
           setAuthorFiles(data?.images);
@@ -123,9 +118,8 @@ const AdminDashboard = () => {
     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/top_files?limit=5`,
-      {
-        headers: { Authorization: user?.token },
-      })
+        { headers: { Authorization: user?.token }}
+      )
       .then(({data}) => {
         if(data?.status) {
           setTopFiles(data?.images);
@@ -133,7 +127,6 @@ const AdminDashboard = () => {
         }
       })
     }
-
   }, [user?.token])
 
 

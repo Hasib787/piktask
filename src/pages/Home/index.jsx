@@ -1,6 +1,6 @@
 import { CategoryCarousel } from "../../components/ui/Carousel";
 import CallToAction from "../../components/ui/CallToAction";
-import { TopSeller } from "../../components/ui/TopSeller";
+// import { TopSeller } from "../../components/ui/TopSeller";
 import SectionHeading from "../../components/ui/Heading";
 import { Button, Container } from "@material-ui/core";
 import Products from "../../components/ui/Products";

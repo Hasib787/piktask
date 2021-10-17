@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1.6rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     position: "relative",
-
     "&::before": {
       backgroundImage: `url(${userBackground})`,
       backgroundRepeat: "no-repeat",
@@ -36,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "0.2rem",
       boxShadow: "0px 0px 5px #ddd",
     },
-    
     "&:hover": {
       "& $avatarOverlay": {
         opacity: 1,
@@ -54,11 +52,9 @@ const useStyles = makeStyles((theme) => ({
     visibility: "hidden",
   },
   bgOverlay: {
-    // padding: "4rem 1.2rem",
     height: "6rem",
     width: "12rem",
     padding: "0.2rem",
-    // borderRadius: "0 0 100% 100%",
     borderBottomRightRadius: "90px",
     borderBottomLeftRadius: "90px",
     display: "flex",
@@ -72,8 +68,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   },
   uploadButton: {
-    // padding: "0.1rem 0.2rem",
-    
     color: "#fff",
     border: "0.5px solid #0088f2",
     backgroundColor: "#0088f2",
@@ -100,13 +94,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     marginTop: "1.5rem",
     cursor: "pointer",
-
     "& a": {
       padding: "0rem",
       minWidth: "0rem",
       transition: "all 0.3s linear",
       "&:hover": {
-        // backgroundColor: "transparent",
         transform: "translateY(-0.7rem)",
       },
     },
@@ -170,7 +162,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1.2rem",
     cursor: "pointer",
     transition: "all 0.3s linear",
-
     "&:hover": {
       backgroundColor: "#F4F7FF",
       color: "#4A7AFF",
@@ -191,7 +182,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1.6rem",
     boxShadow: "0 1px 2px 0 rgb(0 0 0 / 10%)",
     cursor: "pointer",
-
     "& a": {
       textDecoration: "none",
     },
@@ -239,10 +229,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#b71c1c",
     },
-  },
-
-  passwordField: {
-    //  padding: "2rem",
   },
 }));
 

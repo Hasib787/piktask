@@ -30,18 +30,11 @@ const DesktopMenu = ({ history }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
+    return () => { document.body.style.backgroundColor = ""; };
   }, [user, history]);
 
-  const handleChange = (event, index) => {
-    setValue(index);
-  };
-
-  const handleToggle = () => {
-    setOpen((prevState) => !prevState);
-  };
+  const handleChange = (event, index) => { setValue(index);};
+  const handleToggle = () => { setOpen((prevState) => !prevState);};
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -169,7 +162,6 @@ const DesktopMenu = ({ history }) => {
               to="/category/animal"
               label="Animal"
             />
-            {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
             {user?.token ? (
@@ -204,7 +196,7 @@ const DesktopMenu = ({ history }) => {
               Premium
             </Button> */}
 
-            {user && user?.isLogged ? (
+            {user?.token && user?.isLogged ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}
@@ -212,7 +204,7 @@ const DesktopMenu = ({ history }) => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                {user && user?.avatar ? (
+                {user?.token && user?.avatar ? (
                   <img
                     className={classes.avatar}
                     src={user?.avatar}
