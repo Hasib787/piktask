@@ -48,7 +48,7 @@ const HeroSection = (props) => {
 
   useEffect(() => {
     const recentImage = recentButtonRef?.current?.baseURI.split("/").pop();
-    if (recentImage === "recent_images") {
+    if (recentImage === "recent-images") {
       recentButtonRef?.current?.classList?.add("active");
     } else {
       popularButtonRef?.current?.classList?.add("active");
@@ -303,7 +303,7 @@ const HeroSection = (props) => {
                     ref={recentButtonRef}
                     className={classes.recentButton}
                     component={Link}
-                    to={"/recentImage/recent-images"}
+                    to="/recentImage/recent-images"
                   >
                     Recent
                   </Button>

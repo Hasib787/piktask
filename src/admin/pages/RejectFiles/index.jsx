@@ -19,7 +19,7 @@ import useStyles from "./RejectFiles.styles";
 const RejectFiles = () => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
-  const [products, setProducts] = useState(productData.products);
+  const [products, setProducts] = useState([]);
   const [rejectMessage, setRejectMessage] = useState();
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -36,8 +36,18 @@ const RejectFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const handleClick = (product) => {
+   const handleClick = async (product) => {
     // Run  when the reject status is true
+    try {
+      const response =  await fetch(`${process.env.REACT_APP_API_URL}/contributor/images/rejected`)
+      const data = await response.json();
+      if({data}){
+        setProducts({data})
+      }
+    }
+    catch(error){
+
+    }
     if (product?.reject?.status) {
       setOpenModal(true);
       setRejectMessage();
@@ -46,7 +56,6 @@ const RejectFiles = () => {
 
   return (
     <Layout title={"RejectFiles || Piktask"}>
-
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
@@ -95,7 +104,9 @@ const RejectFiles = () => {
       >
         <div className={classes.modalHeader}>
           <div className={classes.headingContent}>
-            <Heading>Reasons for rejection</Heading>
+            <Typography variant="h3" className={classes.title}>
+              Reasons for rejection
+            </Typography>
             <CloseIcon
               className={classes.closeIcon}
               onClick={() => setOpenModal(false)}
@@ -171,8 +182,6 @@ const RejectFiles = () => {
           View More Reasons
         </Button>
       </Drawer>
-
-      
     </Layout>
   );
 };

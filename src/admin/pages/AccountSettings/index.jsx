@@ -308,9 +308,9 @@ const AccountSettings = () => {
                         >
                           {countries.length === 0 && (
                             <>
-                              countryName ? ( )
-                              <option value={countryName}>{countryName}</option>{" "}
-                              :<option value="Bangladesh">Bangladesh</option>
+                              countryName ?
+                              (<option value={countryName}>{countryName}</option>)
+                              :(<option value="Bangladesh">Bangladesh</option>)
                             </>
                           )}
                           {countries.map((option, index) => (
