@@ -1,27 +1,22 @@
 import {
-  // AppBar,
   Button,
   Container,
   Drawer,
   makeStyles,
   Grid,
-  // MenuItem,
-  // MenuList,
-  // Toolbar,
   Typography,
-  AppBar,
 } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import CustomPopper from "../../../components/ui/CustomPopper";
 import crownIcon from "../../../assets/icons/crown.svg";
 import logo from "../../../assets/Logo/piktask-6.png";
-import CustomPopper from "../../../components/ui/CustomPopper";
 import useStyles from "./AdminHeader.styles";
-import { useSelector } from "react-redux";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MobileSidebarMenu from "../Sidebar/MobileSidebarMenu";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
@@ -48,8 +43,15 @@ const customStyles = makeStyles({
   menuIcon: {
     fontSize: "4rem",
     cursor: "pointer",
-    // color: "#0088f2",
     color: "#001c30",
+    "@media (max-width: 769px)": {
+      fontSize: "3.5rem",
+      marginBottom: "0.3rem",
+    },
+    "@media (max-width: 426px)": {
+      fontSize: "2.5rem",
+      marginBottom: "-0.8rem",
+    },
   },
   closeMenuIcon:{
     fontSize: "3rem",
@@ -60,14 +62,13 @@ const customStyles = makeStyles({
 
 const AdminHeader = () => {
   const classes = useStyles();
-  const iconClass = customStyles();
-
-  const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const iconClass = customStyles();
   const user = useSelector((state) => state.user);
 
+  const [open, setOpen] = useState(false);
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
 
   useEffect(() => {
@@ -81,9 +82,7 @@ const AdminHeader = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const handleToggle = () => {
-    setOpen((prevState) => !prevState);
-  };
+  const handleToggle = () => { setOpen((prevState) => !prevState);};
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -97,13 +96,11 @@ const AdminHeader = () => {
       setOpen(false);
     }
   };
-  const handleMobileMenu = () => {
-    setOpenMobileMenu(true);
-  };
+  const handleMobileMenu = () => { setOpenMobileMenu(true);};
 
   return (
     <>
-      <AppBar position="fixed" className={classes.appbarHeader}>
+      <div position="fixed" className={classes.appbarHeader}>
         {mobileView ? (
           <div className={classes.fullWidth}>
           <Container classes={{ root: classes.root }}>
@@ -159,8 +156,6 @@ const AdminHeader = () => {
             <Container classes={{ root: classes.root }}>
               <Grid
                 container
-                spacing={2}
-                classes={{ container: classes.container }}
                 alignItems="center"
               >
                 <Grid item xs={3} md={3} sm={3}>
@@ -258,7 +253,7 @@ const AdminHeader = () => {
           handleClose={handleClose}
           handleListKeyDown={handleListKeyDown}
         />
-      </AppBar>
+      </div>
     </>
   );
 };
