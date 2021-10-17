@@ -87,13 +87,9 @@ export const Recent = () => {
   //   };
   // }, []);
 
-  // newProduct.push(recentProduct.concat(items));
-
-  // console.log("recentProduct", recentProduct);
-  // console.log("items", items);
 
   return (
-    <Layout title="Recent Images | Piktask" description="Recent Images">
+    <Layout title="Recent Images || Piktask" description="Recent Images">
       <Header />
       <HeroSection
         size="large"

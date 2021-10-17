@@ -48,7 +48,7 @@ const HeroSection = (props) => {
 
   useEffect(() => {
     const recentImage = recentButtonRef?.current?.baseURI.split("/").pop();
-    if (recentImage === "recent_images") {
+    if (recentImage === "recent-images") {
       recentButtonRef?.current?.classList?.add("active");
     } else {
       popularButtonRef?.current?.classList?.add("active");

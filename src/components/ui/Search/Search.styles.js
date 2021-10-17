@@ -210,7 +210,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchContent: {
     width: "auto",
-    height: "100%",
+    height: "300px",
     display: "flex",
     flexDirection: "column",
   },
