@@ -270,7 +270,8 @@ const Search = () => {
                                   handleCloseCatSearch()
                                 }}
                               >
-                                {encodeURI(category?.name)}
+                                {/* {encodeURI(category?.name)} */}
+                                {category?.name}
                               </li>
                             ))
                           ) : (

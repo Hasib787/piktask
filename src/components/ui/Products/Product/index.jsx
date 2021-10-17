@@ -43,9 +43,7 @@ const Product = ({ photo = null }) => {
         .post(
           `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like`,
           {},
-          {
-            headers: { Authorization: user.token },
-          }
+          { headers: { Authorization: user.token },}
         )
         .then(({ data }) => {
           if (data?.status) {

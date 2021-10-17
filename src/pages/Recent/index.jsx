@@ -40,7 +40,6 @@ export const Recent = () => {
       .get(recentUrl)
       .then(({ data }) => {
         if (data?.status) {
-          console.log("data image", data.images);
           setRecentProduct(data?.images);
           setLoading(false);
           // recentProduct.push(recentProduct.concat(recentProduct));
@@ -88,14 +87,9 @@ export const Recent = () => {
   //   };
   // }, []);
 
-  // newProduct.push(recentProduct.concat(items));
-
-  // console.log("recentProduct", recentProduct);
-  // console.log("items", items);
-  console.log("recentProduct", recentProduct);
 
   return (
-    <Layout title="Recent Images | Piktask" description="Recent Images">
+    <Layout title="Recent Images || Piktask" description="Recent Images">
       <Header />
       <HeroSection
         size="large"
