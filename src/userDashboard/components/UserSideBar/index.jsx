@@ -219,6 +219,13 @@ const UserSideBar = () => {
         if (res.status) {
           toast.success(res.data.message);
           setProfilePicture(res.data.image);
+          localStorage.setItem("profileImage", res.data.image);
+          dispatch({
+            type: "SET_USER",
+              payload: {
+                avatar: res.data.image,
+              },
+          });
         }
       })
       .catch((error) => {
@@ -250,19 +257,17 @@ const UserSideBar = () => {
                 )}
                 <div className={classes.avatarOverlay}>
                   <div className={classes.bgOverlay}>
-                    {/* <Button className={classes.uploadButton}> */}
-                      <label htmlFor="image" for="upload-photo">
-                        <PhotoCameraIcon className={classes.uploadIcon} />
-                        <input
-                          type="file"
-                          name="profile_picture"
-                          accept="image/*"
-                          id="upload-photo"
-                          style={{ display: "none" }}
-                          onChange={handleUpdateImage}
-                        />
-                      </label>
-                    {/* </Button> */}
+                    <label htmlFor="image" for="upload-photo">
+                      <PhotoCameraIcon className={classes.uploadIcon} />
+                      <input
+                        type="file"
+                        name="profile_picture"
+                        accept="image/*"
+                        id="upload-photo"
+                        style={{ display: "none" }}
+                        onChange={handleUpdateImage}
+                      />
+                    </label>
                   </div>
                 </div>
               </div>

@@ -13,14 +13,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "8rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
   earningManagementWrapper: {
+    marginTop: "10rem",
     margin: "2rem",
   },
   indicator: {

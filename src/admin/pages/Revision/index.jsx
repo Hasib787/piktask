@@ -42,7 +42,7 @@ const Revision = () => {
             <Grid container spacing={2}>
               {products.length > 0 ? (
                 products.map((product) => (
-                  <Grid key={product._id} item xs={12} sm={6} md={2} lg={3}>
+                  <Grid key={product._id} item xs={3} sm={2} md={2} className={classes.productItem}>
                     <Card className={classes.cardWrapper}>
                       <div className={classes.cardImage}>
                         <img src={product.image} alt={product.name} />
