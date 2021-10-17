@@ -188,7 +188,7 @@ const App = () => {
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/search/trending_search" component={TrendingSearch} />
 
-        <Route exact path="/images/recent_images" component={Recent} />
+        <Route exact path="/recentImage/recent-images" component={Recent} />
         <Route exact path="/images/popular_images" component={PopularImages} />
 
         <Route exact path="/search/:keywords" component={SearchResults} />

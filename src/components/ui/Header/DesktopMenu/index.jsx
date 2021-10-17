@@ -28,22 +28,13 @@ const DesktopMenu = ({ history }) => {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(0);
-  // const setUpdateProfileImage = window.localStorage.getItem("updateProfileImage") || [];
-  // const setUserProfileImage = window.localStorage.getItem("userProfileImage") || [];
 
   useEffect(() => {
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
+    return () => { document.body.style.backgroundColor = ""; };
   }, [user, history]);
 
-  const handleChange = (event, index) => {
-    setValue(index);
-  };
-
-  const handleToggle = () => {
-    setOpen((prevState) => !prevState);
-  };
+  const handleChange = (event, index) => { setValue(index);};
+  const handleToggle = () => { setOpen((prevState) => !prevState);};
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -171,7 +162,6 @@ const DesktopMenu = ({ history }) => {
               to="/category/animal"
               label="Animal"
             />
-            {/* <ArrowDropDownIcon /> */}
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
             {user?.token ? (
