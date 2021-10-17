@@ -35,7 +35,6 @@ const AccountSettings = () => {
   const user = useSelector((state) => state.user);
 
   const [payment, setPayment] = useState("Paypal");
-  const [state, setState] = useState("Chittagong");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -65,6 +64,7 @@ const AccountSettings = () => {
   const [bankCountry, setBankCountry] = useState("");
   const [swiftCode, setSwiftCode] = useState("");
   const [paypalAccount, setPaypalAccount] = useState("");
+  const [payoneerAccount, setPayoneerAccount] = useState("");
 
   const [countries, setCountries] = useState([]);
 
@@ -82,31 +82,6 @@ const AccountSettings = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  //load all country name
-  // const handleCountryName = (e) => {
-  //   const categoryID = e.target.getAttribute("data-id");
-  //   const textValue = e.target.textContent;
-  //   setCountryName(textValue);
-  //   setSearchCategoryID(categoryID);
-  // };
-
-  // const loadCategories = () => {
-  //   if (categories.length === 0) {
-  //     axios
-  //     .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
-  //     .then(({ data }) => {
-  //       if (data?.status) {
-  //         const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-  //         setCategories(sortedData);
-  //       }
-  //     })
-  //     .catch((error) => console.log("Categories loading error: ", error));
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setCountries(allCountry.countries);
-  // },[])
 
   const handleCountries = () => {
     setCountries(allCountry.countries);

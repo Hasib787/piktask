@@ -94,7 +94,6 @@ const AuthorProfile = () => {
     }
   };
 
-  console.log("profileInfo", profileInfo?.id);
 
   return (
     <Layout title={`${profileInfo?.username} | Piktask`}>

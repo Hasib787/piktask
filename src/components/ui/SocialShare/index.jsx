@@ -1,19 +1,22 @@
-import { List, Typography } from "@material-ui/core";
+import { List, Typography, Link as MuiLink } from "@material-ui/core";
 import React from "react";
 import useStyles from "./SocialShare.styles";
-import facebookLogo from '../../../assets/icons/facebook-round.svg';
-import instagramLogo from '../../../assets/icons/instagram-round.svg';
-import twitterLogo from '../../../assets/icons/twitter-round.svg';
+import facebookLogo from "../../../assets/icons/facebook-round.svg";
+import instagramLogo from "../../../assets/icons/instagram-round.svg";
+import twitterLogo from "../../../assets/icons/twitter-round.svg";
 import { Link } from "react-router-dom";
 
-
-const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) => {
+const SocialShare = ({
+  title,
+  textCase,
+  socialMedias,
+  position,
+  profileInfo,
+}) => {
   const classes = useStyles();
 
   return (
-    <div
-      className={classes.container}
-    >
+    <div className={classes.container}>
       <Typography
         className={classes.title}
         style={{
@@ -25,46 +28,47 @@ const SocialShare = ({ title, textCase, socialMedias, position, profileInfo }) =
 
       <List>
         {profileInfo?.facebook && (
-          <a href={profileInfo?.facebook} target="_blank">
-            <img
-              className={classes.socialIcon}
-              src={facebookLogo}
-              alt={facebookLogo}
-            />
-          </a>
+            <MuiLink  href={profileInfo?.facebook} target="_blank">
+              <img
+                className={classes.socialIcon}
+                src={facebookLogo}
+                alt={facebookLogo}
+              />
+            </MuiLink>
         )}
 
         {profileInfo?.instagram && (
-          <a href={profileInfo?.instagram} target="_blank">
+          <MuiLink href={profileInfo?.instagram} target="_blank">
             <img
               className={classes.socialIcon}
               src={instagramLogo}
               alt={instagramLogo}
             />
-          </a>
+          </MuiLink>
         )}
 
         {profileInfo?.twitter && (
-          <a href={profileInfo?.twitter} target="_blank">
+          <MuiLink href={profileInfo?.twitter} target="_blank">
             <img
               className={classes.socialIcon}
               src={twitterLogo}
               alt={twitterLogo}
             />
-          </a>
+          </MuiLink>
         )}
       </List>
 
       <List>
-        {socialMedias && socialMedias.map((media, index) => (
-          <Link key={index} to={media.url} target="_blank">
-            <img
-              className={classes.socialIcon}
-              src={media.image}
-              alt={media.name}
-            />
-          </Link>
-        ))}
+        {socialMedias &&
+          socialMedias.map((media, index) => (
+            <Link key={index} to={media.url} target="_blank">
+              <img
+                className={classes.socialIcon}
+                src={media.image}
+                alt={media.name}
+              />
+            </Link>
+          ))}
       </List>
     </div>
   );
