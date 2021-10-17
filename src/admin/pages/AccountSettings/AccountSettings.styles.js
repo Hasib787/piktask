@@ -68,9 +68,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     padding: "3rem",
   },
-  settingsFormWrapper: {
-    padding: "3rem",
-  },
+
   cardRoot: {
     marginBottom: "2.5rem",
     boxShadow:
@@ -132,14 +130,42 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
-  inputImage: {
-    position: "relative",
-    "& img": {
-      position: "absolute",
-      right: "1rem",
-      top: 0,
+  bankCountryName: {
+    width: "49%",
+    paddingLeft: "1rem",
+    alignItems: "left",
+    justifyContent: "left",
+    marginBottom: "2rem",
+    "& legend": {
+      display: "none",
+      width: 0,
+      height: 0,
+    },
+    [theme.breakpoints.up(2000)]: {
+      width: "49.6%",
+    },
+    "@media (max-width: 2250px) and (min-width: 2100px)": {
+      width: "49.5%",
+    },
+    "@media (max-width: 2000px) and (min-width: 1700px)": {
+      width: "49.3%",
+    },
+    "@media (max-width: 960px)": {
+      width: "100%",
+      paddingLeft: "0rem !important",
+      flexDirection: "column",
+      marginBottom: 0,
     },
   },
+
+  // inputImage: {
+  //   position: "relative",
+  //   "& img": {
+  //     position: "absolute",
+  //     right: "1rem",
+  //     top: 0,
+  //   },
+  // },
   cardIcon: {
     width: "18rem",
   },

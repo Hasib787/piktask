@@ -5,36 +5,35 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
-import SignUpModal from "../../../../pages/Authentication/SignUpModal";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import downloadIcon from "../../../../assets/download.svg";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import axios from "axios";
 // import crownIcon from "../../../../assets/icons/crown.svg";
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import downloadIcon from "../../../../assets/download.svg";
+import { getWords } from "../../../../helpers";
+import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import {
   ButtonWrapper,
   CardFooter,
   CardWrapper,
   useStyles,
 } from "./Product.styles";
-import { getWords } from "../../../../helpers";
 
-const Product = ({ photo }) => {
+const Product = ({ photo = null }) => {
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
-  
+
   const title = photo?.title;
   const titleLength = title?.split(" ");
 
   const [likeCount, setLikeCount] = useState(photo?.total_likes);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLike, setLike] = useState(false);
-
 
   const handleLikeBtn = () => {
     if (!user.token) {
@@ -61,6 +60,16 @@ const Product = ({ photo }) => {
         });
     }
   };
+
+  function pikTaskEncodeURI(data) {
+    if (data) {
+      // `/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`;
+
+      return encodeURI(
+        `/images/${data?.title.replace(/ /g, "_")}&id=${data?.image_id}`
+      );
+    }
+  }
 
   return (
     <>
@@ -102,42 +111,38 @@ const Product = ({ photo }) => {
 
         {photo?.extension === "png" ? (
           <div className={classes.itemTransparent}>
-            <Link
-              className={classes.singlePageLink}
-              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
-            />
-            <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
-              <img className={classes.image} src={photo?.preview} alt="" />
+            <Link to={pikTaskEncodeURI(photo)}>
+              <img
+                className={classes.image}
+                src={encodeURI(photo?.preview)}
+                alt=""
+              />
             </Link>
           </div>
         ) : (
           <div className={classes.itemContainer}>
-            <Link
-              className={classes.singlePageLink}
-              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
-            />
-            <Link to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}>
-              <img className={classes.image} src={photo?.preview} alt="" />
+            <Link to={pikTaskEncodeURI(photo)}>
+              <img
+                className={classes.image}
+                src={encodeURI(photo?.preview)}
+                alt=""
+              />
             </Link>
           </div>
         )}
-
 
         <div className={classes.itemFooter}>
           <CardContent className={classes.productTitle}>
             <Link
               className={classes.titleLink}
-              to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
+              to={pikTaskEncodeURI(photo)}
+              title={photo.title}
             >
               <Typography variant="h2" className={classes.title}>
                 {titleLength?.length > 7 ? (
-                  <>
-                    { getWords(6, photo?.title)}...
-                  </>
+                  <>{getWords(6, photo?.title)}...</>
                 ) : (
-                  <>
-                    {photo?.title}
-                  </>
+                  <>{photo?.title}</>
                 )}
               </Typography>
             </Link>
@@ -145,7 +150,10 @@ const Product = ({ photo }) => {
 
           <CardContent className={classes.cardFooter}>
             <CardFooter className={classes.cardAuthorInfo}>
-              <Link to={`/author/${photo?.username}`} className={classes.avatar}>
+              <Link
+                to={`/author/${photo?.username}`}
+                className={classes.avatar}
+              >
                 {photo?.avatar ? (
                   <CardMedia
                     component="img"
@@ -182,7 +190,7 @@ const Product = ({ photo }) => {
               <Button
                 className={classes.categoryButton}
                 component={Link}
-                to={`/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`}
+                to={pikTaskEncodeURI(photo)}
               >
                 Download
               </Button>

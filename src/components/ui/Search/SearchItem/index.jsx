@@ -9,10 +9,10 @@ const SearchItem = ({ item }) => {
   
 
   return (
-    <Link to={`/images/${item?.title.replace(/ /g, "_")}&id=${item?.image_id}`} className={classes.searchItemWrapper}>
+    <Link to={encodeURI(`/images/${item?.title.replace(/ /g, "_")}&id=${item?.image_id}`)} className={classes.searchItemWrapper}>
       <div className={classes.searchLeft}>
         <div className={classes.thumbnail}>
-          <img src={item?.thumbnail} alt={item?.title} />
+          <img src={encodeURI(item?.thumbnail)} alt={item?.title} />
         </div>
         <h2>{item?.title}</h2>
       </div>

@@ -16,7 +16,7 @@ const Footer = () => {
     <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
-          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Categories
             </Typography>
@@ -44,7 +44,7 @@ const Footer = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Content
             </Typography>
@@ -72,7 +72,7 @@ const Footer = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Information
             </Typography>
@@ -110,7 +110,7 @@ const Footer = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid xs={6} sm={3} md={3} className={classes.footerWrapper}>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Legal
             </Typography>

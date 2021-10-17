@@ -27,22 +27,7 @@ import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./AccountSettings.styles";
-
-const country = [
-  { value: "Bangladesh", label: "Bangladesh" },
-  { value: "Nepal", label: "Nepal" },
-  { value: "China", label: "China" },
-  { value: "India", label: "India" },
-  { value: "America", label: "America" },
-];
-const cityName = [
-  { value: "Dhaka", label: "Dhaka" },
-  { value: "Chittagong", label: "Chittagong" },
-  { value: "Khulna", label: "Khulna" },
-  { value: "Rajshahi", label: "Rajshahi" },
-  { value: "Barishal", label: "Barishal" },
-];
-
+import allCountry from "../../../data/countryList.json";
 
 const AccountSettings = () => {
   const classes = useStyles();
@@ -73,13 +58,13 @@ const AccountSettings = () => {
   const [errors, setErrors] = useState({});
 
   //bank info state
-  // const [accountName, setAccountName] = useState("");
-  // const [accountNumber, setAccountNumber] = useState("");
-  // const [routingNumber, setRoutingNumber] = useState("");
-  // const [branch, setBranch] = useState("");
-  // const [bankCountry, setBankCountry] = useState("");
-  // const [swiftCode, setSwiftCode] = useState("");
-  // const [paypalAccount, setPaypalAccount] = useState("");
+  const [accountName, setAccountName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [routingNumber, setRoutingNumber] = useState("");
+  const [branch, setBranch] = useState("");
+  const [bankCountry, setBankCountry] = useState("");
+  const [swiftCode, setSwiftCode] = useState("");
+  const [paypalAccount, setPaypalAccount] = useState("");
 
   const [countries, setCountries] = useState([]);
 
@@ -97,20 +82,35 @@ const AccountSettings = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  // //get countries info
-  // useEffect(() => {
-  //   axios
-  //     .get(`https://restcountries.com/v3.1/all`)
+  //load all country name
+  // const handleCountryName = (e) => {
+  //   const categoryID = e.target.getAttribute("data-id");
+  //   const textValue = e.target.textContent;
+  //   setCountryName(textValue);
+  //   setSearchCategoryID(categoryID);
+  // };
+
+  // const loadCategories = () => {
+  //   if (categories.length === 0) {
+  //     axios
+  //     .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
   //     .then(({ data }) => {
-  //       console.log(data.name.common);
-  //       if (data) {
-  //         setCountries();
+  //       if (data?.status) {
+  //         const sortedData = data?.categories.sort((a, b) => a.id - b.id);
+  //         setCategories(sortedData);
   //       }
   //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  //     .catch((error) => console.log("Categories loading error: ", error));
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   setCountries(allCountry.countries);
+  // },[])
+
+  const handleCountries = () => {
+    setCountries(allCountry.countries);
+  };
 
   // get contributor information
   useEffect(() => {
@@ -122,7 +122,6 @@ const AccountSettings = () => {
           headers: { Authorization: user.token },
         })
         .then(({ data }) => {
-          console.log("userInfo", data.user);
           if (data?.status) {
             setName(data.user.name);
             setUsername(data.user.username);
@@ -134,6 +133,13 @@ const AccountSettings = () => {
             setCity(data.user.city);
             setZipCode(data.user.zip_code);
             setBillingsAddress(data.user.billings_address);
+            setAccountName(data.user.account_name);
+            setAccountNumber(data.user.account_number);
+            setRoutingNumber(data.user.routing_number);
+            setBranch(data.user.branch);
+            setBankCountry(data.user.bank_country);
+            setSwiftCode(data.user.swift_code);
+            setPaypalAccount(data.user.paypal_account);
             setShutterstock(data.user.shutterstock);
             setFreepik(data.user.freepik);
             setBehance(data.user.behance);
@@ -164,6 +170,13 @@ const AccountSettings = () => {
     formData.append("country_name", countryName);
     formData.append("city", city);
     formData.append("zip_code", zipCode);
+    formData.append("account_name", accountName);
+    formData.append("account_number", accountNumber);
+    formData.append("routing_number", routingNumber);
+    formData.append("branch", branch);
+    formData.append("bank_country", bankCountry);
+    formData.append("swift_code", swiftCode);
+    formData.append("paypal_account", paypalAccount);
     formData.append("shutterstock", shutterstock);
     formData.append("freepik", freepik);
     formData.append("behance", behance);
@@ -272,12 +285,13 @@ const AccountSettings = () => {
                         classes={{ fullWidth: classes.fullWidth }}
                       >
                         <TextField
-                          id="website"
                           error={!!errors.website}
                           helperText={errors.website}
-                          label="Website"
+                          fullWidth
                           variant="outlined"
+                          label="Website"
                           className={`${classes.inputField}`}
+                          name="website"
                           value={website}
                           onChange={(e) => setWebsite(e.target.value)}
                         />
@@ -305,30 +319,41 @@ const AccountSettings = () => {
                         fullWidth
                         classes={{ fullWidth: classes.fullWidth }}
                       >
-                        <Select
-                          native
+                        <TextField
+                          SelectProps={{
+                            native: true,
+                          }}
+                          select
+                          variant="outlined"
                           label="Country"
-                          IconComponent={ExpandMoreIcon}
-                          className={classes.selectArea}
+                          className={`${classes.inputField}`}
                           value={countryName}
                           onChange={(e) => setCountryName(e.target.value)}
+                          onClick={handleCountries}
                         >
-                          {country.map((option, index) => (
-                            <option key={index} value={option.value}>
-                              {option.label}
+                          {countries.length === 0 && (
+                            <>
+                              countryName ? ( )
+                              <option value={countryName}>{countryName}</option>{" "}
+                              :<option value="Bangladesh">Bangladesh</option>
+                            </>
+                          )}
+                          {countries.map((option, index) => (
+                            <option key={index} value={option.country}>
+                              {option.country}
                             </option>
                           ))}
 
                           {/* {countries? (
                             countries?.map((country) => (
-                              <option key={country.id} value={country.id}>
-                                {country.name.common}
+                              <option key={country.index} value={country.country}>
+                                {country.country}
                               </option>
                             ))
                           ) : (
                             <option>Country</option>
                           )} */}
-                        </Select>
+                        </TextField>
                       </FormControl>
                     </div>
 
@@ -344,8 +369,7 @@ const AccountSettings = () => {
                           className={`${classes.inputField}`}
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                        >
-                        </TextField>
+                        ></TextField>
                       </FormControl>
 
                       <FormControl
@@ -420,50 +444,149 @@ const AccountSettings = () => {
                           value={payment}
                           onChange={(e) => setPayment(e.target.value)}
                           label="Name on Card"
-                          IconComponent={ExpandMoreIcon}
                           className={classes.selectArea}
                         >
                           <option value="Paypal">Paypal</option>
-                          <option value="Master Card">Master Card</option>
-                          <option value="Credit Card">Credit Card</option>
+                          <option value="Payoneer">Payoneer</option>
+                          <option value="Bank">Bank</option>
                         </Select>
                       </FormControl>
 
-                     
+                      {payment === "Paypal" && (
+                        <FormControl
+                          fullWidth
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            fullWidth
+                            variant="outlined"
+                            label="Paypal Email"
+                            name="paypalEmail"
+                            className={`${classes.inputField}`}
+                            value={paypalAccount}
+                            onChange={(e) => setPaypalAccount(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
+                      {payment === "Payoneer" && (
+                        <FormControl
+                          fullWidth
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            fullWidth
+                            variant="outlined"
+                            label="Payoneer Email"
+                            name="payoneerEmail"
+                            className={`${classes.inputField}`}
+                            value={paypalAccount}
+                            onChange={(e) => setPaypalAccount(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
+                      {payment === "Bank" && (
+                        <FormControl
+                          fullWidth
+                          classes={{ fullWidth: classes.fullWidth }}
+                        >
+                          <TextField
+                            id="name"
+                            label="Account Name"
+                            variant="outlined"
+                            className={`${classes.inputField}`}
+                            placeholder="Account Name"
+                            value={accountName}
+                            onChange={(e) => setAccountName(e.target.value)}
+                          />
+                        </FormControl>
+                      )}
                     </div>
-                    <div className={classes.fieldsGroup}>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                      >
-                        <TextField
-                          id="name"
-                          label="Expiration Date"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="Expiration Date"
-                        />
-                      </FormControl>
-                      <FormControl
-                        fullWidth
-                        classes={{ fullWidth: classes.fullWidth }}
-                        className={classes.inputImage}
-                      >
-                        <TextField
-                          type="number"
-                          id="username"
-                          label="CVC"
-                          variant="outlined"
-                          className={`${classes.inputField}`}
-                          placeholder="CVC"
-                        />
-                        <img
-                          className={classes.cvcIcon}
-                          src={cvcIcon}
-                          alt="CVC"
-                        />
-                      </FormControl>
-                    </div>
+
+                    {payment === "Bank" && (
+                      <div>
+                        <div className={classes.fieldsGroup}>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                            className={classes.inputImage}
+                          >
+                            <TextField
+                              type="number"
+                              id="accountNumber"
+                              label="Account Number"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Account Number"
+                              value={accountNumber}
+                              onChange={(e) => setAccountNumber(e.target.value)}
+                            />
+                          </FormControl>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="routingNumber"
+                              type="number"
+                              label="Routing Number"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Routing Number"
+                              value={routingNumber}
+                              onChange={(e) => setRoutingNumber(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                        <div className={classes.fieldsGroup}>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                            className={classes.inputImage}
+                          >
+                            <TextField
+                              type="number"
+                              id="swiftCode"
+                              label="Swift Code"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Swift Code"
+                              value={swiftCode}
+                              onChange={(e) => setSwiftCode(e.target.value)}
+                            />
+                          </FormControl>
+                          <FormControl
+                            fullWidth
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="branch"
+                              label="Branch"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Branch"
+                              value={branch}
+                              onChange={(e) => setBranch(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                        <div>
+                          <FormControl
+                            className={classes.bankCountryName}
+                            classes={{ fullWidth: classes.fullWidth }}
+                          >
+                            <TextField
+                              id="bankCountry"
+                              label="Bank Country"
+                              variant="outlined"
+                              className={`${classes.inputField}`}
+                              placeholder="Bank Country"
+                              value={bankCountry}
+                              onChange={(e) => setBankCountry(e.target.value)}
+                            />
+                          </FormControl>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
                 {/* Add payment method ends */}
