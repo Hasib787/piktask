@@ -18,16 +18,18 @@ import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
 import useStyles from "./EarningManagement.styles";
 import TabPanel from "./TabPanel";
+import WithdrawModal from "./WithdrawModal";
 
 const EarningManagement = () => {
   const refChart = useRef();
   const classes = useStyles();
   const user = useSelector((state) => state.user);
 
-  const [earningData, setEarningData] = useState(0);
   const [onClickEvent, setOnClickEvent] = useState(true);
   const [totalSummary, setTotalSummery] = useState({});
+  const [earningData, setEarningData] = useState(0);
   const [isLoading, setLoading] = useState(false);
+  const [openWithdrawModal, setWithdrawModal] = useState(false);
 
   const [chartData, setChartData] = useState({});
   const [selectName, setSelectName] = useState("earning");
@@ -49,9 +51,9 @@ const EarningManagement = () => {
     // Total earning summary API integration
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/contributor/earning/summary`, {
-          headers: { Authorization: user?.token },
-        })
+        .get(`${process.env.REACT_APP_API_URL}/contributor/earning/summary`, 
+          { headers: { Authorization: user?.token },}
+        )
         .then(({ data }) => {
           if (data?.status) {
             setTotalSummery(data?.summery);
@@ -296,6 +298,7 @@ const EarningManagement = () => {
           <div className={classes.earningManagementWrapper}>
             <div className={classes.headingWrapper}>
               <Heading tag="h2">Earning Management</Heading>
+              <Button className={classes.withdrawBtn} onClick={() => setWithdrawModal(true)}>Withdraw</Button>
             </div>
 
             <Grid container spacing={0}>
@@ -556,6 +559,10 @@ const EarningManagement = () => {
               </TabPanel>
             </div>
           </div>
+          <WithdrawModal 
+            openWithdrawModal={openWithdrawModal} 
+            setWithdrawModal={setWithdrawModal}
+          />
           <Footer />
         </main>
       </div>
