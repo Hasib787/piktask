@@ -259,7 +259,7 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/images/${authLastFile?.title.replace(/ /g, "_")}&id=${authLastFile?.id}`}>
+                              <Link to={`/images/${authLastFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${authLastFile?.id}`}>
                                 <img
                                   className={classes.earningImg}
                                   src={authLastFile?.preview}
@@ -328,7 +328,7 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/images/${topFile?.title.replace(/ /g, "_")}&id=${topFile?.id}`}>
+                              <Link to={`/images/${topFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${topFile?.id}`}>
                                 <img
                                   className={classes.earningImg}
                                   src={topFile?.thumbnail}
