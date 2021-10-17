@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   adminRoot: {
     // display: "flex",
   },
@@ -13,14 +19,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "10rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
   cardContentWrapper: {
+    marginTop: "10rem",
     margin: "2rem",
   },
   noItemsFound: {
@@ -48,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
   },
   cardImage: {
     padding: "0.4rem 0.4rem 0rem 0.4rem",
+    height: 150,
+    "& img": {
+      height: "100%",
+      width: "100%",
+      objectFit: "cover",
+    },
   },
   cardContent: {
     padding: "0rem",

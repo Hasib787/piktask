@@ -3,23 +3,6 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
     // display: "flex",
-    // marginTop: "8rem",
-    // [theme.breakpoints.up(1700)]: {
-    //   marginTop: "8rem",
-    //   margin: "0rem 10rem",
-    // },
-    // [theme.breakpoints.up(1900)]: {
-    //   marginTop: "8rem",
-    //   margin: "0rem 15rem",
-    // },
-    // [theme.breakpoints.up(2100)]: {
-    //   marginTop: "8rem",
-    //   margin: "0rem 30rem",
-    // },
-    // [theme.breakpoints.up(2560)]: {
-    //   marginTop: "8rem",
-    //   margin: "0rem 51rem",
-    // },
   },
   adminSidebar: {
     marginTop: "0rem",
@@ -29,16 +12,14 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     padding: 0,
-    // width: "100%",
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "10rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
   uploadContainer: {
+    marginTop: "10rem",
     margin: "2rem",
     [theme.breakpoints.down(769)]: {
       padding: "0rem 2rem",

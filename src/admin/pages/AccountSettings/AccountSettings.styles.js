@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import profileBanner from '../../../assets/banner/profile-banner.jpg';
+import profileBanner from "../../../assets/banner/profile-banner.jpg";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
@@ -14,14 +14,13 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "10rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
     },
   },
   profileContentWrapper: {
+    marginTop: "10rem",
     margin: "2rem",
   },
   noItemsFound: {
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsHero: {
     backgroundImage: `url(${profileBanner})`,
-
     backgroundPosition: "center center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -45,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 500,
       zIndex: 999,
     },
-
     "&::before": {
       background: "rgba(0, 28, 48, 0.6)",
       content: '""',
@@ -55,15 +52,10 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: "100%",
     },
-
-    // backgroundColor: "#114960",
-    
   },
-
   headingWrapper: {
     marginBottom: "3.5rem",
   },
-
   // Form
   seperator: {
     borderWidth: 0,
@@ -71,17 +63,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgb(112 112 112 / 38%)",
     width: "100%",
   },
-  // formWrapper: {
-  //     padding: " 1px 3rem",
-  //     // width: "calc(100vw - 315px)",
-  // },
-  // formInnerWrapper: {
-  //     marginLeft: "2rem",
-  //     marginRight: "2rem",
-  //     marginTop: "2rem",
-  //     backgroundColor: theme.palette.common.white,
-
-  // },
   settingsFormTitle: {
     color: "#114960",
     fontWeight: 700,
@@ -120,7 +101,6 @@ const useStyles = makeStyles((theme) => ({
       width: 0,
       height: 0,
     },
-
     "@media (max-width: 960px)": {
       width: "100%",
       flexDirection: "column",
@@ -166,9 +146,6 @@ const useStyles = makeStyles((theme) => ({
   cvcIcon: {
     width: "6rem",
   },
-  forgetPassword:{
-    
-  },
   passwordResetLink: {
     fontSize: 17,
     color: "#959595",
@@ -185,7 +162,6 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: "1rem",
     },
   },
-
   // Portfolio Links
   portfolioLink: {
     position: "relative",
@@ -206,7 +182,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     border: "1px solid rgba(0, 0, 0, 0.23)",
-
     "& img": {
       width: "2.5rem",
       height: "auto",
@@ -215,13 +190,11 @@ const useStyles = makeStyles((theme) => ({
   facebookIcon: {
     width: "1.6rem !important",
   },
-
   buttonGroup: {
     display: "flex",
     justifyContent: "flex-end",
   },
   settingsBtn: {
-    // ...theme.typography.button,
     padding: "1rem 2rem",
     color: theme.palette.common.white,
     fontSize: "1.4rem",
@@ -248,7 +221,6 @@ const useStyles = makeStyles((theme) => ({
       top: "5px",
     },
   },
-
   lastField: {
     "@media (max-width: 960px)": {
       marginBottom: "2rem !important",
