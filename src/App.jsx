@@ -99,6 +99,7 @@ const App = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
       .then(({ data }) => {
+        console.log("popular data",data);
         if (data?.status) {
           dispatch({
             type: "POPULAR_CATEGORIES",
