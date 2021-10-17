@@ -11,24 +11,24 @@ import {
 } from "@material-ui/core";
 import { CustomBtn, InputField } from "../../../components/InputField";
 import { Redirect, useHistory, useLocation } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import logoWhite from "../../../assets/logo-white.png";
 import lockIcon from "../../../assets/password.png";
-import React, { useEffect, useState } from "react";
 import Spacing from "../../../components/Spacing";
 import authImage from "../../../assets/auth.png";
-import CloseIcon from "@material-ui/icons/Close";
-import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import useStyles from "./SignUpModal.styles";
-import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../../database";
+import useStyles from "./SignUpModal.styles";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import jwt_decode from "jwt-decode";
-import axios from "axios";
+import CloseIcon from "@material-ui/icons/Close";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import GoogleLogin from "react-google-login";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
@@ -58,9 +58,12 @@ function a11yProps(index) {
 
 const SignUpModal = (props) => {
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { openAuthModal, setOpenAuthModal } = props;
   const user = useSelector((state) => state.user);
+  const { openAuthModal, setOpenAuthModal } = props;
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const [passwordValue, setPasswordValue] = useState(false);
   const [isRedirectTo, setRedirectTo] = useState(false);
@@ -79,11 +82,6 @@ const SignUpModal = (props) => {
   const handleShowHidePassword = () => {
     setPasswordValue((value) => !value);
   };
-
-  //Redirect to home page when user logs in
-  const history = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
 
   useEffect(() => {
     return () => {
@@ -122,6 +120,7 @@ const SignUpModal = (props) => {
           const token = res.data.token;
           localStorage.setItem("token", token);
           const decodedToken = jwt_decode(token.split(" ")[1]);
+          localStorage.setItem("profileImage", decodedToken.avatar);
 
           if (decodedToken.email) {
             dispatch({
@@ -241,9 +240,7 @@ const SignUpModal = (props) => {
           token: googleData.tokenId,
           role: "user"
         }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json",},
       }
     );
 
@@ -254,6 +251,7 @@ const SignUpModal = (props) => {
       const token = data.token;
       localStorage.setItem("token", token);
       const decodedToken = jwt_decode(token.split(" ")[1]);
+      localStorage.setItem("profileImage", decodedToken.avatar);
 
       if (decodedToken.email) {
         dispatch({
@@ -282,9 +280,7 @@ const SignUpModal = (props) => {
           token: facebookData.tokenId,
           role: "user"
         }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json",},
       }
     );
 
@@ -295,6 +291,7 @@ const SignUpModal = (props) => {
       const token = data.token;
       localStorage.setItem("token", token);
       const decodedToken = jwt_decode(token.split(" ")[1]);
+      localStorage.setItem("profileImage", decodedToken.avatar);
 
       if (decodedToken.email) {
         dispatch({
@@ -323,7 +320,6 @@ const SignUpModal = (props) => {
         aria-describedby="authentication-dialog"
         style={{ backgroundColor: "rgb(20 51 64 / 77%)" }}
         className={classes.dialogModal}
-        // maxWidth="sm"
       >
         <DialogContent style={{ padding: 0, overflow: "hidden" }}>
           <Grid container spacing={3}>

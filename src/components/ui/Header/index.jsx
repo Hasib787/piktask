@@ -28,7 +28,7 @@ const customStyles = makeStyles({
     display: "flex",
     justifyContent: "space-between",
 
-    "@media (max-width: 425px)": {
+    "@media (max-width: 577px)": {
       marginTop: 5,
     },
   },

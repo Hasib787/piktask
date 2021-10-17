@@ -303,7 +303,7 @@ const HeroSection = (props) => {
                     ref={recentButtonRef}
                     className={classes.recentButton}
                     component={Link}
-                    to="/images/recent_images"
+                    to={"/recentImage/recent-images"}
                   >
                     Recent
                   </Button>

@@ -45,9 +45,7 @@ const AuthorProfile = () => {
               axios
                 .get(
                   `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.profile.id}`,
-                  {
-                    headers: { Authorization: user.token },
-                  }
+                  { headers: { Authorization: user.token }}
                 )
                 .then((response) => {
                   if (response.data.status) {
@@ -80,9 +78,7 @@ const AuthorProfile = () => {
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${profileInfo?.id}`,
           {},
-          {
-            headers: { Authorization: user.token },
-          }
+          { headers: { Authorization: user.token }}
         )
         .then((response) => {
           if (response?.status === 200) {
@@ -93,8 +89,6 @@ const AuthorProfile = () => {
       toast.error("You can't follow yourself");
     }
   };
-
-  console.log("profileInfo", profileInfo?.id);
 
   return (
     <Layout title={`${profileInfo?.username} | Piktask`}>

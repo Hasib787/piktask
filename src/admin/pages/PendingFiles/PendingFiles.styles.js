@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "6rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
@@ -22,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dashboardGridContainer: {
     // padding: "1.5rem 1rem 1rem 1rem",
+    marginTop: "6rem",
     padding: "2rem",
   },
   headingWrapper: {

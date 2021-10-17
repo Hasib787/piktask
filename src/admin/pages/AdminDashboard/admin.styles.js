@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     padding: 0,
     marginLeft: "28rem",
-    marginRight: "0rem",
-    marginTop: "8rem",
     [theme.breakpoints.down(769)]: {
       width: "100%",
       marginLeft: "0rem",
@@ -28,16 +26,15 @@ const useStyles = makeStyles((theme) => ({
   },
   dashboardGridContainer: {
     padding: "1.5rem 1rem 0rem 1rem",
+    marginTop: "8rem",
   },
   totalStatus: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    // marginBottom: "1.5rem",
     margin: "0rem 1rem",
-
     "& h2": {
-      fontSize: "1.8rem"
+      fontSize: "1.8rem",
     },
   },
   cardHeading: {
@@ -47,12 +44,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem 0rem",
 
     "& h2": {
-      fontSize: "1.8rem"
+      fontSize: "1.8rem",
     },
   },
-  // statistics: {
-  //   fontSize: "2.5rem",
-  // },
   loadMoreBtn: {
     ...theme.typography.button,
     padding: ".2rem 1.5rem",
@@ -67,19 +61,6 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-  // statisticCardContent: {
-  //   height: "100%",
-  //   display: "flex",
-  //   flexDirection: "column",
-  // },
-  // statisticsInnerWrapper: {
-  //   display: "flex",
-  //   alignItems: "flex-end",
-  //   justifyContent: "space-between",
-  //   flexWrap: "wrap",
-  //   marginBottom: ".5rem",
-  //   height: "100%",
-  // },
   statisticsContent: {
     textAlign: "center",
     margin: "1rem",
@@ -92,9 +73,7 @@ const useStyles = makeStyles((theme) => ({
         transition: "all 0.5s linear",
       },
     },
-    
   },
-
   statisticsIcon: {
     borderRadius: "100%",
     width: "4rem",
@@ -103,12 +82,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     marginRight: "1.5rem",
-
     "& img": {
       width: "2rem",
       height: "2rem",
     },
-
     "@media (max-width: 1170px)": {
       width: "5rem",
       height: "5rem",
@@ -137,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.4rem",
       display: "block",
       marginTop: ".7rem",
-      fontWeight: "400"
+      fontWeight: "400",
     },
     "@media (max-width: 1170px)": {
       fontSize: "2.2rem",
@@ -191,7 +168,6 @@ const useStyles = makeStyles((theme) => ({
       color: "#FD0000",
     },
   },
-
   // Table
   tableContainer: {
     border: 0,
@@ -200,7 +176,6 @@ const useStyles = makeStyles((theme) => ({
   },
   earningImg: {
     width: "10rem",
-    // position: "relative"
   },
   tableHead: {
     backgroundColor: "#ECEEF5",
@@ -212,7 +187,6 @@ const useStyles = makeStyles((theme) => ({
     "& td": {
       borderColor: "#E3E3E3",
     },
-
     "&:last-child td": {
       border: 0,
     },
@@ -221,7 +195,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem",
     fontSize: "1.6rem",
     textAlign: "center",
-
     "& svg": {
       marginBottom: "-0.19rem",
     },
@@ -309,7 +282,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontSize: "1.6rem",
   },
-
   // Top Selling Author
   topAuthorTableHead: {
     boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
@@ -317,7 +289,6 @@ const useStyles = makeStyles((theme) => ({
   },
   authorImgWrapper: {
     position: "relative",
-
     "& img": {
       marginBottom: 0,
     },
@@ -341,7 +312,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.8rem",
     marginBottom: "2rem",
   },
-
   earningGraph: {
     position: "relative",
     marginTop: "2rem",
@@ -364,7 +334,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
-
   mapCard: {
     height: "100%",
     display: "flex",
@@ -376,13 +345,11 @@ const useStyles = makeStyles((theme) => ({
   },
   headingButton: {
     ...theme.typography.button,
-    // backgroundColor: "rgba(0, 0, 0, 0.04)",
     padding: "0.4rem 1rem",
     fontSize: "1.3rem",
     fontWeight: 500,
     color: "#1B3F4E",
     transition: "all 0.3s linear",
-
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
       color: "#fff",
