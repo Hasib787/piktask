@@ -3,6 +3,17 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   inputField: {
     marginBottom: "2rem",
+    "& .MuiInputLabel-outlined": {
+      zIndex: 1,
+      transform: "translate(14px, 13px) scale(1)",
+      pointerEvents: "none",
+    },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(14px, -6px) scale(0.75)",
+    },
+    "& .MuiOutlinedInput-input": {
+      padding: "11px 14px",
+    },
   },
   primaryBtn: {
     paddingTop: ".6rem",
@@ -10,13 +21,14 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
   },
   authBtn: {
-    backgroundColor: "#117A00",
-    padding: "12px 16px",
+    // backgroundColor: "#117A00",
+    backgroundColor: "#0088f2",
+    padding: "6px 16px",
     color: theme.palette.common.white,
-    fontSize: "1.8rem",
+    fontSize: "1.6rem",
 
     "&:hover": {
-      backgroundColor: "#146b06",
+      backgroundColor: "#0773c5",
     },
   },
 }));

@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
     transition: "box-shadow 0.3s linear",
 
     "&:hover": {
-      boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+      // boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+      boxShadow: "0 0px 10px rgb(0 0 0 / 6%)",
     },
 
     "&:focus-visible": {
@@ -28,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
   searchLeft: {
     display: "flex",
+
+    "& h2": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
   thumbnail: {
     width: 60,

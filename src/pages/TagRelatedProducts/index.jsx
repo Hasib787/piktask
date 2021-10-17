@@ -1,19 +1,18 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import heroBanner from "../../assets/banner/banner-tag-page.png";
-import Spacing from "../../components/Spacing";
+// import TagButtons from "../../components/ui/TagButtons/index";
 import CallToAction from "../../components/ui/CallToAction";
+import Product from "../../components/ui/Products/Product";
+import useStyles from "./TagRelatedProducts.style";
+import HeroSection from "../../components/ui/Hero";
+import React, { useEffect, useState } from "react";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
-import Products from "../../components/ui/Products";
-import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons/index";
+import { useParams } from "react-router";
 import Layout from "../../Layout";
-// import TagButtons from "../../components/ui/TagButtons";
-import useStyles from "./TagRelatedProducts.style";
+import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
+import Loader from "../../components/ui/Loader";
+import Spacing from "../../components/Spacing";
 
 const TagTemplate = () => {
   const classes = useStyles();
@@ -22,6 +21,7 @@ const TagTemplate = () => {
   const [tagRelatedProducts, setTagRelatedProducts] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/client/search/?tag=${tagName}`)
       .then(({ data }) => {
@@ -31,31 +31,19 @@ const TagTemplate = () => {
         }
       })
       .catch((error) => console.log(" Related Tag Image error: ", error));
-  }, []);
+  }, [tagName]);
 
   return (
-    <Layout 
-      title={`${tagName}-Piktask`}
-      description={`${tagName}-Piktask`}
-    >
+    <Layout title={`${tagName} | Piktask`} description={`${tagName} | Piktask`}>
       <Header />
-      <HeroSection
-        background={heroBanner}
-        size="medium"
-      />
-        
-      {/* <div className={classes.tagWrapper}>
-        <Container>
-          <TagButtons />
-        </Container>
-      </div> */}
+      <HeroSection size="medium" />
       <Container>
         <Typography className={classes.totalResources} variant="h4">
           {`${tagRelatedProducts.length} Resources for "${tagName}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader/>
           ) : (
             <>
               {tagRelatedProducts.length ? (
@@ -72,14 +60,14 @@ const TagTemplate = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound />
               )}
             </>
           )}
         </Grid>
       </Container>
+
+      <Spacing space= {{height:"5rem"}} />
 
       <CallToAction
         title="Join Designhill designer team"

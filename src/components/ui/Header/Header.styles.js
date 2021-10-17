@@ -3,11 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   headerBottom: {
     "& > .MuiAppBar-colorPrimary": {
-      background: "#143340",
+      // background: "#143340",
+      background: "#001c30",
       height: 70,
     },
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       height: 60,
     },
   },
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
       },
     },
-    "@media (max-width: 425px)": {
+    "@media (max-width: 426px)": {
       width: "10rem",
 
       "& img": {
@@ -47,6 +48,44 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  headerLogo: {
+    width: 153,
+    marginRight: "2rem",
+    padding: 0,
+    "& .MuiButton-label": {
+      justifyContent: "flex-start",
+    },
+    "&:hover": {
+      background: "transparent",
+    },
+
+    "@media (max-width: 1024px)": {
+      width: "14rem",
+
+      "& img": {
+        width: "100%",
+        marginTop: "0.6rem",
+      },
+    },
+    "@media (max-width: 577px)": {
+      width: "11rem",
+
+      "& img": {
+        width: "100%",
+        marginTop: "1rem",
+      },
+    },
+
+    [theme.breakpoints.down(325)]: {
+      width: "9rem",
+      
+      "& img": {
+        width: "100%",
+        marginTop: "1.4rem",
+        
+      },
+    },
+  },
   logo: {
     width: "10.5rem",
     display: "block",
@@ -60,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  menuWrapper: {
+  wrapperMenu: {
     width: "30rem",
     flexDirection: "column",
   },
@@ -69,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
       background: "transparent",
     },
   },
-  mobileTabWrapper: {},
   navItems: {
     width: "100%",
 
@@ -101,6 +139,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingTop: "0.4rem",
+
+    [theme.breakpoints.down(426)]: {
+      paddingTop: "0.8rem",
+    },
   },
 
   loginBtn: {
@@ -109,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     marginRight: "16px",
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       fontSize: "13px",
       marginRight: "8px",
     },
@@ -122,13 +165,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "16px",
     padding: "0px 14px",
 
-    [theme.breakpoints.down(425)]: {
+    [theme.breakpoints.down(426)]: {
       fontSize: "13px",
-      marginRight: "8px",
       padding: "0px 8px",
     },
+    [theme.breakpoints.down(325)]: {
+      fontSize: "10px",
+      padding: "0px 8px",
+      marginRight: "10px",
+    },
   },
-
   userAvatarArea: {
     cursor: "pointer",
     display: "flex",
@@ -142,6 +188,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     right: "-0.6rem",
     color: "#FB5252",
+
+    [theme.breakpoints.down(770)]: {
+      width: "4rem",
+      height: "4rem",
+    },
   },
   arrowDown: {
     fontSize: "5rem",

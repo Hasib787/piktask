@@ -8,17 +8,18 @@ const useStyles = makeStyles((theme) => ({
      },
   },
   appbarHeader: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     boxShadow: "none",
   },
-  fullwidth: {
+  fullWidth: {
     width: "100%",
-    height: "8rem",
-    // backgroundColor: "#1B3F4E",
+    height: "7rem",
+    backgroundColor: "#fff",
+    boxShadow: "0 8px 12px 3px rgb(0 0 0 / 6%)",
   },
   root: {
     height: "100%",
-    paddingTop: "1.5rem",
+    paddingTop: "1rem",
   },
   container: {
     height: "100%",
@@ -30,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   adminLogo: {
-    width: "13rem",
+    width: "15rem",
+    marginTop: "0.6rem",
   },
   logo: {
     width: "10rem",
@@ -41,6 +43,19 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginLeft: "auto",
   },
+  notificationIcon: {
+    height: "4rem",
+    width: "4rem",
+    borderRadius: "100%",
+    backgroundColor: "#f1f1f1",
+    marginRight: "1rem",
+    cursor: "pointer",
+    "& svg": {
+      color: "#0088f2",
+      margin: "0.5rem 0.6rem",
+      fontSize: "2.8rem",
+    },
+  },
   earningAmount: {
     fontSize: "1.8rem",
     fontWeight: 500,
@@ -49,15 +64,16 @@ const useStyles = makeStyles((theme) => ({
   },
   uploadBtn: {
     ...theme.typography.button,
-    backgroundColor: "#117A00",
+    backgroundColor: "#0088f2",
     padding: "0.5rem 1.4rem",
+    marginLeft: "28rem",
     marginRight: "2rem",
     fontSize: "1.4rem",
     border: "2px solid",
     borderColor: "transparent",
-
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor:"#2b5d21",
+      backgroundColor:"#0773c5",
     },
     [theme.breakpoints.down(769)]: {
       display: "none",
@@ -81,13 +97,12 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   adminPhoto: {
-    width: "4.8rem",
-    height: "4.8rem",
+    width: "4rem",
+    height: "4rem",
     borderRadius: "100%",
-    marginRight: "1.5rem",
   },
   userName: {
-    paddingLeft: "1.5rem",
+    paddingLeft: "1rem",
     fontSize: "1.8rem",
     fontWeight: 500,
     color: "#1B3F4E", 

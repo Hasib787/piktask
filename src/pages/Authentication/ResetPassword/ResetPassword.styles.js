@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
     backgroundColor: theme.palette.common.white,
+    width: "55rem",
     borderRadius: 4,
+    flexBasis: "40%",
+    [theme.breakpoints.down(480)]: {
+      width: "30rem",
+    },
   },
   cardHeadingWrapper: {
     textAlign: "center",

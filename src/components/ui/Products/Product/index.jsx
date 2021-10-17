@@ -8,12 +8,13 @@ import {
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+// import crownIcon from "../../../../assets/icons/crown.svg";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import downloadIcon from "../../../../assets/download.svg";
-import crownIcon from "../../../../assets/icons/crown.svg";
+import { getWords } from "../../../../helpers";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import {
   ButtonWrapper,
@@ -22,37 +23,19 @@ import {
   useStyles,
 } from "./Product.styles";
 
-const Product = ({ photo }) => {
+const Product = ({ photo = null }) => {
   const classes = useStyles();
   const likeRef = useRef();
   const user = useSelector((state) => state.user);
+
+  const title = photo?.title;
+  const titleLength = title?.split(" ");
+
+  const [likeCount, setLikeCount] = useState(photo?.total_likes);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [isLike, setLike] = useState(false);
-  const [likeCount, setLikeCount] = useState(photo?.total_likes);
 
-  useEffect(() => {
-    if (user?.token) {
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/images/${photo?.image_id}/like_status`,
-          {
-            headers: { Authorization: user.token },
-          }
-        )
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
-    }
-  }, [photo?.image_id, user.token]);
-
-  const handleClick = () => {
+  const handleLikeBtn = () => {
     if (!user.token) {
       setOpenAuthModal(true);
     } else if (user.id !== photo?.user_id && user.token) {
@@ -78,11 +61,21 @@ const Product = ({ photo }) => {
     }
   };
 
+  function pikTaskEncodeURI(data) {
+    if (data) {
+      // `/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`;
+
+      return encodeURI(
+        `/images/${data?.title.replace(/ /g, "_")}&id=${data?.image_id}`
+      );
+    }
+  }
+
   return (
     <>
       <CardWrapper className={classes.container}>
         <div className={classes.buttonsWrapper}>
-          {photo?.item_for_sale === "sale" && (
+          {/* {photo?.item_for_sale === "sale" && (
             <IconButton
               disableRipple
               classes={{ root: classes.premiumIcon }}
@@ -93,14 +86,14 @@ const Product = ({ photo }) => {
             >
               <img src={crownIcon} alt="Premium" />
             </IconButton>
-          )}
+          )} */}
 
-          {!isLike ? (
+          {!photo?.isLike && !isLike ? (
             <IconButton
               ref={likeRef}
               classes={{ root: classes.favouriteIcon }}
               className={classes.iconBtn}
-              onClick={handleClick}
+              onClick={handleLikeBtn}
             >
               <FavoriteBorderIcon fontSize={"large"} />
             </IconButton>
@@ -109,38 +102,58 @@ const Product = ({ photo }) => {
               ref={likeRef}
               classes={{ root: classes.favouriteIconBtn }}
               className={classes.iconBtn}
-              onClick={handleClick}
+              onClick={handleLikeBtn}
             >
               <FavoriteBorderIcon fontSize={"large"} />
             </IconButton>
           )}
         </div>
 
-        <div className={classes.itemContainer}>
-          <Link
-            className={classes.singlePageLink}
-            to={`/photo/${photo?.image_id}`}
-          />
-          <Link to={`/photo/${photo?.image_id}`}>
-            <img className={classes.image} src={photo?.thumbnail} alt="" />
-          </Link>
-        </div>
+        {photo?.extension === "png" ? (
+          <div className={classes.itemTransparent}>
+            <Link to={pikTaskEncodeURI(photo)}>
+              <img
+                className={classes.image}
+                src={encodeURI(photo?.preview)}
+                alt=""
+              />
+            </Link>
+          </div>
+        ) : (
+          <div className={classes.itemContainer}>
+            <Link to={pikTaskEncodeURI(photo)}>
+              <img
+                className={classes.image}
+                src={encodeURI(photo?.preview)}
+                alt=""
+              />
+            </Link>
+          </div>
+        )}
 
         <div className={classes.itemFooter}>
           <CardContent className={classes.productTitle}>
             <Link
               className={classes.titleLink}
-              to={`/photo/${photo?.image_id}`}
+              to={pikTaskEncodeURI(photo)}
+              title={photo.title}
             >
               <Typography variant="h2" className={classes.title}>
-                {photo?.title}
+                {titleLength?.length > 7 ? (
+                  <>{getWords(6, photo?.title)}...</>
+                ) : (
+                  <>{photo?.title}</>
+                )}
               </Typography>
             </Link>
           </CardContent>
 
           <CardContent className={classes.cardFooter}>
             <CardFooter className={classes.cardAuthorInfo}>
-              <Link to={`/${photo?.username}`} className={classes.avatar}>
+              <Link
+                to={`/author/${photo?.username}`}
+                className={classes.avatar}
+              >
                 {photo?.avatar ? (
                   <CardMedia
                     component="img"
@@ -170,16 +183,14 @@ const Product = ({ photo }) => {
                 alt="Total Download"
               />
               {photo?.total_download}
-              <FavoriteBorderIcon className={classes.heartIcon} />{" "}
-              {/* {photo?.total_likes} */}
-              {likeCount}
+              <FavoriteBorderIcon className={classes.heartIcon} /> {likeCount}
             </Typography>
 
             <ButtonWrapper>
               <Button
                 className={classes.categoryButton}
                 component={Link}
-                to={`/photo/${photo?.image_id}`}
+                to={pikTaskEncodeURI(photo)}
               >
                 Download
               </Button>

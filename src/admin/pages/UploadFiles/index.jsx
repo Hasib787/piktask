@@ -3,7 +3,6 @@ import {
   faExclamationTriangle,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   FormControl,
@@ -12,19 +11,20 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import Spacing from "../../../components/Spacing";
 import Footer from "../../../components/ui/Footer";
-import Layout from "../../../Layout";
+import Spacing from "../../../components/Spacing";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
+import { useHistory } from "react-router-dom";
 import useStyles from "./UploadFiles.styles";
+import { useDropzone } from "react-dropzone";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Layout from "../../../Layout";
+import axios from "axios";
 
 const ItemForSale = [
   { value: "free", label: "Free" },
@@ -68,27 +68,27 @@ const img = {
 };
 
 const UploadFiles = () => {
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
   const classes = useStyles();
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
 
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState(1);
   const [item_for_sale, setItem_for_sale] = useState("free");
-  const [price, setPrice] = useState("0");
-  const [imageFileSrc, setImageFileSrc] = useState("");
   const [archivedFileSrc, setArchivedFileSrc] = useState("");
-  const [usages, setUsages] = useState("free");
   const [typeOfImage, setTypeOfImage] = useState("image");
+  const [categoryItems, setcategoryItems] = useState([]);
+  const [imageFileSrc, setImageFileSrc] = useState("");
   const [description, setDescription] = useState("");
   const [imageError, setImageError] = useState("");
-  const [categoryItems, setcategoryItems] = useState([]);
+  const [usages, setUsages] = useState("free");
+  const [category, setCategory] = useState(1);
+  const [price, setPrice] = useState("0");
+  const [title, setTitle] = useState("");
 
-  const [isLoading, setLoading] = useState(false);
-  const [titleError, setTitleError] = useState(false);
-  const [itemSale, setItemSale] = useState(false);
-  const [isImageFile, setImageFile] = useState(true);
   const [isArchivedFile, setArchivedFile] = useState(true);
+  const [titleError, setTitleError] = useState(false);
+  const [isImageFile, setImageFile] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+  const [itemSale, setItemSale] = useState(false);
 
   //for tag element
   const [tags, setTags] = useState([]);
@@ -155,13 +155,10 @@ const UploadFiles = () => {
 
   const addTags = (event) => {
     event.preventDefault();
-    if (
-      event.target.value !== " " &&
-      tags.length < 10 &&
-      event.target.value !== "  " &&
-      event.target.value !== ","
-    ) {
-      setTags([...tags, event.target.value]);
+    let tag = event.target.value;
+    tag = tag.split(",")[0].trim();
+    if (tag.length && tags.length < 10) {
+      setTags([...tags, tag]);
       event.target.value = "";
     }
     if (tags.length > 9) {
@@ -176,7 +173,6 @@ const UploadFiles = () => {
   const handleUsagesChange = (event) => {
     setUsages(event.target.value);
   };
-
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
@@ -184,7 +180,7 @@ const UploadFiles = () => {
   const loadCategories = (e) => {
     if (categoryItems.length === 0) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories`)
+        .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
         .then(({ data }) => {
           if (data?.status) {
             const sortedData = data?.categories.sort((a, b) => a.id - b.id);
@@ -225,8 +221,8 @@ const UploadFiles = () => {
   const handleArchivedFile = (e) => {
     const archivedFile = e.target.files[0];
 
-    if (!archivedFile?.name?.match(/\.(zip|rar)$/)) {
-      toast.error("You can only upload .zip, .rar etc");
+    if (!archivedFile?.name?.match(/\.(zip|ai|eps|psd|svg)$/)) {
+      toast.error("You can only upload .ai, .eps, .psd, .svg, .zip, .rar");
       setArchivedFile(false);
       return;
     } else {
@@ -240,7 +236,7 @@ const UploadFiles = () => {
     setLoading(true);
     setTitleError(false);
 
-    if (!user.token) {
+    if (!user?.token) {
       toast.error("You have no authorizatoin");
       return;
     }
@@ -272,7 +268,7 @@ const UploadFiles = () => {
       setLoading(false);
       return;
     } else if (!isArchivedFile) {
-      toast.error("The file format should be .zip or .rar etc");
+      toast.error("The file format should be .zip");
       setLoading(false);
       return;
     }
@@ -300,20 +296,23 @@ const UploadFiles = () => {
     formData.append("usages", usages);
     formData.append("description", description);
     formData.append("preview", thumbImage);
-    formData.append("original_file", imageFileSrc);
-
+    if (typeOfImage === "image") {
+      formData.append("original_file", imageFileSrc);
+    } else if (typeOfImage === "zip") {
+      formData.append("isZip", true);
+      formData.append("zip_folder", archivedFileSrc);
+    }
     const url = `${process.env.REACT_APP_API_URL}/images/upload`;
     axios({
       method: "post",
       url,
       data: formData,
       headers: {
-        Authorization: user.token,
+        Authorization: user?.token,
         "Content-Type": "multipart/form-data",
       },
     })
       .then((res) => {
-        console.log("res", res);
         if (res?.status === 200) {
           toast.success(res.data.message);
           setLoading(false);
@@ -325,8 +324,7 @@ const UploadFiles = () => {
           setUsages("");
           setItem_for_sale("");
           setFiles([]);
-          setImageFileSrc("");
-
+          setTypeOfImage("");
         }
         if (res?.status === 401) {
           localStorage.removeItem("token");
@@ -336,19 +334,21 @@ const UploadFiles = () => {
         }
       })
       .catch((error) => {
-        console.log("File uploading error", error.response);
-        toast.error(error?.response?.data?.errors?.image);
+        const { errors } = error.response.data;
+        for (let key in errors) {
+          toast.error(errors[key]);
+        }
         setLoading(false);
       });
   };
 
   return (
-    <Layout>
-      <AdminHeader />
+    <Layout title={`Upload || Piktask`}>
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
+          <AdminHeader />
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className={classes.uploadContainer}>
               <div className={classes.basicInfo}>
@@ -478,11 +478,11 @@ const UploadFiles = () => {
                       id="tags"
                       className={classes.input}
                       type="text"
-                      onKeyUp={(event) =>
-                        event.code === "Space" || event.key === ","
-                          ? addTags(event)
-                          : null
-                      }
+                      onKeyDown={(event) => {
+                        if ( event.key === ",") {
+                          addTags(event);
+                        }
+                      }}
                       placeholder="Add Tag"
                     />
                   </div>
@@ -604,6 +604,7 @@ const UploadFiles = () => {
                   >
                     <div className={classes.uploadIconImage}>
                       <input
+                        className={classes.inputFile}
                         id="image"
                         name="image"
                         type="file"
@@ -632,17 +633,18 @@ const UploadFiles = () => {
                   >
                     <div className={classes.uploadIconImage}>
                       <input
+                        className={classes.inputFile}
                         id="zipFolder"
                         name="zipFolder"
                         type="file"
-                        accept=".zip, .rar"
+                        accept=".ai, .eps, .psd, .svg, .zip, .rar"
                         onChange={handleArchivedFile}
                       />
 
                       <FontAwesomeIcon icon={faCloudUploadAlt} />
 
                       <p className={classes.selectFileText}>
-                        Select a file (AI,EPS,PSD,SVG)
+                        Select a file (AI,EPS,PSD,SVG,ZIP)
                       </p>
                     </div>
                   </label>
@@ -672,14 +674,14 @@ const UploadFiles = () => {
                     icon={faCloudUploadAlt}
                     className={classes.uploadIcon}
                   />
-                  {isLoading ? "Submitting..." : "Submit"}
+                  {isLoading ? "Uploadting..." : "Upload"}
                 </Button>
               </div>
             </div>
           </form>
+          <Footer />
         </main>
       </div>
-      <Footer addminFooter />
     </Layout>
   );
 };

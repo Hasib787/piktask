@@ -25,32 +25,32 @@ const MobileSidebarMenu = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   useEffect(() => {
-    if (window.location.pathname === "/admin/dashboard" && value !== 0) {
+    if (window.location.pathname === "/contributor/dashboard" && value !== 0) {
       setValue(0);
-    } else if (window.location.pathname === "/admin/upload" && value !== 1) {
+    } else if (window.location.pathname === "/contributor/upload" && value !== 1) {
       setOpen(true);
       setValue(1);
       setSelectedItem(1);
-    } else if (window.location.pathname === "/admin/pending" && value !== 2) {
+    } else if (window.location.pathname === "/contributor/pending" && value !== 2) {
       setValue(1);
       setSelectedItem(2);
-    } else if (window.location.pathname === "/admin/revision" && value !== 3) {
+    } else if (window.location.pathname === "/contributor/revision" && value !== 3) {
       setOpen(true);
       setValue(1);
       setSelectedItem(3);
-    } else if (window.location.pathname === "/admin/reject" && value !== 4) {
+    } else if (window.location.pathname === "/contributor/reject" && value !== 4) {
       setOpen(true);
       setValue(1);
       setSelectedItem(4);
-    } else if (window.location.pathname === "/admin/publish" && value !== 5) {
+    } else if (window.location.pathname === "/contributor/publish" && value !== 5) {
       setOpen(true);
       setValue(1);
       setSelectedItem(5);
-    } else if (window.location.pathname === "/admin/earnings" && value !== 6) {
+    } else if (window.location.pathname === "/contributor/earnings" && value !== 6) {
       setValue(6);
     } else if (window.location.pathname === "/admin/plan" && value !== 7) {
       setValue(7);
-    } else if (window.location.pathname === "/admin/guidline" && value !== 8) {
+    } else if (window.location.pathname === "/contributor/guidLine" && value !== 8) {
       setValue(8);
     }
   }, [value]);
@@ -75,7 +75,7 @@ const MobileSidebarMenu = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/dashboard"
+          to="/contributor/dashboard"
           selected={value === 0}
         >
           <ListItemText primary="Dashboard" />
@@ -88,7 +88,7 @@ const MobileSidebarMenu = () => {
           className={classes.dropdownMenu}
           onClick={handleClick}
           component={Link}
-          to="/admin/upload"
+          to="/contributor/upload"
           selected={value === 1}
         >
           <ListItemText primary="Upload File" />
@@ -111,7 +111,7 @@ const MobileSidebarMenu = () => {
             </ListItem> */}
             <ListItem
               component={Link}
-              to="/admin/revision"
+              to="/contributor/revision"
               className={classes.nested}
               selected={value === 1 && selectedItem === 3}
             >
@@ -119,7 +119,7 @@ const MobileSidebarMenu = () => {
             </ListItem>
             <ListItem
               component={Link}
-              to="/admin/reject"
+              to="/contributor/reject"
               className={classes.nested}
               selected={value === 1 && selectedItem === 4}
             >
@@ -127,7 +127,7 @@ const MobileSidebarMenu = () => {
             </ListItem>
             <ListItem
               component={Link}
-              to="/admin/publish"
+              to="/contributor/publish"
               className={classes.nested}
               selected={value === 1 && selectedItem === 5}
             >
@@ -143,7 +143,7 @@ const MobileSidebarMenu = () => {
           }}
           onClick={handleClick}
           component={Link}
-          to="/admin/earnings"
+          to="/contributor/earnings"
           selected={value === 6}
         >
           <ListItemText primary="Earning Management" />
@@ -167,7 +167,7 @@ const MobileSidebarMenu = () => {
           }}
           onClick={handleClick}
           component={Link}
-          to="/admin/guidline"
+          to="/contributor/guidLine"
           selected={value === 8}
         >
           <ListItemText primary="Guidline" />

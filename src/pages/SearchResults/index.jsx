@@ -1,30 +1,31 @@
 import { Container, Grid, Typography } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import heroBanner from "../../assets/banner/banner-single-page.png";
 import CallToAction from "../../components/ui/CallToAction";
-import Footer from "../../components/ui/Footer";
-import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
 import Product from "../../components/ui/Products/Product";
-import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
+import React, { useEffect, useState } from "react";
+import HeroSection from "../../components/ui/Hero";
+import Header from "../../components/ui/Header";
+import Loader from "../../components/ui/Loader";
+import Footer from "../../components/ui/Footer";
+import { useLocation } from "react-router-dom";
 import useStyles from "./SearchResults.styles";
+import { useSelector } from "react-redux";
+import Layout from "../../Layout";
+import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
 
 const SearchResults = () => {
-  const { pathname } = useLocation();
-  const history = useHistory();
   const classes = useStyles();
+  const { pathname } = useLocation();
   const user = useSelector((state) => state.user);
 
-  const [isLoading, setLoading] = useState(false);
-  const [searchCategoryID, setSearchCategoryID] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
-  const keywords = pathname.split("=").pop();
+  const searchQuery = pathname.split("=");
+  const keywords = searchQuery[1];
+  const searchCategoryID = searchQuery[3];
 
   const prepareSearchQuery = () => {
     let url;
@@ -40,16 +41,16 @@ const SearchResults = () => {
   useEffect(() => {
     const URL = prepareSearchQuery();
     axios
-      .get(URL)
-      .then(({ data }) => {
-        if (data?.status) {
-          setSearchResults(data.results);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .get(URL)
+    .then(({ data }) => {
+      if (data?.status) {
+        setSearchResults(data.results);
+        setLoading(false);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }, [pathname]);
 
   const handleJoinUsButton = () => {
@@ -62,7 +63,6 @@ const SearchResults = () => {
     <Layout title={`${keywords} | Piktask`}>
       <Header></Header>
       <HeroSection
-        background={heroBanner}
         size="large"
         popularKeywords
         title="Graphic Resources for Free Download"
@@ -70,12 +70,11 @@ const SearchResults = () => {
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          {searchResults.length &&
-            `${searchResults.length} Resources for "${keywords}"`}
+          {`${searchResults.length} Resources for "${keywords}"`}
         </Typography>
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader />
           ) : (
             <>
               {searchResults.length ? (
@@ -92,9 +91,7 @@ const SearchResults = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">
-                  Sorry, no products found
-                </Typography>
+                <ProductNotFound keywords={keywords}/>
               )}
             </>
           )}

@@ -7,9 +7,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
@@ -21,6 +22,20 @@ const RejectFiles = () => {
   const [products, setProducts] = useState(productData.products);
   const [rejectMessage, setRejectMessage] = useState();
 
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
+
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
+
   const handleClick = (product) => {
     // Run  when the reject status is true
     if (product?.reject?.status) {
@@ -30,39 +45,44 @@ const RejectFiles = () => {
   };
 
   return (
-    <>
-      <AdminHeader />
+    <Layout title={"RejectFiles || Piktask"}>
 
       <div className={classes.adminRoot}>
-        <Sidebar />
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
-          <div className={classes.headingWrapepr}>
-            <Heading tag="h2">Reject Files</Heading>
-          </div>
+          <AdminHeader />
+          <div className={classes.rejectFilesWrapper}>
+            <div className={classes.headingWrapepr}>
+              <Heading tag="h2">Reject Files</Heading>
+            </div>
 
-          <Grid container spacing={4}>
-            {products.length > 0 ? (
-              products.map((product) => (
-                <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
-                  <Card
-                    className={classes.cardWrapper}
-                    onClick={() => handleClick(product)}
-                  >
-                    <img src={product.image} alt={product.name} />
-                    <CardContent>
-                      <Typography variant="h3">{product.name}</Typography>
-                      <Typography variant="subtitle1">Reject File</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-              <div className={classes.noItemsFound}>
-                <Typography>No products are in pending</Typography>
-              </div>
-            )}
-          </Grid>
+            <Grid container spacing={2}>
+              {products.length > 0 ? (
+                products.map((product) => (
+                  <Grid key={product._id} item xs={12} sm={6} md={2} lg={3}>
+                    <Card
+                      className={classes.cardWrapper}
+                      onClick={() => handleClick(product)}
+                    >
+                      <div className={classes.cardImage}>
+                        <img src={product.image} alt={product.name} />
+                      </div>
+                      <CardContent className={classes.cardContent}>
+                        {/* <Typography variant="h3">{product.name}</Typography> */}
+                        <Typography variant="h3">Reject File</Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))
+              ) : (
+                <div className={classes.noItemsFound}>
+                  <Typography>No products are in pending</Typography>
+                </div>
+              )}
+            </Grid>
+          </div>
+          <Footer />
         </main>
       </div>
 
@@ -152,8 +172,8 @@ const RejectFiles = () => {
         </Button>
       </Drawer>
 
-      <Footer addminFooter />
-    </>
+      
+    </Layout>
   );
 };
 

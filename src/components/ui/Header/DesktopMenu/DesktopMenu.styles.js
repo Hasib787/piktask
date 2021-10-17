@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    width: "12rem",
+    width: "100%",
     display: "block",
   },
   menuUnderline: {
@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "13px",
     transition: "all 0.3s ease",
     "&.active": {
-      color: "#76c71a",
+      color: theme.palette.secondary.main,
     },
     "&:last-child": {
       marginRight: "3rem",
     },
     "&:hover": {
-      color: "#76c71a",
+      color: theme.palette.secondary.main,
     },
 
     "@media (max-width: 1024px)": {
@@ -59,6 +59,20 @@ const useStyles = makeStyles((theme) => ({
         marginRight: ".5rem",
       },
     },
+  },
+  subMenu: {
+    transition: "all 0.2s linear",
+
+    // "& .MuiMenu-paper": {
+    //   top: "7.5rem !important",
+    //   // left: "7.5rem !important",
+    // }
+  },
+  subMenuItem: {
+    height: "15rem",
+    width: "50rem",
+    // padding: "5rem",
+    // backgroundColor: "#000"
   },
   toolBarContainer: {
     marginLeft: "auto",
@@ -86,7 +100,10 @@ const useStyles = makeStyles((theme) => ({
   },
   enterprise: {
     color: "#FDAF01",
+    border: "0.2rem solid #FDAF01",
     fontSize: "1.4rem",
+    padding: "0.3rem 1rem",
+    borderRadius: "3rem",
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
       paddingLeft: "1rem",
@@ -95,15 +112,15 @@ const useStyles = makeStyles((theme) => ({
   },
   premium: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#0088f2",
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
-    marginLeft: "0.5rem",
+    marginLeft: "1rem",
     marginRight: "1rem",
-    border: ".2rem solid",
-    borderColor: "transparent",
+    border: ".2rem solid #0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      borderColor: `${theme.palette.common.white}`,
+      borderColor: "#0088f2",
     },
     "@media (max-width: 1024px)": {
       paddingRight: "1rem",
@@ -117,29 +134,36 @@ const useStyles = makeStyles((theme) => ({
   },
   sellContentBtn: {
     ...theme.typography.button,
-    border: `.2rem solid`,
-    borderColor: theme.palette.secondary.main,
+    fontSize: "1.4rem",
     padding: "0.3rem 1rem",
-    marginRight: "1.5rem",
-    fontSize: "1.3rem",
+    borderColor: "#0088f2",
+    marginLeft: "1rem",
+    marginRight: "1rem",
+    border: ".2rem solid #0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: "#0088f2",
+      borderColor: "#0088f2",
     },
-    [theme.breakpoints.down(1100)]: {
-      width: "11rem",
-      fontSize: "1.1rem",
-      marginRight: "0",
-      paddingLeft: "0.7rem",
-      paddingRight: "0.7rem",
+    "@media (max-width: 1024px)": {
+      paddingRight: "1rem",
+      paddingLeft: "1rem",
+      fontSize: "1.4rem",
     },
   },
 
   signInBtn: {
     ...theme.typography.button,
-    ...theme.typography.darkButton,
-    border:".2rem solid transparent",
+    backgroundColor: "#0088f2",
+    border:".2rem solid #0088f2",
     fontSize: "1.4rem",
     padding: "0.3rem 1rem",
+    transition: "all 0.3s linear",
+
+    "&:hover": {
+      backgroundColor: "#0773c5",
+      border:".2rem solid #fff",
+    },
 
     "@media (max-width: 480px)": {
       padding: ".8rem 1.5rem !important",
@@ -152,184 +176,16 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     fontSize: "4.8rem",
-    width: "4.8rem",
-    height: "4.8rem",
+    width: "3.6rem",
+    height: "3.6rem",
     borderRadius: "100%",
     position: "relative",
     right: "-0.6rem",
     color: "#FB5252",
   },
   arrowDown: {
-    fontSize: "5rem",
+    fontSize: "3.5rem",
     color: "#244e5f",
-  },
-
-  // New user authentication modal
-  leftPanel: {
-    backgroundColor: "#117A00",
-    padding: "2.5rem 2.5rem 5.4rem 2.5rem",
-    width: "100%",
-
-    "& p": {
-      color: theme.palette.common.white,
-      fontWeight: 500,
-      fontSize: 16,
-      lineHeight: 2,
-    },
-    "& img": {
-      width: "100%",
-    },
-    [theme.breakpoints.up(1441)]: {
-      padding: "2.5rem 2.5rem 7rem 2.5rem",
-    },
-  },
-  authLogo: {
-    maxWidth: 120,
-    marginBottom: "1.5rem",
-  },
-  checkbox: {
-    "& svg": {
-      fontSize: "2.5rem",
-    },
-  },
-  checkboxLabel: {
-    "& .MuiFormControlLabel-label": {
-      fontSize: 13,
-    },
-  },
-
-  // Auth right panel
-  rightPanel: {
-    paddingTop: 25,
-    paddingRight: 30,
-    paddingBottom: 30,
-    minWidth: 531,
-    height: "100%",
-  },
-  tabsWrapper: {
-    "& .MuiTabs-flexContainer": {
-      justifyContent: "center",
-      borderBottom: "2px solid #E8E8E8",
-    },
-  },
-  tabItem: {
-    color: "#CCCCCC",
-  },
-  selected: {
-    color: "#117A00",
-  },
-  passwordResetLink: {
-    fontSize: 17,
-    color: "#469439",
-    textAlign: "center",
-    display: "block",
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "underline",
-    },
-  },
-  socialsButtons: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: "1.5rem",
-  },
-  googleBtn: {
-    backgroundColor: "#fff !important",
-    fontSize: "30px !important",
-    textAlign: "center",
-    padding: "0.2rem 5rem !important",
-    width: "49%",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgb(28 81 103)",
-    },
-  },
-  facebookBtn: {
-    backgroundColor: "#425993",
-    padding: "1.2rem 2rem",
-    fontSize: "26px !important",
-    width: "49%",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgb(48 72 132)",
-    },
-    [theme.breakpoints.down(1025)]: {
-      fontSize: "17px !important",
-      padding: "20px !important",
-    },
-    [theme.breakpoints.up(2039)]: {
-      padding: "20px !important",
-    },
-  },
-  // socialLoginBtns: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-  // socialLogin: {
-  //   flex: 1,
-  //   height: 48,
-  // },
-  // googleBtn: {
-  //   backgroundColor: "#1B3F4E",
-  //   "&:hover": {
-  //     backgroundColor: "#214e61",
-  //   },
-  // },
-  // facebookBtn: {
-  //   backgroundColor: "#425993",
-  //   "&:hover": {
-  //     backgroundColor: "#374b7d",
-  //   },
-  // },
-
-  horizontalLine: {
-    backgroundColor: "#CBCBCB",
-    height: 1,
-    position: "relative",
-    "& span": {
-      position: "absolute",
-      backgroundColor: theme.palette.common.white,
-      left: "50%",
-      transform: "translate(-50%, -41%)",
-      padding: "0 5px",
-      fontStyle: "italic",
-      fontSize: 13,
-    },
-  },
-  authText: {
-    fontSize: 17,
-    color: "#469439",
-    textAlign: "center",
-    cursor: "pointer",
-  },
-  passwordField: {
-    display: "flex",
-    alignItems: "center",
-    position: "relative",
-    "& img": {
-      position: "absolute",
-      top: ".8rem",
-      right: "3rem",
-      width: "3rem",
-      cursor: "pointer",
-    },
-
-    "@media (max-width: 768px)": {
-      "& img": {
-        width: "2rem",
-      },
-    },
-  },
-  signUpLink: {
-    marginTop: "17%",
-    fontSize: 17,
-    textAlign: "center",
-    "& span": {
-      cursor: "pointer",
-      color: "#469439",
-    },
   },
 }));
 

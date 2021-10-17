@@ -2,44 +2,52 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
-    [theme.breakpoints.up(1700)]: {
-      marginTop: "8rem",
-      margin: "0rem 10rem",
-    },
-    [theme.breakpoints.up(1900)]: {
-      marginTop: "8rem",
-      margin: "0rem 15rem",
-    },
-    [theme.breakpoints.up(2100)]: {
-      marginTop: "8rem",
-      margin: "0rem 30rem",
-    },
-    [theme.breakpoints.up(2560)]: {
-      marginTop: "8rem",
-      margin: "0rem 51rem",
-    },
-  },
-  content: {
-    padding: 0,
-    width: "calc(100vw - 315px)",
-    marginLeft: "2rem",
-    marginRight: "2rem",
-    marginTop: "2rem",
-    [theme.breakpoints.down(769)]: {
-      width: "100%",
-    },
+    // display: "flex",
+    // marginTop: "8rem",
+    // [theme.breakpoints.up(1700)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 10rem",
+    // },
+    // [theme.breakpoints.up(1900)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 15rem",
+    // },
+    // [theme.breakpoints.up(2100)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 30rem",
+    // },
+    // [theme.breakpoints.up(2560)]: {
+    //   marginTop: "8rem",
+    //   margin: "0rem 51rem",
+    // },
   },
   adminSidebar: {
+    marginTop: "0rem",
     [theme.breakpoints.down(769)]: {
       display: "none",
     },
   },
+  content: {
+    padding: 0,
+    // width: "100%",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "10rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  uploadContainer: {
+    margin: "2rem",
+    [theme.breakpoints.down(769)]: {
+      padding: "0rem 2rem",
+    },
+  },
   basicInfo: {
     minWidth: "100%",
-    borderColor: "#e08e0b",
-    backgroundColor: "#f39c12",
+    borderColor: "#0088f2",
+    backgroundColor: "#0088f2",
     color: "white",
     padding: "2rem",
     marginBottom: "2rem",
@@ -120,6 +128,9 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       padding: "1.28rem 1.5rem",
     },
+    '&:after': {
+      borderColor: "gray",
+  },
     "& p": {
       fontSize: "14px",
     },
@@ -316,15 +327,19 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "0.7px solid lightgray",
   },
   uploadBtn: {
-    padding: "13px 29px",
+    padding: "1rem 3rem",
     marginLeft: "50%",
     transform: "translateX(-50%)",
     border: "none",
     borderRadius: "3px",
     fontSize: "18px",
     cursor: "pointer",
-    backgroundColor: "#00a65a",
+    backgroundColor: "#0088f2",
     color: "white",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      backgroundColor: "#0773c5",
+    },
     [theme.breakpoints.down(480)]: {
       width: "100%",
       marginLeft: "0%",

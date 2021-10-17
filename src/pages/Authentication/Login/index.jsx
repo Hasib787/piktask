@@ -5,78 +5,88 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
+import { useDispatch, useSelector } from "react-redux";
 import lockIcon from "../../../assets/password.png";
-import Spacing from "../../../components/Spacing";
+import React, { useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
+import Spacing from "../../../components/Spacing";
 import useStyles from "../Auth.styles";
+import { toast } from "react-toastify";
+import Layout from "../../../Layout";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
-// const clientId =
-//   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
 export const Login = ({ history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const pathHistory = useHistory();
+  const user = useSelector((state) => state.user);
+  // const contributor = useSelector((state) => state.contributor);
+
+  const previousLocation = location.search;
+  const params = new URLSearchParams(previousLocation);
+  const previousPage = params.get('url');
+
+  const { from } = location.state || { from: { pathname: ("/") } };
+
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const pathHistory = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
+  const role = "user";
+
 
   useEffect(() => {
-    if (user && user.token) history.replace(from);
     return () => {
       document.body.style.backgroundColor = "";
     };
   }, [user, history, from]);
 
-  const handleShowHidePassword = () => {
-    setValue((value) => !value);
-  };
+  const handleShowHidePassword = () => { setValue((value) => !value); };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        username,
-        password,
-      })
-      .then((res) => {
-        if (res.data.status) {
-          const token = res.data.token;
-          localStorage.setItem("token", token);
-          const decodedToken = jwt_decode(token.split(" ")[1]);
+    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+      username,
+      password,
+      role,
+    })
+    .then((res) => {
+      if (res.data.status) {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        const decodedToken = jwt_decode(token.split(" ")[1]);
 
-          if (decodedToken.email) {
-            dispatch({
-              type: "SET_USER",
-              payload: {
-                ...decodedToken,
-                token,
-              },
-            });
-          }
-          pathHistory.replace(from);
+        if (decodedToken.email) {
+          dispatch({
+            type: "SET_USER",
+            payload: {
+              ...decodedToken,
+              token,
+            },
+          });
         }
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        setUsername("");
-        setPassword("");
-      });
+        if(previousPage) {
+          pathHistory.push(previousPage);
+        } else {
+          pathHistory.push(from);
+        }
+      }
+    })
+    .catch((error) => {
+      toast.error(error.response.data.message);
+      setUsername("");
+      setPassword("");
+    });
   };
   // //login with google
   // const handleGoogleLogin = async (googleData) => {
@@ -150,7 +160,7 @@ export const Login = ({ history }) => {
   // };
 
   return (
-    <>
+    <Layout title={"Login | Piktask"}>
       <Header />
       <div className={classes.rootContainer}>
         <Spacing space={{ height: "5rem" }} />
@@ -271,6 +281,6 @@ export const Login = ({ history }) => {
         <Spacing space={{ height: "5rem" }} />
       </div>
       <Footer />
-    </>
+    </Layout>
   );
 };

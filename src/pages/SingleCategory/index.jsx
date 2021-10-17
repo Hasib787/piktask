@@ -3,22 +3,22 @@ import {
   ClickAwayListener,
   Container,
   Dialog,
-  DialogActions,
+  // DialogActions,
   DialogContent,
-  DialogContentText,
+  // DialogContentText,
   DialogTitle,
   Grid,
   IconButton,
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import axios from "axios";
-import moment from "moment";
+import CloseIcon from "@material-ui/icons/Close";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
 import {
   EmailIcon,
   EmailShareButton,
@@ -33,50 +33,55 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
-import { toast } from "react-toastify";
-import authorPhoto from "../../assets/author.png";
-import bannerImg from "../../assets/banner/banner.png";
-import copyIcon from "../../assets/icons/copy.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
+import Product from "../../components/ui/Products/Product";
+import SectionHeading from "../../components/ui/Heading";
+import TagButtons from "../../components/ui/TagButtons";
+import SignUpModal from "../Authentication/SignUpModal";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
-import Spacing from "../../components/Spacing";
+import copyIcon from "../../assets/icons/copy.svg";
+import HeroSection from "../../components/ui/Hero";
+import authorPhoto from "../../assets/author.png";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import SectionHeading from "../../components/ui/Heading";
-import HeroSection from "../../components/ui/Hero";
-import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons";
-import Layout from "../../Layout";
-import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
+import Spacing from "../../components/Spacing";
+import { Link } from "react-router-dom";
+import Loader from "../../components/ui/Loader";
+import { toast } from "react-toastify";
+import Layout from "../../Layout";
 
 const SingleCategory = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const user = useSelector((state) => state.user);
+  const history = useHistory();
+  const location = useLocation();
   const shareUrl = window.location.href;
+  const user = useSelector((state) => state.user);
 
+  const imageID = location.pathname.split("=").pop();
+
+  // const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
   const [openAuthModal, setOpenAuthModal] = useState(false);
+  const [openCopyLink, setOpenCopyLink] = useState(false);
   const [isFollowing, setFollowing] = useState(false);
-  const [isLike, setLike] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [imageDetails, setImageDetails] = useState({});
   const [relatedImage, setRelatedImage] = useState([]);
-  const [allTags, setAllTags] = useState([]);
   const [copySuccess, setCopySuccess] = useState("");
-  const [openCopyLink, setOpenCopyLink] = useState(false);
-  const [downloadLicenseDialog, setDownloadLicenseDialog] = useState(false);
+  const [allTags, setAllTags] = useState([]);
   const [open, setOpen] = useState(false);
+  const [isLike, setLike] = useState(false);
+  const [downloadCount, setDownloadCount] = useState();
 
-  const handleDialogOpen = () => {
-    setDownloadLicenseDialog(true);
-  };
-
-  const handleDialogClose = () => {
-    setDownloadLicenseDialog(false);
-  };
+  // const handleDialogOpen = () => {
+  //   setDownloadLicenseDialog(true);
+  // };
+  // const handleDialogClose = () => {
+  //   setDownloadLicenseDialog(false);
+  // };
   const handleTooltipClose = () => {
     setOpenCopyLink(false);
   };
@@ -88,22 +93,22 @@ const SingleCategory = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setLoading(true);
 
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
+      .get(`${process.env.REACT_APP_API_URL}/images/${imageID}`)
       .then(({ data }) => {
         if (data?.success) {
-          setImageDetails(data.detail);
+          setImageDetails(data?.detail);
           if (data?.related_tags) {
-            const tags = data.related_tags;
+            const tags = data?.related_tags;
             setAllTags(tags.filter((e) => e));
           }
 
           if (user?.token) {
             axios
               .get(
-                `${process.env.REACT_APP_API_URL}/sellers/follow_status/${data.detail.user_id}`,
+                `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.detail.user_id}`,
                 {
                   headers: { Authorization: user.token },
                 }
@@ -120,26 +125,33 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
-    if (user?.token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/images/${id}/like_status`, {
-          headers: { Authorization: user.token },
-        })
-        .then(({ data }) => {
-          if (!data?.status) {
-            setLike(false);
-          } else if (data?.status) {
-            setLike(true);
-          } else {
-            console.log("Image like status error");
-          }
-        })
-        .catch((error) => console.log("Like status error: ", error));
-    }
+      if (user?.token) {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
+            headers: { Authorization: user.token },
+          })
+          .then(({ data }) => {
+            if (!data?.status) {
+              setLike(false);
+            } else if (data?.status) {
+              setLike(true);
+            } else {
+              console.log("Image like status error");
+            }
+          })
+          .catch((error) => console.log("Like status error: ", error));
+      }
 
     // related product API
+    let relatedImageURL;
+
+    if (user && user?.id) {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
+    } else {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
+    }
     axios
-      .get(`${process.env.REACT_APP_API_URL}/images/${id}/related_image`)
+      .get(relatedImageURL)
       .then(({ data }) => {
         if (data?.status) {
           setRelatedImage(data.images);
@@ -147,15 +159,17 @@ const SingleCategory = () => {
         }
       })
       .catch((error) => console.log("Related image error: ", error));
-  }, [id, user.token]);
+  }, [imageID, user]);
 
   const handleFollower = () => {
-    if (!user.token) {
+    if ((!user || !user.token) && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    } else if ((!user || !user.token) && window.innerWidth < 900) {
+      history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/sellers/followers/${imageDetails?.user_id}`,
+          `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
           {},
           {
             headers: { Authorization: user.token },
@@ -172,12 +186,14 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token) {
+    if ((!user || !user.token) && window.innerWidth > 900) {
       setOpenAuthModal(true);
+    } else if ((!user || !user.token) && window.innerWidth < 900) {
+      history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/images/${id}/like`,
+          `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
           {},
           {
             headers: { Authorization: user.token },
@@ -207,13 +223,76 @@ const SingleCategory = () => {
     setOpen(false);
   };
 
+  //Handle download image
+  const handleDownload = (e) => {
+    e.preventDefault();
+
+    const downloadAPI = {
+      url: `${process.env.REACT_APP_API_URL}/images/${imageID}/download/`,
+      method: "get",
+    };
+
+    if (user && user.token) {
+      downloadAPI.headers = {
+        Authorization: user.token,
+      };
+      setButtonLoading(true);
+    }
+    axios(downloadAPI)
+      .then(({ data }) => {
+        if (data.url) {
+          axios
+            .get(data.url, {
+              responseType: "blob",
+            })
+            .then((response) => {
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement("a");
+              link.href = url;
+              link.setAttribute(
+                "download",
+                `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
+              );
+              document.body.appendChild(link);
+              link.click();
+
+              const prevState = imageDetails?.user?.images?.total_downloads;
+              setDownloadCount(prevState + 1);
+              setButtonLoading(false);
+            })
+            .catch((error) => {
+              console.log("error", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("catch", error.response);
+        toast.error(error.response.data.message);
+        setOpenAuthModal(true);
+      });
+  };
+
+  const intToString = (value) => {
+    var suffixes = ["", "k", "m", "b", "t"];
+    var suffixNum = Math.floor(("" + value).length / 3);
+    var shortValue = parseFloat(
+      (suffixNum !== 0 ? value / Math.pow(1000, suffixNum) : value).toPrecision(
+        2
+      )
+    );
+    if (shortValue % 1 !== 0) {
+      shortValue = shortValue.toFixed(1);
+    }
+    return shortValue + suffixes[suffixNum];
+  };
+
   return (
     <Layout
-      title={`${imageDetails?.title} | Piktask`}
-      description={`${imageDetails?.description} | Piktask`}
+      title={`${imageDetails?.title} || Piktask`}
+      description={`${imageDetails?.description} || Piktask`}
     >
       <Header />
-      <HeroSection background={bannerImg} size="medium" />
+      <HeroSection size="medium" />
       <Container className={classes.containerWrapper}>
         <Grid
           container
@@ -223,8 +302,9 @@ const SingleCategory = () => {
           <Grid item md={7} sm={6} xs={12} className={classes.productColumn}>
             <div className={classes.imageWrapper}>
               <img
+                title={imageDetails.title}
                 className={classes.image}
-                src={imageDetails?.preview}
+                src={encodeURI(imageDetails?.preview)}
                 alt={imageDetails?.original_name}
               />
             </div>
@@ -291,8 +371,8 @@ const SingleCategory = () => {
                   </div>
                   <div className={classes.singleItem}>
                     <Typography>
-                      <strong>Copyright Information Copyright:</strong>
-                      Designhill
+                      <strong>Copyright Information: </strong><br />
+                      Piktask
                     </Typography>
                   </div>
                 </Grid>
@@ -320,7 +400,7 @@ const SingleCategory = () => {
               <Grid container>
                 <Grid item className={classes.authorArea}>
                   <div className={classes.authorProfile}>
-                    <Link to={`/${imageDetails?.user?.username}`}>
+                    <Link to={`/author/${imageDetails?.user?.username}`}>
                       {imageDetails?.user?.avatar ? (
                         <img
                           className={classes.authorImg}
@@ -341,7 +421,7 @@ const SingleCategory = () => {
                         className={classes.profileName}
                         variant="h3"
                         component={Link}
-                        to={`/${imageDetails?.user?.username}`}
+                        to={`/author/${imageDetails?.user?.username}`}
                       >
                         {imageDetails?.user?.username}
                       </Typography>
@@ -364,7 +444,7 @@ const SingleCategory = () => {
                 </Grid>
               </Grid>
 
-              <div className={classes.premiumInfo}>
+              {/* <div className={classes.premiumInfo}>
                 <Typography variant="h4">
                   Premium User:
                   <Button
@@ -378,7 +458,7 @@ const SingleCategory = () => {
                 <Typography>- High-Speed Unlimited Download</Typography>
                 <Typography>
                   - For commercial use{" "}
-                  <Link to={"#"} className={classes.moreInfoBtn}>
+                  <Link to="!#" className={classes.moreInfoBtn}>
                     More info
                   </Link>
                 </Typography>
@@ -393,11 +473,11 @@ const SingleCategory = () => {
                     </Button>
                   </div>
                   <Dialog
+                    className={classes.licenseDialog}
                     open={downloadLicenseDialog}
                     onClose={handleDialogClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-                    className={classes.licenseDialog}
                   >
                     <DialogTitle className={classes.licenseTitle}>
                       {"Piktast License"}
@@ -421,16 +501,30 @@ const SingleCategory = () => {
                   </Dialog>
                 </div>
                 <Typography>&copy; Copyright : Piktask</Typography>
-              </div>
+              </div> */}
 
               <div className={classes.buttonGroup}>
                 <div className={classes.downloadWrapper}>
-                  <Button className={classes.downloadBtn}>
-                    <img src={downArrowIconWhite} alt="Download" />
-                    Download
-                  </Button>
+                  {buttonLoading ? (
+                    <Button className={classes.downloadingBtn}>
+                      <img src={downArrowIconWhite} alt="Download" />
+                      Downloading...
+                    </Button>
+                  ) : (
+                    <Button
+                      className={classes.downloadBtn}
+                      onClick={handleDownload}
+                    >
+                      <img src={downArrowIconWhite} alt="Download" />
+                      Download
+                    </Button>
+                  )}
                   <div className={classes.downloadedImage}>
-                    {imageDetails?.user?.images?.total_downloads}
+                    {downloadCount
+                      ? intToString(downloadCount)
+                      : intToString(
+                          imageDetails?.user?.images?.total_downloads
+                        )}
                   </div>
                 </div>
                 {user.id !== imageDetails?.user_id && (
@@ -480,7 +574,7 @@ const SingleCategory = () => {
         {/* <Products /> */}
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading......</h2>
+            <Loader />
           ) : (
             relatedImage?.map((photo) => (
               <Grid
@@ -505,9 +599,9 @@ const SingleCategory = () => {
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <DialogTitle id="customized-dialog-title">
-              Use image social link
+          <div className={classes.socialShareWrapper}>
+            <DialogTitle className={classes.socialShareTitle}>
+              {"Use image social link"}
             </DialogTitle>
             <IconButton
               aria-label="close"

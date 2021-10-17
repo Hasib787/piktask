@@ -2,7 +2,10 @@ import { createTheme } from "@material-ui/core/styles";
 
 const dark = "#143340";
 const lightDark = "#1B3F4E";
-const green = "#117A00";
+// const green = "#117A00";
+
+const green = "#76C71A";
+const blue = "#0088f2";
 const lightBlack = "#14323F";
 
 const theme = createTheme({
@@ -24,11 +27,11 @@ const theme = createTheme({
   palette: {
     primary: {
       main: dark,
-      light: green,
+      light: blue,
     },
     secondary: {
-      main: green,
-      light: dark,
+      main: blue,
+      light: green,
     },
   },
   typography: {
@@ -67,7 +70,7 @@ const theme = createTheme({
       opacity: 1,
     },
     secondary: {
-      green,
+      blue,
     },
     colors: {
       lightDarkColor: lightDark,

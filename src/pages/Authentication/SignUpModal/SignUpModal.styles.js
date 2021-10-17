@@ -3,15 +3,22 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
 
   // New user authentication modal
+  dialogModal: {
+    "& .MuiDialog-paperWidthSm": {
+      maxWidth: 800,
+    }
+  },
   leftPanel: {
-    backgroundColor: "#117A00",
+    backgroundColor: "#0088f2",
+    // backgroundColor: "#117A00",
     padding: "2.5rem 2.5rem 5.4rem 2.5rem",
     width: "100%",
+    height: "100%",
 
     "& p": {
       color: theme.palette.common.white,
       fontWeight: 500,
-      fontSize: 16,
+      fontSize: 13,
       lineHeight: 2,
     },
     "& img": {
@@ -33,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   checkboxLabel: {
     "& .MuiFormControlLabel-label": {
       fontSize: 13,
+      marginBottom: -14,
     },
   },
 
@@ -41,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 25,
     paddingRight: 30,
     paddingBottom: 30,
-    minWidth: 531,
+    // minWidth: 531,
     height: "100%",
   },
   tabsWrapper: {
@@ -54,11 +62,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#CCCCCC",
   },
   selected: {
-    color: "#117A00",
+    color: "#0088f2",
+    // color: "#117A00",
   },
   passwordResetLink: {
     fontSize: 17,
-    color: "#469439",
+    // color: "#469439",
+    color: "#0088f2",
     textAlign: "center",
     display: "block",
     textDecoration: "none",
@@ -68,60 +78,60 @@ const useStyles = makeStyles((theme) => ({
   },
   socialsButtons: {
     display: "flex",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: "1.5rem",
   },
-  googleBtn: {
-    backgroundColor: "#fff !important",
-    fontSize: "30px !important",
-    textAlign: "center",
-    padding: "0.2rem 5rem !important",
-    width: "49%",
-    borderRadius: 0,
+  googleButton: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0.8rem 6rem",
+    border: "1px solid #C74C37",
+    borderRadius: "4px",
+    color: "white",
+    backgroundColor: "#C74C37",
+    transition: "all 0.3s linear",
+    "& span": {
+      fontSize: "1.8rem",
+      color: "#fff",
+    },
     "&:hover": {
-      backgroundColor: "rgb(28 81 103)",
+      backgroundColor: "#ab311d",
     },
   },
-  facebookBtn: {
+  googleIcon: {
+    color: "white",
+    fontSize: "1.6rem",
+    marginRight: "0.8rem",
+  },
+  facebookBtn:{
+    display: "flex",
+    alignItems: "center",
+    padding: "0.8rem 5rem",
+    border: "1px solid #425993",
+    borderRadius: "4px",
+    color: "white",
     backgroundColor: "#425993",
-    padding: "1.2rem 2rem",
-    fontSize: "26px !important",
-    width: "49%",
-    borderRadius: 0,
-    "&:hover": {
-      backgroundColor: "rgb(48 72 132)",
+    transition: "all 0.3s linear",
+    "& span": {
+      fontSize: "1.8rem",
+      color: "#fff",
     },
-    [theme.breakpoints.down(1025)]: {
-      fontSize: "17px !important",
-      padding: "20px !important",
-     },
-    [theme.breakpoints.up(2039)]: {
-      padding: "20px !important",
-     },
+    "&:hover": {
+      backgroundColor: "#213567",
+    },
   },
-  // socialLoginBtns: {
-  //   display: "flex",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-  // socialLogin: {
-  //   flex: 1,
-  //   height: 48,
-  // },
-  // googleBtn: {
-  //   backgroundColor: "#1B3F4E",
-  //   "&:hover": {
-  //     backgroundColor: "#214e61",
-  //   },
-  // },
-  // facebookBtn: {
-  //   backgroundColor: "#425993",
-  //   "&:hover": {
-  //     backgroundColor: "#374b7d",
-  //   },
-  // },
-
+  facebookIconBtn:{
+    color: "white",
+    fontSize: "1.6rem",
+    marginRight: "0.8rem !important",
+  },
+  closeModal: {
+    float: "right",
+    marginTop: -15,
+    color: "#0088f2",
+    cursor: "pointer",
+  },
   horizontalLine: {
     backgroundColor: "#CBCBCB",
     height: 1,
@@ -138,9 +148,10 @@ const useStyles = makeStyles((theme) => ({
   },
   authText: {
     fontSize: 17,
-    color: "#469439",
+    color: "#0088f2",
     textAlign: "center",
     cursor: "pointer",
+    marginTop: "1rem",
   },
   passwordField: {
     display: "flex",
@@ -150,10 +161,9 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       top: ".8rem",
       right: "3rem",
-      width: "3rem",
+      width: "2rem",
       cursor: "pointer",
     },
-
     "@media (max-width: 768px)": {
       "& img": {
         width: "2rem",
@@ -161,12 +171,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   signUpLink: {
-    marginTop: "17%",
+    marginTop: "19%",
     fontSize: 17,
     textAlign: "center",
     "& span": {
       cursor: "pointer",
-      color: "#469439",
+      color: "#0088f2",
     },
   },
 }));

@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => ({
       minWidth: "60%",
       left: "auto !important",
     },
-
   },
   dropdownMenuWrapper: {
     padding: 0,
     outline: "none",
   },
   gridUserInfo: {
+    width: "32rem",
     padding: "1rem",
     alignItems: "center",
     outline: "none",
@@ -27,15 +27,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  avatarCircle: {
-
-  },
+  avatarCircle: {},
   dropdownUserAvatar: {
     width: "5rem",
     height: "5rem",
     borderRadius: "100%",
     padding: "0.2rem",
-    backgroundColor: "#1B3F4E",
     marginRight: "1rem",
     "@media (max-width: 576px)": {
       width: "4rem",
@@ -81,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   productDownloadCount: {
-    backgroundColor: "rgb(17 122 0 / 15%)",
+    backgroundColor: "#e7f5ff",
     textAlign: "center",
     padding: "0.8rem",
     "@media (max-width: 576px)": {
@@ -98,15 +95,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   totalAmount: {
-    color: "#76C71A",
-    fontSize: "2rem",
+    color: "#0088f2",
+    fontSize: "2.8rem",
     lineHeight: 1,
     "@media (max-width: 576px)": {
       fontSize: "1.5rem",
     },
   },
   totalText: {
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
     fontWeight: 400,
     "@media (max-width: 576px)": {
       fontSize: "1.3rem",
@@ -119,9 +116,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     fontSize: "1.5rem",
-    fontWeight: 500,
-    "& span": {
-      color: "inherit",
+    
+    "& svg": {
+      color: "#b6b6b6",
     },
     "&:last-child": {
       borderBottom: "0px solid transparent",
@@ -130,6 +127,19 @@ const useStyles = makeStyles((theme) => ({
       padding: ".6rem 1.5rem",
       fontSize: "1.4rem",
       minHeight: 38,
+    },
+  },
+  userMenuIcon: {
+    display: "flex",
+    alignItems: "center",
+    "& span": {
+      fontSize: "1.4rem",
+      color: "inherit",
+    },
+    "& svg": {
+      fontSize: "1.8rem",
+      color: "#858585",
+      marginRight: "1.2rem",
     },
   },
 }));

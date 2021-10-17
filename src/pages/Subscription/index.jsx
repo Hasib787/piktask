@@ -1,9 +1,9 @@
-import React from "react";
+import HeroSection from "../../components/ui/Hero";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
-import Layout from "../../Layout";
 import useStyles from "./Subscription.style";
+import Layout from "../../Layout";
+import React from "react";
 
 const Subscription = () => {
     const classes = useStyles();

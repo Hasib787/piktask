@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+  formSubmit: {
+    width: "100%",
+  },
   searchWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -16,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     padding: ".5rem 3rem",
     fontSize: 18,
     height: "5.2rem",
-    // width: "50rem",
     borderTopLeftRadius: ".3rem",
     borderBottomLeftRadius: ".2rem",
     [theme.breakpoints.down("sm")]: {
@@ -27,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIconWrapper: {
-    backgroundColor: theme.palette.primary.light,
+    // backgroundColor: theme.palette.primary.light,
+    backgroundColor: "#0088f2",
     width: 122,
     height: "5.2rem",
     cursor: "pointer",
@@ -107,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
       marginRight: "0.5rem",
       minWidth: 140,
+      color: "#666",
     },
 
     "&:hover": {
@@ -116,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
     "& svg": {
       position: "absolute",
       right: 5,
+      color: "#666",
     },
 
     [theme.breakpoints.down("sm")]: {
@@ -180,7 +185,8 @@ const useStyles = makeStyles((theme) => ({
     top: 59,
     width: "100%",
     left: 0,
-    zIndex: 99,
+    zIndex: 1,
+    opacity: 99,
   },
   closeIcon: {
     position: "absolute",

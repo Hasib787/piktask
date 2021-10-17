@@ -1,11 +1,13 @@
-import { Button, Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Button, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import SectionHeading from "../Heading";
 import Product from "./Product";
+import Loader from "../Loader";
+import axios from "axios";
+import ProductNotFound from "../ProductNotFound";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "all 0.3s linear",
 
     "&:hover": {
-      backgroundColor: "#117A00",
+      backgroundColor: theme.palette.secondary.main,
       color: "#fff",
     },
   },
@@ -34,76 +36,81 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = (props) => {
   const classes = useStyles();
-  const { catName, count, showHeading } = props;
-  const [categories, setCategories] = useState([]);
-
-  const [isLoading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
+  const { category, count, showHeading } = props;
+  const [images, setImages] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
+  // Data load
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setLoading(true);
 
-    if (catName !== undefined) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${catName?.id}`)
-        .then(({ data }) => {
-          if (data?.status) {
-            setCategories(data?.category_image);
-            setLoading(false);
-            dispatch({
-              type: "CATEGORY_BASED_ITEMS",
-              payload: {
-                totalImages: data.total_image_count.total_image,
-                categories: data.category_image,
-              },
-            });
-          }
-        });
+    let categoryURL;
+
+    if (user && user?.id) {
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}&limit=8`;
     } else {
-      setLoading(false);
+      categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?limit=8`;
     }
-  }, [catName, dispatch]);
+    if (category) {
+      axios.get(categoryURL).then(({ data }) => {
+        if (data?.status) {
+          setImages(data?.category_image);
+          setLoading(false);
+          dispatch({
+            type: "CATEGORY_BASED_ITEMS",
+            payload: {
+              totalImages: data.total_image_count.total_image,
+              images: data.category_image,
+            },
+          });
+        }
+      });
+    } else {
+      setLoading(true);
+    }
+  }, [dispatch, category, user]);
 
   return (
     <>
-      {isLoading ? (
-        <h2>Loading......</h2>
-      ) : (
-        <>
-          {categories.length !== 0 && showHeading && (
-            <SectionHeading title={catName?.name} large>
-              <Button
-                className={classes.headingButton}
-                component={Link}
-                to={`category/${catName?.slug}`}
-              >
-                See More
-              </Button>
-            </SectionHeading>
-          )}
-        </>
+      {images.length !== 0 && showHeading && (
+        <SectionHeading title={category?.name} large>
+          <Button
+            className={classes.headingButton}
+            component={Link}
+            to={`category/${category?.slug}`}
+          >
+            See More
+          </Button>
+        </SectionHeading>
       )}
 
       <Grid classes={{ container: classes.container }} container spacing={2}>
         {isLoading ? (
-          <h2>Loading now......</h2>
+          <Loader item={images} />
         ) : (
           <>
-            {categories.length ? (
-              categories?.slice(0, count).map((photo) => (
+            {images.length ? (
+              images?.slice(0, count).map((photo) => (
                 <Grid
-                  key={photo.image_id}
+                  key={photo?.image_id}
                   item
                   xs={6}
                   sm={4}
                   md={3}
                   className={classes.productItem}
                 >
-                  <Product photo={photo} />
+                  <Product
+                    key={photo?.image_id}
+                    catId={category?.id}
+                    photo={photo}
+                  />
                 </Grid>
               ))
             ) : (
-              <Typography variant="body1">Sorry, no products found</Typography>
+              <ProductNotFound />
             )}
           </>
         )}

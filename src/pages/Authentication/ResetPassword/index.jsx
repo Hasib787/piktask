@@ -1,27 +1,28 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import { CustomBtn, InputField } from "../../../components/InputField";
-import Spacing from "../../../components/Spacing";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import HeroSection from "../../../components/ui/Hero";
 import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
-import HeroSection from "../../../components/ui/Hero";
+import React, { useEffect, useState } from "react";
+import Spacing from "../../../components/Spacing";
 import useStyles from "./ResetPassword.styles";
+import { toast } from "react-toastify";
+import axios from "axios";
+import Layout from "../../../Layout";
 
 export const ResetPassword = () => {
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
-  const [passwordChange, setPasswordChange] = useState(false);
-  const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/login" } };
+
+  const [passwordChange, setPasswordChange] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     document.body.style.backgroundColor = "#ECEEF5";
@@ -50,19 +51,19 @@ export const ResetPassword = () => {
 
     if (email && !passwordChange) {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
-          email,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            toast.success(res.data.message);
-          }
-        })
-        .catch((error) => {
-          setPasswordChange(false);
-          setEmail("");
-          toast.error("No user found with this email", error.message);
-        });
+      .post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, {
+        email,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => {
+        setPasswordChange(false);
+        setEmail("");
+        toast.error("No user found with this email", error.message);
+      });
     }
     setIsLoading(false);
   };
@@ -110,37 +111,37 @@ export const ResetPassword = () => {
 
     if (passwordChange && token && password && confirmPassword) {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/reset-password`, {
-          token,
-          password,
-          confirmPassword,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            toast.success(res.data.message);
-            history.replace(from);
-          }
-        })
-        .catch((error) => {
-          toast.error(error.response.data.message);
-          setToken("");
-          setPassword("");
-          setConfirmPassword("");
-        });
+      .post(`${process.env.REACT_APP_API_URL}/auth/reset-password`, {
+        token,
+        password,
+        confirmPassword,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          history.replace(from);
+        }
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        setToken("");
+        setPassword("");
+        setConfirmPassword("");
+      });
     }
     setIsLoading(false);
   };
 
   return (
-    <>
+    <Layout title={"ResetPassword | Piktask"}>
       <Header />
       <HeroSection/>
       <Spacing space={{ height: "3.5rem" }} />
 
       <Container>
         <Grid container spacing={0} justify="center">
-          <Grid item sm={12} md={6}>
-            <div className={classes.cardWrapper} style={{ padding: "4rem" }}>
+          <Grid >
+            <div className={classes.cardWrapper} style={{ padding: "2.5rem" }}>
               <div className={classes.cardHeadingWrapper}>
                 <Typography className={classes.cardHeading} variant="h2">
                   Reset Password
@@ -242,6 +243,6 @@ export const ResetPassword = () => {
       <Spacing space={{ height: "5rem" }} />
 
       <Footer />
-    </>
+    </Layout>
   );
 };

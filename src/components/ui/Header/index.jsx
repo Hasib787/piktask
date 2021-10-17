@@ -10,27 +10,26 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import logo from "../../../assets/Logo/piktask-6.png";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import crownIcon from "../../../assets/icons/crown.svg";
-import logo from "../../../assets/piktaskLogo.svg";
 import CustomPopper from "../CustomPopper";
+import { useSelector } from "react-redux";
 import DesktopMenu from "./DesktopMenu";
 import useStyles from "./Header.styles";
 
 const customStyles = makeStyles({
   menuWrapper: {
     top: "1.8rem",
-    marginTop: 20,
+    marginTop: 10,
     color: "#FFF",
     display: "flex",
     justifyContent: "space-between",
 
     "@media (max-width: 425px)": {
-      marginTop: 10,
+      marginTop: 5,
     },
   },
   closeIconWrapper: {
@@ -45,6 +44,10 @@ const customStyles = makeStyles({
     fontSize: "4rem",
     cursor: "pointer",
     color: "#FFF",
+
+    "@media (max-width: 577px)": {
+      fontSize: "3rem",
+    },
   },
   closeIcon: {
     fontSize: "3rem",
@@ -55,13 +58,14 @@ const customStyles = makeStyles({
 
 const Header = () => {
   const classes = useStyles();
-  const iconClass = customStyles();
-
-  const [open, setOpen] = useState(false);
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  const [menuSate, setMenuSate] = useState({ mobileView: false });
-  const user = useSelector((state) => state.user);
   const anchorRef = useRef(null);
+  const location = useLocation();
+  const iconClass = customStyles();
+  const user = useSelector((state) => state.user);
+
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const { mobileView } = menuSate;
 
@@ -76,9 +80,7 @@ const Header = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const handleToggle = () => {
-    setOpen((prevState) => !prevState);
-  };
+  const handleToggle = () => { setOpen((prevState) => !prevState); };
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -86,15 +88,15 @@ const Header = () => {
     }
     setOpen(false);
   };
+
   const handleListKeyDown = (e) => {
     if (e.key === "Escape") {
       e.preventDefault();
       setOpen(false);
     }
   };
-  const handleMobileMenu = () => {
-    setOpenMobileMenu(true);
-  };
+
+  const handleMobileMenu = () => { setOpenMobileMenu(true); };
 
   return (
     <>
@@ -107,7 +109,7 @@ const Header = () => {
                   <Button
                     component={Link}
                     to="/"
-                    className={classes.logoWrapper}
+                    className={classes.headerLogo}
                     disableRipple
                   >
                     <img src={logo} className={classes.logo} alt="Dev" />
@@ -139,7 +141,7 @@ const Header = () => {
                         <Button
                           className={classes.loginBtn}
                           component={Link}
-                          to="/login"
+                          to={`/login?url=${location.pathname}`}
                         >
                           Login
                         </Button>
@@ -200,7 +202,7 @@ const Header = () => {
             </div>
           )}
         </div>
-        <Toolbar disableGutters className={classes.menuWrapper}>
+        <Toolbar disableGutters className={classes.wrapperMenu}>
           <MenuList className={classes.navItems}>
             <MenuItem
               onClick={() => setOpenMobileMenu(false)}

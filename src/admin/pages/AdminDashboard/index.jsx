@@ -2,244 +2,240 @@ import {
   Button,
   Card,
   CardContent,
-  CardHeader,
+  Container,
   Grid,
-  LinearProgress,
   Paper,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tabs,
   Typography,
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/styles";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import authorImg from "../../../assets/author.png";
-import authorBadge from "../../../assets/badge.png";
-import image3 from "../../../assets/bangladesh.png";
-import image1 from "../../../assets/brazil.png";
-import box from "../../../assets/dashboardicons/box.svg";
 import arrowDown from "../../../assets/dashboardicons/icon1.svg";
 import moneyIcon from "../../../assets/dashboardicons/money.svg";
-import downloadIcon from "../../../assets/icons/downArrow.svg";
-import image4 from "../../../assets/india.png";
-import image2 from "../../../assets/japan.png";
-import map from "../../../assets/map.png";
+import box from "../../../assets/dashboardicons/box.svg";
+import authorBadge from "../../../assets/badge.png";
 import Footer from "../../../components/ui/Footer";
-import portfolioData from "../../../data/portfolio.json";
-import useStyles from "../../admin.styles";
-// import DoughnutChart from "../../components/Charts/DoughnutChart";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
-import DoughnutChart from "./DoughnutChart";
-
-const ProfileProgress = withStyles((theme) => ({
-  root: {
-    height: ".6rem",
-    marginBottom: "1.4rem",
-  },
-  colorPrimary: {
-    backgroundColor: "#D1D1D1",
-  },
-  bar: {
-    backgroundColor: "#117A00",
-  },
-}))(LinearProgress);
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <>{children}</>}
-    </div>
-  );
-}
+import useStyles from "./admin.styles";
+import React, { useEffect, useState } from "react";
+import Layout from "../../../Layout";
+import Blog from "../../../components/ui/Blog";
+// import { TopSeller } from "../../../components/ui/TopSeller";
+// import SectionHeading from "../../../components/ui/Heading";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import followerIcon from '../../../assets/icons/followerIcon.png';
+import Spacing from "../../../components/Spacing";
+import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const AdminDashboard = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-  const { portfolios } = portfolioData;
   const user = useSelector((state) => state.user);
 
-  function selectTab(index) {
-    return {
-      id: `portfolio-${index}`,
-      "aria-controls": `portfolio-tabpanel-${index}`,
+  const [isLoading, setLoading] = useState(false);
+  const [topFiles, setTopFiles] = useState([]);
+  const [authorFiles, setAuthorFiles] = useState([]);
+  const [earnCurrentMonth, setEarnCurrentMonth] = useState({});
+  const [earnPreviousMonth, setEarnPreviousMonth] = useState({});
+
+  const [menuSate, setMenuSate] = useState({ mobileView: false });
+  const { mobileView } = menuSate;
+
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 769
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
     };
-  }
 
-  const handleChange = (e, index) => {
-    setValue(index);
-  };
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
-  const rows = [
-    {
-      id: 1,
-      image: image1,
-      location: "Brazil",
-      earning: 0.2,
-      date: "31-1-2021",
-      author: authorImg,
-    },
-    {
-      id: 2,
-      image: image2,
-      location: "Bangladesh",
-      earning: 0.4,
-      date: "31-1-2021",
-      author: authorImg,
-    },
-    {
-      id: 3,
-      image: image3,
-      location: "Japan",
-      earning: 0.35,
-      date: "31-1-2021",
-      author: authorImg,
-    },
-    {
-      id: 4,
-      image: image4,
-      location: "India",
-      earning: 0.6,
-      date: "31-1-2021",
-      author: authorImg,
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+
+    // Author current month earning
+    if(user?.token){
+      var newDate = new Date();
+      var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
+      var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
+      var todayCurrentMonth = newDate.toISOString().substring(0, 10);
+      
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${firstDay}&end=${todayCurrentMonth}`,
+      {
+        headers: {Authorization: user?.token},
+      })
+      .then(({data}) => {
+        if(data?.status){
+          setEarnCurrentMonth(data?.user_statistics);
+          setLoading(false);
+        }
+      })
+    }
+    
+    // Author previous month earning
+    if(user?.token){
+      var previousDate = new Date();
+      var previousMonthFirstDay = new Date(previousDate.getFullYear(), previousDate.getMonth() - 1, 2);
+      var previousFirstDays = previousMonthFirstDay.toISOString().substring(0, 10);
+      
+      const previousMonthLastDay = new Date(previousDate.getFullYear(), previousDate.getMonth(), 1);
+      var previousFirstDay = previousMonthLastDay.toISOString().substring(0, 10);
+
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/summery/?start=${previousFirstDays}&end=${previousFirstDay}`,
+      {
+        headers: {Authorization: user?.token},
+      })
+      .then(({data}) => {
+        if(data?.status){
+          setEarnPreviousMonth(data?.user_statistics);
+          setLoading(false);
+        }
+      })
+    }
+
+    // Author last file API
+    if(user?.token){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images?limit=5`,
+      {
+        headers: { Authorization: user?.token },
+      })
+      .then(({data}) => {
+        if(data?.status) {
+          setAuthorFiles(data?.images);
+          setLoading(false);
+        }
+      })
+    }
+
+    // Piktask top file API 
+    if(user?.token){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/top_files?limit=5`,
+      {
+        headers: { Authorization: user?.token },
+      })
+      .then(({data}) => {
+        if(data?.status) {
+          setTopFiles(data?.images);
+          setLoading(false);
+        }
+      })
+    }
+
+  }, [user?.token])
+
 
   return (
-    <>
-      <AdminHeader />
-
+    <Layout title={`Dashboard || Piktask`}>
       <div className={classes.adminRoot}>
-        <Sidebar />
+        {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
         <main className={classes.content}>
-          <Grid
-            container
-            spacing={2}
-            className={classes.dashboardGridContainer}
-          >
-            <Grid item xs={12} sm={7}>
-              <Card className={classes.cardRoot}>
-                <CardContent className={classes.statisticCardContent}>
-                  <div className={classes.cardHeading}>
-                    <Typography className={classes.statistics} variant="h5">
-                      Statistics
-                    </Typography>
-                    <Button className={classes.updateBtn}>Update Daily</Button>
+          <AdminHeader />
+          <div className={classes.dashboardGridContainer}>
+            <div className={classes.totalStatus}>
+              <Heading tag="h2">Current Month</Heading>
+              <Button 
+                className={classes.loadMoreBtn}
+                component={Link}
+                to={`/contributor/earnings`}
+              >More status</Button>
+            </div>
+            <Grid container>
+              <Grid item xs={6} sm={6} md={3} className={classes.loaderItem}>
+                <CardContent className={classes.statisticsContent}>
+                  <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                    <img src={moneyIcon} alt="Money" />
                   </div>
-                  <div className={classes.statisticsInnerWrapper}>
-                    <div className={classes.statisticsContent}>
-                      <div
-                        className={`${classes.arrowIcon} ${classes.statisticsIcon}`}
-                      >
-                        <img src={arrowDown} alt="Download" />
-                      </div>
-                      <Typography className={classes.statisticsText}>
-                        2.0k
-                        <span>Download</span>
-                      </Typography>
-                    </div>
-
-                    <div className={classes.statisticsContent}>
-                      <div
-                        className={`${classes.boxIcon} ${classes.statisticsIcon}`}
-                      >
-                        <img src={box} alt="Products" />
-                      </div>
-                      <Typography className={classes.statisticsText}>
-                        2.0k
-                        <span>Products</span>
-                      </Typography>
-                    </div>
-                    <div className={classes.statisticsContent}>
-                      <div
-                        className={`${classes.moneyIcon} ${classes.statisticsIcon}`}
-                      >
-                        <img src={moneyIcon} alt="Money" />
-                      </div>
-                      <Typography className={classes.statisticsText}>
-                        2.0k
-                        <span>Earning</span>
-                      </Typography>
-                    </div>
-                  </div>
+                  <Typography className={classes.totalCount} variant="h1">
+                    {earnCurrentMonth?.total_earning}
+                    <span>Earning</span>
+                  </Typography>
+                  <Typography className={classes.lastTotalCount}>
+                      Last month: {earnPreviousMonth?.total_earning}
+                  </Typography>
                 </CardContent>
-              </Card>
-            </Grid>
+              </Grid>
 
-            <Grid item xs={12} sm={5}>
-              <Card className={classes.cardRoot}>
-                <CardContent className={classes.authorCard}>
-                  <div className={classes.authorInfo}>
-                    <img
-                      className={classes.authorBadge}
-                      src={authorBadge}
-                      alt="Badge"
-                    />
-
-                    <div className={classes.authorArea}>
-                      {
-                        user && user?.avatar ? (
-                          <img
-                            className={classes.authorImg}
-                            src={user.avatar}
-                            alt="UserPhoto"
-                          />
-                        ) : (
-                          <img
-                            className={classes.authorImg}
-                            src={authorImg}
-                            alt="Design Studio"
-                          />
-                        )
-                      }
-                      <Typography variant="h4">Hi, Alamin Sourov</Typography>
-                      <Typography>50% Profile strength</Typography>
-                    </div>
-                    <ProfileProgress variant="determinate" value={60} />
-                    <Typography className={classes.aboutText}>
-                      Increase your discoverability > Tell us{" "}
-                      <span>about you</span>
-                    </Typography>
+              <Grid item xs={6} sm={6} md={3} className={classes.loaderItem}>
+                <CardContent className={classes.statisticsContent}>
+                  <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                    <img src={arrowDown} alt="Download" />
                   </div>
+                  <Typography className={classes.totalCount} variant="h1">
+                    {earnCurrentMonth?.total_downloads}
+                    <span>Download</span>
+                  </Typography>
+                  <Typography className={classes.lastTotalCount}>
+                    Last month: {earnPreviousMonth?.total_downloads}
+                  </Typography>
                 </CardContent>
-              </Card>
+              </Grid>
+
+              <Grid item xs={6} sm={6} md={3} className={classes.loaderItem}>
+                <CardContent className={classes.statisticsContent}>
+                  <div className={`${classes.arrowIcon} ${classes.statisticsIcon}`} >
+                    <img src={followerIcon} alt="followerIcon" />
+                  </div>
+                  <Typography className={classes.totalCount} variant="h1">
+                    {earnCurrentMonth?.total_follower}
+                    <span>Follower</span>
+                  </Typography>
+                  <Typography className={classes.lastTotalCount}>
+                    Last month: {earnPreviousMonth?.total_follower}
+                  </Typography>
+                </CardContent>
+              </Grid>
+
+              <Grid item xs={6} sm={6} md={3} className={classes.loaderItem}>
+                <CardContent className={classes.statisticsContent}>
+                  <div
+                    className={`${classes.arrowIcon} ${classes.statisticsIcon}`}
+                  >
+                    <img src={box} alt="Products" />
+                  </div>
+                  <Typography className={classes.totalCount} variant="h1">
+                    {earnCurrentMonth?.total_image}
+                    <span>Files</span>
+                  </Typography>
+                  <Typography className={classes.lastTotalCount}>
+                    Last month: {earnPreviousMonth?.total_image}
+                  </Typography>
+                </CardContent>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
 
           {/* Map & country wise earning statistics */}
           <Grid
             container
-            spacing={0}
             className={classes.dashboardGridContainer}
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12} md={6} className={classes.loaderItem}>
               <Card className={classes.cardRoot}>
-                <CardContent className={classes.mapCard}>
-                  <img src={map} alt="Map" />
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <Card className={classes.cardRoot}>
-                <CardHeader>Location</CardHeader>
                 <CardContent className={classes.authorCard}>
+                  <div className={classes.cardHeading}>
+                    <Heading tag="h2">Your Last File's</Heading>
+                    <Button 
+                      className={classes.loadMoreBtn}
+                      component={Link}
+                      to={`/contributor/publish`}
+                    >
+                      Load more
+                    </Button>
+                  </div>
                   <TableContainer
                     className={classes.tableContainer}
                     component={Paper}
@@ -252,38 +248,46 @@ const AdminDashboard = () => {
                         <TableRow className={classes.tableHead}>
                           <TableCell className={classes.tableCell}></TableCell>
                           <TableCell className={classes.tableCell}>
-                            Location
+                            Type
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            Download
                           </TableCell>
                           <TableCell className={classes.tableCell}>
                             Earning
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Date
                           </TableCell>
                         </TableRow>
                       </TableHead>
 
                       <TableBody>
-                        {rows.map((row) => (
+                        {authorFiles?.map((authLastFile) => (
                           <TableRow
-                            key={row.id}
+                            key={authLastFile?.id}
                             className={classes.tableRowContent}
                           >
-                            <TableCell className={classes.tableCell}>
-                              <img
-                                className={classes.earningImg}
-                                src={row.image}
-                                alt={row.location}
-                              />
+                            <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
+                              <Link to={`/images/${authLastFile?.title.replace(/ /g, "_")}&id=${authLastFile?.id}`}>
+                                <img
+                                  className={classes.earningImg}
+                                  src={authLastFile?.preview}
+                                  alt={authLastFile?.preview}
+                                />
+                              </Link>
+                              
+                              {authLastFile?.item_for_sale === "sale" && (
+                                <div className={classes.premiumIcon}>
+                                  <img src={premiumFileSell} alt="Premium Product" />
+                                </div>
+                              )}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
-                              {row.location}
+                              {authLastFile?.extension}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
-                              {row.earning}
+                              {authLastFile?.total_downloads}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
-                              {row.date}
+                              <AttachMoneyIcon />{authLastFile?.earn_per_image}
                             </TableCell>
                           </TableRow>
                         ))}
@@ -293,94 +297,12 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
             </Grid>
-          </Grid>
 
-          <Card className={`${classes.cardRoot} ${classes.portfolioContainer}`}>
-            <Grid container className={classes.portfolioTabWrapper}>
-              <Typography className={classes.portfolioHeading} variant="h2">
-                My Portfolio
-              </Typography>
-
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="portfolio tabs"
-                className={`${classes.portfolioTabs}`}
-                classes={{ indicator: classes.indicator }}
-              >
-                <Tab
-                  disableRipple
-                  classes={{ selected: classes.selected }}
-                  label="PNG Images(90)"
-                  {...selectTab(0)}
-                />
-                <Tab
-                  disableRipple
-                  classes={{ selected: classes.selected }}
-                  label="PSD Templates(120)"
-                  {...selectTab(1)}
-                />
-                <Tab
-                  disableRipple
-                  classes={{ selected: classes.selected }}
-                  label="Illustrations(30)"
-                  {...selectTab(2)}
-                />
-              </Tabs>
-            </Grid>
-
-            <CardContent className={classes.portfolioWrapper}>
-              <TabPanel value={value} index={0} className={classes.tabPanel}>
-                <Grid container spacing={3}>
-                  {portfolios.length &&
-                    portfolios.map((portfolio) => (
-                      <Grid
-                        key={portfolio._id}
-                        item
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        lg={3}
-                        className={classes.portfolioItem}
-                      >
-                        <div className={classes.portfolioContentWrapper}>
-                          <img src={portfolio.image} alt={portfolio.name} />
-                          <div className={classes.portfolioContent}>
-                            <Typography
-                              className={classes.portfoioTitle}
-                              variant="h4"
-                            >
-                              {portfolio.name}
-                            </Typography>
-                            <div className={classes.downloadInfo}>
-                              <img src={downloadIcon} alt="Download" />
-                              Download: {portfolio.total_downloads}k
-                            </div>
-                          </div>
-                        </div>
-                      </Grid>
-                    ))}
-                </Grid>
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                PSD Templates
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                Illustrations
-              </TabPanel>
-            </CardContent>
-          </Card>
-
-          <Grid
-            container
-            spacing={2}
-            className={classes.dashboardGridContainer}
-          >
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6} className={classes.loaderItem}>
               <Card className={classes.cardRoot}>
-                <CardContent>
+                <CardContent className={classes.authorCard}>
                   <div className={classes.cardHeading}>
-                    <Heading tag="h2">Top Selling Author</Heading>
+                    <Heading style={{padding: "0.4rem 0rem"}} tag="h2">Piktask Top File's</Heading>
                   </div>
 
                   <TableContainer
@@ -392,10 +314,13 @@ const AdminDashboard = () => {
                       aria-label="earning data table"
                     >
                       <TableHead>
-                        <TableRow className={classes.topAuthorTableHead}>
+                        <TableRow className={classes.tableHead}>
                           <TableCell className={classes.tableCell}></TableCell>
                           <TableCell className={classes.tableCell}>
-                            Download
+                            Type
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
+                            Downloads
                           </TableCell>
                           <TableCell className={classes.tableCell}>
                             Author
@@ -404,29 +329,41 @@ const AdminDashboard = () => {
                       </TableHead>
 
                       <TableBody>
-                        {rows.map((row) => (
+                        {topFiles?.map((topFile) => (
                           <TableRow
-                            key={row.id}
+                            key={topFile?.id}
                             className={classes.tableRowContent}
                           >
-                            <TableCell className={classes.tableCell}>
-                              <img
-                                className={classes.earningImg}
-                                src={row.image}
-                                alt={row.location}
-                              />
+                            <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
+                              <Link to={`/images/${topFile?.title.replace(/ /g, "_")}&id=${topFile?.id}`}>
+                                <img
+                                  className={classes.earningImg}
+                                  src={topFile?.thumbnail}
+                                  alt={topFile?.thumbnail}
+                                />
+                              </Link>
+                              {topFile?.item_for_sale === "sale" && (
+                                <div className={classes.premiumIcon}>
+                                  <img src={premiumFileSell} alt="Premium Product" />
+                                </div>
+                              )}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
-                              50: 00K
+                              {topFile?.extension}
+                            </TableCell>
+                            <TableCell className={classes.tableCell}>
+                              {topFile?.total_downloads}
                             </TableCell>
                             <TableCell
                               className={`${classes.tableCell} ${classes.authorImgWrapper}`}
                             >
-                              <img
-                                className={classes.authorImg}
-                                src={row.author}
-                                alt="Author"
-                              />
+                              <Link to={`/author/${topFile?.username}`}>
+                                <img
+                                  className={classes.authorImg}
+                                  src={topFile?.avatar}
+                                  alt="Author"
+                                />
+                              </Link>
                               <img
                                 className={classes.bestAuthorBadge}
                                 src={authorBadge}
@@ -441,49 +378,27 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
             </Grid>
-
-            <Grid item xs={12} sm={12} md={6}>
-              <Card className={classes.cardRoot}>
-                <CardContent>
-                  <div className={classes.monthlyEarningHeader}>
-                    <div>
-                      <Heading tag="h2">Earnings</Heading>
-                      <Typography
-                        variant="subtitle2"
-                        className={classes.subText}
-                      >
-                        This Month
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        className={classes.subText}
-                      >
-                        68.2% more earnings than last month.
-                      </Typography>
-                    </div>
-                    <Typography variant="h4">$3201: 00</Typography>
-                  </div>
-
-                  <div className={classes.earningGraph}>
-                    <DoughnutChart />
-                    <div className={classes.earningAmount}>$344.5.00</div>
-                    {/* <div className={classes.graphFront}>
-                      <Typography
-                        variant="subtitle1"
-                        className={classes.currentEarning}
-                      >
-                        $344.5.00
-                      </Typography>
-                    </div> */}
-                  </div>
-                </CardContent>
-              </Card>
-            </Grid>
           </Grid>
+
+          <Spacing space={{height: "2rem"}} />
+
+          {/* <Container>
+            <SectionHeading title="Top Selling Author" large>
+              <Button
+                className={classes.headingButton}
+                component={Link}
+                to="/sellers"
+              >
+                See More
+              </Button>
+            </SectionHeading>
+          </Container>
+          <TopSeller adminDashBoard /> */}
+          <Blog />
+          <Footer />
         </main>
       </div>
-      <Footer addminFooter />
-    </>
+    </Layout>
   );
 };
 

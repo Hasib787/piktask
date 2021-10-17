@@ -1,62 +1,57 @@
 import {
+  Button,
   Container,
   FormControl,
   Grid,
-  ListItem,
   Select,
   Typography,
 } from "@material-ui/core";
-import axios from "axios";
+import ProductNotFound from "../../components/ui/ProductNotFound";
+import CallToAction from "../../components/ui/CallToAction";
+import Product from "../../components/ui/Products/Product";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import heroBanner from "../../assets/banner/banner-category-page.png";
-import CallToAction from "../../components/ui/CallToAction";
+import HeroSection from "../../components/ui/Hero";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import HeroSection from "../../components/ui/Hero";
-import Product from "../../components/ui/Products/Product";
-import TagButtons from "../../components/ui/TagButtons";
+import Loader from "../../components/ui/Loader";
 import Layout from "../../Layout";
 import useStyles from "./Category.styles";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-const Category = () => {
+export const Category = () => {
   const classes = useStyles();
-  const { catName, id } = useParams();
+  const { catName } = useParams();
+  const user = useSelector((state) => state.user);
 
-
+  const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [totalImageCount, setTotalImageCount] = useState("");
-
   const [categories, setCategories] = useState([]);
-  const [popularSearchKeywords, setPopularSearchKeywords] = useState([]);
-  const [allTags, setAllTags] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const categoryItem = categories.find((item) => item?.slug === catName);
 
   useEffect(() => {
+    setLoading(true);
     getCategories();
     getCategoriesWithId();
     popularKeyWords();
-    getRelatedTags();
   }, [categoryItem?.id]);
 
-  const getRelatedTags =()=>{
-    axios
-    .get(`${process.env.REACT_APP_API_URL}/images/${id}`)
-    .then(({ data }) => {
-        if (data?.related_tags) {
-          const tags = data.related_tags;
-          setAllTags(tags.filter(e =>  e));
-        }
-  }).catch((error) => {
-    console.log(error);
-  });
-};
   const getCategoriesWithId = () => {
-    if (categoryItem?.id !== undefined) {
+    if (categoryItem?.id) {
+      let relatedImageURL;
+
+      if (user && user?.id) {
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}`;
+      } else {
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`;
+      }
+
       axios
-        .get(`${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`)
+        .get(relatedImageURL)
         .then(({ data }) => {
           if (data?.status) {
             setCategoryProducts(data?.category_image);
@@ -73,14 +68,15 @@ const Category = () => {
     }
   };
 
-  const popularKeyWords = (limit = 10) => {
+  const popularKeyWords = () => {
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=${limit}}`
+        `${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10}`
       )
       .then(({ data }) => {
         if (data?.status) {
-          setPopularSearchKeywords(data?.keywords);
+          const popularSearch = data?.keywords;
+          setPopularSearchKeywords(popularSearch.filter((e) => e));
         }
       })
       .catch((error) => {
@@ -91,7 +87,7 @@ const Category = () => {
 
   const getCategories = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/`)
+      .get(`${process.env.REACT_APP_API_URL}/categories?limit=50`)
       .then(({ data }) => {
         if (data?.status) {
           setCategories(data.categories);
@@ -106,7 +102,7 @@ const Category = () => {
   //Fetch api to get data for the category page by sorting by popularity
   const getCategoryProducts = (e) => {
     const product = e.target.value;
-    if (categoryItem?.id !== undefined) {
+    if (categoryItem?.id) {
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
@@ -127,39 +123,13 @@ const Category = () => {
   };
 
   return (
-    <Layout>
+    <Layout title={`${catName} | Piktask`}>
       <Header />
       <HeroSection
-        background={heroBanner}
         size="large"
         creativeWorksDone
         title="Graphic Resource for Free Download"
       />
-
-      <div className={classes.tagWrapper}>
-        <Container>
-            {/* BUTTONS OF TAGS */}
-            <TagButtons allTags={allTags} />
-          {/* <Grid container className={classes.root}>
-            <Grid item md={2} sm={12} className={classes.columnItem}>
-              <Typography className={classes.tagTitle} variant="h3">
-                Popular Search:
-              </Typography>
-            </Grid>
-
-            <Grid item md={10} sm={12} className={classes.columnItem}>
-              {popularSearchKeywords.length &&
-                popularSearchKeywords.map((keyword, index) => (
-                  <ListItem key={index} className={classes.linkItem}>
-                    <Link className={classes.link} to="#">
-                      {`${index + 1}: ${keyword}`}
-                    </Link>
-                  </ListItem>
-                ))}
-            </Grid>
-          </Grid> */}
-        </Container>
-      </div>
 
       <Container>
         <div className={classes.shortList}>
@@ -188,12 +158,12 @@ const Category = () => {
 
       <Container>
         <Typography className={classes.totalResources} variant="h3">
-          {totalImageCount && `${totalImageCount} Resources`}
+          {`${totalImageCount} Resources`}
         </Typography>
 
         <Grid classes={{ container: classes.container }} container spacing={2}>
           {isLoading ? (
-            <h2>Loading now......</h2>
+            <Loader />
           ) : (
             <>
               {categoryProducts.length ? (
@@ -210,15 +180,38 @@ const Category = () => {
                   </Grid>
                 ))
               ) : (
-                <Typography variant="body1">No resources found</Typography>
+                <ProductNotFound />
               )}
             </>
           )}
         </Grid>
       </Container>
 
+      <div className={classes.tagWrapper}>
+        <Container>
+          <Grid container>
+            <Grid item className={classes.tagsContainer}>
+              <Typography className={classes.tagTitle} variant="h3">
+                Popular Search:
+              </Typography>
+              {popularSearchKeywords?.map((tag, index) => (
+                <Button
+                  className={classes.tagButton}
+                  key={index}
+                  tag={tag}
+                  component={Link}
+                  to={`/tag/${tag}`}
+                >
+                  {tag}
+                </Button>
+              ))}
+            </Grid>
+          </Grid>
+        </Container>
+      </div>
+
       <CallToAction
-        title="Join Designhill designer team"
+        title="Join Piktask team"
         subtitle="Upload your first copyrighted design. Get $5 designer coupon packs"
         buttonText="Join Us"
         uppercase
@@ -228,5 +221,3 @@ const Category = () => {
     </Layout>
   );
 };
-
-export default Category;

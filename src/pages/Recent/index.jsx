@@ -92,6 +92,7 @@ export const Recent = () => {
 
   // console.log("recentProduct", recentProduct);
   // console.log("items", items);
+
   return (
     <Layout title="Recent Images | Piktask" description="Recent Images">
       <Header />

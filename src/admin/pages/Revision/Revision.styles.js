@@ -2,17 +2,26 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   adminRoot: {
-    display: "flex",
-    marginTop: "8rem",
+    // display: "flex",
+  },
+  adminSidebar: {
+    marginTop: "0rem",
+    [theme.breakpoints.down(769)]: {
+      display: "none",
+    },
   },
   content: {
-    // flexGrow: 1,
-    // padding: theme.spacing(2),
     padding: 0,
-    width: "calc(100vw - 315px)",
-    marginLeft: "2rem",
-    marginRight: "2rem",
-    marginTop: "2rem",
+    marginLeft: "28rem",
+    marginRight: "0rem",
+    marginTop: "10rem",
+    [theme.breakpoints.down(769)]: {
+      width: "100%",
+      marginLeft: "0rem",
+    },
+  },
+  cardContentWrapper: {
+    margin: "2rem",
   },
   noItemsFound: {
     marginLeft: "1.5rem",
@@ -22,26 +31,37 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: "2rem",
-    marginBottom: "4.5rem",
+    marginBottom: "1.5rem",
   },
   cardWrapper: {
     position: "relative",
-    padding: "3.5rem 3rem 0",
     height: "100%",
     "& img": {
       width: "100%",
-      borderRadius: theme.shape.borderRadius,
+      height: 150,
+      objectFit: "cover",
+      borderRadius: "0.1rem",
     },
+    "& .MuiCardContent-root": {
+      paddingBottom: "0rem !important",
+    },
+  },
+  cardImage: {
+    padding: "0.4rem 0.4rem 0rem 0.4rem",
+  },
+  cardContent: {
+    padding: "0rem",
+    backgroundColor: "#f1f1f1",
+    marginTop: "-0.39rem !important",
     "& h3": {
-      fontSize: "2rem",
-      marginBottom: "1rem",
+      fontSize: "1.4rem",
       lineHeight: "1.5",
       color: "#114960",
+      textAlign: "center",
+      padding: "0.5rem 0rem",
     },
-    "& h6": {
-      fontSize: "1.5rem",
-      fontWeight: 500,
-      color: "#114960",
+    "& .MuiCardContent-root": {
+      padding: "0rem !important",
     },
   },
 }));

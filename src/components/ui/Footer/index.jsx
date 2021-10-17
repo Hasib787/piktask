@@ -1,118 +1,84 @@
 import {
   Container,
   Grid,
-  Link,
   List,
   ListItem,
   Typography,
 } from "@material-ui/core";
 import React from "react";
-import SocialShare from "../SocialShare";
 import Copyright from "./CopyRight";
-import { Column, useStyles } from "./Footer.styles";
-import facebook from "../../../assets/icons/facebook-round.svg";
-import twitter from "../../../assets/icons/twitter-round.svg";
-import instagram from "../../../assets/icons/instagram-round.svg";
+import { useStyles } from "./Footer.styles";
+import { Link } from "react-router-dom";
 
-const Footer = ({ addminFooter = false }) => {
+const Footer = () => {
   const classes = useStyles();
-  const socialMedias = [
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com/",
-      image: instagram,
-    },
-    {
-      name: "Twitter",
-      url: "https://twitter.com/",
-      image: twitter,
-    },
-    {
-      name: "Facebook",
-      url: "https://www.facebook.com/",
-      image: facebook,
-    },
-  ];
   return (
-    <footer
-      style={addminFooter ? { marginTop: "4rem" } : undefined}
-      className={classes.footerRoot}
-    >
+    <footer className={classes.footerRoot}>
       <Container classes={{ root: classes.root }}>
         <Grid container spacing={3}>
-          <Column>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Categories
             </Typography>
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Graphics &amp; Design
+                <Link className={classes.navLink} to="/category/sports">
+                  Graphic Template 
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Digital Marketing
+                <Link className={classes.navLink} to="/category/travel">
+                Social Media Banner
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Writing &amp; Translation
+                <Link className={classes.navLink} to="/category/education">
+                  Logo Mockup
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Video &amp; Animation
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Music &amp; Audio
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Programming &amp; Tech
+                <Link className={classes.navLink} to="/category/music">
+                  Abstract Background
                 </Link>
               </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
-              Contact
+              Content
             </Typography>
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/images/recent_images">
                   New resources
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/images/popular_images">
                   The most popular content
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/search/trending_search">
                   Search trends
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/allBlogs/blogs">
                   Blog
                 </Link>
               </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Information
             </Typography>
 
             <List className={classes.menuWrapper}>
-              <ListItem className={classes.navItem}>
+              {/* <ListItem className={classes.navItem}>
                 <Link className={classes.navLink} to="#">
                   Plans &amp; pricing
                 </Link>
@@ -121,15 +87,10 @@ const Footer = ({ addminFooter = false }) => {
                 <Link className={classes.navLink} to="#">
                   Affiliate
                 </Link>
-              </ListItem>
+              </ListItem> */}
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/aboutUs">
                   About us
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Jobs
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
@@ -137,65 +98,46 @@ const Footer = ({ addminFooter = false }) => {
                   Sell your content
                 </Link>
               </ListItem>
+              <ListItem className={classes.navItem}>
+                <Link className={classes.navLink} to="/support">
+                  Support
+                </Link>
+              </ListItem>
+              <ListItem className={classes.navItem}>
+                <Link className={classes.navLink} to="/contact">
+                  Contact
+                </Link>
+              </ListItem>
             </List>
-          </Column>
-          <Column>
+          </Grid>
+          <Grid item xs={6} sm={3} md={3} className={classes.footerWrapper}>
             <Typography variant="h3" className={classes.footerHeading}>
               Legal
             </Typography>
 
             <List className={classes.menuWrapper}>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/termsConditions">
                   Terms &amp; conditions
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/licenseAgreement">
                   License Agreement
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/copyrightInformation">
                   Copyright information
                 </Link>
               </ListItem>
               <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
+                <Link className={classes.navLink} to="/cookiesPolicy">
                   Cookies policy
                 </Link>
               </ListItem>
             </List>
-          </Column>
-          <Column>
-            <Typography variant="h3" className={classes.footerHeading}>
-              Help
-            </Typography>
-
-            <List className={classes.menuWrapper}>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Support
-                </Link>
-              </ListItem>
-              <ListItem className={classes.navItem}>
-                <Link className={classes.navLink} to="#">
-                  Contact
-                </Link>
-              </ListItem>
-              <Typography variant="h3" className={classes.socialMediaTitle}>
-              Social Media
-            </Typography>
-            <Grid className={classes.gridRoot}>
-            <Grid item xs={12}>
-            <SocialShare
-              socialMedias={socialMedias}
-              position="left"
-            />
           </Grid>
-          </Grid>
-            </List>
-          </Column>
         </Grid>
       </Container>
 

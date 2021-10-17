@@ -1,5 +1,4 @@
 import {
-  Button,
   ClickAwayListener,
   Grid,
   Grow,
@@ -11,14 +10,20 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import firebase from "firebase";
-import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
+// import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
 import useStyles from "./Popper.styles";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+// import DevicesIcon from "@material-ui/icons/Devices";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const CustomPopper = ({
   open,
@@ -28,22 +33,47 @@ const CustomPopper = ({
   handleListKeyDown,
 }) => {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-  const userSignout = () => {
-    if (user && user?.token) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          toast.success("You successfully signed out");
-          window.location.reload(history.replace("/"));
+  const [downloadCount, setDownloadCount] = useState("");
+  const [downloadLimit, setDownloadLimit] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
+          headers: { Authorization: user?.token },
         })
-        .catch((error) => {
-          console.log("Signout error", error.message);
-        });
+        .then(({data}) => {
+          if (data.status) {
+            setDownloadCount(data?.downloads);
+            setDownloadLimit(data?.daily_limit - data?.downloads);
+            setLoading(false);
+          }
+        })
+        .catch((error) => { console.log(error);});
+    }
+  }, [user.token]);
+
+  const handleSignout = () => {
+    if (user && user?.token) {
+      toast.success("You successfully signed out");
+      user.isLogged = false;
+      history.push("/");
       localStorage.clear();
+
+      dispatch({
+        type: "LOGOUT",
+        payload: {
+          email: "",
+          token: "",
+        },
+      });
     }
   };
 
@@ -100,21 +130,21 @@ const CustomPopper = ({
                     </div>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button className={classes.accountStatusBtn}>
+                    {/* <Button className={classes.accountStatusBtn}>
                       <img
                         className={classes.accountIcon}
                         src={crownGreenIcon}
                         alt="Free"
                       />
                       Free
-                    </Button>
+                    </Button> */}
                   </Grid>
                 </Grid>
 
                 <Grid container className={classes.productDownloadCount}>
                   <Grid item xs={6} className={classes.productDownloadGrid}>
                     <Typography variant="h2" className={classes.totalAmount}>
-                      5
+                      {downloadCount}
                     </Typography>
                     <Typography variant="h3" className={classes.totalText}>
                       Daily Downloads
@@ -122,7 +152,7 @@ const CustomPopper = ({
                   </Grid>
                   <Grid item xs={6} className={classes.productDownloadGrid}>
                     <Typography variant="h2" className={classes.totalAmount}>
-                      5
+                      {downloadLimit}
                     </Typography>
                     <Typography variant="h3" className={classes.totalText}>
                       Remaining Downloads
@@ -134,48 +164,61 @@ const CustomPopper = ({
                   className={classes.userMenuItem}
                   onClick={handleClose}
                   component={Link}
-                  to="/admin/settings"
+                  to="/user/profile"
                 >
-                  <span>My Profile</span>
+                  <div className={classes.userMenuIcon}>
+                    <PersonOutlineIcon />
+                    <span>Edit Profile</span>
+                  </div>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
                   // onClick={handleClose}
                   component={Link}
-                  to="/admin/upload"
+                  to="/user/favorites"
                 >
-                  <span>Go Upload</span>
+                  <div className={classes.userMenuIcon}>
+                    <FavoriteBorderIcon />
+                    <span>Favourite</span>
+                  </div>
+                  <ArrowForwardIosIcon />
+                </MenuItem>
+                <MenuItem
+                  className={classes.userMenuItem}
+                  // onClick={handleClose}
+                  component={Link}
+                  to="/user/downloads"
+                >
+                  <div className={classes.userMenuIcon}>
+                    <GetAppIcon />
+                    <span>Downloads({downloadCount}/{downloadLimit})</span>
+                  </div>
                   <ArrowForwardIosIcon />
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
                   onClick={handleClose}
+                  component={Link}
+                  to="/user/following"
                 >
-                  <span>Subscriptions</span>
+                  <div className={classes.userMenuIcon}>
+                    <PeopleOutlineIcon />
+                    <span>Following</span>
+                  </div>
                   <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                >
-                  <span>My Download</span>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                >
-                  Followers
                 </MenuItem>
                 <MenuItem
                   className={classes.userMenuItem}
                   onClick={(e) => {
                     handleClose(e);
-                    userSignout();
+                    handleSignout();
                   }}
                 >
-                  Logout
+                  <div className={classes.userMenuIcon}>
+                    <PowerSettingsNewIcon />
+                    <span>Logout</span>
+                  </div>
                 </MenuItem>
               </MenuList>
             </ClickAwayListener>
