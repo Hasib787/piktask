@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         opacity: 1,
         visibility: "visible",
         transition: "all 0.3s linear",
+        cursor: "pointer",
       },
     },
   },
@@ -66,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   uploadIcon: {
     fontSize: "2.5rem",
     color: "#fff",
+    cursor: "pointer",
   },
   uploadButton: {
     color: "#fff",

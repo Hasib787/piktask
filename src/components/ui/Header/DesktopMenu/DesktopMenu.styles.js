@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuTab: {
     marginLeft: 25,
-    [theme.breakpoints.down(577)]: {
+    [theme.breakpoints.down(769)]: {
       display: "none",
     },
   },
