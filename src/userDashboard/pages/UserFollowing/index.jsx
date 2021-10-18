@@ -19,7 +19,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductNotFound from "../../../components/ui/ProductNotFound";
-import { Pagination } from "@material-ui/lab";
+import Paginations from "../../../components/ui/Pagination";
 
 const UserFollowing = () => {
   const classes = useStyles();
@@ -143,18 +143,7 @@ const UserFollowing = () => {
               )}
               {followersItem.length > 9 && (
                 <>
-                  <Spacing space={{ height: "3rem" }} />
-                  <div className={classes.pagination}>
-                    <Pagination
-                      onChange={(event, value) => setPageCount(value)}
-                      count={10}
-                      variant="outlined"
-                      shape="rounded"
-                      color="primary"
-                      size="medium"
-                      pageCount={pageCount}
-                    />
-                  </div>
+                  <Paginations count={10} />
                 </>
               )}
             </Grid>

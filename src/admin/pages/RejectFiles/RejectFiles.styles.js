@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   closeIcon: {
     cursor: "pointer",
-    fontSize: "3.5rem",
+    fontSize: "2.5rem",
     color: "#B7B7B7",
     "&:hover": {
       color: "#0088f2",
@@ -98,7 +98,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   rejectionMessage: {
-    padding: "0rem 4rem",
+    // height:"100vh",
+    padding: "2rem 4rem",
     margin: "2.2rem 0",
     "& p": {
       color: "#B1B1B1",
@@ -121,16 +122,17 @@ const useStyles = makeStyles((theme) => ({
   },
   viewBtn: {
     backgroundColor: "#0088f2",
-    fontSize: "2.2rem",
-    padding: "1.5rem 2rem",
+    fontSize: "1.6rem",
+    padding: "1rem 2rem",
     borderRadius: 0,
     color: "#FFF",
     border: "none",
 
     "&:hover": {
-      backgroundColor: "rgb(17 122 0 / 95%)",
+      backgroundColor: "#0773c5",
     },
   },
+ 
 }));
 
 export default useStyles;
