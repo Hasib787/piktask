@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
     "@media (max-width: 1024px)": {
       flexWrap: "wrap",
-      justifyContent: "flex-start",
+      justifyContent: "space-between",
     },
     "@media (max-width: 640px)": {
       justifyContent: "center",
@@ -85,6 +85,18 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "@media (max-width: 1024px)": {
+      width: "auto",
+      paddingRight: "2rem",
+      paddingLeft: "2rem",
+      marginBottom: "3rem",
+
+      // "&:after": {
+      //   backgroundColor: "transparent",
+      //   width: 0,
+      //   height: 0,
+      // },
+    },
+    "@media (max-width: 577px)": {
       width: "auto",
       paddingRight: "2rem",
       paddingLeft: "2rem",

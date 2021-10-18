@@ -57,20 +57,20 @@ const Publish = () => {
     if(user?.token){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images`,
-      {
-        headers: { Authorization: user?.token },
-      })
-      .then(({data}) => {
-        if(data?.status) {
-          setAllPublishProduct(data?.images);
-          setLoading(false);
+        { headers: { Authorization: user?.token },}
+        )
+        .then(({data}) => {
+          if(data?.status) {
+            setAllPublishProduct(data?.images);
+            setLoading(false);
 
-          dispatch({
-            type: "TOTAL_IMAGE_EARNING",
-            payload: [...data?.images],
-          });
+            dispatch({
+              type: "TOTAL_IMAGE_EARNING",
+              payload: [...data?.images],
+            });
+          }
         }
-      })
+      )
     }
   }, [user?.token, dispatch]);
 
