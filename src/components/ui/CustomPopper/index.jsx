@@ -62,7 +62,6 @@ const CustomPopper = ({
 
   const handleSignout = () => {
     if (user && user?.token) {
-      toast.success("You successfully signed out");
       user.isLogged = false;
       history.push("/");
       localStorage.clear();

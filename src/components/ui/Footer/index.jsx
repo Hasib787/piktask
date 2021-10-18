@@ -96,14 +96,14 @@ const Footer = () => {
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="/images/popular_images">
+                  <Link className={classes.navLink} to="/images/popular-images">
                     The most popular content
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
                   <Link
                     className={classes.navLink}
-                    to="/search/trending_search"
+                    to="/search/trending-search"
                   >
                     Search trends
                   </Link>
@@ -243,12 +243,12 @@ const Footer = () => {
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/images/popular_images">
+                <Link className={classes.navLink} to="/images/popular-images">
                   The most popular content
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/search/trending_search">
+                <Link className={classes.navLink} to="/search/trending-search">
                   Search trends
                 </Link>
               </ListItemButton>

@@ -13,7 +13,7 @@ const Paginations = (props) => {
       <Spacing space={{ height: "3rem" }} />
       <div className={classes.pagination}>
         <Pagination
-          onChange={(event, value) => setPageCount(value)}
+        //  setPageCount= {onChange={(value) => setPageCount(value)}}
           variant="outlined"
           shape="rounded"
           color="primary"

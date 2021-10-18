@@ -137,7 +137,7 @@ export const Recent = () => {
 
       <Spacing space={{ height: "2.5rem" }} />
 
-      <Container>
+      {/* <Container>
         <SectionHeading title="Top Selling Author" large>
           <Button
             className={classes.headingButton}
@@ -147,10 +147,10 @@ export const Recent = () => {
             See More
           </Button>
         </SectionHeading>
-      </Container>
+      </Container> */}
 
       {/* Top selling author */}
-      <TopSeller homeTopSeller />
+      {/* <TopSeller homeTopSeller /> */}
       {/* BLOG SECTION */}
       <Blog />
 
