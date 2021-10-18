@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: "5rem",
   },
   footerWrapper: {
-    paddingLeft: "11rem",
+    paddingLeft: "11rem !important",
 
     "@media (max-width: 1200px)": {
       paddingLeft: "5rem",

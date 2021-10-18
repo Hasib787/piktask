@@ -106,7 +106,7 @@ const AuthorProfile = () => {
               {profileInfo ? (
                 <Grid container className={classes.profileWrapper}>
                   <div className={classes.authorImg}>
-                    {profileInfo?.avatar ? (
+                    {profileInfo?.avatar ? (  
                       <img
                         src={profileInfo?.avatar}
                         alt={profileInfo?.username}

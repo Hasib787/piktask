@@ -1,5 +1,4 @@
 import { Container, Grid } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/styles";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import Footer from "../../../components/ui/Footer";
 import Header from "../../../components/ui/Header";
 import SectionHeading from "../../../components/ui/Heading";
 import Loader from "../../../components/ui/Loader";
+import Paginations from "../../../components/ui/Pagination";
 import ProductNotFound from "../../../components/ui/ProductNotFound";
 import Product from "../../../components/ui/Products/Product";
 import Layout from "../../../Layout";
@@ -19,32 +19,6 @@ const useStyles = makeStyles({
     "@media (max-width: 576px)": {
       maxWidth: "100%",
       flexBasis: "100%",
-    },
-  },
-  pagination: {
-    display: "flex",
-    justifyContent: "flex-end",
-
-    "& button": {
-      fontSize: "1.4rem",
-      fontWeight: 500,
-      borderColor: "#0088f2",
-      color: "#0088f2",
-    },
-    "& button:hover": {
-      backgroundColor: "#0088f2",
-      color: "#fff",
-    },
-    "& button svg": {
-      fontSize: "2.5rem",
-    },
-    "& .Mui-selected ": {
-      backgroundColor: "#0088f2",
-      color: "#fff",
-      borderColor: "#0088f2",
-    },
-    "& .Mui-selected:hover ": {
-      backgroundColor: "#0773c5",
     },
   },
 });
@@ -116,21 +90,10 @@ const FavoriteItems = () => {
               )}
             </Grid>
             {favoriteProducts?.length > 17 && (
-                <>
-                  <Spacing space={{ height: "3rem" }} />
-                  <div className={classes.pagination}>
-                    <Pagination
-                      onChange={(event, value) => setPageCount(value)}
-                      count={10}
-                      variant="outlined"
-                      shape="rounded"
-                      color="primary"
-                      size="medium"
-                      pageCount={pageCount}
-                    />
-                  </div>
-                </>
-              )}
+              <>
+                <Paginations count={10} />
+              </>
+            )}
           </Grid>
         </Grid>
       </Container>

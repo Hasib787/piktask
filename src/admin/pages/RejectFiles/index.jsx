@@ -8,7 +8,10 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Footer from "../../../components/ui/Footer";
+import Paginations from "../../../components/ui/Pagination";
+import ProductNotFound from "../../../components/ui/ProductNotFound";
 import productData from "../../../data/products.json";
 import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
@@ -20,7 +23,11 @@ const RejectFiles = () => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState(productData.products);
+  const [rejectImage, setRejectImage] = useState([]);
   const [rejectMessage, setRejectMessage] = useState();
+  const [pageCount, setPageCount] = useState(1);
+
+  const user = useSelector((state) => state.user);
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -36,6 +43,36 @@ const RejectFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
+
+  const rejectItem = 6;
+  //load data
+  useEffect(() => {
+    if (user.token) {
+      try {
+        async function fetchApi() {
+          let response = await fetch(
+            `${process.env.REACT_APP_API_URL}/contributor/images/rejected?limit=${rejectItem}&page=${pageCount}`,
+            {
+              headers: {
+                Authorization: user.token,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = await response.json();
+          if (data?.status) {
+            console.log("data", data);
+            setRejectImage(data);
+            console.log("set data", data);
+          }
+        }
+        fetchApi();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [pageCount,user.token]);
+
   const handleClick = (product) => {
     // Run  when the reject status is true
     if (product?.reject?.status) {
@@ -46,7 +83,6 @@ const RejectFiles = () => {
 
   return (
     <Layout title={"RejectFiles || Piktask"}>
-
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
@@ -77,10 +113,16 @@ const RejectFiles = () => {
                 ))
               ) : (
                 <div className={classes.noItemsFound}>
-                  <Typography>No products are in pending</Typography>
+                  <ProductNotFound noCollection="Reject"/>
                 </div>
               )}
+
             </Grid>
+              {products?.length > 5 && (
+                <>
+                 <Paginations count={10} />
+                </>
+              )}
           </div>
           <Footer />
         </main>
@@ -95,7 +137,9 @@ const RejectFiles = () => {
       >
         <div className={classes.modalHeader}>
           <div className={classes.headingContent}>
-            <Heading>Reasons for rejection</Heading>
+            <Typography variant="h3" className={classes.title}>
+              Reasons for rejection
+            </Typography>
             <CloseIcon
               className={classes.closeIcon}
               onClick={() => setOpenModal(false)}
@@ -130,49 +174,23 @@ const RejectFiles = () => {
           </div>
           <div className={classes.article}>
             <Typography variant="h3" className={classes.title}>
-              Plagiarism
+              Composition
             </Typography>
             <Typography variant="body1">
-              All artwork you send must be original and of your own. Thus, if
-              you send us designs that imitate other resources or reuse elements
-              of another author, we will reject your content. We do not accept
-              designs using vector elements from other resources already
-              published in Freepik, whether they belong to the same author or to
-              a different one.{" "}
+              The design does not comply with the basic composition rules. In
+              order for a resource to have good composition, all elements must
+              be put together coherently. Make sure they are correctly arranged
+              in the artboard and have adequate size. Content with a poor
+              arrangement of elements or with an unbalanced composition will be
+              rejected
             </Typography>
           </div>
-          <div className={classes.article}>
-            <Typography variant="h3" className={classes.title}>
-              Trademark / Copyright
-            </Typography>
-            <Typography variant="body1">
-              Images that contain registered trademarks are not allowed. Example
-              of trademarks: Adobe, Amazon, Nintendo… However, the use of social
-              network icons is allowed.
-            </Typography>
-            <Typography variant="body1">
-              Celebrities and fictional characters are not allowed due to image
-              rights. Example of not allowed characters are politicians, famous
-              superheroes or Disney characters.
-            </Typography>
-          </div>
-          <div className={classes.article}>
-            <Typography variant="h3" className={classes.title}>
-              Unwanted elements in the artboard
-            </Typography>
-            <Typography variant="body1">
-              When you left unwanted elements in the artboard that are not part
-              of the illustration (reference images, nodes, separate parts of
-              the illustration, etc.)
-            </Typography>
-          </div>
+          
         </div>
         <Button variant="contained" className={classes.viewBtn}>
           View More Reasons
         </Button>
       </Drawer>
-
-      
     </Layout>
   );
 };
