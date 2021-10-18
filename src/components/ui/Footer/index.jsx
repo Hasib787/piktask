@@ -4,25 +4,11 @@ import {
   List,
   ListItem,
   Typography,
-  ListSubheader,
-  // ListItemButton,
   ListItemIcon,
-  ListItemText,
   Collapse,
-  // ExpandLess,
-  // ExpandMore,
 } from "@material-ui/core";
-// import ListSubheader from "@mui/material/ListSubheader";
-// import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-// import ListItemText from "@mui/material/ListItemText";
-// import Collapse from "@mui/material/Collapse";
-// import ExpandLess from "@mui/icons-material/ExpandLess";
-// import ExpandMore from "@mui/icons-material/ExpandMore";
-// import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
-// import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import React, { useEffect, useState } from "react";
 import Copyright from "./CopyRight";
@@ -31,10 +17,10 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [contact, setContact] = React.useState(true);
-  const [information, setInformation] = React.useState(true);
-  const [legal, setLegal] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [contact, setContact] = useState(true);
+  const [information, setInformation] = useState(true);
+  const [legal, setLegal] = useState(true);
 
   const handleClick = () => {
     setOpen(!open);
@@ -199,110 +185,145 @@ const Footer = () => {
         </Container>
       ) : (
         <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          className={classes.collapseRoot}
           component="nav"
           aria-labelledby="nested-list-subheader"
         >
           <ListItemButton onClick={handleClick}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon} />
             <ListItem className={classes.title}>CATEGORIES</ListItem>
             {open ? (
-              <ExpandLessRoundedIcon className={classes.arrowIcon} />
-            ) : (
               <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
             )}
           </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={!open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Graphic Template" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/category/sports">
+                  Graphic Template
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Social Media Banner" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/category/travel">
+                  Social Media Banner
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Logo Mockup" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/category/education">
+                  Logo Mockup
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Abstract Background" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/category/music">
+                  Abstract Background
+                </Link>
               </ListItemButton>
             </List>
           </Collapse>
 
           <ListItemButton onClick={handleContact}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon} />
             <ListItem className={classes.title}>CONTENT</ListItem>
             {contact ? (
-              <ExpandLessRoundedIcon className={classes.arrowIcon} />
-            ) : (
               <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
             )}
           </ListItemButton>
-          <Collapse in={contact} timeout="auto" unmountOnExit>
+          <Collapse in={!contact} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="New resources" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link
+                  className={classes.navLink}
+                  to="/recentImage/recent-images"
+                >
+                  New resources
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="The most popular content" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/images/popular_images">
+                  The most popular content
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Search trends" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/search/trending_search">
+                  Search trends
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Blog" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/allBlogs/blogs">
+                  Blog
+                </Link>
               </ListItemButton>
             </List>
           </Collapse>
 
           <ListItemButton onClick={handleInformation}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon} />
             <ListItem className={classes.title}>INFORMATION</ListItem>
             {information ? (
-              <ExpandLessRoundedIcon className={classes.arrowIcon} />
-            ) : (
               <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
             )}
           </ListItemButton>
-          <Collapse in={information} timeout="auto" unmountOnExit>
+          <Collapse in={!information} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="About us" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/aboutUs">
+                  About us
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Sell your content" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="#">
+                  Sell your content
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Support" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/support">
+                  Support
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Contact" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/contact">
+                  Contact
+                </Link>
               </ListItemButton>
             </List>
           </Collapse>
 
           <ListItemButton onClick={handleLegal}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon} />
             <ListItem className={classes.title}>LEGAL</ListItem>
             {legal ? (
-              <ExpandLessRoundedIcon className={classes.arrowIcon} />
-            ) : (
               <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
             )}
           </ListItemButton>
-          <Collapse in={legal} timeout="auto" unmountOnExit>
+          <Collapse in={!legal} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary=" Terms &amp; conditions" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/termsConditions">
+                  Terms &amp; conditions
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="License Agreement" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/licenseAgreement">
+                  License Agreement
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Copyright information" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/copyrightInformation">
+                  Copyright information
+                </Link>
               </ListItemButton>
-              <ListItemButton sx={{ pl: 9 }}>
-                <ListItemText primary="Cookies policy" />
+              <ListItemButton sx={{ pl: 4 }}>
+                <Link className={classes.navLink} to="/cookiesPolicy">
+                  Cookies policy
+                </Link>
               </ListItemButton>
             </List>
           </Collapse>

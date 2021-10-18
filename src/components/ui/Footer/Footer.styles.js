@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     paddingBottom: "5rem",
     paddingTop: "5rem",
+    [theme.breakpoints.down(900)]:{
+      display: "none",
+    },
   },
   footerWrapper: {
     paddingLeft: "11rem !important",
@@ -64,13 +67,20 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   // mobile version
-  title:{
+  collapseRoot:{
+    width: "100%",
+    padding:"2rem 0",
+  },
+  listItemIcon:{
+    minWidth:"0 !important",
+  },
+  title: {
     padding: "0",
+    fontSize: "1.4rem",
     fontWeight: "500",
   },
-  arrowIcon:{
-    width:"2em !important",
-    height:"1.5em !important"
+  arrowIcon: {
+    width: "2em !important",
+    height: "1.5em !important",
   },
- 
 }));
