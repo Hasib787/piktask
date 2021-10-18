@@ -22,6 +22,23 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "10rem",
     margin: "2rem",
   },
+  headingWrapper: {
+    display: "flex",
+    justifyContent:"space-between",
+  },
+  withdrawBtn: {
+    padding: "0.2rem 3.5rem",
+    backgroundColor: "#0088f2",
+    color: "#fff",
+    border: ".2rem solid",
+    borderColor: "#0088f2",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      backgroundColor: "#0773c5",
+      borderColor: "#0773c5",
+      color: "#fff",
+    },
+  },
   indicator: {
     backgroundColor: "transparent",
   },
