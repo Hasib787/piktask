@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   menuTab: {
     marginLeft: 25,
+    [theme.breakpoints.down(577)]: {
+      display: "none",
+    },
   },
   menuItem: {
     opacity: 1,

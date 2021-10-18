@@ -36,7 +36,7 @@ export const Home = () => {
 
   return (
     <Layout
-      title="Graphic Resources for Free Download || Piktask"
+      title="Graphic Resources for Free Download | Piktask"
       description="Graphic Resources for Free Download"
     >
       <Header />
@@ -67,7 +67,7 @@ export const Home = () => {
       {popularCats?.length &&
         popularCats.map((category, index) => (
           <Container>
-            <Products key={category.index} category={category} showHeading count={8} />
+            <Products key={index} category={category} showHeading count={8} />
           </Container>
         ))}
       ;

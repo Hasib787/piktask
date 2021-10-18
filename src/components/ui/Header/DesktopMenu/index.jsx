@@ -204,7 +204,7 @@ const DesktopMenu = ({ history }) => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                {user?.token && user?.avatar ? (
+                {user?.token && user?.avatar !== "null" ? (
                   <img
                     className={classes.avatar}
                     src={user?.avatar}

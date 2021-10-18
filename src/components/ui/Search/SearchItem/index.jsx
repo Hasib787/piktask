@@ -9,7 +9,7 @@ const SearchItem = ({ item }) => {
   
 
   return (
-    <Link to={encodeURI(`/images/${item?.title.replace(/ /g, "_")}&id=${item?.image_id}`)} className={classes.searchItemWrapper}>
+    <Link to={encodeURI(`/images/${item?.title.toLowerCase().replace(/\s/g , "-")}&id=${item?.image_id}`)} className={classes.searchItemWrapper}>
       <div className={classes.searchLeft}>
         <div className={classes.thumbnail}>
           <img src={encodeURI(item?.thumbnail)} alt={item?.title} />

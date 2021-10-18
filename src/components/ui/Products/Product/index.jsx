@@ -64,7 +64,7 @@ const Product = ({ photo = null }) => {
       // `/images/${photo?.title.replace(/ /g, "_")}&id=${photo?.image_id}`;
 
       return encodeURI(
-        `/images/${data?.title.replace(/ /g, "_")}&id=${data?.image_id}`
+        `/images/${data?.title.toLowerCase().replace(/\s/g , "-")}&id=${data?.image_id}`
       );
     }
   }

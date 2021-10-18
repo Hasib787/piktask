@@ -126,6 +126,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: "4.5rem",
     },
+    [theme.breakpoints.down(577)]: {
+      display: "none"
+    },
   },
   searchCatItem: {
     padding: "1rem 0rem",
