@@ -63,5 +63,14 @@ export const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  // mobile version
+  title:{
+    padding: "0",
+    fontWeight: "500",
+  },
+  arrowIcon:{
+    width:"2em !important",
+    height:"1.5em !important"
+  },
  
 }));

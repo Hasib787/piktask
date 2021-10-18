@@ -1,12 +1,29 @@
-import { Container, Grid, List, ListItem, Typography } from "@material-ui/core";
-import ListSubheader from "@mui/material/ListSubheader";
+import {
+  Container,
+  Grid,
+  List,
+  ListItem,
+  Typography,
+  ListSubheader,
+  // ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  // ExpandLess,
+  // ExpandMore,
+} from "@material-ui/core";
+// import ListSubheader from "@mui/material/ListSubheader";
 // import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+// import ListItemIcon from "@mui/material/ListItemIcon";
+// import ListItemText from "@mui/material/ListItemText";
+// import Collapse from "@mui/material/Collapse";
+// import ExpandLess from "@mui/icons-material/ExpandLess";
+// import ExpandMore from "@mui/icons-material/ExpandMore";
+// import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessOutlined';
+import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
+// import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreOutlined';
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import React, { useEffect, useState } from "react";
 import Copyright from "./CopyRight";
 import { useStyles } from "./Footer.styles";
@@ -181,108 +198,115 @@ const Footer = () => {
           </Grid>
         </Container>
       ) : (
-        {
-          /* Mobile view */
-        }(
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-            subheader={
-              <ListSubheader component="div" id="nested-list-subheader">
-                Nested List Items
-              </ListSubheader>
-            }
-          >
-            <ListItemButton onClick={handleClick}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="CATEGORIES" />
-              {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Graphic Template" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Social Media Banner" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Logo Mockup" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Abstract Background" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+        >
+          <ListItemButton onClick={handleClick}>
+            <ListItemIcon></ListItemIcon>
+            <ListItem className={classes.title}>CATEGORIES</ListItem>
+            {open ? (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            )}
+          </ListItemButton>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Graphic Template" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Social Media Banner" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Logo Mockup" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Abstract Background" />
+              </ListItemButton>
+            </List>
+          </Collapse>
 
-            <ListItemButton onClick={handleContact}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="CONTENT" />
-              {contact ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={contact} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="New resources" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="The most popular content" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Search trends" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Blog" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+          <ListItemButton onClick={handleContact}>
+            <ListItemIcon></ListItemIcon>
+            <ListItem className={classes.title}>CONTENT</ListItem>
+            {contact ? (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            )}
+          </ListItemButton>
+          <Collapse in={contact} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="New resources" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="The most popular content" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Search trends" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Blog" />
+              </ListItemButton>
+            </List>
+          </Collapse>
 
-            <ListItemButton onClick={handleInformation}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="INFORMATION" />
-              {information ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={information} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="About us" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Sell your content" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Support" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Contact" />
-                </ListItemButton>
-              </List>
-            </Collapse>
+          <ListItemButton onClick={handleInformation}>
+            <ListItemIcon></ListItemIcon>
+            <ListItem className={classes.title}>INFORMATION</ListItem>
+            {information ? (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            )}
+          </ListItemButton>
+          <Collapse in={information} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="About us" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Sell your content" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Support" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Contact" />
+              </ListItemButton>
+            </List>
+          </Collapse>
 
-            <ListItemButton onClick={handleLegal}>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary="LEGAL" />
-              {legal ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={legal} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary=" Terms &amp; conditions" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="License Agreement" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Copyright information" />
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 9 }}>
-                  <ListItemText primary="Cookies policy" />
-                </ListItemButton>
-              </List>
-            </Collapse>
-          </List>
-        )
+          <ListItemButton onClick={handleLegal}>
+            <ListItemIcon></ListItemIcon>
+            <ListItem className={classes.title}>LEGAL</ListItem>
+            {legal ? (
+              <ExpandLessRoundedIcon className={classes.arrowIcon} />
+            ) : (
+              <ExpandMoreRoundedIcon className={classes.arrowIcon} />
+            )}
+          </ListItemButton>
+          <Collapse in={legal} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary=" Terms &amp; conditions" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="License Agreement" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Copyright information" />
+              </ListItemButton>
+              <ListItemButton sx={{ pl: 9 }}>
+                <ListItemText primary="Cookies policy" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
       )}
       <Copyright />
     </footer>
