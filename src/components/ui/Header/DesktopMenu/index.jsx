@@ -14,7 +14,7 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import signInIcon from "../../../../assets/icons/signInIcon.svg";
 import React, { useEffect, useRef, useState } from "react";
 // import crownIcon from "../../../../assets/icons/crown.svg";
-import logo from "../../../../assets/Logo/piktask-6.png";
+import logo from "../../../../assets/Logo/piktask-2.png";
 import { Link, NavLink } from "react-router-dom";
 import CustomPopper from "../../CustomPopper";
 import useStyles from "./DesktopMenu.styles";
