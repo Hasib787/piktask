@@ -170,12 +170,12 @@ const App = () => {
         <Route exact path="/reset-password" component={ResetPassword} />
 
         <Route exact path="/subscription" component={Subscription} />
-        <Route exact path="/sellers" component={Sellers} />
+        {/* <Route exact path="/sellers" component={Sellers} /> */}
         <Route exact path="/categories" component={Categories} />
-        <Route exact path="/search/trending_search" component={TrendingSearch} />
+        <Route exact path="/search/trending-search" component={TrendingSearch} />
 
         <Route exact path="/recentImage/recent-images" component={Recent} />
-        <Route exact path="/images/popular_images" component={PopularImages} />
+        <Route exact path="/images/popular-images" component={PopularImages} />
 
         <Route exact path="/search/:keywords" component={SearchResults} />
         <Route exact path="/allBlogs/blogs" component={AllBlogs} />

@@ -45,7 +45,7 @@ export const Category = () => {
       let relatedImageURL;
 
       if (user && user?.id) {
-        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}`;
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}&limit=50`;
       } else {
         relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`;
       }

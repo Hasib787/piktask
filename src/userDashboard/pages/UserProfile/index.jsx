@@ -28,16 +28,17 @@ import twitterLogo from "../../../assets/icons/twitter.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import Switch from "@material-ui/core/Switch";
+// import Switch from "@material-ui/core/Switch";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import Switch from '@mui/material/Switch';
 
 const clientId =
   "523940507800-llt47tmfjdscq2icuvu1fgh20hmknk4u.apps.googleusercontent.com";
 
-const UserProfile = () => {
+const   UserProfile = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const pathHistory = useHistory();
@@ -60,14 +61,15 @@ const UserProfile = () => {
   const [twitter, setTwitter] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [instagram, setInstagram] = useState("");
-  const [switchToggle, setSwitchToggle] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const [checked, setChecked] = useState(true);
 
-  const handleChange = (name) => (event) => {
-    setSwitchToggle({ [name]: event.target.checked });
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
   };
+
 
   //mobile view
   const [menuSate, setMenuSate] = useState({ mobileView: false });
@@ -667,11 +669,10 @@ const UserProfile = () => {
                     <FormControlLabel
                       control={
                         <Switch
-                          checked={switchToggle}
-                          onChange={handleChange}
-                          value="checkedB"
-                          color="primary"
-                        />
+                        checked={checked}
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                      />
                       }
                       label="Primary"
                     />
