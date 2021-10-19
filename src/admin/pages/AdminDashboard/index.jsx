@@ -30,6 +30,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import followerIcon from '../../../assets/icons/followerIcon.png';
+import authorPhoto from "../../../assets/author.png";
 import Spacing from "../../../components/Spacing";
 import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
@@ -240,15 +241,9 @@ const AdminDashboard = () => {
                       <TableHead>
                         <TableRow className={classes.tableHead}>
                           <TableCell className={classes.tableCell}></TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Type
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Download
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Earning
-                          </TableCell>
+                          <TableCell className={classes.tableCell}>Type</TableCell>
+                          <TableCell className={classes.tableCell}>Download</TableCell>
+                          <TableCell className={classes.tableCell}>Earning</TableCell>
                         </TableRow>
                       </TableHead>
 
@@ -309,15 +304,9 @@ const AdminDashboard = () => {
                       <TableHead>
                         <TableRow className={classes.tableHead}>
                           <TableCell className={classes.tableCell}></TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Type
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Downloads
-                          </TableCell>
-                          <TableCell className={classes.tableCell}>
-                            Author
-                          </TableCell>
+                          <TableCell className={classes.tableCell}>Type</TableCell>
+                          <TableCell className={classes.tableCell}>Downloads</TableCell>
+                          <TableCell className={classes.tableCell}>Author</TableCell>
                         </TableRow>
                       </TableHead>
 
@@ -351,11 +340,19 @@ const AdminDashboard = () => {
                               className={`${classes.tableCell} ${classes.authorImgWrapper}`}
                             >
                               <Link to={`/author/${topFile?.username}`}>
-                                <img
-                                  className={classes.authorImg}
-                                  src={topFile?.avatar}
-                                  alt="Author"
-                                />
+                                {topFile?.avatar ? (
+                                  <img
+                                    className={classes.authorImg}
+                                    src={topFile?.avatar}
+                                    alt="AuthorPhoto"
+                                  />
+                                ) : (
+                                  <img
+                                    className={classes.authorImg}
+                                    src={authorPhoto}
+                                    alt="AuthorPhoto"
+                                  />
+                                )}
                               </Link>
                               <img
                                 className={classes.bestAuthorBadge}
