@@ -32,7 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     height: "100%",
-    paddingTop: "1rem",
+    display: "flex", 
+    margin: "0rem 1.5rem",
+    justifyContent: "space-between", 
+    alignItems: "center"
   },
   item: {
     height: "100%",

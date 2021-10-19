@@ -6,6 +6,7 @@ import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import BecomeContributor from "./pages/BecomeContributor";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 import PendingFiles from "./admin/pages/PendingFiles";
 import RejectFiles from "./admin/pages/RejectFiles";
 import SingleCategory from "./pages/SingleCategory";
@@ -20,7 +21,6 @@ import Revision from "./admin/pages/Revision";
 import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
-import { useDispatch, useSelector } from "react-redux";
 import theme from "./components/ui/Theme";
 import React, { useEffect } from "react";
 import jwt_decode from "jwt-decode";
@@ -142,12 +142,12 @@ const App = () => {
 
         {/* footer pages */}
         <Route exact path="/termsConditions" component={TermsConditions} />
-        <Route exact path="/copyrightInformation" component={CopyrightInfo} />
         <Route exact path="/licenseAgreement" component={LicenseAgreement} />
+        <Route exact path="/copyrightInformation" component={CopyrightInfo} />
         <Route exact path="/cookiesPolicy" component={CookiesPolicy} />
+        <Route exact path="/aboutUs" component={AboutUs} />
         <Route exact path="/support" component={Support} />
         <Route exact path="/contact" component={Contact} />
-        <Route exact path="/aboutUs" component={AboutUs} />
 
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />

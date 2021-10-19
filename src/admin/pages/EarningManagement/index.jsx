@@ -171,9 +171,7 @@ const EarningManagement = () => {
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectName}`,
-          {
-            headers: { Authorization: user?.token },
-          }
+          { headers: { Authorization: user?.token },}
         )
         .then(({ data }) => {
           if (data?.status) {
@@ -210,9 +208,7 @@ const EarningManagement = () => {
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${fromDates}&end=${toDates}&status=${selectedName}`,
-          {
-            headers: { Authorization: user?.token },
-          }
+          { headers: { Authorization: user?.token }, }
         )
         .then(({ data }) => {
           if (data?.status) {

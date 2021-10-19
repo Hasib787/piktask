@@ -1,13 +1,25 @@
-import { Card, CardContent, Dialog, Typography } from "@material-ui/core";
+import { Dialog, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import { CustomBtn, InputField } from "../../../../components/InputField";
 
 const useStyles = makeStyles({
+  withdrawModal: {
+    "& .MuiDialog-paperWidthSm": {
+      width: "40rem",
+    },
+  },
   withdrawInfo: {
-    padding: "2rem 5rem",
-  }
-})
+    padding: "4rem 5rem",
+    maxWidth: "50rem",
+  },
+  withdrawTitle: {
+    textAlign: "center",
+    fontSize: "1.6rem",
+    fontWeight: "500",
+    marginBottom: "2rem",
+  },
+});
 
 const WithdrawModal = (props) => {
   const classes = useStyles();
@@ -24,43 +36,57 @@ const WithdrawModal = (props) => {
   const handleSubmit = () => {};
 
   return (
-    <div>
+    <>
       <Dialog
         open={openWithdrawModal}
         onClose={closeWithdrawModal}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className={classes.withdrawModal}
       >
-        <Card className={classes.withdrawInfo}>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
+        <div className={classes.withdrawInfo}>
+          <Typography variant="h5" className={classes.withdrawTitle}>
+            {"Apply for withdrawal"}
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <InputField
+              label="User Name"
+              name="userName"
+              // value={authData.userName}
+              // onChange={handleAuthData}
+            />
+            <InputField
+              label="Paypal"
+              name="paypal"
+              // value={authData.userName}
+              // onChange={handleAuthData}
+            />
+            <InputField
+              label="Email"
+              name="email"
+              // value={authData.userName}
+              // onChange={handleAuthData}
+            />
+            <div className={classes.passwordField}>
               <InputField
-                label="User Name / Email"
-                name="userName"
-                // value={authData.userName}
+                label="Amount"
+                type="number"
+                name="amount"
+                // value={authData.password}
                 // onChange={handleAuthData}
               />
-              <div className={classes.passwordField}>
-                <InputField
-                  label="Password"
-                  // type={passwordValue ? "text" : "password"}
-                  name="password"
-                  // value={authData.password}
-                  // onChange={handleAuthData}
-                />
-                {/* <img
-                  src={lockIcon}
-                  alt="Show or hide password"
-                  onClick={handleShowHidePassword}
-                /> */}
-              </div>
+              {/* <img
+                    src={lockIcon}
+                    alt="Show or hide password"
+                    onClick={handleShowHidePassword}
+                  /> */}
+            </div>
 
-              <CustomBtn type="submit" text="Sign In" color="green" />
-            </form>
-          </CardContent>
-        </Card>
+            <CustomBtn type="submit" text="Apply" color="green" />
+          </form>
+        </div>
       </Dialog>
-    </div>
+    </>
   );
 };
 

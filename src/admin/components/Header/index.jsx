@@ -153,56 +153,50 @@ const AdminHeader = () => {
         </div>
         ) : (
           <div className={classes.fullWidth}>
-            <Container classes={{ root: classes.root }}>
-              <Grid
-                container
-                alignItems="center"
-              >
-                <Grid item xs={3} md={3} sm={3}>
-                  <Button
-                    className={classes.uploadBtn}
-                    component={Link}
-                    to="/contributor/upload"
-                  >
-                    <img
-                      className={classes.ButtoncrownIcon}
-                      src={crownIcon}
-                      alt="Upload"
-                    />
-                    Upload
-                  </Button>
-                </Grid>
-
-                <Grid item xs={7} md={7} sm={7} classes={{ item: classes.item }}>
-                  <div className={classes.headerInfo}>
-                    <div className={classes.notificationIcon}>
-                      <NotificationsIcon />
-                    </div>
-                    <div
-                      className={classes.userProfile}
-                      onClick={handleToggle}
-                      aria-controls={open ? "menu-list-grow" : undefined}
-                      aria-haspopup="true"
-                      ref={anchorRef}
-                    >
-                      {user?.token && user?.avatar !== "null" ? (
-                        <img
-                          className={classes.adminPhoto}
-                          src={user?.avatar}
-                          alt="UserPhoto"
-                        />
-                      ) : (
-                        <AccountCircleIcon className={classes.avatar} />
-                      )}
-                      <Typography className={classes.userName} variant="h4">
-                        {user ? user.username : "Design Studio"}
-                      </Typography>
-                      <ArrowDropDownIcon className={classes.arrowDown} />
-                    </div>
+            <div  className={classes.root}>
+              <div>
+                <Button
+                  className={classes.uploadBtn}
+                  component={Link}
+                  to="/contributor/upload"
+                >
+                  <img
+                    className={classes.ButtoncrownIcon}
+                    src={crownIcon}
+                    alt="Upload"
+                  />
+                  Upload
+                </Button>
+              </div>
+              <div>
+                <div className={classes.headerInfo}>
+                  <div className={classes.notificationIcon}>
+                    <NotificationsIcon />
                   </div>
-                </Grid>
-              </Grid>
-            </Container>
+                  <div
+                    className={classes.userProfile}
+                    onClick={handleToggle}
+                    aria-controls={open ? "menu-list-grow" : undefined}
+                    aria-haspopup="true"
+                    ref={anchorRef}
+                  >
+                    {user?.token && user?.avatar !== "null" ? (
+                      <img
+                        className={classes.adminPhoto}
+                        src={user?.avatar}
+                        alt="UserPhoto"
+                      />
+                    ) : (
+                      <AccountCircleIcon className={classes.avatar} />
+                    )}
+                    <Typography className={classes.userName} variant="h4">
+                      {user ? user.username : "Design Studio"}
+                    </Typography>
+                    <ArrowDropDownIcon className={classes.arrowDown} />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
         <Drawer

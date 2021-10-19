@@ -276,42 +276,42 @@ const UserSideBar = () => {
                 <Typography>{user?.email}</Typography>
               </div>
               <div className={classes.socialMedia}>
-                {userProfile?.facebook !== "" && (
+                {userProfile?.facebook && (
                   <MuiLink href={`${userProfile?.facebook}`} target="_blank">
                     <img src={facebookIcon} className={classes.facebookIcon} alt="facebookIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.twitter !== "" && (
+                {userProfile?.twitter && (
                   <MuiLink href={`${userProfile?.twitter}`} target="_blank">
                     <img src={twitterIcon} className={classes.twitterIcon} alt="twitterIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.linkedin !== "" && (
+                {userProfile?.linkedin && (
                   <MuiLink href={`${userProfile?.linkedin}`} target="_blank">
                     <img src={linkedinIcon} className={classes.linkedinIcon} alt="linkedinIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.instagram !== "" && (
+                {userProfile?.instagram && (
                   <MuiLink href={`${userProfile?.instagram}`} target="_blank">
                     <img src={instagramIcon} className={classes.instagramIcon} alt="instagramIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.shutterstock !== "" && (
+                {userProfile?.shutterstock && (
                   <MuiLink href={`${userProfile?.shutterstock}`} target="_blank">
                     <img src={shutterstockIcon} className={classes.shutterstockIcon} alt="shutterstockIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.freepik !== "" && (
+                {userProfile?.freepik && (
                   <MuiLink href={`${userProfile?.freepik}`} target="_blank">
                     <img src={freepikIcon} className={classes.freepikIcon} alt="freepikIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.behance !== "" && (
+                {userProfile?.behance && (
                   <MuiLink href={`${userProfile?.behance}`} target="_blank">
                     <img src={behanceIcon} className={classes.behanceIcon} alt="behanceIcon"/>
                   </MuiLink>
                 )}
-                {userProfile?.dribble !== "" && (
+                {userProfile?.dribble && (
                   <MuiLink href={`${userProfile?.dribble}`} target="_blank">
                     <img src={dribbleIcon} className={classes.dribbleIcon} alt="dribbleIcon"/>
                   </MuiLink>
