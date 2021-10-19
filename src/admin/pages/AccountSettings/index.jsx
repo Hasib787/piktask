@@ -82,7 +82,6 @@ const AccountSettings = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-
   const handleCountries = () => {
     setCountries(allCountry.countries);
   };
@@ -115,6 +114,7 @@ const AccountSettings = () => {
             setBankCountry(data.user.bank_country);
             setSwiftCode(data.user.swift_code);
             setPaypalAccount(data.user.paypal_account);
+            setPayoneerAccount(data.user.payoneer_account);
             setShutterstock(data.user.shutterstock);
             setFreepik(data.user.freepik);
             setBehance(data.user.behance);
@@ -137,54 +137,132 @@ const AccountSettings = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("location", locationAddress);
-    formData.append("phone", phone);
-    formData.append("website", website);
-    formData.append("billings_address", billingsAddress);
-    formData.append("country_name", countryName);
-    formData.append("city", city);
-    formData.append("zip_code", zipCode);
-    formData.append("account_name", accountName);
-    formData.append("account_number", accountNumber);
-    formData.append("routing_number", routingNumber);
-    formData.append("branch", branch);
-    formData.append("bank_country", bankCountry);
-    formData.append("swift_code", swiftCode);
-    formData.append("paypal_account", paypalAccount);
-    formData.append("shutterstock", shutterstock);
-    formData.append("freepik", freepik);
-    formData.append("behance", behance);
-    formData.append("dribble", dribble);
-    formData.append("facebook", facebook);
-    formData.append("twitter", twitter);
-    formData.append("instagram", instagram);
-    formData.append("linkedin", linkedin);
+    let checkEmptyField = 0;
+    if (name) {
+      formData.append("name", name);
+      checkEmptyField++;
+    }
+    if (locationAddress) {
+      formData.append("location", locationAddress);
+      checkEmptyField++;
+    }
+    if (phone) {
+      formData.append("phone", phone);
+      checkEmptyField++;
+    }
+    if (website) {
+      formData.append("website", website);
+      checkEmptyField++;
+    }
+    if (billingsAddress) {
+      formData.append("billings_address", billingsAddress);
+      checkEmptyField++;
+    }
+    if (countryName) {
+      formData.append("country_name", countryName);
+      checkEmptyField++;
+    }
+    if (city) {
+      formData.append("city", city);
+      checkEmptyField++;
+    }
+    if (zipCode) {
+      formData.append("zip_code", zipCode);
+      checkEmptyField++;
+    }
+    if (accountName) {
+      formData.append("account_name", accountName);
+      checkEmptyField++;
+    }
+    if (accountNumber) {
+      formData.append("account_number", accountNumber);
+      checkEmptyField++;
+    }
+    if (routingNumber) {
+      formData.append("routing_number", routingNumber);
+      checkEmptyField++;
+    }
+    if (branch) {
+      formData.append("branch", branch);
+      checkEmptyField++;
+    }
+    if (bankCountry) {
+      formData.append("bank_country", bankCountry);
+      checkEmptyField++;
+    }
+    if (swiftCode) {
+      formData.append("swift_code", swiftCode);
+      checkEmptyField++;
+    }
+    if (paypalAccount) {
+      formData.append("paypal_account", paypalAccount);
+      checkEmptyField++;
+    } 
+    if (payoneerAccount) {
+      formData.append("payoneer_account", payoneerAccount);
+      checkEmptyField++;
+    }
+    if (shutterstock) {
+      formData.append("shutterstock", shutterstock);
+      checkEmptyField++;
+    }
+    if (freepik) {
+      formData.append("freepik", freepik);
+      checkEmptyField++;
+    }
+    if (behance) {
+      formData.append("behance", behance);
+      checkEmptyField++;
+    }
+    if (dribble) {
+      formData.append("dribble", dribble);
+      checkEmptyField++;
+    }
+    if (facebook) {
+      formData.append("facebook", facebook);
+      checkEmptyField++;
+    }
+    if (twitter) {
+      formData.append("twitter", twitter);
+      checkEmptyField++;
+    }
+    if (instagram) {
+      formData.append("instagram", instagram);
+      checkEmptyField++;
+    }
+    if (linkedin) {
+      formData.append("linkedin", linkedin);
+      checkEmptyField++;
+    }
 
-    const url = `${process.env.REACT_APP_API_URL}/contributor/profile`;
-    axios({
-      method: "put",
-      url,
-      headers: {
-        Authorization: user.token,
-        "Content-Type": "application/json",
-      },
-      data: formData,
-    })
-      .then((res) => {
-        if (res?.status === 200) {
-          toast.success(res.data.message);
-          setErrors({});
-        }
+    if (checkEmptyField) {
+      const url = `${process.env.REACT_APP_API_URL}/contributor/profile`;
+      axios({
+        method: "put",
+        url,
+        headers: {
+          Authorization: user.token,
+          "Content-Type": "application/json",
+        },
+        data: formData,
       })
-      .catch((error) => {
-        const { errors } = error.response.data;
-        setErrors(errors);
-      });
+        .then((res) => {
+          if (res?.status === 200) {
+            toast.success(res.data.message);
+            setErrors({});
+          }
+        })
+        .catch((error) => {
+          const { errors } = error.response.data;
+          setErrors(errors);
+        });
+    } else {
+      toast.error("Please insert profile info");
+    }
   };
 
   return (
-    <Layout title={`Profile | Piktask`}>
+    <Layout title={`Profile || Piktask`}>
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
@@ -308,9 +386,10 @@ const AccountSettings = () => {
                         >
                           {countries.length === 0 && (
                             <>
-                              countryName ?
-                              (<option value={countryName}>{countryName}</option>)
-                              :(<option value="Bangladesh">Bangladesh</option>)
+                              countryName ? (
+                              <option value={countryName}>{countryName}</option>
+                              ) :(<option value="Bangladesh">Bangladesh</option>
+                              )
                             </>
                           )}
                           {countries.map((option, index) => (
@@ -454,8 +533,8 @@ const AccountSettings = () => {
                             label="Payoneer Email"
                             name="payoneerEmail"
                             className={`${classes.inputField}`}
-                            value={paypalAccount}
-                            onChange={(e) => setPaypalAccount(e.target.value)}
+                            value={payoneerAccount}
+                            onChange={(e) => setPayoneerAccount(e.target.value)}
                           />
                         </FormControl>
                       )}
@@ -559,6 +638,12 @@ const AccountSettings = () => {
                               onChange={(e) => setBankCountry(e.target.value)}
                             />
                           </FormControl>
+                          <Button
+                            type="submit"
+                            className={classes.profileInfoSaveBtn}
+                          >
+                            Save Changes
+                          </Button>
                         </div>
                       </div>
                     )}

@@ -124,66 +124,83 @@ const   UserProfile = () => {
     e.preventDefault();
 
     const formData = new FormData();
+    let emptyFieldCheck = 0;
     if(name){
       formData.append("name", name);
+      emptyFieldCheck++;
     }
     if(locationAddress){
       formData.append("location", locationAddress);
+      emptyFieldCheck++;
     }
     if(job_position){
       formData.append("job_position", job_position);
+      emptyFieldCheck++;
     }
     if(phone){
       formData.append("phone", phone);
+      emptyFieldCheck++;
     }
     if(website){
       formData.append("website", website);
+      emptyFieldCheck++;
     }
     if(shutterstock){
       formData.append("shutterstock", shutterstock);
+      emptyFieldCheck++;
     }
     if(freepik){
       formData.append("freepik", freepik);
+      emptyFieldCheck++;
     }
     if(behance){
       formData.append("behance", behance);
+      emptyFieldCheck++;
     }
     if(dribble){
       formData.append("dribble", dribble);
+      emptyFieldCheck++;
     }
     if(facebook){
       formData.append("facebook", facebook);
+      emptyFieldCheck++;
     }
     if(twitter){
       formData.append("twitter", twitter);
+      emptyFieldCheck++;
     }
     if(instagram){
       formData.append("instagram", instagram);
     }
     if(linkedin){
       formData.append("linkedin", linkedin);
+      emptyFieldCheck++;
     }
 
-    const url = `${process.env.REACT_APP_API_URL}/user/profile`;
-    axios({
-      method: "put",
-      url,
-      headers: {
-        Authorization: user.token,
-        "Content-Type": "application/json",
-      },
-      data: formData,
-    })
-      .then((res) => {
-        if (res?.status === 200) {
-          toast.success(res.data.message);
-          setErrors({});
-        }
+    if(emptyFieldCheck){
+      const url = `${process.env.REACT_APP_API_URL}/user/profile`;
+      axios({
+        method: "put",
+        url,
+        headers: {
+          Authorization: user.token,
+          "Content-Type": "application/json",
+        },
+        data: formData,
       })
-      .catch((error) => {
-        const { errors } = error.response.data;
-        setErrors(errors);
-      });
+        .then((res) => {
+          if (res?.status === 200) {
+            toast.success(res.data.message);
+            setErrors({});
+          }
+        })
+        .catch((error) => {
+          const { errors } = error.response.data;
+          setErrors(errors);
+        });
+    }else{
+      toast.error("Please insert profile info")
+    }
   };
 
   //login with google

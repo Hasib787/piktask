@@ -157,15 +157,22 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 0,
     },
   },
-
-  // inputImage: {
-  //   position: "relative",
-  //   "& img": {
-  //     position: "absolute",
-  //     right: "1rem",
-  //     top: 0,
-  //   },
-  // },
+  profileInfoSaveBtn: {
+    height: "5.5rem",
+    width: "24rem",
+    color: "#fff",
+    float: "right",
+    marginRight: "1rem",
+    border: "0.5px solid #0088f2",
+    backgroundColor: "#0088f2",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      backgroundColor: "#0773c5",
+    },
+    [theme.breakpoints.down(900)]: {
+      display: "none",
+    },
+  },
   cardIcon: {
     width: "18rem",
   },
@@ -188,6 +195,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: "1rem",
     },
   },
+
   // Portfolio Links
   portfolioLink: {
     position: "relative",
