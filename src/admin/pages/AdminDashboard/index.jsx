@@ -259,17 +259,17 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/images/${authLastFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${authLastFile?.id}`}>
+                              <Link to={encodeURI(`/images/${authLastFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${authLastFile?.id}`)}>
                                 <img
                                   className={classes.earningImg}
-                                  src={authLastFile?.preview}
+                                  src={encodeURI(authLastFile?.preview)}
                                   alt={authLastFile?.preview}
                                 />
                               </Link>
                               
                               {authLastFile?.item_for_sale === "sale" && (
                                 <div className={classes.premiumIcon}>
-                                  <img src={premiumFileSell} alt="Premium Product" />
+                                  <img src={encodeURI(premiumFileSell)} alt="Premium Product" />
                                 </div>
                               )}
                             </TableCell>
@@ -328,16 +328,16 @@ const AdminDashboard = () => {
                             className={classes.tableRowContent}
                           >
                             <TableCell className={`${classes.tableCell} ${classes.authProductWrapper}`}>
-                              <Link to={`/images/${topFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${topFile?.id}`}>
+                              <Link to={encodeURI(`/images/${topFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${topFile?.id}`)}>
                                 <img
                                   className={classes.earningImg}
-                                  src={topFile?.thumbnail}
+                                  src={encodeURI(topFile?.thumbnail)}
                                   alt={topFile?.thumbnail}
                                 />
                               </Link>
                               {topFile?.item_for_sale === "sale" && (
                                 <div className={classes.premiumIcon}>
-                                  <img src={premiumFileSell} alt="Premium Product" />
+                                  <img src={encodeURI(premiumFileSell)} alt="Premium Product" />
                                 </div>
                               )}
                             </TableCell>

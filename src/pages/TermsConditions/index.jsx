@@ -25,7 +25,7 @@ export const TermsConditions = () => {
             <div>
               <Typography className={classes.description}>
                 We own all the Piktask content that we have put on Piktask. This
-                includes the design,Software,Website, Theme, Template,Idea,
+                includes the design, Software, Website, Theme, Template, Idea,
                 Feelings, and look and feel of the Piktask sites, and copyright,
                 trademarks, designs and other intellectual property on Piktask.
                 We own all the Softwares, Application, logos, service marks and

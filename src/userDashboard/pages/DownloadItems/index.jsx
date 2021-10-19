@@ -28,7 +28,8 @@ const DownloadItems = () => {
   const [isLoading, setLoading] = useState(true);
   const [downloadsItem, setDownloadsItem] = useState([]);
   const [pageCount, setPageCount] = useState(1);
-  var downloadItem = 18;
+
+  var downloadItem = 4;
 
   useEffect(() => {
     setLoading(true);
@@ -91,10 +92,10 @@ const DownloadItems = () => {
                 </>
               )}
             </Grid>
-            {downloadsItem?.length > 17 && (
+            {downloadsItem?.length >3 && (
               <>
                 <Paginations
-                  onChange={(event, value) => setPageCount(value)}
+                  onChange={() => setPageCount(prev => prev + 1)}
                   count={10}
                   pageCount={pageCount}
                 />
