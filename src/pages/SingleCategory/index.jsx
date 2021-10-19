@@ -109,9 +109,7 @@ const SingleCategory = () => {
             axios
               .get(
                 `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.detail.user_id}`,
-                {
-                  headers: { Authorization: user.token },
-                }
+                { headers: { Authorization: user.token },}
               )
               .then((response) => {
                 if (response.data.status) {
@@ -127,9 +125,9 @@ const SingleCategory = () => {
 
       if (user?.token) {
         axios
-          .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
-            headers: { Authorization: user.token },
-          })
+          .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, 
+            { headers: { Authorization: user.token },}
+          )
           .then(({ data }) => {
             if (!data?.status) {
               setLike(false);
@@ -170,10 +168,7 @@ const SingleCategory = () => {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
-          {},
-          {
-            headers: { Authorization: user.token },
-          }
+          { headers: { Authorization: user.token },}
         )
         .then((response) => {
           if (response?.status === 200) {
@@ -194,10 +189,7 @@ const SingleCategory = () => {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
-          {},
-          {
-            headers: { Authorization: user.token },
-          }
+          { headers: { Authorization: user.token },}
         )
         .then(({ data }) => {
           if (data?.status) {
@@ -242,9 +234,7 @@ const SingleCategory = () => {
       .then(({ data }) => {
         if (data.url) {
           axios
-            .get(data.url, {
-              responseType: "blob",
-            })
+            .get(data.url, { responseType: "blob",})
             .then((response) => {
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement("a");

@@ -124,19 +124,45 @@ const   UserProfile = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("location", locationAddress);
-    formData.append("job_position", job_position);
-    formData.append("phone", phone);
-    formData.append("website", website);
-    formData.append("shutterstock", shutterstock);
-    formData.append("freepik", freepik);
-    formData.append("behance", behance);
-    formData.append("dribble", dribble);
-    formData.append("facebook", facebook);
-    formData.append("twitter", twitter);
-    formData.append("instagram", instagram);
-    formData.append("linkedin", linkedin);
+    if(name){
+      formData.append("name", name);
+    }
+    if(locationAddress){
+      formData.append("location", locationAddress);
+    }
+    if(job_position){
+      formData.append("job_position", job_position);
+    }
+    if(phone){
+      formData.append("phone", phone);
+    }
+    if(website){
+      formData.append("website", website);
+    }
+    if(shutterstock){
+      formData.append("shutterstock", shutterstock);
+    }
+    if(freepik){
+      formData.append("freepik", freepik);
+    }
+    if(behance){
+      formData.append("behance", behance);
+    }
+    if(dribble){
+      formData.append("dribble", dribble);
+    }
+    if(facebook){
+      formData.append("facebook", facebook);
+    }
+    if(twitter){
+      formData.append("twitter", twitter);
+    }
+    if(instagram){
+      formData.append("instagram", instagram);
+    }
+    if(linkedin){
+      formData.append("linkedin", linkedin);
+    }
 
     const url = `${process.env.REACT_APP_API_URL}/user/profile`;
     axios({
