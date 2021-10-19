@@ -32,9 +32,9 @@ export const Recent = () => {
   const loadData = () => {
     let recentUrl;
     if (user && user?.id) {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&user_id=${user.id}&limit=100`;
     } else {
-      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent`;
+      recentUrl = `${process.env.REACT_APP_API_URL}/images?sort_by=recent&limit=100`;
     }
     axios
       .get(recentUrl)

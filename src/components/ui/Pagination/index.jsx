@@ -7,19 +7,22 @@ const Paginations = (props) => {
   const classes = useStyles();
   // const [pageCount, setPageCount] = useState(1);
 
-  const { count, pageCount, setPageCount } = props;
+  const { count, pageCount, onChange } = props;
+
   return (
     <>
       <Spacing space={{ height: "3rem" }} />
       <div className={classes.pagination}>
         <Pagination
         //  setPageCount= {onChange={(value) => setPageCount(value)}}
+        onChange={onChange}
           variant="outlined"
           shape="rounded"
           color="primary"
           size="medium"
           count={count}
-          pageCount={pageCount}
+          page={pageCount}
+
         />
       </div>
     </>

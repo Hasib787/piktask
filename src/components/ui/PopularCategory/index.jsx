@@ -9,11 +9,13 @@ const PopularCategory = ({ photo }) => {
   return (
     <div className={classes.catItemWrapper}>
       <div className={classes.catItem}>
-        <img
-          className={classes.catImage}
-          src={photo?.thumbnail}
-          alt="Popular images"
-        />
+        <Link  to={`category/${photo.slug}`}>
+          <img
+            className={classes.catImage}
+            src={photo?.thumbnail}
+            alt="Popular images"
+          />
+        </Link>
         <Button
           className={classes.catName}
           component={Link}
