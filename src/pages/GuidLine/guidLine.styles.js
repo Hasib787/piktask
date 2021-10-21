@@ -8,9 +8,15 @@ const useStyles = makeStyles((theme) => ({
     },
     guidLineWrapper: {
         padding: "0rem 20rem",
+        [theme.breakpoints.down(1199)]: {
+            padding: "0rem 1rem",
+        },
     },
     guidLineImageWrapper: {
         display: "flex",
+        [theme.breakpoints.down(577)]: {
+            flexDirection: "column",
+        }
     },
     guidLineImage: {
         width: "65rem",
@@ -26,11 +32,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down(769)]: {
             width: "100%",
             height: "100%",
+            margin: "1rem 0",
         }
     },
     guidLineContent: {
         "& p": {
             lineHeight: "4rem",
+            textAlign: "justify",
+            [theme.breakpoints.down(769)]: {
+                lineHeight: "3rem",
+            },
         },
 
         "& span": {
