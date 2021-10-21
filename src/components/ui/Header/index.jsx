@@ -125,7 +125,7 @@ const Header = () => {
                         aria-haspopup="true"
                         ref={anchorRef}
                       >
-                        {user && user?.avatar ? (
+                        {user?.token && user?.avatar !== "null" ? (
                           <img
                             className={classes.avatar}
                             src={user?.avatar}

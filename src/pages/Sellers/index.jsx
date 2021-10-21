@@ -29,7 +29,7 @@ const Sellers = () => {
   }, []);
 
   return (
-    <Layout title={"Seller | Piktask"}>
+    <Layout title={"Seller || Piktask"}>
       <Header />
       <HeroSection />
       <Spacing space={{ height: "3rem" }} />

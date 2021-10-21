@@ -32,6 +32,8 @@ import {
   TelegramShareButton,
   TwitterIcon,
   TwitterShareButton,
+  PinterestShareButton,
+  PinterestIcon,
 } from "react-share";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import Product from "../../components/ui/Products/Product";
@@ -76,15 +78,8 @@ const SingleCategory = () => {
   const [isLike, setLike] = useState(false);
   const [downloadCount, setDownloadCount] = useState();
 
-  // const handleDialogOpen = () => {
-  //   setDownloadLicenseDialog(true);
-  // };
-  // const handleDialogClose = () => {
-  //   setDownloadLicenseDialog(false);
-  // };
-  const handleTooltipClose = () => {
-    setOpenCopyLink(false);
-  };
+
+  const handleTooltipClose = () => { setOpenCopyLink(false);};
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
@@ -168,6 +163,7 @@ const SingleCategory = () => {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
+          {},
           { headers: { Authorization: user.token },}
         )
         .then((response) => {
@@ -189,6 +185,7 @@ const SingleCategory = () => {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
+          {},
           { headers: { Authorization: user.token },}
         )
         .then(({ data }) => {
@@ -225,9 +222,7 @@ const SingleCategory = () => {
     };
 
     if (user && user.token) {
-      downloadAPI.headers = {
-        Authorization: user.token,
-      };
+      downloadAPI.headers = { Authorization: user.token,};
       setButtonLoading(true);
     }
     axios(downloadAPI)
@@ -383,6 +378,41 @@ const SingleCategory = () => {
                       <strong>Scope of authorization: </strong>
                       personal/enterprise
                     </Typography>
+                  </div>
+                </Grid>
+              </Grid>
+
+              <Grid container>
+                <Grid item style={{ display: "flex", alignItems: "center" }}>
+                  <Typography>Share: </Typography>
+                  <div>
+                    <PinterestShareButton url={shareUrl}>
+                      <PinterestIcon size={25} style={{ marginLeft: "1rem" }} round={true} />
+                    </PinterestShareButton>
+
+                    <EmailShareButton url={shareUrl}>
+                      <EmailIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </EmailShareButton>
+
+                    <FacebookShareButton url={shareUrl}>
+                      <FacebookIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </FacebookShareButton>
+
+                    <FacebookMessengerShareButton url={shareUrl}>
+                      <FacebookMessengerIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </FacebookMessengerShareButton>
+
+                    <TwitterShareButton url={shareUrl}>
+                      <TwitterIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </TwitterShareButton>
+
+                    <LinkedinShareButton url={shareUrl}>
+                      <LinkedinIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </LinkedinShareButton>
+
+                    <TelegramShareButton url={shareUrl}>
+                      <TelegramIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                    </TelegramShareButton>
                   </div>
                 </Grid>
               </Grid>
@@ -610,31 +640,32 @@ const SingleCategory = () => {
                 justifyContent: "space-between",
               }}
             >
+              <PinterestShareButton url={shareUrl}>
+                <PinterestIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+              </PinterestShareButton>
+
               <EmailShareButton url={shareUrl}>
-                <EmailIcon size={40} round={true} />
+                <EmailIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </EmailShareButton>
 
               <FacebookShareButton url={shareUrl}>
-                <FacebookIcon size={40} round={true} />
+                <FacebookIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </FacebookShareButton>
 
               <FacebookMessengerShareButton url={shareUrl}>
-                <FacebookMessengerIcon size={40} round={true} />
+                <FacebookMessengerIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </FacebookMessengerShareButton>
 
-              {/* <br />
-            <Spacing space={{ height: "1.5rem" }}></Spacing> */}
-
               <TwitterShareButton url={shareUrl}>
-                <TwitterIcon size={40} round={true} />
+                <TwitterIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </TwitterShareButton>
 
               <LinkedinShareButton url={shareUrl}>
-                <LinkedinIcon size={40} round={true} />
+                <LinkedinIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </LinkedinShareButton>
 
               <TelegramShareButton url={shareUrl}>
-                <TelegramIcon size={40} round={true} />
+                <TelegramIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </TelegramShareButton>
             </div>
           </DialogContent>
