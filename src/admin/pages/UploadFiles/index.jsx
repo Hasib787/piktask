@@ -43,30 +43,6 @@ const typeOfImageItem = [
   { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
 
-const thumb = {
-  display: "inline-flex",
-  borderRadius: 2,
-  border: "1px solid #eaeaea",
-  marginBottom: 8,
-  marginRight: 8,
-  width: 100,
-  height: 100,
-  padding: 4,
-  boxSizing: "border-box",
-};
-
-const thumbInner = {
-  display: "flex",
-  minWidth: 0,
-  overflow: "hidden",
-};
-
-const img = {
-  display: "block",
-  width: "auto",
-  height: "100%",
-};
-
 const UploadFiles = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -116,7 +92,6 @@ const UploadFiles = () => {
     },
     [files, thumbImage]
   );
-
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
@@ -144,9 +119,19 @@ const UploadFiles = () => {
   });
 
   const thumbs = files.map((file) => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img src={file.preview} alt="thumbnail" style={img} />
+    <div className={classes.thumb} key={file.name}>
+      <div className={classes.thumbInner}>
+        <div className={classes.thumbImg}>
+          <img
+            src={file.preview}
+            alt="thumbnail"
+            className={classes.previewImg}
+          />
+        </div>
+        <Typography className={classes.imageTitle} variant="h5">
+          {file.name} <br />
+          <span>{Math.trunc(file.size / 1024 / 1024)} MB</span>
+        </Typography>
       </div>
     </div>
   ));
