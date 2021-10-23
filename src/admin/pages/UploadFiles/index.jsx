@@ -50,7 +50,6 @@ const typeOfImageItem = [
   { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
 
-
 const UploadFiles = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -100,7 +99,6 @@ const UploadFiles = () => {
     },
     [files, thumbImage]
   );
-
   useEffect(() => {
     const setResponsiveness = () => {
       return window.innerWidth < 900
@@ -137,13 +135,13 @@ const UploadFiles = () => {
             className={classes.previewImg}
           />
         </div>
-          <Typography className={classes.imageTitle} variant="h5">
-            {file.name} <br /><span>{file.size} bytes</span>
-          </Typography>
+        <Typography className={classes.imageTitle} variant="h5">
+          {file.name} <br />
+          <span>{Math.trunc(file.size / 1024 / 1024)} MB</span>
+        </Typography>
       </div>
     </div>
   ));
-
 
   const isActive = isDragActive && "2px dashed #26AA10";
 

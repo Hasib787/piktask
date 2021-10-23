@@ -34,7 +34,8 @@ const AccountSettings = () => {
 
   const user = useSelector((state) => state.user);
 
-  const [payment, setPayment] = useState("Paypal");
+  const [paymentMethod, setPaymentMethod] = useState([]);
+  const [payment, setPayment] = useState("PayPal");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -197,7 +198,7 @@ const AccountSettings = () => {
     if (paypalAccount) {
       formData.append("paypal_account", paypalAccount);
       checkEmptyField++;
-    } 
+    }
     if (payoneerAccount) {
       formData.append("payoneer_account", payoneerAccount);
       checkEmptyField++;
@@ -234,6 +235,10 @@ const AccountSettings = () => {
       formData.append("linkedin", linkedin);
       checkEmptyField++;
     }
+    if (payment) {
+      formData.append("payment_gateway", payment);
+      checkEmptyField++;
+    }
 
     if (checkEmptyField) {
       const url = `${process.env.REACT_APP_API_URL}/contributor/profile`;
@@ -260,6 +265,24 @@ const AccountSettings = () => {
       toast.error("Please insert profile info");
     }
   };
+
+  //payment getWay
+  useEffect(() => {
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/payment`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (data?.status) {
+            setPaymentMethod(data.gateways);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  }, [user.token]);
 
   return (
     <Layout title={`Profile || Piktask`}>
@@ -338,8 +361,8 @@ const AccountSettings = () => {
                         classes={{ fullWidth: classes.fullWidth }}
                       >
                         <TextField
-                          error={!!errors.website}
-                          helperText={errors.website}
+                          // error={!!errors.website}
+                          // helperText={errors.website}
                           fullWidth
                           variant="outlined"
                           label="Website"
@@ -497,16 +520,21 @@ const AccountSettings = () => {
                           native
                           value={payment}
                           onChange={(e) => setPayment(e.target.value)}
-                          label="Name on Card"
                           className={classes.selectArea}
                         >
-                          <option value="Paypal">Paypal</option>
-                          <option value="Payoneer">Payoneer</option>
-                          <option value="Bank">Bank</option>
+                          {paymentMethod ? (
+                            paymentMethod?.map((paymentValue, index) => (
+                              <option key={index} value={paymentValue.name}>
+                                {paymentValue.name}
+                              </option>
+                            ))
+                          ) : (
+                            <option>PayPal</option>
+                          )}
                         </Select>
                       </FormControl>
 
-                      {payment === "Paypal" && (
+                      {payment === "PayPal" && (
                         <FormControl
                           fullWidth
                           classes={{ fullWidth: classes.fullWidth }}
@@ -679,8 +707,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="shutterstock"
-                          error={!!errors.shutterstock}
-                          helperText={errors.shutterstock}
+                          // error={!!errors.shutterstock}
+                          // helperText={errors.shutterstock}
                           label="Your Shutterstock Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -706,8 +734,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="freepik"
-                          error={!!errors.freepik}
-                          helperText={errors.freepik}
+                          // error={!!errors.freepik}
+                          // helperText={errors.freepik}
                           label="Your Freepik Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -733,8 +761,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="behance"
-                          error={!!errors.behance}
-                          helperText={errors.behance}
+                          // error={!!errors.behance}
+                          // helperText={errors.behance}
                           label="Your Behance Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -760,8 +788,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="dribbble"
-                          error={!!errors.dribble}
-                          helperText={errors.dribble}
+                          // error={!!errors.dribble}
+                          // helperText={errors.dribble}
                           label="Your Dribbble Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -807,8 +835,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="facebook"
-                          error={!!errors.facebook}
-                          helperText={errors.facebook}
+                          // error={!!errors.facebook}
+                          // helperText={errors.facebook}
                           label="Your Facebook Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -834,8 +862,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="twitter"
-                          error={!!errors.twitter}
-                          helperText={errors.twitter}
+                          // error={!!errors.twitter}
+                          // helperText={errors.twitter}
                           label="Your Twitter Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -861,8 +889,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="linkedin"
-                          error={!!errors.linkedin}
-                          helperText={errors.linkedin}
+                          // error={!!errors.linkedin}
+                          // helperText={errors.linkedin}
                           label="Your Linkedin Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
@@ -888,8 +916,8 @@ const AccountSettings = () => {
                         </label>
                         <TextField
                           id="instagram"
-                          error={!!errors.instagram}
-                          helperText={errors.instagram}
+                          // error={!!errors.instagram}
+                          // helperText={errors.instagram}
                           label="Your Instagram Account"
                           variant="outlined"
                           className={`${classes.inputField}`}
