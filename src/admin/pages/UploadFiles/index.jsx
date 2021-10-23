@@ -32,23 +32,22 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Layout from "../../../Layout";
 import axios from "axios";
+import { Box, LinearProgress } from "@mui/material";
 
-const ItemForSale = [
-  { value: "free", label: "Free" },
-  { value: "sale", label: "Premium" },
-];
-
-const usePhoto = [
-  { value: "free", label: "Free for commercial use" },
-  { value: "free_personal", label: "Free for personal use" },
-  { value: "editorial_only", label: "Editorial use only" },
-  { value: "web_only", label: "Use only on website" },
-];
-
-const typeOfImageItem = [
-  { value: "image", label: "Image (JPG, PNG, GIF)" },
-  { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
-];
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 const UploadFiles = () => {
   const classes = useStyles();
@@ -86,7 +85,7 @@ const UploadFiles = () => {
     () => () => {
       let image = new Image();
       image.onload = () => {
-        // if (image.width !== 200 ) {
+        // if (image.size ===2000 ) {
         //   setImageDimensionOkay(true);
         // } else {
         //   setImageDimensionOkay(false);
@@ -110,8 +109,8 @@ const UploadFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: "image/*",
+  const { getRootProps, getInputProps, isDragActive} = useDropzone({
+    accept: "image/*, .ai,.eps,.psd,.svg ",
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
@@ -125,6 +124,19 @@ const UploadFiles = () => {
     },
   });
 
+  //ProgressBar
+  const [progress, setProgress] = useState(10);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 10 : prevProgress + 10
+      );
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const thumbs = files.map((file) => (
     <div className={classes.thumb} key={file.name}>
       <div className={classes.thumbInner}>
@@ -135,10 +147,13 @@ const UploadFiles = () => {
             className={classes.previewImg}
           />
         </div>
-        <Typography className={classes.imageTitle} variant="h5">
+        <Typography className={classes.imageTitle}>
           {file.name} <br />
-          <span>{Math.trunc(file.size / 1024 / 1024)} MB</span>
+          <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
         </Typography>
+        <Box className={classes.progressBar}>
+          <LinearProgressWithLabel value={progress} />
+        </Box>
       </div>
     </div>
   ));
@@ -264,20 +279,6 @@ const UploadFiles = () => {
       setLoading(false);
       return;
     }
-
-    //     isImageFile
-    // isArchivedFile
-
-    // if (item_for_sale === ("free" || 'premium') ) {
-    //   toast.error("Item for sale status must be Free or Sale");
-    //   setLoading(false);
-    //   return;
-    // }
-    // else if (price) {
-    //   toast.error("Item for sale status must be Free or Sale");
-    //   setLoading(false);
-    //   return;
-    // }
 
     const formData = new FormData();
     formData.append("title", title.toString());
@@ -411,12 +412,13 @@ const UploadFiles = () => {
                       variant="body1"
                       style={{ color: "red" }}
                     >
-                      Your image dimension exceeds the limit. It should be
-                      850x531
+                      Your image dimension exceeds the limit. Preview files must
+                      be between 2000px and 10000px on any of the sides.
                     </Typography>
                   ) : (
                     <Typography className={classes.subtitle} variant="body1">
-                      The photo must be equal to: 850x531
+                      Preview files must be between 2000px and 10000px on any of
+                      the sides.
                     </Typography>
                   )}
                 </div>
@@ -424,11 +426,11 @@ const UploadFiles = () => {
 
               {!isImageDimensionOkay && thumbs}
 
+              <Spacing space={{ height: "2.5rem" }} />
+
               <Heading tag="h2">
                 What type of content are you going to upload?
               </Heading>
-
-              <Spacing space={{ height: "2.5rem" }} />
             </div>
           </form>
 
@@ -461,8 +463,8 @@ const UploadFiles = () => {
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
                       <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
+                        Preview files must be between 2000px and 10000px on any
+                        of the sides.
                       </Typography>
                     </div>
                     <div className={classes.labelItem}>
@@ -488,19 +490,21 @@ const UploadFiles = () => {
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
                       <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
+                        PSD between 1.5MB and 250MB and a JPG preview file (with
+                        the same name)
                       </Typography>
                     </div>
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
+                      <Typography>
+                        Color: sRGB, Adobe RGB, Prophoto RGB or P3
+                      </Typography>
                     </div>
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
                       <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
+                        Preview files must be between 2000px and 10000px on any
+                        of the sides.
                       </Typography>
                     </div>
                     <div className={classes.labelItem}>
@@ -521,24 +525,23 @@ const UploadFiles = () => {
                   className={classes.imageTypeGrid}
                 >
                   <div>
-                    <Heading tag="h2">PNG</Heading>
+                    <Heading tag="h2">Photos</Heading>
 
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
+                      <Typography>Only JPG files Over 0.5MB</Typography>
+                    </div>
+                    <div className={classes.labelItem}>
+                      <CheckCircleRoundedIcon />
                       <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
+                        Color: sRGB, Adobe RGB, Prophoto RGB or P3
                       </Typography>
                     </div>
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
                       <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
+                        Photos must be between 2000px and 10000px on any of the
+                        sides.
                       </Typography>
                     </div>
                     <div className={classes.labelItem}>
