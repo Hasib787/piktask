@@ -5,19 +5,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Button,
-  Card,
-  CardContent,
-  Checkbox,
   FormControl,
-  FormControlLabel,
-  FormGroup,
   FormHelperText,
-  Grid,
   TextareaAutosize,
   TextField,
   Typography,
 } from "@material-ui/core";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
@@ -50,6 +43,29 @@ const typeOfImageItem = [
   { value: "zip", label: "Image and Vector graphic (AI, EPS, PSD,SVG)" },
 ];
 
+const thumb = {
+  display: "inline-flex",
+  borderRadius: 2,
+  border: "1px solid #eaeaea",
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: "border-box",
+};
+
+const thumbInner = {
+  display: "flex",
+  minWidth: 0,
+  overflow: "hidden",
+};
+
+const img = {
+  display: "block",
+  width: "auto",
+  height: "100%",
+};
 
 const UploadFiles = () => {
   const classes = useStyles();
@@ -87,11 +103,11 @@ const UploadFiles = () => {
     () => () => {
       let image = new Image();
       image.onload = () => {
-        // if (image.width !== 200 ) {
-        //   setImageDimensionOkay(true);
-        // } else {
-        //   setImageDimensionOkay(false);
-        // }
+        if (image.width !== 850 || image.height !== 531) {
+          setImageDimensionOkay(true);
+        } else {
+          setImageDimensionOkay(false);
+        }
       };
       image.src = thumbImage.preview;
 
@@ -128,22 +144,12 @@ const UploadFiles = () => {
   });
 
   const thumbs = files.map((file) => (
-    <div className={classes.thumb} key={file.name}>
-      <div className={classes.thumbInner}>
-        <div className={classes.thumbImg}>
-          <img
-            src={file.preview}
-            alt="thumbnail"
-            className={classes.previewImg}
-          />
-        </div>
-          <Typography className={classes.imageTitle} variant="h5">
-            {file.name} <br /><span>{file.size} bytes</span>
-          </Typography>
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img src={file.preview} alt="thumbnail" style={img} />
       </div>
     </div>
   ));
-
 
   const isActive = isDragActive && "2px dashed #26AA10";
 
@@ -431,130 +437,248 @@ const UploadFiles = () => {
               </Heading>
 
               <Spacing space={{ height: "2.5rem" }} />
+
+              <div className={classes.uploadForm}>
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="title">
+                    Title <span>*</span>
+                  </label>
+                  <TextField
+                    id="title"
+                    InputLabelProps={{ shrink: true }}
+                    className={classes.inputField}
+                    placeholder="Title"
+                    variant="outlined"
+                    fullWidth
+                    error={titleError}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="tags">
+                    Tag <span>*</span>
+                  </label>
+                  <div className={classes.tagsInput}>
+                    <ul className={classes.tags}>
+                      {tags.map((tag, index) => (
+                        <li key={index} className={classes.tag}>
+                          <span className={classes.tagTitle}>{tag}</span>
+                          <span
+                            className={classes.tagCloseIcon}
+                            onClick={() => removeTags(index)}
+                          >
+                            x
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <input
+                      id="tags"
+                      className={classes.input}
+                      type="text"
+                      onKeyDown={(event) => {
+                        if ( event.key === ",") {
+                          addTags(event);
+                        }
+                      }}
+                      placeholder="Add Tag"
+                    />
+                  </div>
+                  <FormHelperText className={classes.helperText}>
+                    Press space or comma to add tags (maximum 10 tags)
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl
+                  fullWidth
+                  className={classes.fieldWrapper}
+                  onClick={loadCategories}
+                >
+                  <label htmlFor="category">
+                    Category <span>*</span>
+                  </label>
+                  <TextField
+                    id="category"
+                    className={classes.categoryInput}
+                    variant="outlined"
+                    select
+                    value={category}
+                    onChange={handleCategoryChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {categoryItems.length ? (
+                      categoryItems?.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option>Uncategorized</option>
+                    )}
+                  </TextField>
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="itemStatus">
+                    Item for sale? <span>*</span>
+                  </label>
+                  <TextField
+                    id="itemStatus"
+                    className={classes.itemSaleInput}
+                    variant="outlined"
+                    select
+                    value={item_for_sale}
+                    onChange={handleSaleChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {ItemForSale.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="license">
+                    How they can use this photo <span>*</span>
+                  </label>
+                  <TextField
+                    id="license"
+                    className={classes.usagesInput}
+                    select
+                    label=""
+                    variant="outlined"
+                    value={usages}
+                    onChange={handleUsagesChange}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {usePhoto.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="typeOfImage">
+                    Type of Image? <span>*</span>
+                  </label>
+                  <TextField
+                    id="typeOfImage"
+                    className={classes.typeOfImageInput}
+                    select
+                    variant="outlined"
+                    value={typeOfImage}
+                    onChange={handleTypeOfImage}
+                    SelectProps={{
+                      native: true,
+                    }}
+                  >
+                    {typeOfImageItem.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                </FormControl>
+
+                {typeOfImage === "image" && (
+                  <label
+                    htmlFor="image"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isImageFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
+                    <div className={classes.uploadIconImage}>
+                      <input
+                        className={classes.inputFile}
+                        id="image"
+                        name="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageFiles}
+                      />
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
+                      <p className={classes.selectFileText}>
+                        Select a file (jpg, png, gif etc.)
+                      </p>
+                    </div>
+                  </label>
+                )}
+
+                {typeOfImage === "zip" && (
+                  <label
+                    htmlFor="zipFolder"
+                    className={classes.imageFileUploadBox}
+                    style={
+                      !isArchivedFile
+                        ? { borderColor: "red" }
+                        : { borderColor: "inherit" }
+                    }
+                  >
+                    <div className={classes.uploadIconImage}>
+                      <input
+                        className={classes.inputFile}
+                        id="zipFolder"
+                        name="zipFolder"
+                        type="file"
+                        accept=".ai, .eps, .psd, .svg, .zip, .rar"
+                        onChange={handleArchivedFile}
+                      />
+
+                      <FontAwesomeIcon icon={faCloudUploadAlt} />
+
+                      <p className={classes.selectFileText}>
+                        Select a file (AI,EPS,PSD,SVG,ZIP)
+                      </p>
+                    </div>
+                  </label>
+                )}
+
+                <FormControl fullWidth className={classes.fieldWrapper}>
+                  <label htmlFor="description">Description (Optional)</label>
+                  <TextareaAutosize
+                    id="description"
+                    className={classes.description}
+                    aria-label="minimum height"
+                    minRows={5}
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+
+                <div className={classes.singleBorder}></div>
+                <Button
+                  variant="contained"
+                  className={classes.uploadBtn}
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  <FontAwesomeIcon
+                    icon={faCloudUploadAlt}
+                    className={classes.uploadIcon}
+                  />
+                  {isLoading ? "Uploadting..." : "Upload"}
+                </Button>
+              </div>
             </div>
           </form>
-
-          <Card className={classes.cardRoot}>
-            <CardContent className={classes.cardContent}>
-              <Grid container>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div className={classes.checkboxCol}>
-                    {/* <Heading tag="h4"></Heading> */}
-                    <Typography c variant="h2">
-                      Vectors
-                    </Typography>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div className={classes.checkboxCol}>
-                    <Heading tag="h2">PSD</Heading>
-
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div>
-                    <Heading tag="h2">PNG</Heading>
-
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Preview file must be between 2.000px and 8.000px on any
-                        of its sides
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
           <Footer />
         </main>
       </div>

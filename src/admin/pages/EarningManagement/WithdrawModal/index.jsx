@@ -1,6 +1,8 @@
 import { Dialog, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { CustomBtn, InputField } from "../../../../components/InputField";
 
 const useStyles = makeStyles({
@@ -23,7 +25,13 @@ const useStyles = makeStyles({
 
 const WithdrawModal = (props) => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const { openWithdrawModal, setWithdrawModal } = props;
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [authData, setAuthData] = useState({amount: "",});
 
   // const handleClickOpen = () => {
   //   setOpen(true);
@@ -32,6 +40,32 @@ const WithdrawModal = (props) => {
   const closeWithdrawModal = () => {
     setWithdrawModal(false);
   };
+
+  const handleAuthData = (e) => {
+    const { name, value } = e.target;
+    setAuthData({ ...authData, [name]: value });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/contributor/profile`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (data?.status) {
+            setUsername(data.user.username);
+            setEmail(data.user.email);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  }, [user?.token])
 
   const handleSubmit = () => {};
 
@@ -52,28 +86,25 @@ const WithdrawModal = (props) => {
             <InputField
               label="User Name"
               name="userName"
-              // value={authData.userName}
-              // onChange={handleAuthData}
+              value={username}
             />
             <InputField
               label="Paypal"
               name="paypal"
               // value={authData.userName}
-              // onChange={handleAuthData}
             />
             <InputField
               label="Email"
               name="email"
-              // value={authData.userName}
-              // onChange={handleAuthData}
+              value={email}
             />
             <div className={classes.passwordField}>
               <InputField
                 label="Amount"
                 type="number"
                 name="amount"
-                // value={authData.password}
-                // onChange={handleAuthData}
+                value={authData.amount}
+                onChange={handleAuthData}
               />
               {/* <img
                     src={lockIcon}
