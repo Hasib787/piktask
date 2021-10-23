@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
 
     [theme.breakpoints.down(426)]: {
-      width: "100%",
+      width: "70%",
     },
   },
   wrapperMenu: {

@@ -252,8 +252,12 @@ const SingleCategory = () => {
       })
       .catch((error) => {
         console.log("catch", error.response);
-        toast.error(error.response.data.message);
-        setOpenAuthModal(true);
+        if(user?.token){
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(error.response.data.message);
+          setOpenAuthModal(true);
+        }
       });
   };
 

@@ -75,7 +75,7 @@ const UploadFiles = () => {
   const [item_for_sale, setItem_for_sale] = useState("free");
   const [archivedFileSrc, setArchivedFileSrc] = useState("");
   const [typeOfImage, setTypeOfImage] = useState("image");
-  const [categoryItems, setcategoryItems] = useState([]);
+  const [categoryItems, setCategoryItems] = useState([]);
   const [imageFileSrc, setImageFileSrc] = useState("");
   const [description, setDescription] = useState("");
   const [imageError, setImageError] = useState("");
@@ -184,7 +184,7 @@ const UploadFiles = () => {
         .then(({ data }) => {
           if (data?.status) {
             const sortedData = data?.categories.sort((a, b) => a.id - b.id);
-            setcategoryItems(sortedData);
+            setCategoryItems(sortedData);
           }
         })
         .catch((error) => console.log("Categories loading error: ", error));

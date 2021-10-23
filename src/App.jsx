@@ -18,7 +18,7 @@ import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Subscription from "./pages/Subscription";
 import Revision from "./admin/pages/Revision";
-import Sellers from "./pages/Sellers";
+// import Sellers from "./pages/Sellers";
 import Publish from "./admin/pages/Publish";
 import Categories from "./pages/Categories";
 import theme from "./components/ui/Theme";
