@@ -109,9 +109,9 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       padding: "1.28rem 1.5rem",
     },
-    '&:after': {
+    "&:after": {
       borderColor: "gray",
-  },
+    },
     "& p": {
       fontSize: "14px",
     },
@@ -333,6 +333,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "7px",
   },
 
+  labelItem: {
+    display: "flex",
+    marginBottom: "1rem",
+    "& svg": {
+      margin: "0.2rem 1rem 0 0",
+    },
+  },
   // Checkbox card
 
   cardContent: {
@@ -385,8 +392,30 @@ const useStyles = makeStyles((theme) => ({
       height: "2.5rem",
     },
   },
-  labelItem: {
-    fontSize: "1.4rem",
+  thumb: {
+    display: "block",
+    width: "100%",
+    marginBottom: "2rem",
+  },
+  thumbInner: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  thumbImg: {
+    width: "15rem",
+    "& img": {
+      height: "100%",
+      width: "100%",
+      objectFit: "cover",
+    },
+  },
+  imageTitle: {
+    marginLeft: "2rem",
+
+    "& span": {
+     color:"gray",
+    },
   },
 }));
 
