@@ -100,7 +100,7 @@ const HeroSection = (props) => {
                 <img src={contributorLogo} alt="contributorLogo" />
               </Button>
 
-              {user && user?.isLogged ? (
+              {user?.token && user?.role === "contributor" && user?.isLogged ? (
                 <div
                   className={classes.userAvatarArea}
                   onClick={handleToggle}
@@ -108,7 +108,7 @@ const HeroSection = (props) => {
                   aria-haspopup="true"
                   ref={anchorRef}
                 >
-                  {user && user?.avatar ? (
+                  {user?.token && user?.avatar ? (
                     <img
                       className={classes.avatar}
                       src={user?.avatar}

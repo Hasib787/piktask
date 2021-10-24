@@ -164,7 +164,7 @@ const DesktopMenu = ({ history }) => {
             />
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {user?.token ? (
+            {user?.token && user?.role === "contributor" ? (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
@@ -196,7 +196,7 @@ const DesktopMenu = ({ history }) => {
               Premium
             </Button> */}
 
-            {user?.token && user?.isLogged ? (
+            {user?.token && user?.role === "user" && user?.isLogged ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}

@@ -73,7 +73,7 @@ const UserSideBar = () => {
   const [isLoading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
 
   //mobile responsive
   const [menuSate, setMenuSate] = useState({ mobileView: false });
