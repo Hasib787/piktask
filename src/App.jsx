@@ -56,6 +56,7 @@ import UserFollowing from "./userDashboard/pages/UserFollowing";
 import DeviceActivity from "./userDashboard/pages/DeviceActivity";
 import UserSubscription from "./userDashboard/pages/UserSubscription";
 import JoinNow from "./admin/pages/JoinNow";
+import ContributorPricePlan from "./admin/pages/ContributorPricePlan";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -128,6 +129,7 @@ const App = () => {
         <Route exact path="/contributor/reject" component={RejectFiles} />
         <Route exact path="/contributor/publish" component={Publish} />
         <Route exact path="/contributor/earnings" component={EarningManagement} />
+        <Route exact path="/contributor/contributorPricePlan" component={ContributorPricePlan} />
         <Route exact path="/contributor/guidLine" component={GuidLine} />
         <Route exact path="/contributor/settings" component={AccountSettings} />
         <Route exact path="/contributor/join" component={JoinNow} />

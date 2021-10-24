@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { CustomBtn, InputField } from "../../../../components/InputField";
+import CloseIcon from "@material-ui/icons/Close";
 
 const useStyles = makeStyles({
   withdrawModal: {
@@ -11,8 +12,14 @@ const useStyles = makeStyles({
       width: "40rem",
     },
   },
+  closeModal: {
+    marginLeft: "auto",
+    padding: "1rem",
+    color: "#0088f2",
+    cursor: "pointer",
+  },
   withdrawInfo: {
-    padding: "4rem 5rem",
+    padding: "0rem 5rem 4rem",
     maxWidth: "50rem",
   },
   withdrawTitle: {
@@ -74,17 +81,7 @@ const WithdrawModal = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    // if (authData.amount < minWithdraw) {
-    //   setErrors("Sorry, Minimum withdraw $25");
-    //   setLoading(false);
-    //   return;
-    // } else if(authData.amount > totalBalance){
-    //   setErrors("Sorry, you don't have enough balance to withdraw");
-    //   setLoading(false);
-    //   return;
-    // } 
+    setLoading(true); 
 
     if(user?.token && !errors){
       axios
@@ -113,6 +110,12 @@ const WithdrawModal = (props) => {
         aria-describedby="alert-dialog-description"
         className={classes.withdrawModal}
       >
+        <div className={classes.closeModal}>
+          <CloseIcon
+            fontSize="large"
+            onClick={() => setWithdrawModal(false)}
+          />
+        </div>
         <div className={classes.withdrawInfo}>
           <Typography variant="h5" className={classes.withdrawTitle}>
             {"Apply for withdrawal"}
@@ -140,8 +143,8 @@ const WithdrawModal = (props) => {
             {paymentGateway === "Payoneer" && (
               <>
                 <InputField
-                  label="Paypal"
-                  name="paypal"
+                  label="Payoneer"
+                  name="payoneer"
                   value={paymentGateway}
                 />
                 <InputField
@@ -154,8 +157,8 @@ const WithdrawModal = (props) => {
             {paymentGateway === "Bank" && (
               <>
                 <InputField
-                  label="Paypal"
-                  name="paypal"
+                  label="Bank"
+                  name="bank"
                   value={paymentGateway}
                 />
                 <InputField
