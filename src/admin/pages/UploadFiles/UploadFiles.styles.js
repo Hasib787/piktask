@@ -410,13 +410,37 @@ const useStyles = makeStyles((theme) => ({
       objectFit: "cover",
     },
   },
+  // titleWrapper:{
+  //   [theme.breakpoints.down(575)]:{
+  //     flexDirection:"column",
+  //   }
+  // },
   imageTitle: {
+    fontSize:"1.7rem",
+    fontWeight: "500",
     marginLeft: "2rem",
 
     "& span": {
      color:"gray",
+     fontSize:"1.3rem",
     },
   },
+  progressBar:{
+    width: "25%",
+    marginLeft: "auto",
+    "& p":{
+      fontSize: "1.5rem",
+    },
+    "& span":{
+         height: "0.7rem",
+         borderRadius:"0.3rem",
+    },
+    // [theme.breakpoints.down(575)]:{
+    //   marginLeft: "2rem",
+    //   width: "100%",
+    // }
+  }
+  
 }));
 
 export default useStyles;

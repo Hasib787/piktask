@@ -35,7 +35,7 @@ const AccountSettings = () => {
   const user = useSelector((state) => state.user);
 
   const [paymentMethod, setPaymentMethod] = useState([]);
-  const [payment, setPayment] = useState("PayPal");
+  const [payment, setPayment] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -124,6 +124,7 @@ const AccountSettings = () => {
             setTwitter(data.user.twitter);
             setLinkedin(data.user.linkedin);
             setInstagram(data.user.instagram);
+            setPayment(data.user.payment_gateway);
             setLoading(false);
           }
         })
@@ -420,16 +421,6 @@ const AccountSettings = () => {
                               {option.country}
                             </option>
                           ))}
-
-                          {/* {countries? (
-                            countries?.map((country) => (
-                              <option key={country.index} value={country.country}>
-                                {country.country}
-                              </option>
-                            ))
-                          ) : (
-                            <option>Country</option>
-                          )} */}
                         </TextField>
                       </FormControl>
                     </div>
