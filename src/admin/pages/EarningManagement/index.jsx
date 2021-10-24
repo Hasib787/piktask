@@ -30,6 +30,7 @@ const EarningManagement = () => {
   const [earningData, setEarningData] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [openWithdrawModal, setWithdrawModal] = useState(false);
+  
 
   const [chartData, setChartData] = useState({});
   const [selectName, setSelectName] = useState("earning");
@@ -75,9 +76,7 @@ const EarningManagement = () => {
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/contributor/dashboard/statistics/?start=${firstDay}&end=${todayCurrentMonth}&status=earning`,
-          {
-            headers: { Authorization: user?.token },
-          }
+          { headers: { Authorization: user?.token },}
         )
         .then(({ data }) => {
           if (data?.status) {
@@ -284,6 +283,41 @@ const EarningManagement = () => {
     });
   }, [onClickEvent, chartData]);
 
+  const [username, setUsername] = useState("");
+  const [paymentGateway, setPaymentGateway] = useState("");
+  const [paypalAccount, setPaypalAccount] = useState("");
+  const [payoneerAccount, setPayoneerAccount] = useState("");
+  const [totalBalance, setTotalBalance] = useState("");
+  const [minWithdraw, setMinWithdraw] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  
+  const handleWithdrawInfo = () => {
+    setLoading(true);
+    if (user?.token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/contributor/withdrawals/info`, {
+          headers: { Authorization: user.token },
+        })
+        .then(({ data }) => {
+          if (data?.status) {
+            setUsername(data.username);
+            setPaymentGateway(data.payment_gateway);
+            setPaypalAccount(data.paypal_account);
+            setPayoneerAccount(data.payoneer_account);
+            setTotalBalance(data.balance);
+            setMinWithdraw(data.amount_min_withdrawal);
+            setAccountNumber(data.account_number);
+            // setEmail(data.user.email);
+            setWithdrawModal(true);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  }
+
   return (
     <Layout title={"Earning Management || Piktask"}>
       <div className={classes.adminRoot}>
@@ -294,7 +328,15 @@ const EarningManagement = () => {
           <div className={classes.earningManagementWrapper}>
             <div className={classes.headingWrapper}>
               <Heading tag="h2">Earning Management</Heading>
-              <Button className={classes.withdrawBtn} onClick={() => setWithdrawModal(true)}>Withdraw</Button>
+              <Button 
+                className={classes.withdrawBtn} 
+                onClick={() => {
+                  
+                  handleWithdrawInfo();
+                }}
+              >
+                Withdraw
+              </Button>
             </div>
 
             <Grid container spacing={0}>
@@ -558,6 +600,13 @@ const EarningManagement = () => {
           <WithdrawModal 
             openWithdrawModal={openWithdrawModal} 
             setWithdrawModal={setWithdrawModal}
+            username={username}
+            paymentGateway={paymentGateway}
+            paypalAccount={paypalAccount} 
+            payoneerAccount={payoneerAccount}
+            accountNumber={accountNumber}
+            totalBalance={totalBalance} 
+            minWithdraw={minWithdraw}
           />
           <Footer />
         </main>

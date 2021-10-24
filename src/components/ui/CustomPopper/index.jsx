@@ -13,7 +13,6 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 // import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
 import useStyles from "./Popper.styles";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -46,11 +45,11 @@ const CustomPopper = ({
 
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
-          headers: { Authorization: user?.token },
-        })
+        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, 
+          { headers: { Authorization: user?.token },}
+        )
         .then(({data}) => {
-          if (data.status) {
+          if (data?.status) {
             setDownloadCount(data?.downloads);
             setDownloadLimit(data?.daily_limit - data?.downloads);
             setLoading(false);
@@ -58,7 +57,7 @@ const CustomPopper = ({
         })
         .catch((error) => { console.log(error);});
     }
-  }, [user.token]);
+  }, [user?.token]);
 
   const handleSignout = () => {
     if (user && user?.token) {

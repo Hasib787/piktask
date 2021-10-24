@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
       width: "50%",
     },
     [theme.breakpoints.down(480)]: {
-      width: "100%",
+      width: "70%",
     },
   },
   appbarHeader: {

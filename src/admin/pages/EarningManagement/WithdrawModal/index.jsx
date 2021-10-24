@@ -1,6 +1,8 @@
 import { Dialog, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { CustomBtn, InputField } from "../../../../components/InputField";
 
 const useStyles = makeStyles({
@@ -19,21 +21,88 @@ const useStyles = makeStyles({
     fontWeight: "500",
     marginBottom: "2rem",
   },
+  amountField: {
+    "& p": {
+      color: "red",
+      fontSize: "1.2rem",
+      fontWeight: "500",
+      marginBottom: "1rem",
+      marginTop: "-1rem",
+    },
+  }
 });
 
 const WithdrawModal = (props) => {
   const classes = useStyles();
-  const { openWithdrawModal, setWithdrawModal } = props;
+  const user = useSelector((state) => state.user);
+  const { 
+    openWithdrawModal, 
+    setWithdrawModal, 
+    username, 
+    paymentGateway, 
+    paypalAccount,
+    payoneerAccount,
+    accountNumber,
+    totalBalance,
+    minWithdraw,
+  } = props;
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  
+  const [isLoading, setLoading] = useState(false);
+  const [authData, setAuthData] = useState("");
+  const [errors, setErrors] = useState("");
 
   const closeWithdrawModal = () => {
     setWithdrawModal(false);
   };
 
-  const handleSubmit = () => {};
+  const handleAuthData = (e) => {
+    const { value } = e.target;
+    setAuthData(value);
+    if (value < minWithdraw) {
+      setErrors("Sorry, Minimum withdraw $25");
+      return;
+    } else if(value > totalBalance){
+      setErrors("Sorry, you don't have enough balance to withdraw");
+      return;
+    } else {
+      setErrors("");
+      return;
+    }
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // if (authData.amount < minWithdraw) {
+    //   setErrors("Sorry, Minimum withdraw $25");
+    //   setLoading(false);
+    //   return;
+    // } else if(authData.amount > totalBalance){
+    //   setErrors("Sorry, you don't have enough balance to withdraw");
+    //   setLoading(false);
+    //   return;
+    // } 
+
+    if(user?.token && !errors){
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/contributor/withdrawals/request`,
+          {amount: authData}, 
+          {headers: { Authorization: user.token },}
+        )
+        .then(({ data }) => {
+          console.log("data", data);
+          if (data?.status) {
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    }
+  };
 
   return (
     <>
@@ -52,34 +121,59 @@ const WithdrawModal = (props) => {
             <InputField
               label="User Name"
               name="userName"
-              // value={authData.userName}
-              // onChange={handleAuthData}
+              value={username}
             />
-            <InputField
-              label="Paypal"
-              name="paypal"
-              // value={authData.userName}
-              // onChange={handleAuthData}
-            />
-            <InputField
-              label="Email"
-              name="email"
-              // value={authData.userName}
-              // onChange={handleAuthData}
-            />
-            <div className={classes.passwordField}>
+            {paymentGateway === "PayPal" && (
+              <>
+                <InputField
+                  label="Paypal"
+                  name="paypal"
+                  value={paymentGateway}
+                />
+                <InputField
+                  label="Email"
+                  name="email"
+                  value={paypalAccount}
+                />
+              </>
+            )}
+            {paymentGateway === "Payoneer" && (
+              <>
+                <InputField
+                  label="Paypal"
+                  name="paypal"
+                  value={paymentGateway}
+                />
+                <InputField
+                  label="Email"
+                  name="email"
+                  value={payoneerAccount}
+                />
+              </>
+            )}
+            {paymentGateway === "Bank" && (
+              <>
+                <InputField
+                  label="Paypal"
+                  name="paypal"
+                  value={paymentGateway}
+                />
+                <InputField
+                  label="Account Number"
+                  name="account"
+                  value={accountNumber}
+                />
+              </>
+            )}
+            <div className={classes.amountField}>
               <InputField
                 label="Amount"
                 type="number"
                 name="amount"
-                // value={authData.password}
-                // onChange={handleAuthData}
+                value={authData}
+                onChange={handleAuthData}
               />
-              {/* <img
-                    src={lockIcon}
-                    alt="Show or hide password"
-                    onClick={handleShowHidePassword}
-                  /> */}
+              {errors && (<Typography>{errors}</Typography>)}
             </div>
 
             <CustomBtn type="submit" text="Apply" color="green" />
