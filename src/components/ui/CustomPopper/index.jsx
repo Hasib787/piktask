@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import EuroIcon from '@material-ui/icons/Euro';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -45,17 +46,19 @@ const CustomPopper = ({
 
     if (user?.token) {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, 
-          { headers: { Authorization: user?.token },}
-        )
-        .then(({data}) => {
+        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
+          headers: { Authorization: user?.token },
+        })
+        .then(({ data }) => {
           if (data?.status) {
             setDownloadCount(data?.downloads);
             setDownloadLimit(data?.daily_limit - data?.downloads);
             setLoading(false);
           }
         })
-        .catch((error) => { console.log(error);});
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, [user?.token]);
 
@@ -139,85 +142,135 @@ const CustomPopper = ({
                   </Grid>
                 </Grid>
 
-                <Grid container className={classes.productDownloadCount}>
-                  <Grid item xs={6} className={classes.productDownloadGrid}>
-                    <Typography variant="h2" className={classes.totalAmount}>
-                      {downloadCount}
-                    </Typography>
-                    <Typography variant="h3" className={classes.totalText}>
-                      Daily Downloads
-                    </Typography>
+                {user?.role === "user" && (
+                  <Grid container className={classes.productDownloadCount}>
+                    <Grid item xs={6} className={classes.productDownloadGrid}>
+                      <Typography variant="h2" className={classes.totalAmount}>
+                        {downloadCount}
+                      </Typography>
+                      <Typography variant="h3" className={classes.totalText}>
+                        Daily Downloads
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} className={classes.productDownloadGrid}>
+                      <Typography variant="h2" className={classes.totalAmount}>
+                        {downloadLimit}
+                      </Typography>
+                      <Typography variant="h3" className={classes.totalText}>
+                        Remaining Downloads
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6} className={classes.productDownloadGrid}>
-                    <Typography variant="h2" className={classes.totalAmount}>
-                      {downloadLimit}
-                    </Typography>
-                    <Typography variant="h3" className={classes.totalText}>
-                      Remaining Downloads
-                    </Typography>
-                  </Grid>
-                </Grid>
+                )}
 
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                  component={Link}
-                  to="/user/profile"
-                >
-                  <div className={classes.userMenuIcon}>
-                    <PersonOutlineIcon />
-                    <span>Edit Profile</span>
-                  </div>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  // onClick={handleClose}
-                  component={Link}
-                  to="/user/favorites"
-                >
-                  <div className={classes.userMenuIcon}>
-                    <FavoriteBorderIcon />
-                    <span>Favourite</span>
-                  </div>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  // onClick={handleClose}
-                  component={Link}
-                  to="/user/downloads"
-                >
-                  <div className={classes.userMenuIcon}>
-                    <GetAppIcon />
-                    <span>Downloads({downloadCount}/{downloadLimit})</span>
-                  </div>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={handleClose}
-                  component={Link}
-                  to="/user/following"
-                >
-                  <div className={classes.userMenuIcon}>
-                    <PeopleOutlineIcon />
-                    <span>Following</span>
-                  </div>
-                  <ArrowForwardIosIcon />
-                </MenuItem>
-                <MenuItem
-                  className={classes.userMenuItem}
-                  onClick={(e) => {
-                    handleClose(e);
-                    handleSignout();
-                  }}
-                >
-                  <div className={classes.userMenuIcon}>
-                    <PowerSettingsNewIcon />
-                    <span>Logout</span>
-                  </div>
-                </MenuItem>
+                {user?.role === "user" && (
+                  <>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/user/profile"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <PersonOutlineIcon />
+                        <span>Edit Profile</span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/user/favorites"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <FavoriteBorderIcon />
+                        <span>Favourite</span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/user/downloads"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <GetAppIcon />
+                        <span>
+                          Downloads({downloadCount}/{downloadLimit})
+                        </span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/user/following"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <PeopleOutlineIcon />
+                        <span>Following</span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={(e) => {
+                        handleClose(e);
+                        handleSignout();
+                      }}
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <PowerSettingsNewIcon />
+                        <span>Logout</span>
+                      </div>
+                    </MenuItem>
+                  </>
+                )}
+
+                {user?.role === "contributor" && (
+                  <>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/contributor/earnings"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <EuroIcon />
+                        <span>Earning Management</span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={handleClose}
+                      component={Link}
+                      to="/contributor/settings"
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <AccountCircleIcon />
+                        <span>Account Setting</span>
+                      </div>
+                      <ArrowForwardIosIcon />
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.userMenuItem}
+                      onClick={(e) => {
+                        handleClose(e);
+                        handleSignout();
+                      }}
+                    >
+                      <div className={classes.userMenuIcon}>
+                        <PowerSettingsNewIcon />
+                        <span>Logout</span>
+                      </div>
+                    </MenuItem>
+                  </>
+                )}
+                
               </MenuList>
             </ClickAwayListener>
           </Paper>
