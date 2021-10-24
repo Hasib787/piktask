@@ -13,6 +13,8 @@ const TagButtons = ({ allTags }) => {
           <Typography className={classes.tagTitle} variant="h3">
             Related tags
           </Typography>
+          <div>
+
           {allTags?.map((tag, index) => (
             <Button
               className={classes.tagButton}
@@ -24,6 +26,7 @@ const TagButtons = ({ allTags }) => {
               {tag}
             </Button>
           ))}
+          </div>
         </Grid>
       </Grid>
     </>

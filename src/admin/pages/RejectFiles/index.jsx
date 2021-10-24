@@ -61,9 +61,7 @@ const RejectFiles = () => {
           );
           const data = await response.json();
           if (data?.status) {
-            console.log("data", data);
             setRejectImage(data);
-            console.log("set data", data);
           }
         }
         fetchApi();

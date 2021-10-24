@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tagTitle: {
     fontSize: "2.2rem",
-    marginRight: "2rem",
+    marginBottom: "1rem",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginBottom: "1.5rem",
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid rgb(150 164 173 / 54%)",
     padding: "0.4rem 2.5rem",
     textDecoration: "none",
+    margin: "0.2rem 0rem",
     "&:not(last-child)": {
       marginRight: "1.2rem",
     },

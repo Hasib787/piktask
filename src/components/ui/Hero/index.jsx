@@ -284,11 +284,13 @@ const HeroSection = (props) => {
               )}
 
               {!isSearch && <Search />}
-              <SearchKeyWords
-                popularKeywords={popularKeywords}
-                heroButton={heroButton}
-                creativeWorksDone={creativeWorksDone}
-              />
+              {popularKeywords && 
+                <SearchKeyWords
+                  popularKeywords={popularKeywords}
+                  heroButton={heroButton}
+                  creativeWorksDone={creativeWorksDone}
+                />
+              }
               {heroButton && (
                 <div className={classes.heroButtonWrapper}>
                   <Button

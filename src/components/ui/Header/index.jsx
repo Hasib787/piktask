@@ -117,7 +117,7 @@ const Header = () => {
                 </div>
                 <div>
                   <div className={classes.menuButton}>
-                    {user && user?.token ? (
+                    {user?.token ? (
                       <div
                         className={classes.userAvatarArea}
                         onClick={handleToggle}

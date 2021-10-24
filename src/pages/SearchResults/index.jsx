@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Layout from "../../Layout";
 import axios from "axios";
 import ProductNotFound from "../../components/ui/ProductNotFound";
+import Spacing from "../../components/Spacing";
 
 const SearchResults = () => {
   const classes = useStyles();
@@ -60,7 +61,7 @@ const SearchResults = () => {
   };
 
   return (
-    <Layout title={`${keywords} | Piktask`}>
+    <Layout title={`${keywords} || Piktask`}>
       <Header></Header>
       <HeroSection
         size="large"
@@ -97,6 +98,7 @@ const SearchResults = () => {
           )}
         </Grid>
       </Container>
+      <Spacing space={{ height: "3rem" }} />
 
       {!user.token ? (
         <CallToAction
