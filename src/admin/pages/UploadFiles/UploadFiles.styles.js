@@ -410,6 +410,9 @@ const useStyles = makeStyles((theme) => ({
       objectFit: "cover",
     },
   },
+  fileThumbnail:{
+    width:"70% !important",
+  },
   // titleWrapper:{
   //   [theme.breakpoints.down(575)]:{
   //     flexDirection:"column",

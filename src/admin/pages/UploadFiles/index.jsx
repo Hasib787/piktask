@@ -33,6 +33,7 @@ import { toast } from "react-toastify";
 import Layout from "../../../Layout";
 import axios from "axios";
 import { Box, LinearProgress } from "@mui/material";
+import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -109,8 +110,9 @@ const UploadFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive} = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*, .ai,.eps,.psd,.svg ",
+    noKeyboard: true,
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
@@ -141,11 +143,15 @@ const UploadFiles = () => {
     <div className={classes.thumb} key={file.name}>
       <div className={classes.thumbInner}>
         <div className={classes.thumbImg}>
-          <img
-            src={file.preview}
-            alt="thumbnail"
-            className={classes.previewImg}
-          />
+          {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
+            <img
+              src={fileThumbnail}
+              alt="thumbnail"
+              className={classes.fileThumbnail}
+            />
+          ) : (
+            <img src={file.preview} alt="thumbnail" />
+          )}
         </div>
         <Typography className={classes.imageTitle}>
           {file.name} <br />
@@ -198,45 +204,45 @@ const UploadFiles = () => {
     }
   };
 
-  const handleSaleChange = (e) => {
-    setItem_for_sale(e.target.value);
-    setItemSale(!itemSale);
-    if (e.target.value === "sale") {
-      setPrice("5");
-    } else {
-      setPrice("0");
-    }
-  };
+  // const handleSaleChange = (e) => {
+  //   setItem_for_sale(e.target.value);
+  //   setItemSale(!itemSale);
+  //   if (e.target.value === "sale") {
+  //     setPrice("5");
+  //   } else {
+  //     setPrice("0");
+  //   }
+  // };
 
-  const handleTypeOfImage = (e) => {
-    setTypeOfImage(e.target.value);
-  };
+  // const handleTypeOfImage = (e) => {
+  //   setTypeOfImage(e.target.value);
+  // };
 
-  const handleImageFiles = (e) => {
-    const file = e.target.files[0];
+  // const handleImageFiles = (e) => {
+  //   const file = e.target.files[0];
 
-    if (!file?.name?.match(/\.(jpg|jpeg|png|gif)$/) && file !== undefined) {
-      toast.error("You can only upload .jpg, .jpeg, .png, .gif etc");
-      setImageFile(false);
-      return;
-    } else {
-      setImageFile(true);
-      setImageFileSrc(file);
-    }
-  };
+  //   if (!file?.name?.match(/\.(jpg|jpeg|png|gif)$/) && file !== undefined) {
+  //     toast.error("You can only upload .jpg, .jpeg, .png, .gif etc");
+  //     setImageFile(false);
+  //     return;
+  //   } else {
+  //     setImageFile(true);
+  //     setImageFileSrc(file);
+  //   }
+  // };
 
-  const handleArchivedFile = (e) => {
-    const archivedFile = e.target.files[0];
+  // const handleArchivedFile = (e) => {
+  //   const archivedFile = e.target.files[0];
 
-    if (!archivedFile?.name?.match(/\.(zip|ai|eps|psd|svg)$/)) {
-      toast.error("You can only upload .ai, .eps, .psd, .svg, .zip, .rar");
-      setArchivedFile(false);
-      return;
-    } else {
-      setArchivedFile(true);
-      setArchivedFileSrc(archivedFile);
-    }
-  };
+  //   if (!archivedFile?.name?.match(/\.(zip|ai|eps|psd|svg)$/)) {
+  //     toast.error("You can only upload .ai, .eps, .psd, .svg, .zip, .rar");
+  //     setArchivedFile(false);
+  //     return;
+  //   } else {
+  //     setArchivedFile(true);
+  //     setArchivedFileSrc(archivedFile);
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -392,7 +398,7 @@ const UploadFiles = () => {
                 <div className={classes.uploadIconWrapper}>
                   <input
                     {...getInputProps({
-                      multiple: false,
+                      multiple: true,
                     })}
                   />
                   <FontAwesomeIcon icon={faCloudUploadAlt} />
@@ -426,14 +432,27 @@ const UploadFiles = () => {
 
               {!isImageDimensionOkay && thumbs}
 
-              <Spacing space={{ height: "2.5rem" }} />
-
-              <Heading tag="h2">
-                What type of content are you going to upload?
-              </Heading>
+              <div className={classes.singleBorder}></div>
+              <Button
+                variant="contained"
+                className={classes.uploadBtn}
+                type="submit"
+                disabled={isLoading}
+              >
+                <FontAwesomeIcon
+                  icon={faCloudUploadAlt}
+                  className={classes.uploadIcon}
+                />
+                {isLoading ? "Uploading..." : "Upload"}
+              </Button>
             </div>
           </form>
 
+          <Spacing space={{ height: "2.5rem" }} />
+
+          <Heading tag="h2">
+            What type of content are you going to upload?
+          </Heading>
           <Card className={classes.cardRoot}>
             <CardContent className={classes.cardContent}>
               <Grid container>
