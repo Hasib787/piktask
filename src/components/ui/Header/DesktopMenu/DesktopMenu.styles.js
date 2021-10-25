@@ -100,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
         minWidth: "fit-content",
       },
     },
+    // [theme.breakpoints.down(769)]: {
+    //   display: "none",
+    // },
   },
   enterprise: {
     color: "#FDAF01",

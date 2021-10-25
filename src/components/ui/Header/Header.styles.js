@@ -78,11 +78,10 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down(325)]: {
       width: "9rem",
-      
+
       "& img": {
         width: "100%",
         marginTop: "1.4rem",
-        
       },
     },
   },
