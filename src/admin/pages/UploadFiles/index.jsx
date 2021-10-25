@@ -105,13 +105,17 @@ const UploadFiles = () => {
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
+      const fileData = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
       );
+
+      if (files.length === 0) {
+        setFiles(fileData);
+      } else {
+        setFiles((prevFiles) => [...fileData, ...prevFiles]);
+      }
     },
   });
 
@@ -134,7 +138,7 @@ const UploadFiles = () => {
       <div className={classes.thumb}>
         <div className={classes.thumbInner}>
           <div className={classes.thumbImg}>
-            {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
+            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
               <img
                 src={fileThumbnail}
                 alt="thumbnail"
@@ -154,7 +158,7 @@ const UploadFiles = () => {
           </Box>
           <div className={classes.deleteBtn}>
             <DeleteForeverIcon
-              onClick={(e) => removeFile(e)}
+              onClick={(e) => removeFile(file, index)}
               className={classes.deleteIcon}
             />
           </div>
@@ -163,12 +167,11 @@ const UploadFiles = () => {
     </div>
   ));
 
-  const removeFile = (e) => {
-    const isItem = e.target.closest(".files-wrapper");
+  const removeFile = (file, itemIndex) => {
+    const index = files.indexOf(file);
 
-    if (isItem) {
-      isItem.remove();
-    }
+    const removeFiles = files.splice(index, 1);
+    setFiles((prevFiles) => [...prevFiles]);
   };
 
   const isActive = isDragActive && "2px dashed #26AA10";
