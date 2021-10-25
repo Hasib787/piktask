@@ -18,8 +18,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import Spacing from "../../../components/Spacing";
 import AdminHeader from "../../components/Header";
@@ -82,33 +83,34 @@ const UploadFiles = () => {
 
   const { mobileView } = menuSate;
   // 200 x 200
-  useEffect(
-    () => () => {
-      let image = new Image();
-      image.onload = () => {
-        // if (image.size ===2000 ) {
-        //   setImageDimensionOkay(true);
-        // } else {
-        //   setImageDimensionOkay(false);
-        // }
-      };
-      image.src = thumbImage.preview;
+  // useEffect(() => {
+  //     let image = new Image();
+  //     image.onload = () => {
+  //       // if (image.size ===2000 ) {
+  //       //   setImageDimensionOkay(true);
+  //       // } else {
+  //       //   setImageDimensionOkay(false);
+  //       // }
+  //     };
+  //     image.src = thumbImage.preview;
 
-      // Make sure to revoke the data uris to avoid memory leaks
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
-    },
-    [files, thumbImage]
-  );
-  useEffect(() => {
-    const setResponsiveness = () => {
-      return window.innerWidth < 900
-        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
-        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
-    };
+  //     // Make sure to revoke the data uris to avoid memory leaks
+  //     // files.forEach((file) => URL.revokeObjectURL(file.preview));
+  //   },
+  //   [files, thumbImage]
+  // );
 
-    setResponsiveness();
-    window.addEventListener("resize", () => setResponsiveness());
-  }, []);
+  //mobile responsive
+  // useEffect(() => {
+  //   const setResponsiveness = () => {
+  //     return window.innerWidth < 900
+  //       ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+  //       : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+  //   };
+
+  //   setResponsiveness();
+  //   window.addEventListener("resize", () => setResponsiveness());
+  // }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*, .ai,.eps,.psd,.svg ",
@@ -127,8 +129,8 @@ const UploadFiles = () => {
   });
 
   //ProgressBar
-  const [progress, setProgress] = useState(10);
-  useEffect(() => {
+  const [progress, setProgress] = useState(0);
+  useCallback(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
         prevProgress >= 100 ? 10 : prevProgress + 10
@@ -138,6 +140,12 @@ const UploadFiles = () => {
       clearInterval(timer);
     };
   }, []);
+
+  const removeFile = (index) => {
+    // files.splice(index,1);
+    console.log("clicked");
+  };
+console.log("files",files);
 
   const thumbs = files.map((file) => (
     <div className={classes.thumb} key={file.name}>
@@ -157,9 +165,16 @@ const UploadFiles = () => {
           {file.name} <br />
           <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
         </Typography>
+
         <Box className={classes.progressBar}>
           <LinearProgressWithLabel value={progress} />
         </Box>
+        <div className={classes.deleteBtn}>
+          <DeleteForeverIcon
+            onClick={removeFile()}
+            className={classes.deleteIcon}
+          />
+        </div>
       </div>
     </div>
   ));
@@ -348,8 +363,8 @@ const UploadFiles = () => {
 
         <main className={classes.content}>
           <AdminHeader />
-          <form autoComplete="off" onSubmit={handleSubmit}>
-            <div className={classes.uploadContainer}>
+          <div className={classes.uploadContainer}>
+            <form autoComplete="off" onSubmit={handleSubmit}>
               <div className={classes.basicInfo}>
                 <ul>
                   <li>
@@ -433,24 +448,26 @@ const UploadFiles = () => {
               {!isImageDimensionOkay && thumbs}
 
               <div className={classes.singleBorder}></div>
-              <Button
-                variant="contained"
-                className={classes.uploadBtn}
-                type="submit"
-                disabled={isLoading}
-              >
-                <FontAwesomeIcon
-                  icon={faCloudUploadAlt}
-                  className={classes.uploadIcon}
-                />
-                {isLoading ? "Uploading..." : "Upload"}
-              </Button>
-            </div>
-          </form>
+              <div className={classes.uploadBtnRoot}>
+                <Button
+                  variant="contained"
+                  className={classes.uploadBtn}
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  <FontAwesomeIcon
+                    icon={faCloudUploadAlt}
+                    className={classes.uploadIcon}
+                  />
+                  {isLoading ? "Uploading..." : "Upload"}
+                </Button>
+              </div>
+            </form>
+          </div>
 
           <Spacing space={{ height: "2.5rem" }} />
 
-          <Heading tag="h2">
+          <Heading className={classes.contentTypeTitle} tag="h2">
             What type of content are you going to upload?
           </Heading>
           <Card className={classes.cardRoot}>
