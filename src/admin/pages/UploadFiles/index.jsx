@@ -2,26 +2,34 @@ import {
   faCloudUploadAlt,
   faExclamationTriangle,
   faInfoCircle,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Card, CardContent, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  TextareaAutosize,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Box, LinearProgress } from "@mui/material";
-import axios from "axios";
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
-import Spacing from "../../../components/Spacing";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
-import Layout from "../../../Layout";
+import Spacing from "../../../components/Spacing";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
+import { useHistory } from "react-router-dom";
 import useStyles from "./UploadFiles.styles";
+import { useDropzone } from "react-dropzone";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Layout from "../../../Layout";
+import axios from "axios";
+import { Box, LinearProgress } from "@mui/material";
+import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -117,7 +125,6 @@ const UploadFiles = () => {
 
   //ProgressBar
   const [progress, setProgress] = useState(0);
-
   useCallback(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -153,9 +160,10 @@ const UploadFiles = () => {
             <LinearProgressWithLabel value={progress} />
           </Box>
           <div className={classes.deleteBtn}>
-            <DeleteForeverIcon
+            <FontAwesomeIcon
               onClick={(e) => removeFile(e)}
               className={classes.deleteIcon}
+              icon={faTrash}
             />
           </div>
         </div>
@@ -170,6 +178,7 @@ const UploadFiles = () => {
       isItem.remove();
     }
   };
+  // console.log("files", files);
 
   const isActive = isDragActive && "2px dashed #26AA10";
 
