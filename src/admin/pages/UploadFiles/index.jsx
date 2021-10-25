@@ -3,38 +3,25 @@ import {
   faExclamationTriangle,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  Button,
-  Card,
-  CardContent,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  Grid,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Card, CardContent, Grid, Typography } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useCallback, useEffect, useState } from "react";
-import Footer from "../../../components/ui/Footer";
+import { Box, LinearProgress } from "@mui/material";
+import axios from "axios";
+import React, { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
 import Spacing from "../../../components/Spacing";
+import Footer from "../../../components/ui/Footer";
+import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
 import Sidebar from "../../components/Sidebar";
-import { useHistory } from "react-router-dom";
 import useStyles from "./UploadFiles.styles";
-import { useDropzone } from "react-dropzone";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import Layout from "../../../Layout";
-import axios from "axios";
-import { Box, LinearProgress } from "@mui/material";
-import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -130,6 +117,7 @@ const UploadFiles = () => {
 
   //ProgressBar
   const [progress, setProgress] = useState(0);
+
   useCallback(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
@@ -141,46 +129,47 @@ const UploadFiles = () => {
     };
   }, []);
 
-  const removeFile = (file, itemIndex) => {
-    const removeFiles = files.splice(itemIndex, 1);
-    console.log("remove file", itemIndex);
-    // setFiles(removeFiles);
-    const findItem = files.filter((file, index) => index !== itemIndex);
-    console.log("findItem",findItem);
-  };
-  // console.log("files", files);
-
   const thumbs = files.map((file, index) => (
-    <div className={classes.thumb} key={file.name}>
-      <div className={classes.thumbInner}>
-        <div className={classes.thumbImg}>
-          {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
-            <img
-              src={fileThumbnail}
-              alt="thumbnail"
-              className={classes.fileThumbnail}
-            />
-          ) : (
-            <img src={file.preview} alt="thumbnail" />
-          )}
-        </div>
-        <Typography className={classes.imageTitle}>
-          {file.name} <br />
-          <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-        </Typography>
+    <div className="files-wrapper" key={file.name}>
+      <div className={classes.thumb}>
+        <div className={classes.thumbInner}>
+          <div className={classes.thumbImg}>
+            {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
+              <img
+                src={fileThumbnail}
+                alt="thumbnail"
+                className={classes.fileThumbnail}
+              />
+            ) : (
+              <img src={file.preview} alt="thumbnail" />
+            )}
+          </div>
+          <Typography className={classes.imageTitle}>
+            {file.name} <br />
+            <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+          </Typography>
 
-        <Box className={classes.progressBar}>
-          <LinearProgressWithLabel value={progress} />
-        </Box>
-        <div className={classes.deleteBtn}>
-          <DeleteForeverIcon
-            onClick={(e) => removeFile(file, index)}
-            className={classes.deleteIcon}
-          />
+          <Box className={classes.progressBar}>
+            <LinearProgressWithLabel value={progress} />
+          </Box>
+          <div className={classes.deleteBtn}>
+            <DeleteForeverIcon
+              onClick={(e) => removeFile(e)}
+              className={classes.deleteIcon}
+            />
+          </div>
         </div>
       </div>
     </div>
   ));
+
+  const removeFile = (e) => {
+    const isItem = e.target.closest(".files-wrapper");
+
+    if (isItem) {
+      isItem.remove();
+    }
+  };
 
   const isActive = isDragActive && "2px dashed #26AA10";
 
