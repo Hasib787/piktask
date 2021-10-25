@@ -2,7 +2,6 @@ import {
   faCloudUploadAlt,
   faExclamationTriangle,
   faInfoCircle,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Button,
@@ -15,6 +14,7 @@ import {
 } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt }  from "@fortawesome/free-regular-svg-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import Spacing from "../../../components/Spacing";
@@ -113,13 +113,17 @@ const UploadFiles = () => {
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
+      const fileData = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
       );
+
+      if (files.length === 0) {
+        setFiles(fileData);
+      } else {
+        setFiles((prevFiles) => [...fileData, ...prevFiles]);
+      }
     },
   });
 
@@ -141,7 +145,7 @@ const UploadFiles = () => {
       <div className={classes.thumb}>
         <div className={classes.thumbInner}>
           <div className={classes.thumbImg}>
-            {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
+            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
               <img
                 src={fileThumbnail}
                 alt="thumbnail"
@@ -159,11 +163,10 @@ const UploadFiles = () => {
           <Box className={classes.progressBar}>
             <LinearProgressWithLabel value={progress} />
           </Box>
-          <div className={classes.deleteBtn}>
+          <div className={classes.deleteBtn} onClick={(e) => removeFile(file, index)}>
             <FontAwesomeIcon
-              onClick={(e) => removeFile(e)}
               className={classes.deleteIcon}
-              icon={faTrash}
+              icon={faTrashAlt}
             />
           </div>
         </div>
@@ -171,14 +174,12 @@ const UploadFiles = () => {
     </div>
   ));
 
-  const removeFile = (e) => {
-    const isItem = e.target.closest(".files-wrapper");
+  const removeFile = (file, itemIndex) => {
+    const index = files.indexOf(file);
 
-    if (isItem) {
-      isItem.remove();
-    }
+     files.splice(index, 1);
+    setFiles((prevFiles) => [...prevFiles]);
   };
-  // console.log("files", files);
 
   const isActive = isDragActive && "2px dashed #26AA10";
 
