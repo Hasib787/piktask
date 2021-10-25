@@ -141,13 +141,16 @@ const UploadFiles = () => {
     };
   }, []);
 
-  const removeFile = (index) => {
-    // files.splice(index,1);
-    console.log("clicked");
+  const removeFile = (file, itemIndex) => {
+    const removeFiles = files.splice(itemIndex, 1);
+    console.log("remove file", itemIndex);
+    // setFiles(removeFiles);
+    const findItem = files.filter((file, index) => index !== itemIndex);
+    console.log("findItem",findItem);
   };
-console.log("files",files);
+  // console.log("files", files);
 
-  const thumbs = files.map((file) => (
+  const thumbs = files.map((file, index) => (
     <div className={classes.thumb} key={file.name}>
       <div className={classes.thumbInner}>
         <div className={classes.thumbImg}>
@@ -171,7 +174,7 @@ console.log("files",files);
         </Box>
         <div className={classes.deleteBtn}>
           <DeleteForeverIcon
-            onClick={removeFile()}
+            onClick={(e) => removeFile(file, index)}
             className={classes.deleteIcon}
           />
         </div>
