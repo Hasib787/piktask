@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt }  from "@fortawesome/free-regular-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import Spacing from "../../../components/Spacing";
@@ -78,22 +78,20 @@ const UploadFiles = () => {
 
   const { mobileView } = menuSate;
   // 200 x 200
-  // useEffect(() => {
-  //     let image = new Image();
-  //     image.onload = () => {
-  //       // if (image.size ===2000 ) {
-  //       //   setImageDimensionOkay(true);
-  //       // } else {
-  //       //   setImageDimensionOkay(false);
-  //       // }
-  //     };
-  //     image.src = thumbImage.preview;
+  useEffect(() => {
+    let image = new Image();
+    image.onload = () => {
+      if (image.width < 800) {
+        setImageDimensionOkay(true);
+      } else {
+        setImageDimensionOkay(false);
+      }
+    };
+    image.src = thumbImage.preview;
 
-  //     // Make sure to revoke the data uris to avoid memory leaks
-  //     // files.forEach((file) => URL.revokeObjectURL(file.preview));
-  //   },
-  //   [files, thumbImage]
-  // );
+    // Make sure to revoke the data uris to avoid memory leaks
+    // files.forEach((file) => URL.revokeObjectURL(file.preview));
+  }, [files, thumbImage]);
 
   //mobile responsive
   // useEffect(() => {
@@ -118,6 +116,9 @@ const UploadFiles = () => {
           preview: URL.createObjectURL(file),
         })
       );
+      if (files.find((name) => name === getInputProps)) {
+        alert("file are exist");
+      }
 
       if (files.length === 0) {
         setFiles(fileData);
@@ -140,6 +141,8 @@ const UploadFiles = () => {
     };
   }, []);
 
+  //Upload file preview
+
   const thumbs = files.map((file, index) => (
     <div className="files-wrapper" key={file.name}>
       <div className={classes.thumb}>
@@ -156,28 +159,31 @@ const UploadFiles = () => {
             )}
           </div>
           <Typography className={classes.imageTitle}>
-            {file.name} <br />
+            {file.name} <br />{" "}
             <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
           </Typography>
 
           <Box className={classes.progressBar}>
             <LinearProgressWithLabel value={progress} />
           </Box>
-          <div className={classes.deleteBtn} onClick={(e) => removeFile(file, index)}>
-            <FontAwesomeIcon
-              className={classes.deleteIcon}
-              icon={faTrashAlt}
-            />
+          <div
+            className={classes.deleteBtn}
+            onClick={(e) => removeFile(file, index)}
+          >
+            <FontAwesomeIcon className={classes.deleteIcon} icon={faTrashAlt} />
           </div>
         </div>
       </div>
     </div>
   ));
+  // if (file.find((name) => name === "19.psd")) {
+  //   console.log("hello");
+  // }
 
+  //remove file function
   const removeFile = (file, itemIndex) => {
     const index = files.indexOf(file);
-
-     files.splice(index, 1);
+    files.splice(index, 1);
     setFiles((prevFiles) => [...prevFiles]);
   };
 
@@ -266,42 +272,42 @@ const UploadFiles = () => {
     setLoading(true);
     setTitleError(false);
 
-    if (!user?.token) {
-      toast.error("You have no authorizatoin");
-      return;
-    }
+    // if (!user?.token) {
+    //   toast.error("You have no authorizatoin");
+    //   return;
+    // }
 
-    if (thumbs.length === 0) {
-      setLoading(false);
-      toast.error(
-        "Please upload a thumbnail preview with the dimention of 850 x 531"
-      );
-      return;
-    } else if (!title) {
-      setLoading(false);
-      toast.error("The Title field is required.");
-      return;
-    } else if (title.length < 3 || title.length > 200) {
-      setLoading(false);
-      toast.error("Title must be between 3 and 200 characters");
-      return;
-    } else if (tags.length === 0) {
-      setLoading(false);
-      toast.error("The tag field is required");
-      return;
-    } else if (category === "0") {
-      toast.error("Please select your item category");
-      setLoading(false);
-      return;
-    } else if (!isImageFile) {
-      toast.error("Please upload an image file.");
-      setLoading(false);
-      return;
-    } else if (!isArchivedFile) {
-      toast.error("The file format should be .zip");
-      setLoading(false);
-      return;
-    }
+    // if (thumbs.length === 0) {
+    //   setLoading(false);
+    //   toast.error(
+    //     "Please upload a thumbnail preview with the dimention of 850 x 531"
+    //   );
+    //   return;
+    // } else if (!title) {
+    //   setLoading(false);
+    //   toast.error("The Title field is required.");
+    //   return;
+    // } else if (title.length < 3 || title.length > 200) {
+    //   setLoading(false);
+    //   toast.error("Title must be between 3 and 200 characters");
+    //   return;
+    // } else if (tags.length === 0) {
+    //   setLoading(false);
+    //   toast.error("The tag field is required");
+    //   return;
+    // } else if (category === "0") {
+    //   toast.error("Please select your item category");
+    //   setLoading(false);
+    //   return;
+    // } else if (!isImageFile) {
+    //   toast.error("Please upload an image file.");
+    //   setLoading(false);
+    //   return;
+    // } else if (!isArchivedFile) {
+    //   toast.error("The file format should be .zip");
+    //   setLoading(false);
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("title", title.toString());
@@ -484,9 +490,7 @@ const UploadFiles = () => {
                 >
                   <div className={classes.checkboxCol}>
                     {/* <Heading tag="h4"></Heading> */}
-                    <Typography c variant="h2">
-                      Vectors
-                    </Typography>
+                    <Typography variant="h2">Vectors</Typography>
                     <div className={classes.labelItem}>
                       <CheckCircleRoundedIcon />
                       <Typography>
