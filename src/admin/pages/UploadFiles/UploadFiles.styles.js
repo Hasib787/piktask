@@ -307,10 +307,12 @@ const useStyles = makeStyles((theme) => ({
     margin: "2.5rem 0 2rem 0",
     borderBottom: "0.7px solid lightgray",
   },
+  uploadBtnRoot: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
   uploadBtn: {
     padding: "1rem 3rem",
-    marginLeft: "50%",
-    transform: "translateX(-50%)",
     border: "none",
     borderRadius: "3px",
     fontSize: "18px",
@@ -332,7 +334,9 @@ const useStyles = makeStyles((theme) => ({
   uploadIcon: {
     marginRight: "7px",
   },
-
+  contentTypeTitle: {
+    margin: "0 0 2rem 2rem",
+  },
   labelItem: {
     display: "flex",
     marginBottom: "1rem",
@@ -344,7 +348,7 @@ const useStyles = makeStyles((theme) => ({
 
   cardContent: {
     padding: "3rem 2.5rem",
-    border: "1px solid #ACACAC",
+    border: "0.7px solid lightgray",
 
     "& h2": {
       marginBottom: "1.5rem",
@@ -395,55 +399,63 @@ const useStyles = makeStyles((theme) => ({
   thumb: {
     display: "block",
     width: "100%",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
   },
   thumbInner: {
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
+    transition: "all 0.2s linear",
+    paddingRight: "1rem",
+    "&:hover": {
+      backgroundColor: "#e3e3e363",
+    },
   },
   thumbImg: {
-    width: "15rem",
+    width: "10rem",
     "& img": {
       height: "100%",
       width: "100%",
       objectFit: "cover",
     },
   },
-  fileThumbnail:{
-    width:"70% !important",
+  fileThumbnail: {
+    border: "1px solid #c9c9c9",
+    backgroundColor: "#ddd",
+    padding: "1rem 3rem",
   },
-  // titleWrapper:{
-  //   [theme.breakpoints.down(575)]:{
-  //     flexDirection:"column",
-  //   }
-  // },
+  deleteBtn: {
+    marginLeft: "2rem",
+    cursor: "pointer",
+    "& svg":{
+      fontSize: "2rem",
+    },
+  },
   imageTitle: {
-    fontSize:"1.7rem",
+    fontSize: "1.7rem",
     fontWeight: "500",
     marginLeft: "2rem",
 
     "& span": {
-     color:"gray",
-     fontSize:"1.3rem",
+      color: "gray",
+      fontSize: "1.3rem",
     },
   },
-  progressBar:{
-    width: "25%",
+  progressBar: {
+    width: "15%",
     marginLeft: "auto",
-    "& p":{
+    "& p": {
       fontSize: "1.5rem",
     },
-    "& span":{
-         height: "0.7rem",
-         borderRadius:"0.3rem",
+    "& span": {
+      height: "0.7rem",
+      borderRadius: "0.3rem",
     },
     // [theme.breakpoints.down(575)]:{
     //   marginLeft: "2rem",
     //   width: "100%",
     // }
-  }
-  
+  },
 }));
 
 export default useStyles;
