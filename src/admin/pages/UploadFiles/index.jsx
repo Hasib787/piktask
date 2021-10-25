@@ -7,19 +7,14 @@ import {
   Button,
   Card,
   CardContent,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
   Grid,
   TextareaAutosize,
   TextField,
   Typography,
 } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt }  from "@fortawesome/free-regular-svg-icons";
 import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
 import Spacing from "../../../components/Spacing";
@@ -118,13 +113,17 @@ const UploadFiles = () => {
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
 
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
+      const fileData = acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
       );
+
+      if (files.length === 0) {
+        setFiles(fileData);
+      } else {
+        setFiles((prevFiles) => [...fileData, ...prevFiles]);
+      }
     },
   });
 
@@ -141,43 +140,46 @@ const UploadFiles = () => {
     };
   }, []);
 
-  const removeFile = (index) => {
-    // files.splice(index,1);
-    console.log("clicked");
-  };
-console.log("files",files);
+  const thumbs = files.map((file, index) => (
+    <div className="files-wrapper" key={file.name}>
+      <div className={classes.thumb}>
+        <div className={classes.thumbInner}>
+          <div className={classes.thumbImg}>
+            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
+              <img
+                src={fileThumbnail}
+                alt="thumbnail"
+                className={classes.fileThumbnail}
+              />
+            ) : (
+              <img src={file.preview} alt="thumbnail" />
+            )}
+          </div>
+          <Typography className={classes.imageTitle}>
+            {file.name} <br />
+            <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+          </Typography>
 
-  const thumbs = files.map((file) => (
-    <div className={classes.thumb} key={file.name}>
-      <div className={classes.thumbInner}>
-        <div className={classes.thumbImg}>
-          {file.name.match(/\.(ai|eps|psd|svg)$/) ? (
-            <img
-              src={fileThumbnail}
-              alt="thumbnail"
-              className={classes.fileThumbnail}
+          <Box className={classes.progressBar}>
+            <LinearProgressWithLabel value={progress} />
+          </Box>
+          <div className={classes.deleteBtn} onClick={(e) => removeFile(file, index)}>
+            <FontAwesomeIcon
+              className={classes.deleteIcon}
+              icon={faTrashAlt}
             />
-          ) : (
-            <img src={file.preview} alt="thumbnail" />
-          )}
-        </div>
-        <Typography className={classes.imageTitle}>
-          {file.name} <br />
-          <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-        </Typography>
-
-        <Box className={classes.progressBar}>
-          <LinearProgressWithLabel value={progress} />
-        </Box>
-        <div className={classes.deleteBtn}>
-          <DeleteForeverIcon
-            onClick={removeFile()}
-            className={classes.deleteIcon}
-          />
+          </div>
         </div>
       </div>
     </div>
   ));
+
+  const removeFile = (file, itemIndex) => {
+    const index = files.indexOf(file);
+
+     files.splice(index, 1);
+    setFiles((prevFiles) => [...prevFiles]);
+  };
 
   const isActive = isDragActive && "2px dashed #26AA10";
 

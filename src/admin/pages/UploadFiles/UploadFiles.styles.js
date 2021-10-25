@@ -425,10 +425,16 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem 3rem",
   },
   deleteBtn: {
+    padding: "1rem",
+    borderRadius:"0.3rem",
+    transition: "all 0.2s linear",
     marginLeft: "2rem",
     cursor: "pointer",
+    "&:hover":{
+      backgroundColor:"#d1d1d1"
+    },
     "& svg":{
-      fontSize: "2rem",
+      fontSize: "1.8rem",
     },
   },
   imageTitle: {
