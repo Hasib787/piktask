@@ -27,7 +27,7 @@ export const Home = () => {
     setScrolling(window.pageYOffset);
     let currentPosition = scrolling;
 
-    if (categories.length && currentPosition % 50 > 30 && index <= 7) {
+    if (categories.length && currentPosition % 50 > 30 && index < categories.length) {
       const category = categories[index];
       setIndex((index) => index + 1);
       popularCats.push(category);
@@ -66,8 +66,8 @@ export const Home = () => {
       </Container>
       {popularCats?.length &&
         popularCats.map((category, index) => (
-          <Container>
-            <Products key={index} category={category} showHeading count={8} />
+          <Container key={category?.id}>
+            <Products key={category?.id} category={category} showHeading count={8} />
           </Container>
         ))}
       ;

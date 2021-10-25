@@ -114,7 +114,7 @@ const UserFollowing = () => {
                           <div className={classes.viewProfileBtn}>
                             <Button
                               component={Link}
-                              to={`/${followItem?.username}`}
+                              to={`/author/${followItem?.username}`}
                               className={classes.viewMoreBtn}
                             >
                               View Profile

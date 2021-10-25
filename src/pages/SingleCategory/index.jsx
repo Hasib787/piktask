@@ -20,6 +20,8 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
 import {
+  PinterestShareButton,
+  PinterestIcon,
   EmailIcon,
   EmailShareButton,
   FacebookIcon,
@@ -32,8 +34,6 @@ import {
   TelegramShareButton,
   TwitterIcon,
   TwitterShareButton,
-  PinterestShareButton,
-  PinterestIcon,
 } from "react-share";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
 import Product from "../../components/ui/Products/Product";
@@ -390,32 +390,32 @@ const SingleCategory = () => {
                 <Grid item style={{ display: "flex", alignItems: "center" }}>
                   <Typography>Share: </Typography>
                   <div>
-                    <PinterestShareButton url={shareUrl}>
-                      <PinterestIcon size={25} style={{ marginLeft: "1rem" }} round={true} />
+                    <PinterestShareButton media={shareUrl}>
+                      <PinterestIcon size={25} style={{ marginLeft: "1rem", cursor: "pointer" }} round={true} />
                     </PinterestShareButton>
 
                     <EmailShareButton url={shareUrl}>
-                      <EmailIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <EmailIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </EmailShareButton>
 
                     <FacebookShareButton url={shareUrl}>
-                      <FacebookIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <FacebookIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </FacebookShareButton>
 
                     <FacebookMessengerShareButton url={shareUrl}>
-                      <FacebookMessengerIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <FacebookMessengerIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </FacebookMessengerShareButton>
 
                     <TwitterShareButton url={shareUrl}>
-                      <TwitterIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <TwitterIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </TwitterShareButton>
 
                     <LinkedinShareButton url={shareUrl}>
-                      <LinkedinIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <LinkedinIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </LinkedinShareButton>
 
                     <TelegramShareButton url={shareUrl}>
-                      <TelegramIcon size={25} style={{ marginLeft: "0.4rem" }} round={true} />
+                      <TelegramIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
                     </TelegramShareButton>
                   </div>
                 </Grid>

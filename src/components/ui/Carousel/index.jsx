@@ -1,13 +1,13 @@
 import { Container } from "@material-ui/core";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-import CategoryItemLoader from "../Loader/CategoryItemLoader";
+// import CategoryItemLoader from "../Loader/CategoryItemLoader";
 import PopularCategory from "../PopularCategory";
-import ProductNotFound from "../ProductNotFound";
+// import ProductNotFound from "../ProductNotFound";
 import useStyles from "./Carousel.styles";
 
 function NavigateNextArrow(props) {
@@ -30,25 +30,8 @@ function NavigatePrevArrow(props) {
 
 export const CategoryCarousel = () => {
   const classes = useStyles();
+  const categories = useSelector((state) => state.popularCategories);
 
-  const [popularCategories, setPopularCategories] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/categories/popular`)
-      .then(({ data }) => {
-        if (data?.status) {
-          setPopularCategories(data?.categories);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log("Popular categories error: ", error);
-      });
-  }, []);
 
   const settings = {
     dots: false,
@@ -102,23 +85,11 @@ export const CategoryCarousel = () => {
   return (
     <>
       <Container>
-        {/* <Grid container spacing={2}> */}
-        {isLoading ? (
-          <CategoryItemLoader />
-        ) : (
-          <>
-            {popularCategories.length ? (
-              <Slider {...settings} className={classes.carouselWrapper}>
-                {popularCategories?.map((photo) => (
-                  <PopularCategory key={photo.id} photo={photo} />
-                ))}
-              </Slider>
-            ) : (
-              <ProductNotFound />
-            )}
-          </>
-        )}
-        {/* </Grid> */}
+        <Slider {...settings} className={classes.carouselWrapper}>
+          {categories?.length && categories?.map((photo) => (
+            <PopularCategory key={photo.id} photo={photo} />
+          ))}
+        </Slider>
       </Container>
     </>
   );
