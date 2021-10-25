@@ -14,9 +14,9 @@ import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(0);
+  const [selectedItem, setSelectedItem] = useState("");
   const totalPublishFile = useSelector((state) => state.totalPublishFile);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Sidebar = () => {
       setSelectedItem(5);
     } else if (window.location.pathname === "/contributor/earnings" && value !== 6) {
       setValue(6);
-    } else if (window.location.pathname === "/admin/plan" && value !== 7) {
+    } else if (window.location.pathname === "/contributor/contributorPricePlan" && value !== 7) {
       setValue(7);
     } else if (window.location.pathname === "/contributor/guidLine" && value !== 8) {
       setValue(8);
@@ -162,7 +162,7 @@ const Sidebar = () => {
             selected: classes.selectedItem,
           }}
           component={Link}
-          to="/admin/plan"
+          to="/contributor/contributorPricePlan"
           selected={value === 7}
         >
           <CardMembershipIcon />

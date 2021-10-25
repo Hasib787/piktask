@@ -123,7 +123,7 @@ export const Category = () => {
   };
 
   return (
-    <Layout title={`${catName} | Piktask`}>
+    <Layout title={`${catName} || Piktask`}>
       <Header />
       <HeroSection
         size="large"
@@ -132,28 +132,30 @@ export const Category = () => {
       />
 
       <Container>
-        <div className={classes.shortList}>
-          <div className={classes.shortListWrapper}>
-            <Typography className={classes.shortListTag}>Sort by:</Typography>
-            <FormControl variant="outlined" className={classes.formControl}>
-              <Select
-                className={classes.selectSortItem}
-                native
-                onChange={getCategoryProducts}
-                inputProps={{
-                  id: "outlined-age-native-simple",
-                }}
-              >
-                <option value="all_product">All Product</option>
-                <option value="brand_new">Brand New</option>
-                <option value="popular">Popular</option>
-                <option value="top_download">Top Download</option>
-                <option value="free">Free</option>
-                <option value="premium">Premium</option>
-              </Select>
-            </FormControl>
+        {categoryProducts.length > 0 && (
+          <div className={classes.shortList}>
+            <div className={classes.shortListWrapper}>
+              <Typography className={classes.shortListTag}>Sort by:</Typography>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <Select
+                  className={classes.selectSortItem}
+                  native
+                  onChange={getCategoryProducts}
+                  inputProps={{
+                    id: "outlined-age-native-simple",
+                  }}
+                >
+                  <option value="all_product">All Product</option>
+                  <option value="brand_new">Brand New</option>
+                  <option value="popular">Popular</option>
+                  <option value="top_download">Top Download</option>
+                  <option value="free">Free</option>
+                  <option value="premium">Premium</option>
+                </Select>
+              </FormControl>
+            </div>
           </div>
-        </div>
+        )}
       </Container>
 
       <Container>
