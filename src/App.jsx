@@ -60,7 +60,7 @@ import ContributorPricePlan from "./admin/pages/ContributorPricePlan";
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -113,7 +113,7 @@ const App = () => {
     //     });
     // }
 
-  }, [dispatch, user?.token]);
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>

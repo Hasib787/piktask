@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
   detailsContainer: {
     width: "55rem",
     marginTop: "2rem",
+    marginBottom: "1rem",
     [theme.breakpoints.down(768)]: {
       width: "55rem",
     },
@@ -120,6 +121,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
+    marginTop: "1.5rem",
   },
   authorProfile: {
     display: "flex",
