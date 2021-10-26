@@ -308,6 +308,27 @@ const useStyles = makeStyles((theme) => ({
       marginRight: "2.5rem",
     },
   },
+  disabledBtn: {
+    color: "#fff",
+    fontSize: 17,
+    padding: "1rem 10rem",
+    marginRight: "4rem",
+    backgroundColor: "#ddd",
+    "& img": {
+      marginRight: "1.5rem",
+      width: "1.2rem",
+    },
+    "@media (max-width: 768px)": {
+      fontSize: 16,
+      padding: "0.8rem 9rem",
+      marginRight: "2.5rem",
+    },
+    [theme.breakpoints.down(480)]: {
+      fontSize: 16,
+      padding: "0.4rem 5.1rem",
+      marginRight: "2.5rem",
+    },
+  },
   likeBtn: {
     padding: "1rem 1.5rem",
     backgroundColor: theme.palette.primary.main,
