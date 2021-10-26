@@ -57,6 +57,7 @@ import DeviceActivity from "./userDashboard/pages/DeviceActivity";
 import UserSubscription from "./userDashboard/pages/UserSubscription";
 import JoinNow from "./admin/pages/JoinNow";
 import ContributorPricePlan from "./admin/pages/ContributorPricePlan";
+import { getBaseURL } from "./helpers";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -113,9 +114,14 @@ const App = () => {
     //     });
     // }
 
-    // Product API integration
-    // axios
-    //   .get(`${process.env.REACT_APP_API_URL}/client/urls`)
+    // Base url API integration
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/client/urls`)
+      .then(({data}) => {
+        if(data?.status){
+          localStorage.setItem("imageBaseURL", JSON.stringify(data.urls));
+        }
+      })
 
   }, [dispatch]);
 

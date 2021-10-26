@@ -91,7 +91,7 @@ const UserSideBar = () => {
   useEffect(() => {
     setLoading(true);
 
-    if (user?.token) {
+    if (user?.isLogged) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
           headers: { Authorization: user?.token },
@@ -109,7 +109,7 @@ const UserSideBar = () => {
     }
 
     // get user information
-    if (user?.token) {
+    if (user?.isLogged) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/user/profile`, {
           headers: { Authorization: user.token },
@@ -125,7 +125,7 @@ const UserSideBar = () => {
           console.log(error.message);
         });
     }
-  }, [user?.token]);
+  }, [user?.token, user?.isLogged]);
 
   //close account modal
   const handleDialogOpen = () => { setAlertDialog(true);};

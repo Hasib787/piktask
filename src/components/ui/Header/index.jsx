@@ -117,7 +117,7 @@ const Header = () => {
                 </div>
                 <div>
                   <div className={classes.menuButton}>
-                    {user?.token ? (
+                    {user?.isLogged ? (
                       <div
                         className={classes.userAvatarArea}
                         onClick={handleToggle}
@@ -125,7 +125,7 @@ const Header = () => {
                         aria-haspopup="true"
                         ref={anchorRef}
                       >
-                        {user?.token && user?.avatar !== "null" ? (
+                        {user?.isLogged && user?.avatar !== "null" ? (
                           <img
                             className={classes.avatar}
                             src={user?.avatar}
