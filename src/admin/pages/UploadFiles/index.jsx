@@ -90,7 +90,7 @@ const UploadFiles = () => {
     image.src = thumbImage.preview;
 
     // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach((file) => URL.revokeObjectURL(file.preview)); 
+    files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files, thumbImage]);
 
   //mobile responsive
@@ -119,7 +119,7 @@ const UploadFiles = () => {
       if (files.find((name) => name === fileData)) {
         alert("file are exist");
       }
-
+      console.log("fileData", fileData);
       if (files.length === 0) {
         setFiles(fileData);
       } else {
@@ -127,6 +127,45 @@ const UploadFiles = () => {
       }
     },
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let chankCounter;
+    const chunkSize = 5242880;
+
+    for (let file = 0; file < files.length; file++) {
+      const element = files[file];
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        console.log(`started ${ev}`);
+        const fileSize = ev.target.result.byteLength;
+        for (let i = 0; i < fileSize / chunkSize + 1; i++) {
+          const chunk = ev.target.result.slice(
+            i * chunkSize,
+            i * chunkSize + chunkSize
+          );
+          if (fileSize < chunkSize) {
+      //       await fetch("http://localhost:8080/upload",  {
+      //         "method": "POST",
+      //         "headers": {
+      //             "content-type": "application/octet-stream",
+      //             "content-length" : chunk.byteLength,
+      //             "upload-id": uploadId
+      //         },
+      //         "body": chunk
+      // });
+
+      // divP.textContent = Math.round(i*1000*100/ev.target.result.byteLength,0) + "%";
+          }
+          console.log(`sending ${chunk.byteLength}`);
+             
+        }
+      };
+
+      reader.readAsArrayBuffer(element);
+      console.log("element", element);
+    }
+  };
 
   //ProgressBar
   const [progress, setProgress] = useState(0);
@@ -267,7 +306,7 @@ const UploadFiles = () => {
   //   }
   // };
 
-  const handleSubmit = (e) => {
+  const handleSubmits = (e) => {
     e.preventDefault();
     setLoading(true);
     setTitleError(false);
