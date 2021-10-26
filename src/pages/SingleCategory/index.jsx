@@ -49,6 +49,7 @@ import HeroSection from "../../components/ui/Hero";
 import Loader from "../../components/ui/Loader";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
+import { getBaseURL } from "../../helpers";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
@@ -309,7 +310,7 @@ const SingleCategory = () => {
               <img
                 title={imageDetails.title}
                 className={classes.image}
-                src={encodeURI(imageDetails?.preview)}
+                src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + imageDetails?.preview)}
                 alt={imageDetails?.original_name}
               />
             </div>

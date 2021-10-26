@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import downloadIcon from "../../../../assets/download.svg";
-import { getWords } from "../../../../helpers";
+import { getBaseURL, getWords } from "../../../../helpers";
 import SignUpModal from "../../../../pages/Authentication/SignUpModal";
 import {
   ButtonWrapper,
@@ -112,8 +112,8 @@ const Product = ({ photo = null }) => {
             <Link to={pikTaskEncodeURI(photo)}>
               <img
                 className={classes.image}
-                src={encodeURI(photo?.preview)}
-                alt=""
+                src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + photo?.preview)}
+                alt="previewImage"
               />
             </Link>
           </div>
@@ -122,7 +122,7 @@ const Product = ({ photo = null }) => {
             <Link to={pikTaskEncodeURI(photo)}>
               <img
                 className={classes.image}
-                src={encodeURI(photo?.preview)}
+                src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + photo?.preview)}
                 alt=""
               />
             </Link>

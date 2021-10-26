@@ -66,7 +66,7 @@ const CustomPopper = ({
     if (user && user?.token) {
       user.isLogged = false;
       history.push("/");
-      localStorage.clear();
+      localStorage.removeItem("token");
 
       dispatch({
         type: "LOGOUT",
