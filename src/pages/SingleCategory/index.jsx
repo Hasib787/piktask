@@ -12,16 +12,14 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import CloseIcon from "@material-ui/icons/Close";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import axios from "axios";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import moment from "moment";
-import axios from "axios";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import {
-  PinterestShareButton,
-  PinterestIcon,
   EmailIcon,
   EmailShareButton,
   FacebookIcon,
@@ -30,29 +28,30 @@ import {
   FacebookShareButton,
   LinkedinIcon,
   LinkedinShareButton,
+  PinterestIcon,
+  PinterestShareButton,
   TelegramIcon,
   TelegramShareButton,
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
+import { toast } from "react-toastify";
+import authorPhoto from "../../assets/author.png";
+import copyIcon from "../../assets/icons/copy.svg";
 import downArrowIconWhite from "../../assets/icons/downArrowIconWhite.svg";
-import Product from "../../components/ui/Products/Product";
-import SectionHeading from "../../components/ui/Heading";
-import TagButtons from "../../components/ui/TagButtons";
-import SignUpModal from "../Authentication/SignUpModal";
 import likeIcon from "../../assets/icons/likeIcon.svg";
 import shareIcon from "../../assets/icons/share.svg";
-import copyIcon from "../../assets/icons/copy.svg";
-import HeroSection from "../../components/ui/Hero";
-import authorPhoto from "../../assets/author.png";
+import Spacing from "../../components/Spacing";
 import Footer from "../../components/ui/Footer";
 import Header from "../../components/ui/Header";
-import useStyles from "./SingleCategory.styles";
-import Spacing from "../../components/Spacing";
-import { Link } from "react-router-dom";
+import SectionHeading from "../../components/ui/Heading";
+import HeroSection from "../../components/ui/Hero";
 import Loader from "../../components/ui/Loader";
-import { toast } from "react-toastify";
+import Product from "../../components/ui/Products/Product";
+import TagButtons from "../../components/ui/TagButtons";
 import Layout from "../../Layout";
+import SignUpModal from "../Authentication/SignUpModal";
+import useStyles from "./SingleCategory.styles";
 
 const SingleCategory = () => {
   const classes = useStyles();
@@ -79,8 +78,9 @@ const SingleCategory = () => {
   const [downloadCount, setDownloadCount] = useState();
   const [imageLink, setImageLink] = useState("");
 
-
-  const handleTooltipClose = () => { setOpenCopyLink(false);};
+  const handleTooltipClose = () => {
+    setOpenCopyLink(false);
+  };
 
   const handleCopyUrl = (e) => {
     navigator.clipboard.writeText(window.location.href);
@@ -95,20 +95,19 @@ const SingleCategory = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/images/${imageID}`)
       .then(({ data }) => {
-        console.log(data?.detail.preview);
         if (data?.success) {
           setImageDetails(data?.detail);
-          setImageLink(data?.detail.preview)
+          setImageLink(data?.detail.preview);
           if (data?.related_tags) {
             const tags = data?.related_tags;
             setAllTags(tags.filter((e) => e));
           }
 
-          if (user?.token) {
+          if (user && user?.isLogged && user.role === "user") {
             axios
               .get(
                 `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.detail.user_id}`,
-                { headers: { Authorization: user.token },}
+                { headers: { Authorization: user.token } }
               )
               .then((response) => {
                 if (response.data.status) {
@@ -122,47 +121,44 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
-      // Like status API
-      if (user?.token) {
-        axios
-          .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, 
-            { headers: { Authorization: user?.token },}
-          )
-          .then(({ data }) => {
-            if (!data?.status) {
-              setLike(false);
-            } else if (data?.status) {
-              setLike(true);
-            } else {
-              console.log("Image like status error");
-            }
-          })
-          .catch((error) => console.log("Like status error: ", error));
-      }
-
-   
-
+    // Like status API
+    if (user && user?.isLogged && user.role === "user") {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
+          headers: { Authorization: user?.token },
+        })
+        .then(({ data }) => {
+          if (!data?.status) {
+            setLike(false);
+          } else if (data?.status) {
+            setLike(true);
+          } else {
+            console.log("Image like status error");
+          }
+        })
+        .catch((error) => console.log("Like status error: ", error));
+    }
   }, [imageID, user?.token]);
 
   useEffect(() => {
-     // related product API
-     let relatedImageURL;
+    // related product API
+    let relatedImageURL;
 
-     if (user?.token && user?.id) {
-       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
-     } else {
-       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
-     }
-     axios
-       .get(relatedImageURL)
-       .then(({ data }) => {
-         if (data?.status) {
-           setRelatedImage(data.images);
-           setLoading(false);
-         }
-       })
-       .catch((error) => console.log("Related image error: ", error));
-  }, [imageID, user?.id, user?.token])
+    if (user?.token && user?.id) {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
+    } else {
+      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
+    }
+    axios
+      .get(relatedImageURL)
+      .then(({ data }) => {
+        if (data?.status) {
+          setRelatedImage(data.images);
+          setLoading(false);
+        }
+      })
+      .catch((error) => console.log("Related image error: ", error));
+  }, [imageID, user?.id, user?.token]);
 
   const handleFollower = () => {
     if (!user.token && window.innerWidth > 900) {
@@ -174,7 +170,7 @@ const SingleCategory = () => {
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
           {},
-          { headers: { Authorization: user.token },}
+          { headers: { Authorization: user.token } }
         )
         .then((response) => {
           if (response?.status === 200) {
@@ -196,7 +192,7 @@ const SingleCategory = () => {
         .post(
           `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
           {},
-          { headers: { Authorization: user.token },}
+          { headers: { Authorization: user.token } }
         )
         .then(({ data }) => {
           if (data?.status) {
@@ -214,9 +210,13 @@ const SingleCategory = () => {
     }
   };
 
-  const handleClickOpen = () => { setOpen(true);};
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  const handleClose = () => { setOpen(false);};
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   //Handle download image
   const handleDownload = (e) => {
@@ -228,21 +228,21 @@ const SingleCategory = () => {
     };
 
     if (user?.token) {
-      downloadAPI.headers = { Authorization: user?.token,};
+      downloadAPI.headers = { Authorization: user?.token };
       setButtonLoading(true);
     }
     axios(downloadAPI)
       .then(({ data }) => {
         if (data.url) {
           axios
-            .get(data.url, { responseType: "blob",})
+            .get(data.url, { responseType: "blob" })
             .then((response) => {
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement("a");
               link.href = url;
               link.setAttribute(
                 "download",
-                `${imageDetails?.title.replace(/\s/g , "-")}.${data.extension}`
+                `${imageDetails?.title.replace(/\s/g, "-")}.${data.extension}`
               );
               document.body.appendChild(link);
               link.click();
@@ -258,7 +258,7 @@ const SingleCategory = () => {
       })
       .catch((error) => {
         console.log("catch", error.response);
-        if(user?.token){
+        if (user?.token) {
           toast.error(error.response.data.message);
         } else {
           toast.error(error.response.data.message);
@@ -366,7 +366,8 @@ const SingleCategory = () => {
                   </div>
                   <div className={classes.singleItem}>
                     <Typography>
-                      <strong>Copyright Information: </strong><br />
+                      <strong>Copyright Information: </strong>
+                      <br />
                       Piktask
                     </Typography>
                   </div>
@@ -397,31 +398,59 @@ const SingleCategory = () => {
                   <Typography>Share: </Typography>
                   <div>
                     <PinterestShareButton url={shareUrl} media={imageLink}>
-                      <PinterestIcon size={25} style={{ marginLeft: "1rem", cursor: "pointer" }} round={true} />
+                      <PinterestIcon
+                        size={25}
+                        style={{ marginLeft: "1rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </PinterestShareButton>
 
                     <EmailShareButton url={shareUrl}>
-                      <EmailIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <EmailIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </EmailShareButton>
 
                     <FacebookShareButton url={shareUrl}>
-                      <FacebookIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <FacebookIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </FacebookShareButton>
 
                     <FacebookMessengerShareButton url={shareUrl}>
-                      <FacebookMessengerIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <FacebookMessengerIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </FacebookMessengerShareButton>
 
                     <TwitterShareButton url={shareUrl}>
-                      <TwitterIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <TwitterIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </TwitterShareButton>
 
                     <LinkedinShareButton url={shareUrl}>
-                      <LinkedinIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <LinkedinIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </LinkedinShareButton>
 
                     <TelegramShareButton url={shareUrl}>
-                      <TelegramIcon size={25} style={{ marginLeft: "0.7rem", cursor: "pointer" }} round={true} />
+                      <TelegramIcon
+                        size={25}
+                        style={{ marginLeft: "0.7rem", cursor: "pointer" }}
+                        round={true}
+                      />
                     </TelegramShareButton>
                   </div>
                 </Grid>
@@ -651,31 +680,59 @@ const SingleCategory = () => {
               }}
             >
               <PinterestShareButton url={imageLink}>
-                <PinterestIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <PinterestIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </PinterestShareButton>
 
               <EmailShareButton url={shareUrl}>
-                <EmailIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <EmailIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </EmailShareButton>
 
               <FacebookShareButton url={shareUrl}>
-                <FacebookIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <FacebookIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </FacebookShareButton>
 
               <FacebookMessengerShareButton url={shareUrl}>
-                <FacebookMessengerIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <FacebookMessengerIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </FacebookMessengerShareButton>
 
               <TwitterShareButton url={shareUrl}>
-                <TwitterIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <TwitterIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </TwitterShareButton>
 
               <LinkedinShareButton url={shareUrl}>
-                <LinkedinIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <LinkedinIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </LinkedinShareButton>
 
               <TelegramShareButton url={shareUrl}>
-                <TelegramIcon size={40} style={{ margin: "0.4rem" }} round={true} />
+                <TelegramIcon
+                  size={40}
+                  style={{ margin: "0.4rem" }}
+                  round={true}
+                />
               </TelegramShareButton>
             </div>
           </DialogContent>
