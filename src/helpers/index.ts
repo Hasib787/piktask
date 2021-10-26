@@ -19,6 +19,8 @@ export const getBaseURL = () => {
     bucket_base_url: client.bucket_base_url,
     profiles: client.profiles,
     images: client.images,
+    categories: client.categories,
+    blog_images: client.blog_images,
   };
 };
 

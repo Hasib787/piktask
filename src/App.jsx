@@ -57,7 +57,6 @@ import DeviceActivity from "./userDashboard/pages/DeviceActivity";
 import UserSubscription from "./userDashboard/pages/UserSubscription";
 import JoinNow from "./admin/pages/JoinNow";
 import ContributorPricePlan from "./admin/pages/ContributorPricePlan";
-import { getBaseURL } from "./helpers";
 
 const App = () => {
   const dispatch = useDispatch();

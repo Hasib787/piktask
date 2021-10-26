@@ -33,13 +33,10 @@ const DownloadItems = () => {
 
   useEffect(() => {
     setLoading(true);
-
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/user/downloads?limit=${downloadItem}&page=${pageCount}`,
-        {
-          headers: { Authorization: user.token },
-        }
+    if(user?.isLogged){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/downloads?limit=${downloadItem}&page=${pageCount}`,
+        { headers: { Authorization: user?.token }, }
       )
       .then(({ data }) => {
         if (data?.status) {
@@ -51,7 +48,8 @@ const DownloadItems = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, [user, pageCount, downloadItem]);
+    }
+  }, [user?.isLogged, user?.token, pageCount, downloadItem]);
 
   return (
     <Layout title="Downloads || Piktask">

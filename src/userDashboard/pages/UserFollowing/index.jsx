@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductNotFound from "../../../components/ui/ProductNotFound";
 import Paginations from "../../../components/ui/Pagination";
+import { getBaseURL } from "../../../helpers";
 
 const UserFollowing = () => {
   const classes = useStyles();
@@ -33,9 +34,9 @@ const UserFollowing = () => {
   useEffect(() => {
     setLoading(true);
 
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/user/following_list?limit=${followerItem}&page=${pageCount}`,
+    if(user?.isLogged){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/following_list?limit=${followerItem}&page=${pageCount}`,
         { headers: { Authorization: user?.token } }
       )
       .then(({ data }) => {
@@ -48,7 +49,8 @@ const UserFollowing = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, [user, pageCount, followerItem]);
+    }
+  }, [user?.isLogged, user?.token, pageCount, followerItem]);
 
   return (
     <Layout title="Followings || Piktask">
@@ -129,7 +131,7 @@ const UserFollowing = () => {
                                 key={followerResource?.id}
                                 className={classes.followerFiles}
                               >
-                                <img src={followerResource?.preview} alt="" />
+                                <img src={getBaseURL().bucket_base_url + getBaseURL().images + followerResource?.preview} alt="" />
                               </Card>
                             ))}
                           </div>

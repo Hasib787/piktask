@@ -44,7 +44,7 @@ const CustomPopper = ({
   useEffect(() => {
     setLoading(true);
 
-    if (user?.token) {
+    if (user?.isLogged && user?.role === "user") {
       axios
         .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
           headers: { Authorization: user?.token },
@@ -60,7 +60,7 @@ const CustomPopper = ({
           console.log(error);
         });
     }
-  }, [user?.token]);
+  }, [user?.token, user?.isLogged, user?.role]);
 
   const handleSignout = () => {
     if (user && user?.token) {

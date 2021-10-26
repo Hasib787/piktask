@@ -36,6 +36,7 @@ import {
 } from "react-share";
 import SignUpModal from "../Authentication/SignUpModal";
 import moment from "moment";
+import { getBaseURL } from "../../helpers";
 
 const SingleBlogPost = () => {
   const classes = useStyles();
@@ -118,7 +119,7 @@ const SingleBlogPost = () => {
         <Grid container spacing={3} className={classes.blogContainer}>
           <Grid item sm={8} md={8} xs={12} className={classes.blogsItem}>
             <div className={classes.blogImageWrapper}>
-              <img src={blogDetails?.thumbnail} alt={blogDetails?.category} />
+              <img src={getBaseURL().bucket_base_url + getBaseURL().blog_images + blogDetails?.thumbnail} alt={blogDetails?.category} />
             </div>
 
             <Spacing space={{ height: "2rem" }} />
@@ -195,7 +196,7 @@ const SingleBlogPost = () => {
             <Spacing space={{ height: "3rem" }} />
 
             <div className={classes.blogImageWrapper}>
-              <img src={blogDetails?.thumbnail} alt={blogDetails?.category} />
+              <img src={getBaseURL().bucket_base_url + getBaseURL().blog_images + blogDetails?.thumbnail} alt={blogDetails?.category} />
             </div>
             <Spacing space={{ height: "4rem" }} />
             <div className={classes.blogContent}>
