@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   tagsContainer: {
-    display: "flex",
     flexWrap: "wrap",
     alignItems: "center",
     marginTop: "4.5rem",
@@ -10,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tagTitle: {
     fontSize: "2.2rem",
-    marginBottom: "1rem",
+    marginBottom: "2rem",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
       marginBottom: "1.5rem",

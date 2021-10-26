@@ -77,6 +77,7 @@ const SingleCategory = () => {
   const [open, setOpen] = useState(false);
   const [isLike, setLike] = useState(false);
   const [downloadCount, setDownloadCount] = useState();
+  const [imageLink, setImageLink] = useState("");
 
 
   const handleTooltipClose = () => { setOpenCopyLink(false);};
@@ -90,11 +91,14 @@ const SingleCategory = () => {
   useEffect(() => {
     setLoading(true);
 
+    // Match image ID
     axios
       .get(`${process.env.REACT_APP_API_URL}/images/${imageID}`)
       .then(({ data }) => {
+        console.log(data?.detail.preview);
         if (data?.success) {
           setImageDetails(data?.detail);
+          setImageLink(data?.detail.preview)
           if (data?.related_tags) {
             const tags = data?.related_tags;
             setAllTags(tags.filter((e) => e));
@@ -118,10 +122,11 @@ const SingleCategory = () => {
       })
       .catch((error) => console.log(error));
 
+      // Like status API
       if (user?.token) {
         axios
           .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, 
-            { headers: { Authorization: user.token },}
+            { headers: { Authorization: user?.token },}
           )
           .then(({ data }) => {
             if (!data?.status) {
@@ -135,29 +140,34 @@ const SingleCategory = () => {
           .catch((error) => console.log("Like status error: ", error));
       }
 
-    // related product API
-    let relatedImageURL;
+   
 
-    if (user && user?.id) {
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
-    } else {
-      relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
-    }
-    axios
-      .get(relatedImageURL)
-      .then(({ data }) => {
-        if (data?.status) {
-          setRelatedImage(data.images);
-          setLoading(false);
-        }
-      })
-      .catch((error) => console.log("Related image error: ", error));
-  }, [imageID, user]);
+  }, [imageID, user?.token]);
+
+  useEffect(() => {
+     // related product API
+     let relatedImageURL;
+
+     if (user?.token && user?.id) {
+       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
+     } else {
+       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
+     }
+     axios
+       .get(relatedImageURL)
+       .then(({ data }) => {
+         if (data?.status) {
+           setRelatedImage(data.images);
+           setLoading(false);
+         }
+       })
+       .catch((error) => console.log("Related image error: ", error));
+  }, [imageID, user?.id, user?.token])
 
   const handleFollower = () => {
-    if ((!user || !user.token) && window.innerWidth > 900) {
+    if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if ((!user || !user.token) && window.innerWidth < 900) {
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -177,9 +187,9 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if ((!user || !user.token) && window.innerWidth > 900) {
+    if (!user.token && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if ((!user || !user.token) && window.innerWidth < 900) {
+    } else if (!user.token && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
     } else if (user.id !== imageDetails?.user_id && user.token) {
       axios
@@ -198,19 +208,15 @@ const SingleCategory = () => {
             console.log("Something wrong with the like");
           }
         })
-        .catch((err) => console.log("Like error: ", err));
+        .catch((error) => console.log("Like error: ", error));
     } else {
       toast.error("You can't like yourself");
     }
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => { setOpen(true);};
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => { setOpen(false);};
 
   //Handle download image
   const handleDownload = (e) => {
@@ -221,8 +227,8 @@ const SingleCategory = () => {
       method: "get",
     };
 
-    if (user && user.token) {
-      downloadAPI.headers = { Authorization: user.token,};
+    if (user?.token) {
+      downloadAPI.headers = { Authorization: user?.token,};
       setButtonLoading(true);
     }
     axios(downloadAPI)
@@ -236,7 +242,7 @@ const SingleCategory = () => {
               link.href = url;
               link.setAttribute(
                 "download",
-                `${imageDetails?.title.replace(/ /g, "_")}.${data.extension}`
+                `${imageDetails?.title.replace(/\s/g , "-")}.${data.extension}`
               );
               document.body.appendChild(link);
               link.click();
@@ -390,7 +396,7 @@ const SingleCategory = () => {
                 <Grid item style={{ display: "flex", alignItems: "center" }}>
                   <Typography>Share: </Typography>
                   <div>
-                    <PinterestShareButton media={shareUrl}>
+                    <PinterestShareButton url={shareUrl} media={imageLink}>
                       <PinterestIcon size={25} style={{ marginLeft: "1rem", cursor: "pointer" }} round={true} />
                     </PinterestShareButton>
 
@@ -551,7 +557,7 @@ const SingleCategory = () => {
                         )}
                   </div>
                 </div>
-                {user.id !== imageDetails?.user_id && (
+                {user?.id !== imageDetails?.user_id && (
                   <>
                     {!isLike ? (
                       <Button
@@ -644,7 +650,7 @@ const SingleCategory = () => {
                 justifyContent: "space-between",
               }}
             >
-              <PinterestShareButton url={shareUrl}>
+              <PinterestShareButton url={imageLink}>
                 <PinterestIcon size={40} style={{ margin: "0.4rem" }} round={true} />
               </PinterestShareButton>
 
