@@ -30,11 +30,17 @@ const DesktopMenu = ({ history }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    return () => { document.body.style.backgroundColor = ""; };
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
   }, [user, history]);
 
-  const handleChange = (event, index) => { setValue(index);};
-  const handleToggle = () => { setOpen((prevState) => !prevState);};
+  const handleChange = (event, index) => {
+    setValue(index);
+  };
+  const handleToggle = () => {
+    setOpen((prevState) => !prevState);
+  };
 
   const handleClose = (e) => {
     if (anchorRef.current && anchorRef.current.contains(e.target)) {
@@ -87,13 +93,14 @@ const DesktopMenu = ({ history }) => {
               className={classes.menuItem}
               disableRipple
               component={NavLink}
-              to={`/category/sports`}
-              label="Sports"
+              to={`/category/business-card-mockup`}
+              label="Business Card Mockup"
+              
 
               // id="Sports"
               // aria-controls="Sports"
               // aria-haspopup="true"
-              // aria-expanded={openSubMenu ? 'true' : undefined}              
+              // aria-expanded={openSubMenu ? 'true' : undefined}
               // onClick={handleHoverMenu}
               // onMouseOver={handleHoverMenu}
             />
@@ -116,13 +123,13 @@ const DesktopMenu = ({ history }) => {
               className={classes.menuItem}
               disableRipple
               component={NavLink}
-              to="/category/travel"
-              label="Travel"
+              to="/category/text-effect"
+              label="Text Effect"
 
               // id="Travel"
               // aria-controls="Travel"
               // aria-haspopup="true"
-              // aria-expanded={openSubMenu ? 'true' : undefined}              
+              // aria-expanded={openSubMenu ? 'true' : undefined}
               // onClick={handleHoverMenu}
               // onMouseOver={handleHoverMenu}
             />
@@ -145,26 +152,26 @@ const DesktopMenu = ({ history }) => {
               className={classes.menuItem}
               disableRipple
               component={NavLink}
-              to="/category/education"
-              label="Education"
+              to="/category/social-media-banner"
+              label="Social Media Banner"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
               component={NavLink}
-              to="/category/music"
-              label="Music"
+              to="/category/game"
+              label="Game"
             />
             <Tab
               className={classes.menuItem}
               disableRipple
               component={NavLink}
-              to="/category/animal"
-              label="Animal"
+              to="/category/logo-mockup"
+              label="Logo Mockup"
             />
           </Tabs>
           <Toolbar disableGutters className={classes.toolBarContainer}>
-            {user?.token && user?.role === "contributor" ? (
+            { user?.isLogged && user?.role === "contributor" ? (
               <Button
                 className={classes.sellContentBtn}
                 component={Link}
