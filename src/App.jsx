@@ -113,6 +113,10 @@ const App = () => {
     //     });
     // }
 
+    // Product API integration
+    // axios
+    //   .get(`${process.env.REACT_APP_API_URL}/client/urls`)
+
   }, [dispatch]);
 
   return (

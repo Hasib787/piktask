@@ -14,18 +14,17 @@ const TagButtons = ({ allTags }) => {
             Related tags
           </Typography>
           <div>
-
-          {allTags?.map((tag, index) => (
-            <Button
-              className={classes.tagButton}
-              key={index}
-              tag={tag}
-              component={Link}
-              to={`/tag/${tag}`}
-            >
-              {tag}
-            </Button>
-          ))}
+            {allTags?.map((tag, index) => (
+              <Button
+                className={classes.tagButton}
+                key={index}
+                tag={tag}
+                component={Link}
+                to={`/tag/${tag}`}
+              >
+                {tag}
+              </Button>
+            ))}
           </div>
         </Grid>
       </Grid>
