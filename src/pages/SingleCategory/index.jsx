@@ -119,7 +119,7 @@ const SingleCategory = () => {
           }
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log("Single image", error));
 
     // Like status API
     if (user && user?.isLogged && user.role === "user") {
@@ -138,13 +138,13 @@ const SingleCategory = () => {
         })
         .catch((error) => console.log("Like status error: ", error));
     }
-  }, [imageID, user?.token]);
+  }, [imageID, user, user?.token]);
 
   useEffect(() => {
     // related product API
     let relatedImageURL;
 
-    if (user?.token && user?.id) {
+    if (user?.isLogged && user?.id) {
       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
     } else {
       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
@@ -158,14 +158,19 @@ const SingleCategory = () => {
         }
       })
       .catch((error) => console.log("Related image error: ", error));
-  }, [imageID, user?.id, user?.token]);
+  }, [imageID, user?.id, user?.isLogged]);
 
   const handleFollower = () => {
-    if (!user.token && window.innerWidth > 900) {
+    if (!user?.isLogged && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token && window.innerWidth < 900) {
+    } else if (!user?.isLogged && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
-    } else if (user.id !== imageDetails?.user_id && user.token) {
+    } else if (
+      user?.id !== imageDetails?.user_id &&
+      user &&
+      user?.isLogged &&
+      user?.role === "user"
+    ) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
@@ -183,11 +188,16 @@ const SingleCategory = () => {
   };
 
   const handleLikeBtn = () => {
-    if (!user.token && window.innerWidth > 900) {
+    if (!user?.isLogged && window.innerWidth > 900) {
       setOpenAuthModal(true);
-    } else if (!user.token && window.innerWidth < 900) {
+    } else if (!user?.isLogged && window.innerWidth < 900) {
       history.push(`/login?url=${location.pathname}`);
-    } else if (user.id !== imageDetails?.user_id && user.token) {
+    } else if (
+      user?.id !== imageDetails?.user_id &&
+      user &&
+      user?.isLogged &&
+      user?.role === "user"
+    ) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
@@ -227,13 +237,13 @@ const SingleCategory = () => {
       method: "get",
     };
 
-    if (user?.token) {
+    if (user && user?.isLogged) {
       downloadAPI.headers = { Authorization: user?.token };
-      setButtonLoading(true);
     }
     axios(downloadAPI)
       .then(({ data }) => {
         if (data.url) {
+          setButtonLoading(true);
           axios
             .get(data.url, { responseType: "blob" })
             .then((response) => {
@@ -570,13 +580,26 @@ const SingleCategory = () => {
                       Downloading...
                     </Button>
                   ) : (
-                    <Button
-                      className={classes.downloadBtn}
-                      onClick={handleDownload}
-                    >
-                      <img src={downArrowIconWhite} alt="Download" />
-                      Download
-                    </Button>
+                    <>
+                      {user?.role === "contributor" ? (
+                        <Button
+                          disabled
+                          className={classes.disabledBtn}
+                          onClick={handleDownload}
+                        >
+                          <img src={downArrowIconWhite} alt="Download" />
+                          Download
+                        </Button>
+                      ) : (
+                        <Button
+                          className={classes.downloadBtn}
+                          onClick={handleDownload}
+                        >
+                          <img src={downArrowIconWhite} alt="Download" />
+                          Download
+                        </Button>
+                      )}
+                    </>
                   )}
                   <div className={classes.downloadedImage}>
                     {downloadCount
