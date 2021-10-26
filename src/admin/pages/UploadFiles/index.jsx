@@ -90,20 +90,20 @@ const UploadFiles = () => {
     image.src = thumbImage.preview;
 
     // Make sure to revoke the data uris to avoid memory leaks
-    // files.forEach((file) => URL.revokeObjectURL(file.preview));
+    files.forEach((file) => URL.revokeObjectURL(file.preview)); 
   }, [files, thumbImage]);
 
   //mobile responsive
-  // useEffect(() => {
-  //   const setResponsiveness = () => {
-  //     return window.innerWidth < 900
-  //       ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
-  //       : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
-  //   };
+  useEffect(() => {
+    const setResponsiveness = () => {
+      return window.innerWidth < 900
+        ? setMenuSate((prevState) => ({ ...prevState, mobileView: true }))
+        : setMenuSate((prevState) => ({ ...prevState, mobileView: false }));
+    };
 
-  //   setResponsiveness();
-  //   window.addEventListener("resize", () => setResponsiveness());
-  // }, []);
+    setResponsiveness();
+    window.addEventListener("resize", () => setResponsiveness());
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: "image/*, .ai,.eps,.psd,.svg ",
@@ -116,7 +116,7 @@ const UploadFiles = () => {
           preview: URL.createObjectURL(file),
         })
       );
-      if (files.find((name) => name === getInputProps)) {
+      if (files.find((name) => name === fileData)) {
         alert("file are exist");
       }
 

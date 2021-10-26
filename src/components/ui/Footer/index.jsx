@@ -14,9 +14,11 @@ import React, { useEffect, useState } from "react";
 import Copyright from "./CopyRight";
 import { useStyles } from "./Footer.styles";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [open, setOpen] = useState(true);
   const [contact, setContact] = useState(true);
   const [information, setInformation] = useState(true);
@@ -60,23 +62,23 @@ const Footer = () => {
 
               <List className={classes.menuWrapper}>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="/category/sports">
-                    Graphic Template
+                  <Link className={classes.navLink} to="/category/business-card-mockup">
+                  Business Card Mockup
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="/category/travel">
+                  <Link className={classes.navLink} to="/category/social-media-banner">
                     Social Media Banner
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="/category/education">
+                  <Link className={classes.navLink} to="/category/logo-mockup">
                     Logo Mockup
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="/category/music">
-                    Abstract Background
+                  <Link className={classes.navLink} to="/category/text-effect">
+                    Text Effect
                   </Link>
                 </ListItem>
               </List>
@@ -137,9 +139,15 @@ const Footer = () => {
                   </Link>
                 </ListItem>
                 <ListItem className={classes.navItem}>
-                  <Link className={classes.navLink} to="#">
+                {user?.isLogged && user?.role === "contributor" ? (
+                  <Link className={classes.navLink} to="/contributor/dashboard">
                     Sell your content
                   </Link>
+                ) : (
+                  <Link className={classes.navLink} to="/contributor/join">
+                    Sell your content
+                  </Link>
+                )}
                 </ListItem>
                 <ListItem className={classes.navItem}>
                   <Link className={classes.navLink} to="/support">
@@ -201,23 +209,23 @@ const Footer = () => {
           <Collapse in={!open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/category/sports">
-                  Graphic Template
+                <Link className={classes.navLink} to="/category/business-card-mockup">
+                  Business Card Mockup
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/category/travel">
+                <Link className={classes.navLink} to="/category/social-media-banner">
                   Social Media Banner
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/category/education">
+                <Link className={classes.navLink} to="/category/logo-mockup">
                   Logo Mockup
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="/category/music">
-                  Abstract Background
+                <Link className={classes.navLink} to="/category/text-effect">
+                  Text Effect
                 </Link>
               </ListItemButton>
             </List>
@@ -277,9 +285,15 @@ const Footer = () => {
                 </Link>
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
-                <Link className={classes.navLink} to="#">
-                  Sell your content
-                </Link>
+                {user?.isLogged && user?.role === "contributor" ? (
+                  <Link className={classes.navLink} to="/contributor/dashboard">
+                    Sell your content
+                  </Link>
+                ) : (
+                  <Link className={classes.navLink} to="/contributor/join">
+                    Sell your content
+                  </Link>
+                )}
               </ListItemButton>
               <ListItemButton sx={{ pl: 4 }}>
                 <Link className={classes.navLink} to="/support">

@@ -41,7 +41,7 @@ const AuthorProfile = () => {
             setImageSummery(data?.images_summary);
             setLoading(false);
 
-            if (user?.token) {
+            if (user && user?.isLogged && user?.role === "user") {
               axios
                 .get(
                   `${process.env.REACT_APP_API_URL}/contributor/follow_status/${data.profile.id}`,
