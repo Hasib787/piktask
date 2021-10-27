@@ -159,7 +159,7 @@ const UserSideBar = () => {
         if (res.status) {
           toast.success("Your account are successfully deleted");
           history.push("/");
-          localStorage.clear();
+          localStorage.removeItem("token");
           dispatch({
             type: "LOGOUT",
             payload: {

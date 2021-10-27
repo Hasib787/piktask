@@ -128,7 +128,7 @@ const AdminHeader = () => {
                     aria-haspopup="true"
                     ref={anchorRef}
                   >
-                    {user?.isLogged && user?.role === "contributor" && user?.avatar !== "null" ? (
+                    {user?.isLogged && user?.role === "contributor" && user?.avatar && user?.avatar !== "null" ? (
                       <img
                         className={classes.adminPhoto}
                         src={user?.avatar}
@@ -180,7 +180,7 @@ const AdminHeader = () => {
                     aria-haspopup="true"
                     ref={anchorRef}
                   >
-                    {user?.isLogged && user?.role === "contributor" && user?.avatar !== "null" ? (
+                    {user?.isLogged && user?.role === "contributor" && user?.avatar && user?.avatar !== "null" ? (
                       <img
                         className={classes.adminPhoto}
                         src={user?.avatar}
@@ -210,7 +210,7 @@ const AdminHeader = () => {
               onClick={() => setOpenMobileMenu(false)}
               className={iconClass.closeMenuIcon}
             />
-            {user && user?.token ? (
+            {user && user?.isLogged ? (
               <Button
                 component={Link}
                 to="/"

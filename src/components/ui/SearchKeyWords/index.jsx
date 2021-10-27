@@ -11,7 +11,7 @@ const SearchKeyWords = (props) => {
 
   useEffect(() => {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword`)
+        .get(`${process.env.REACT_APP_API_URL}/client/search/popular_keyword?limit=10`)
         .then(({ data }) => {
           if (data?.status) {
             const popularKeyword = data.keywords;

@@ -106,7 +106,7 @@ const CustomPopper = ({
                 <Grid container className={classes.gridUserInfo}>
                   <Grid item xs={6} className={classes.userInDropdown}>
                     <div className={classes.avatarCircle}>
-                      {user?.token && user?.avatar !== "null" ? (
+                      {user?.isLogged && user?.avatar && user?.avatar !== "null" ? (
                         <img
                           className={classes.dropdownUserAvatar}
                           src={user?.avatar}

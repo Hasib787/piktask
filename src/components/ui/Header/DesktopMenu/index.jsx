@@ -203,7 +203,7 @@ const DesktopMenu = ({ history }) => {
               Premium
             </Button> */}
 
-            {user?.token && user?.role === "user" && user?.isLogged ? (
+            {user?.isLogged && user?.role === "user" && user?.isLogged ? (
               <div
                 className={classes.userAvatarArea}
                 onClick={handleToggle}
@@ -211,7 +211,7 @@ const DesktopMenu = ({ history }) => {
                 aria-haspopup="true"
                 ref={anchorRef}
               >
-                {user?.token && user?.avatar !== "null" ? (
+                {user?.isLogged && user?.avatar && user?.avatar !== "null" ? (
                   <img
                     className={classes.avatar}
                     src={user?.avatar}

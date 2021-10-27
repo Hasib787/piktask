@@ -6,10 +6,10 @@ import TagRelatedProducts from "./pages/TagRelatedProducts";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import BecomeContributor from "./pages/BecomeContributor";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PendingFiles from "./admin/pages/PendingFiles";
 import RejectFiles from "./admin/pages/RejectFiles";
-import SingleCategory from "./pages/SingleCategory";
+import SingleProductDetails from "./pages/SingleProductDetails";
 import UploadFiles from "./admin/pages/UploadFiles";
 import "react-toastify/dist/ReactToastify.min.css";
 import SearchResults from "./pages/SearchResults";
@@ -60,7 +60,6 @@ import ContributorPricePlan from "./admin/pages/ContributorPricePlan";
 
 const App = () => {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -113,7 +112,7 @@ const App = () => {
     //     });
     // }
 
-    // Base url API integration
+    // Product Base url API
     axios
       .get(`${process.env.REACT_APP_API_URL}/client/urls`)
       .then(({data}) => {
@@ -143,7 +142,7 @@ const App = () => {
         <Route exact path="/contributor/settings" component={AccountSettings} />
         <Route exact path="/contributor/join" component={JoinNow} />
 
-        {/* user Dashboard */}
+        {/* User Dashboard */}
         <PrivateRoute exact path="/user/profile" component={UserProfile} />
         <PrivateRoute exact path="/user/favorites" component={FavoriteItems} />
         <PrivateRoute exact path="/user/downloads" component={DownloadItems} />
@@ -151,7 +150,7 @@ const App = () => {
         <PrivateRoute exact path="/user/devices" component={DeviceActivity} />
         <PrivateRoute exact path="/user/subscription" component={UserSubscription} />
 
-        {/* footer pages */}
+        {/* Footer pages */}
         <Route exact path="/termsConditions" component={TermsConditions} />
         <Route exact path="/licenseAgreement" component={LicenseAgreement} />
         <Route exact path="/copyrightInformation" component={CopyrightInfo} />
@@ -163,6 +162,7 @@ const App = () => {
         <Route exact path="/start-selling" component={BecomeContributor} />
         <Route exact path="/email/verify" component={CompleteRegistration} />
 
+        {/* Category pages */}
         <Route exact path="/vector" component={Category} />
         <Route exact path="/psd" component={Category} />
         <Route exact path="/photos" component={Category} />
@@ -180,11 +180,13 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/reset-password" component={ResetPassword} />
 
+        {/* Subscription page */}
         <Route exact path="/subscription" component={Subscription} />
         {/* <Route exact path="/sellers" component={Sellers} /> */}
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/search/trending-search" component={TrendingSearch} />
 
+        {/* Recent or Popular pages */}
         <Route exact path="/recentImage/recent-images" component={Recent} />
         <Route exact path="/images/popular-images" component={PopularImages} />
 
@@ -194,7 +196,7 @@ const App = () => {
         <Route exact path="/tag/:tagName" component={TagRelatedProducts} />
         <Route exact path="/author/:username" component={AuthorProfile} />
         <Route exact path="/category/:catName" component={Category} />
-        <Route exact path="/images/:id" component={SingleCategory} />
+        <Route exact path="/images/:id" component={SingleProductDetails} />
 
         <Route path="*" component={NotFoundPage} />
       </Switch>
