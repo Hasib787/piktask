@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import { getWords } from "../../../../helpers";
+import { getBaseURL, getWords } from "../../../../helpers";
 import useStyles from "./Post.styles";
 import moment from "moment";
 
@@ -17,7 +17,7 @@ const Post = ({ post, recentBlog }) => {
           <div className={classes.postWrapper}>
             <div className={classes.imageWrapper}>
               <Link to={`/blog/${post?.id}`} className={classes.singlePost} />
-              <img src={post?.thumbnail} alt={post?.title} />
+              <img src={getBaseURL().bucket_base_url + getBaseURL().blog_images + post?.thumbnail} alt={post?.title} />
             </div>
             <div className={classes.contentWrapper}>
               <Link to={`/blog/${post?.id}`} className={classes.titleLink}>
@@ -37,7 +37,7 @@ const Post = ({ post, recentBlog }) => {
         <div className={classes.postWrapper}>
           <div className={classes.imageWrapper}>
             <Link to={`/blog/${post?.id}`} className={classes.singlePost} />
-            <img src={post?.thumbnail} alt={post?.title} />
+            <img src={getBaseURL().bucket_base_url + getBaseURL().blog_images + post?.thumbnail} alt={post?.title} />
           </div>
           <div className={classes.contentWrapper}>
             <Link to={`/blog/${post?.id}`} className={classes.titleLink}>

@@ -55,9 +55,7 @@ export const ConfirmSignup = () => {
 
     if (token) {
       axios
-      .post(`${process.env.REACT_APP_API_URL}/auth/verify/account`, {
-        token,
-      })
+      .post(`${process.env.REACT_APP_API_URL}/auth/verify/account`, {token,})
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
@@ -76,7 +74,7 @@ export const ConfirmSignup = () => {
   };
 
   return (
-    <Layout title={"Confirm Signup | Piktask"}>
+    <Layout title={"Confirm Signup || Piktask"}>
       {/* if confirm redirect to login */}
       {isRedirectTo && <Redirect to="/login" />}
       <Header />

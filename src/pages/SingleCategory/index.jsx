@@ -49,6 +49,7 @@ import HeroSection from "../../components/ui/Hero";
 import Loader from "../../components/ui/Loader";
 import Product from "../../components/ui/Products/Product";
 import TagButtons from "../../components/ui/TagButtons";
+import { getBaseURL } from "../../helpers";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
 import useStyles from "./SingleCategory.styles";
@@ -122,7 +123,7 @@ const SingleCategory = () => {
       .catch((error) => console.log("Single image", error));
 
     // Like status API
-    if (user && user?.isLogged && user.role === "user") {
+    if (user && user?.isLogged && user?.role === "user") {
       axios
         .get(`${process.env.REACT_APP_API_URL}/images/${imageID}/like_status`, {
           headers: { Authorization: user?.token },
@@ -144,7 +145,7 @@ const SingleCategory = () => {
     // related product API
     let relatedImageURL;
 
-    if (user?.isLogged && user?.id) {
+    if (user?.isLogged && user?.id && user?.role === "user") {
       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image?user_id=${user?.id}`;
     } else {
       relatedImageURL = `${process.env.REACT_APP_API_URL}/images/${imageID}/related_image`;
@@ -158,7 +159,7 @@ const SingleCategory = () => {
         }
       })
       .catch((error) => console.log("Related image error: ", error));
-  }, [imageID, user?.id, user?.isLogged]);
+  }, [imageID, user?.id, user?.isLogged, user?.role]);
 
   const handleFollower = () => {
     if (!user?.isLogged && window.innerWidth > 900) {
@@ -175,7 +176,7 @@ const SingleCategory = () => {
         .post(
           `${process.env.REACT_APP_API_URL}/contributor/followers/${imageDetails?.user_id}`,
           {},
-          { headers: { Authorization: user.token } }
+          { headers: { Authorization: user?.token } }
         )
         .then((response) => {
           if (response?.status === 200) {
@@ -202,7 +203,7 @@ const SingleCategory = () => {
         .post(
           `${process.env.REACT_APP_API_URL}/images/${imageID}/like`,
           {},
-          { headers: { Authorization: user.token } }
+          { headers: { Authorization: user?.token } }
         )
         .then(({ data }) => {
           if (data?.status) {
@@ -238,7 +239,12 @@ const SingleCategory = () => {
     };
 
     if (user && user?.isLogged) {
-      downloadAPI.headers = { Authorization: user?.token };
+      if(user?.role === "user"){
+        downloadAPI.headers = { Authorization: user?.token };
+      } else{
+        setOpenAuthModal(true);
+        return;
+      }
     }
     axios(downloadAPI)
       .then(({ data }) => {
@@ -309,7 +315,7 @@ const SingleCategory = () => {
               <img
                 title={imageDetails.title}
                 className={classes.image}
-                src={encodeURI(imageDetails?.preview)}
+                src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + imageDetails?.preview)}
                 alt={imageDetails?.original_name}
               />
             </div>
@@ -580,17 +586,17 @@ const SingleCategory = () => {
                       Downloading...
                     </Button>
                   ) : (
-                    <>
-                      {user?.role === "contributor" ? (
-                        <Button
-                          disabled
-                          className={classes.disabledBtn}
-                          onClick={handleDownload}
-                        >
-                          <img src={downArrowIconWhite} alt="Download" />
-                          Download
-                        </Button>
-                      ) : (
+                    // <>
+                    //   {user?.role === "contributor" ? (
+                    //     <Button
+                    //       disabled
+                    //       className={classes.disabledBtn}
+                    //       onClick={handleDownload}
+                    //     >
+                    //       <img src={downArrowIconWhite} alt="Download" />
+                    //       Download
+                    //     </Button>
+                    //   ) : (
                         <Button
                           className={classes.downloadBtn}
                           onClick={handleDownload}
@@ -598,8 +604,8 @@ const SingleCategory = () => {
                           <img src={downArrowIconWhite} alt="Download" />
                           Download
                         </Button>
-                      )}
-                    </>
+                    //   )}
+                    // </>
                   )}
                   <div className={classes.downloadedImage}>
                     {downloadCount

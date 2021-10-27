@@ -128,7 +128,7 @@ const AdminHeader = () => {
                     aria-haspopup="true"
                     ref={anchorRef}
                   >
-                    {user?.token && user?.avatar !== "null" ? (
+                    {user?.isLogged && user?.role === "contributor" && user?.avatar !== "null" ? (
                       <img
                         className={classes.adminPhoto}
                         src={user?.avatar}
@@ -180,7 +180,7 @@ const AdminHeader = () => {
                     aria-haspopup="true"
                     ref={anchorRef}
                   >
-                    {user?.token && user?.avatar !== "null" ? (
+                    {user?.isLogged && user?.role === "contributor" && user?.avatar !== "null" ? (
                       <img
                         className={classes.adminPhoto}
                         src={user?.avatar}

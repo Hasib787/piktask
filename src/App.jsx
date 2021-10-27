@@ -113,9 +113,14 @@ const App = () => {
     //     });
     // }
 
-    // Product API integration
-    // axios
-    //   .get(`${process.env.REACT_APP_API_URL}/client/urls`)
+    // Base url API integration
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/client/urls`)
+      .then(({data}) => {
+        if(data?.status){
+          localStorage.setItem("imageBaseURL", JSON.stringify(data.urls));
+        }
+      })
 
   }, [dispatch]);
 

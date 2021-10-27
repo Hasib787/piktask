@@ -32,8 +32,9 @@ import { useSelector } from "react-redux";
 import followerIcon from '../../../assets/icons/followerIcon.png';
 import authorPhoto from "../../../assets/author.png";
 import Spacing from "../../../components/Spacing";
-import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
+// import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { getBaseURL } from "../../../helpers";
 
 const AdminDashboard = () => {
   const classes = useStyles();
@@ -62,7 +63,7 @@ const AdminDashboard = () => {
     setLoading(true);
 
     // Author current month earning
-    if(user?.token){
+    if(user?.isLogged && user?.role === "contributor"){
       var newDate = new Date();
       var firstDayCurrentMonth = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
       var firstDay = firstDayCurrentMonth.toISOString().substring(0, 10);
@@ -81,7 +82,7 @@ const AdminDashboard = () => {
     }
     
     // Author previous month earning
-    if(user?.token){
+    if(user?.isLogged && user?.role === "contributor"){
       var previousDate = new Date();
       var previousMonthFirstDay = new Date(previousDate.getFullYear(), previousDate.getMonth() - 1, 2);
       var previousFirstDays = previousMonthFirstDay.toISOString().substring(0, 10);
@@ -102,7 +103,7 @@ const AdminDashboard = () => {
     }
 
     // Author last file API
-    if(user?.token){
+    if(user?.isLogged && user?.role === "contributor"){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/earning/images?limit=5`,
         { headers: { Authorization: user?.token },}
@@ -116,7 +117,7 @@ const AdminDashboard = () => {
     }
 
     // Piktask top file API 
-    if(user?.token){
+    if(user?.isLogged && user?.role === "contributor"){
       axios
       .get(`${process.env.REACT_APP_API_URL}/contributor/dashboard/top_files?limit=5`,
         { headers: { Authorization: user?.token }}
@@ -128,7 +129,7 @@ const AdminDashboard = () => {
         }
       })
     }
-  }, [user?.token])
+  }, [user?.token, user?.role, user?.isLogged])
 
 
   return (
@@ -257,16 +258,16 @@ const AdminDashboard = () => {
                               <Link to={encodeURI(`/images/${authLastFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${authLastFile?.id}`)}>
                                 <img
                                   className={classes.earningImg}
-                                  src={encodeURI(authLastFile?.preview)}
-                                  alt={authLastFile?.preview}
+                                  src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + authLastFile?.preview)}
+                                  alt={"Contributor last file"}
                                 />
                               </Link>
                               
-                              {authLastFile?.item_for_sale === "sale" && (
+                              {/* {authLastFile?.item_for_sale === "sale" && (
                                 <div className={classes.premiumIcon}>
                                   <img src={encodeURI(premiumFileSell)} alt="Premium Product" />
                                 </div>
-                              )}
+                              )} */}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
                               {authLastFile?.extension}
@@ -320,15 +321,15 @@ const AdminDashboard = () => {
                               <Link to={encodeURI(`/images/${topFile?.title.toLowerCase().replace(/\s/g , "-")}&id=${topFile?.id}`)}>
                                 <img
                                   className={classes.earningImg}
-                                  src={encodeURI(topFile?.thumbnail)}
-                                  alt={topFile?.thumbnail}
+                                  src={encodeURI(getBaseURL().bucket_base_url + getBaseURL().images + topFile?.preview)}
+                                  alt={"Piktask top file"}
                                 />
                               </Link>
-                              {topFile?.item_for_sale === "sale" && (
+                              {/* {topFile?.item_for_sale === "sale" && (
                                 <div className={classes.premiumIcon}>
                                   <img src={encodeURI(premiumFileSell)} alt="Premium Product" />
                                 </div>
-                              )}
+                              )} */}
                             </TableCell>
                             <TableCell className={classes.tableCell}>
                               {topFile?.extension}

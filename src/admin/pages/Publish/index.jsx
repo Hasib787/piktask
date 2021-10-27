@@ -24,7 +24,7 @@ import useStyles from "./Publish.styles";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import { getWords } from "../../../helpers";
+import { getBaseURL, getWords } from "../../../helpers";
 import { Link } from "react-router-dom";
 import premiumFileSell from '../../../assets/icons/crownEnterpriseIcon.svg';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
@@ -362,16 +362,16 @@ const Publish = () => {
                                   <Link to={`/images/${product?.title.replace(/ /g, "_")}&id=${product?.id}`}>
                                     <img
                                       className={classes.publishImg}
-                                      src={product?.preview}
+                                      src={getBaseURL().bucket_base_url + getBaseURL().images + product?.preview}
                                       alt={product?.preview}
                                     />
                                   </Link>
                                   
-                                  {product?.item_for_sale === "sale" && (
+                                  {/* {product?.item_for_sale === "sale" && (
                                     <div className={classes.premiumIcon}>
                                       <img src={premiumFileSell} alt="Premium Product" />
                                     </div>
-                                  )}
+                                  )} */}
                                 </TableCell>
                                 <TableCell style={{textAlign: "left"}} className={classes.tableCell}>
                                   {product?.title.split(" ").length > 4 ? (

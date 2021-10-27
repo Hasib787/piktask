@@ -49,7 +49,7 @@ const Products = (props) => {
 
     let categoryURL;
 
-    if (user?.id) {
+    if (user?.id && user?.role === "user") {
       categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?user_id=${user?.id}&limit=8`;
     } else {
       categoryURL = `${process.env.REACT_APP_API_URL}/categories/${category?.id}?limit=8`;
@@ -71,7 +71,7 @@ const Products = (props) => {
     } else {
       setLoading(true);
     }
-  }, [dispatch, category, user?.id]);
+  }, [dispatch, category, user?.id, user?.role]);
 
   return (
     <>

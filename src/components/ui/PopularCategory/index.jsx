@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
+import { getBaseURL } from "../../../helpers";
 import useStyles from "./Category.styles";
 
 const PopularCategory = ({ photo }) => {
@@ -12,7 +13,7 @@ const PopularCategory = ({ photo }) => {
         <Link  to={`category/${photo.slug}`}>
           <img
             className={classes.catImage}
-            src={photo?.thumbnail}
+            src={getBaseURL().bucket_base_url + getBaseURL().categories + photo?.thumbnail}
             alt="Popular images"
           />
         </Link>

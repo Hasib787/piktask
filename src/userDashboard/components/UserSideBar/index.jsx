@@ -66,8 +66,6 @@ const UserSideBar = () => {
   const user = useSelector((state) => state.user);
   
   const [profilePicture, setProfilePicture] = useState("");
-  const [downloadCount, setDownloadCount] = useState("");
-  const [downloadLimit, setDownloadLimit] = useState("");
   const [alertDialog, setAlertDialog] = useState(false);
   const [userProfile, setUserProfile] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -91,28 +89,11 @@ const UserSideBar = () => {
   useEffect(() => {
     setLoading(true);
 
-    if (user?.token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/profile/download_count`, {
-          headers: { Authorization: user?.token },
-        })
-        .then(({ data }) => {
-          if (data.status) {
-            setDownloadCount(data?.downloads);
-            setDownloadLimit(data?.daily_limit - data?.downloads);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
     // get user information
-    if (user?.token) {
+    if (user?.isLogged) {
       axios
         .get(`${process.env.REACT_APP_API_URL}/user/profile`, {
-          headers: { Authorization: user.token },
+          headers: { Authorization: user?.token },
         })
         .then(({ data }) => {
           if (data?.status) {
@@ -125,7 +106,7 @@ const UserSideBar = () => {
           console.log(error.message);
         });
     }
-  }, [user?.token]);
+  }, [user?.token, user?.isLogged]);
 
   //close account modal
   const handleDialogOpen = () => { setAlertDialog(true);};
@@ -155,7 +136,7 @@ const UserSideBar = () => {
     if (user && user?.token) {
       user.isLogged = false;
       history.push("/");
-      localStorage.clear();
+      localStorage.removeItem("token");
       dispatch({
         type: "LOGOUT",
         payload: {
@@ -171,7 +152,7 @@ const UserSideBar = () => {
     const URL = `${process.env.REACT_APP_API_URL}/user`;
     axios
       .delete(URL, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
         data: { password: password },
       })
       .then((res) => {
@@ -209,7 +190,7 @@ const UserSideBar = () => {
       method: "put",
       url,
       headers: {
-        Authorization: user.token,
+        Authorization: user?.token,
         "Content-Type": "multipart/form-data",
       },
       data: formData,
@@ -352,7 +333,7 @@ const UserSideBar = () => {
                 >
                   <GetAppIcon />
                   <span>
-                    Downloads({downloadCount}/{downloadLimit})
+                    Downloads
                   </span>
                 </ListItem>
 
