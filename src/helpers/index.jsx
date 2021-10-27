@@ -1,8 +1,8 @@
-export const getYear = (date: string): string => {
+export const getYear = (date) => {
   return date;
 };
 
-export const dateFormat = (time: number) => {
+export const dateFormat = (time) => {
   // switch(time) {
   //     case time!:
   //     break;
@@ -24,9 +24,9 @@ export const getBaseURL = () => {
   };
 };
 
-export const getWords = (amount: number, str: string): string => {
-  const strArray: string[] = str.split(" ");
-  const newDescription: string = strArray.splice(0, amount).join(" ");
+export const getWords = (amount, str) => {
+  const strArray = str.split(" ");
+  const newDescription = strArray.splice(0, amount).join(" ");
 
   return newDescription;
 };
