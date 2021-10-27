@@ -139,26 +139,88 @@ const UploadFiles = () => {
       reader.onload = async (ev) => {
         console.log(`started ${ev}`);
         const fileSize = ev.target.result.byteLength;
-        for (let i = 0; i < fileSize / chunkSize + 1; i++) {
-          const chunk = ev.target.result.slice(
-            i * chunkSize,
-            i * chunkSize + chunkSize
-          );
-          if (fileSize < chunkSize) {
-      //       await fetch("http://localhost:8080/upload",  {
-      //         "method": "POST",
-      //         "headers": {
-      //             "content-type": "application/octet-stream",
-      //             "content-length" : chunk.byteLength,
-      //             "upload-id": uploadId
-      //         },
-      //         "body": chunk
-      // });
-
-      // divP.textContent = Math.round(i*1000*100/ev.target.result.byteLength,0) + "%";
+        if (fileSize < chunkSize) {
+          console.log("fast conditions");
+          try {
+            await fetch("http://localhost:8080/upload", {
+              method: "POST",
+              headers: {
+                Authorization: user.token,
+                "content-type": "application/octet-stream",
+                "content-length": fileSize,
+                start: true,
+                end: true,
+                // "data": data,
+              },
+              body: ev.target.result,
+            });
+          } catch (error) {
+            console.error(error);
           }
-          console.log(`sending ${chunk.byteLength}`);
-             
+        } else {
+          for (let i = 0; i < fileSize / chunkSize + 1; i++) {
+            const chunk = ev.target.result.slice(
+              i * chunkSize,
+              i * chunkSize + chunkSize
+            );
+            let uploadId;
+            console.log("counter", fileSize / chunkSize + 1);
+            if (!i) {
+              console.log("start");
+              try {
+                await fetch("http://localhost:8080/upload", {
+                  method: "POST",
+                  headers: {
+                    Authorization: user.token,
+                    "content-type": "application/octet-stream",
+                    "content-length": chunk.byteLength,
+                    start: true,
+                    // "upload-id": uploadId
+                  },
+                  body: chunk,
+                });
+              } catch (error) {
+                console.error(error);
+              }
+            } else if (i === Math.ceil(fileSize / chunkSize + 1) - 1) {
+              try {
+                await fetch("http://localhost:8080/upload", {
+                  method: "POST",
+                  headers: {
+                    Authorization: user.token,
+                    "content-type": "application/octet-stream",
+                    "content-length": chunk.byteLength,
+                    // "upload-id": uploadId,
+                    // "partNumber": part_number,
+                    // "data": data,
+                  },
+                  body: chunk,
+                });
+              } catch (error) {
+                console.error(error);
+              }
+              console.log("last value", i);
+            } else {
+              console.log("middle");
+              try {
+                await fetch("http://localhost:8080/upload", {
+                  method: "POST",
+                  headers: {
+                    Authorization: user.token,
+                    "content-type": "application/octet-stream",
+                    "content-length": chunk.byteLength,
+                    "end": true,
+                    // "upload-id": uploadId,
+                    // "partNumber": part_number,
+                    // "data": data,
+                  },
+                  body: chunk,
+                });
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          }
         }
       };
 
