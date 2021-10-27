@@ -33,10 +33,10 @@ const FavoriteItems = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/user/favourite_image/?limit=${favoriteProduct}&page=${pageCount}`,
-        { headers: { Authorization: user.token } }
+    if(user?.isLogged){
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/user/favourite_image/?limit=${favoriteProduct}&page=${pageCount}`,
+        { headers: { Authorization: user?.token } }
       )
       .then(({ data }) => {
         if (data?.status) {
@@ -48,7 +48,8 @@ const FavoriteItems = () => {
         console.log("Category products error:", error);
         setLoading(false);
       });
-  }, [user, pageCount, favoriteProduct]);
+    }
+  }, [user?.isLogged, user?.token, pageCount, favoriteProduct]);
 
   return (
     <Layout title="Favorite Items || Piktask">
