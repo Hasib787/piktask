@@ -50,32 +50,35 @@ const PendingFiles = () => {
     return;
   };
 
-
-
   const selectedProduct = (e, product) => {
     product.isSelected = true;
-    
+
     // If the product is already selected stop here
     if (product.isSelected) {
-      cardRef.current.style.border = "5px solid red";
+      e.currentTarget.style.border = "2px solid #0088f2";
     } else {
-      cardRef.current.style.border = "";
+      e.currentTarget.style.border = "";
     }
-    // if (e.currentTarget) {
-    //   setSelected((prevState) => !prevState);
-    // }
 
-    // selectedProducts.push(product);
-    setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
-    setTimeout(() => {
-      console.log("selectedProducts", selectedProducts);
+    // setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
+    setSelectedProducts((prevItems) => {
+      const isSelected = prevItems.find((item) => item._id === product._id);
 
-    }, 1000);
+      if (isSelected) {
+        return prevItems.map((item) =>
+          item._id === product._id ? { ...item, isSelected: false } : item
+        );
+      }
+
+      return [...prevItems, { ...product }];
+    });
   };
+
   console.log("selectedProducts", selectedProducts);
 
-  
-
+  const getSelectItem = () => {
+    console.log("selectedProducts", selectedProducts);
+  };
 
   const editSingleItem = (product) => {
     setOpenModal(true);
@@ -85,7 +88,8 @@ const PendingFiles = () => {
   const [editProducts, setEditProducts] = useState([]);
 
   const editProduct = (product) => {
-    setEditProducts((prevProducts) => setEditProducts([...prevProducts, product])
+    setEditProducts((prevProducts) =>
+      setEditProducts([...prevProducts, product])
     );
   };
 
@@ -99,7 +103,6 @@ const PendingFiles = () => {
   };
 
   // console.log("editProducts", editProducts);
-
 
   const selectProduct = () => {
     // console.log("cardRef", cardRef);
@@ -152,7 +155,7 @@ const PendingFiles = () => {
                       onClick={(e) => {
                         // editProduct(product);
                         // selectProduct();
-                        selectedProduct(e, product)
+                        selectedProduct(e, product);
                       }}
                       classes={{ root: classes.root }}
                       ref={cardRef}
