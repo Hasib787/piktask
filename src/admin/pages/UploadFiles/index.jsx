@@ -1,15 +1,11 @@
 import {
   faCloudUploadAlt,
-  faExclamationTriangle,
-  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Button,
   Card,
   CardContent,
   Grid,
-  TextareaAutosize,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
@@ -78,20 +74,20 @@ const UploadFiles = () => {
 
   const { mobileView } = menuSate;
   // 200 x 200
-  useEffect(() => {
-    let image = new Image();
-    image.onload = () => {
-      if (image.width < 800) {
-        setImageDimensionOkay(true);
-      } else {
-        setImageDimensionOkay(false);
-      }
-    };
-    image.src = thumbImage.preview;
+  // useEffect(() => {
+  //   let image = new Image();
+  //   image.onload = () => {
+  //     if (image.width < 800) {
+  //       setImageDimensionOkay(true);
+  //     } else {
+  //       setImageDimensionOkay(false);
+  //     }
+  //   };
+  //   image.src = thumbImage.preview;
 
-    // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, [files, thumbImage]);
+  //   // Make sure to revoke the data uris to avoid memory leaks
+  //   files.forEach((file) => URL.revokeObjectURL(file.preview));
+  // }, [files, thumbImage]);
 
   //mobile responsive
   useEffect(() => {
@@ -105,27 +101,21 @@ const UploadFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
     accept: "image/*, .ai,.eps,.psd,.svg ",
     noKeyboard: true,
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
-      if (
-        acceptedFiles[0]?.name?.match(/\.(eps)$/) &&
-        acceptedFiles[0].size > 145000
-      ) {
-        toast.error("not accepted");
-        return;
-      }
       const fileData = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
         })
       );
-      if (files.find((name) => name === fileData)) {
-        alert("file are exist");
-      }
-      console.log("fileData", fileData);
+
+      // if(acceptedFiles[0].name.match(/\.(jpg|jpeg|png|gif|ai|eps|psd|svg)$/)){
+      //   toast.error("You can't upload this kind of files");
+      //   return;
+      // }
       if (files.length === 0) {
         setFiles(fileData);
       } else {
@@ -133,12 +123,36 @@ const UploadFiles = () => {
       }
     },
   });
-  // if (fileSize < 1572864 || fileSize > 262144000) {
-  //   toast.error(
-  //     "The file size should be getter than 1.5Mb and less than or equal to 250Mb"
-  //   );
-  //   return;
-  // }
+
+  //reject file
+  const fileRejectionItems = fileRejections.map(({ file, errors }) => (
+    <li key={file.path}>
+      <ul>
+        {errors.map(e => (
+          <li style={{color:"red"}} key={e.code}>{e.message}</li>
+        ))}
+      </ul>
+    </li>
+  ));
+
+  // upload conditions
+  // const uploadCondition = (file) => {
+  //   let uploadStatus = false;
+  //   if (
+  //     (file.name.match(/\.(jpg|jpeg|png|gif)$/) && file.size < 524288) ||
+  //     (file.name.match(/\.(eps)$/) && file.size > 5242880) ||
+  //     (file.name.match(/\.(psd)$/) && file.size < 1572864) ||
+  //     file.size > 262144000
+  //   ) {
+  //     setLoading(true);
+  //     uploadStatus = true;
+  //   } else {
+  //     setLoading(false);
+  //     uploadStatus = false;
+  //   }
+  //   return uploadStatus;
+  // };
+
   //upload file
   let tokenMatch = {};
   const uploadFile = (file) => {
@@ -296,39 +310,80 @@ const UploadFiles = () => {
 
   //Upload file preview
 
-  const thumbs = files.map((file, index) => (
-    <div className="files-wrapper" key={file.name}>
-      <div className={classes.thumb}>
-        <div className={classes.thumbInner}>
-          <div className={classes.thumbImg}>
-            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
-              <img
-                src={fileThumbnail}
-                alt="thumbnail"
-                className={classes.fileThumbnail}
-              />
-            ) : (
-              <img src={file.preview} alt="thumbnail" />
-            )}
-          </div>
-          <Typography className={classes.imageTitle}>
-            {file.name} <br />{" "}
-            <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
-          </Typography>
+  // const thumbs = files.map((file, index) => (
+  //   <div className="files-wrapper" key={file.name}>
+  //     {(file.name.match(/\.(jpg|jpeg|png|gif)$/) && file.size < 524288) ||
+  //     (file.name.match(/\.(eps)$/) && file.size > 5242880) ||
+  //     (file.name.match(/\.(psd)$/) && file.size < 1572864) ||
+  //     file.size > 262144000 ? (
+  //       <div className={classes.thumbError}>
+  //         <div className={classes.thumbInner}>
+  //           <div className={classes.thumbImg}>
+  //             {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
+  //               <img
+  //                 src={fileThumbnail}
+  //                 alt="thumbnail"
+  //                 className={classes.fileThumbnail}
+  //               />
+  //             ) : (
+  //               <img src={file.preview} alt="thumbnail" />
+  //             )}
+  //           </div>
+  //           <Typography className={classes.imageTitle}>
+  //             {file.name} <br />{" "}
+  //             <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+  //           </Typography>
 
-          <Box className={classes.progressBar}>
-            <LinearProgressWithLabel value={progress} />
-          </Box>
-          <div
-            className={classes.deleteBtn}
-            onClick={(e) => removeFile(file, index)}
-          >
-            <FontAwesomeIcon className={classes.deleteIcon} icon={faTrashAlt} />
-          </div>
-        </div>
-      </div>
-    </div>
-  ));
+  //           <Box className={classes.progressBar}>
+  //             <LinearProgressWithLabel value={progress} />
+  //           </Box>
+  //           <div
+  //             className={classes.deleteBtn}
+  //             onClick={(e) => removeFile(file, index)}
+  //           >
+  //             <FontAwesomeIcon
+  //               className={classes.deleteIcon}
+  //               icon={faTrashAlt}
+  //             />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     ) : (
+  //       <div className={classes.thumb}>
+  //         <div className={classes.thumbInner}>
+  //           <div className={classes.thumbImg}>
+  //             {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
+  //               <img
+  //                 src={fileThumbnail}
+  //                 alt="thumbnail"
+  //                 className={classes.fileThumbnail}
+  //               />
+  //             ) : (
+  //               <img src={file.preview} alt="thumbnail" />
+  //             )}
+  //           </div>
+  //           <Typography className={classes.imageTitle}>
+  //             {file.name} <br />{" "}
+  //             <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+  //           </Typography>
+
+  //           <Box className={classes.progressBar}>
+  //             <LinearProgressWithLabel value={progress} />
+  //           </Box>
+  //           <div
+  //             className={classes.deleteBtn}
+  //             onClick={(e) => removeFile(file, index)}
+  //           >
+  //             <FontAwesomeIcon
+  //               className={classes.deleteIcon}
+  //               icon={faTrashAlt}
+  //             />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     )}
+  //   </div>
+  // ));
   // if (file.find((name) => name === "19.psd")) {
   //   console.log("hello");
   // }
@@ -525,109 +580,6 @@ const UploadFiles = () => {
         <main className={classes.content}>
           <AdminHeader />
           <div className={classes.uploadContainer}>
-            <form autoComplete="off" onSubmit={handleSubmit}>
-              <div className={classes.basicInfo}>
-                <ul>
-                  <li>
-                    <FontAwesomeIcon
-                      className={classes.basicInfoIcon}
-                      icon={faExclamationTriangle}
-                    />
-                    Please read the terms and conditions to avoid sanctions
-                  </li>
-                  <li>
-                    <FontAwesomeIcon
-                      className={classes.basicInfoIcon}
-                      icon={faInfoCircle}
-                    />
-                    You can upload 2 photos per day
-                  </li>
-                  <li>
-                    <FontAwesomeIcon
-                      className={classes.basicInfoIcon}
-                      icon={faInfoCircle}
-                    />
-                    It is not allowed images of violence or pornographic content
-                    of any kind
-                  </li>
-                  <li>
-                    <FontAwesomeIcon
-                      className={classes.basicInfoIcon}
-                      icon={faInfoCircle}
-                    />
-                    Photos must be of Authoring
-                  </li>
-                </ul>
-              </div>
-
-              <Heading tag="h2">Upload Your Content</Heading>
-
-              <label
-                htmlFor="btn-upload"
-                className={classes.fileUploadContainer}
-                {...getRootProps({
-                  onClick: (e) =>
-                    (e.currentTarget.style.border = "2px dashed #26AA10"),
-                })}
-                style={{ border: isActive }}
-              >
-                <div className={classes.uploadIconWrapper}>
-                  <input
-                    {...getInputProps({
-                      multiple: true,
-                    })}
-                  />
-                  <FontAwesomeIcon icon={faCloudUploadAlt} />
-
-                  <h2 className={classes.imageErrorText}>{imageError}</h2>
-
-                  <Typography
-                    className={classes.photoUploadText}
-                    variant="body1"
-                  >
-                    Drag and drop or click to upload an photo
-                  </Typography>
-
-                  {isImageDimensionOkay ? (
-                    <Typography
-                      className={classes.subtitle}
-                      variant="body1"
-                      style={{ color: "red" }}
-                    >
-                      Your image dimension exceeds the limit. Preview files must
-                      be between 2000px and 10000px on any of the sides.
-                    </Typography>
-                  ) : (
-                    <Typography className={classes.subtitle} variant="body1">
-                      Preview files must be between 2000px and 10000px on any of
-                      the sides.
-                    </Typography>
-                  )}
-                </div>
-              </label>
-
-              {!isImageDimensionOkay && thumbs}
-
-              <div className={classes.singleBorder}></div>
-              <div className={classes.uploadBtnRoot}>
-                <Button
-                  variant="contained"
-                  className={classes.uploadBtn}
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  <FontAwesomeIcon
-                    icon={faCloudUploadAlt}
-                    className={classes.uploadIcon}
-                  />
-                  {isLoading ? "Uploading..." : "Upload"}
-                </Button>
-              </div>
-            </form>
-          </div>
-
-          <Spacing space={{ height: "2.5rem" }} />
-
           <Heading className={classes.contentTypeTitle} tag="h2">
             What type of content are you going to upload?
           </Heading>
@@ -751,6 +703,158 @@ const UploadFiles = () => {
               </Grid>
             </CardContent>
           </Card>
+          <Spacing space={{ height: "2.5rem" }} />
+            <form autoComplete="off" onSubmit={handleSubmit}>
+
+              <Heading tag="h2">Upload Your Content</Heading>
+
+              <label
+                htmlFor="btn-upload"
+                className={classes.fileUploadContainer}
+                {...getRootProps({
+                  onClick: (e) =>
+                    (e.currentTarget.style.border = "2px dashed #26AA10"),
+                })}
+                style={{ border: isActive }}
+              >
+                <div className={classes.uploadIconWrapper}>
+                  <input
+                    {...getInputProps({
+                      multiple: true,
+                    })}
+                  />
+                  <FontAwesomeIcon icon={faCloudUploadAlt} />
+
+                  <h2 className={classes.imageErrorText}>{imageError}</h2>
+
+                  <Typography
+                    className={classes.photoUploadText}
+                    variant="body1"
+                  >
+                    Drag and drop or click to upload an photo
+                  </Typography>
+
+                  {isImageDimensionOkay ? (
+                    <Typography
+                      className={classes.subtitle}
+                      variant="body1"
+                      style={{ color: "red" }}
+                    >
+                      Your image dimension exceeds the limit. Preview files must
+                      be between 2000px and 10000px on any of the sides.
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.subtitle} variant="body1">
+                      Preview files must be between 2000px and 10000px on any of
+                      the sides.
+                    </Typography>
+                  )}
+                </div>
+              </label>
+
+              {!isImageDimensionOkay}
+
+              <>
+                {files.map((file, index) => (
+                  <div className="files-wrapper" key={file.name}>
+                    {(file.name.match(/\.(jpg|jpeg|png|gif)$/) &&
+                      file.size < 524288) ||
+                    (file.name.match(/\.(eps)$/) && file.size > 5242880) ||
+                    (file.name.match(/\.(psd)$/) && file.size < 1572864) ||
+                    file.size > 262144000 ? (
+                      <div className={classes.thumbError}>
+                        <div className={classes.thumbInnerError}>
+                          <div className={classes.thumbImg}>
+                            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
+                              <img
+                                src={fileThumbnail}
+                                alt="thumbnail"
+                                className={classes.fileThumbnail}
+                              />
+                            ) : (
+                              <img src={file.preview} alt="thumbnail" />
+                            )}
+                          </div>
+                          <Typography className={classes.imageTitleError}>
+                            {file.name} <br />{" "}
+                            <span>
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                            </span>
+                          </Typography>
+
+                          <Box className={classes.progressBar}>
+                            <LinearProgressWithLabel value={progress} />
+                          </Box>
+                          <div
+                            className={classes.deleteBtnError}
+                            onClick={(e) => removeFile(file, index)}
+                          >
+                            <FontAwesomeIcon
+                              className={classes.deleteIcon}
+                              icon={faTrashAlt}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={classes.thumb}>
+                        <div className={classes.thumbInner}>
+                          <div className={classes.thumbImg}>
+                            {file?.name?.match(/\.(ai|eps|psd|svg)$/) ? (
+                              <img
+                                src={fileThumbnail}
+                                alt="thumbnail"
+                                className={classes.fileThumbnail}
+                              />
+                            ) : (
+                              <img src={file.preview} alt="thumbnail" />
+                            )}
+                          </div>
+                          <Typography className={classes.imageTitle}>
+                            {file.name} <br />{" "}
+                            <span>
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                            </span>
+                          </Typography>
+
+                          <Box className={classes.progressBar}>
+                            <LinearProgressWithLabel value={progress} />
+                          </Box>
+                          <div
+                            className={classes.deleteBtn}
+                            onClick={(e) => removeFile(file, index)}
+                          >
+                            <FontAwesomeIcon
+                              className={classes.deleteIcon}
+                              icon={faTrashAlt}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </>
+              <div className={classes.singleBorder}></div>
+              <div className={classes.uploadBtnRoot}>
+                <Button
+                  variant="contained"
+                  className={classes.uploadBtn}
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  <FontAwesomeIcon
+                    icon={faCloudUploadAlt}
+                    className={classes.uploadIcon}
+                  />
+                  {isLoading ? "Uploading..." : "Upload"}
+                </Button>
+              </div>
+            </form>
+            <ul>{fileRejectionItems}</ul>
+          </div>
+
+          <Spacing space={{ height: "2rem" }} />
           <Footer />
         </main>
       </div>

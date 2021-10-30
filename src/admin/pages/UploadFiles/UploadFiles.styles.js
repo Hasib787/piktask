@@ -335,7 +335,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "7px",
   },
   contentTypeTitle: {
-    margin: "0 0 2rem 2rem",
+    margin: "0 0 2rem 0rem",
   },
   labelItem: {
     display: "flex",
@@ -401,6 +401,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginBottom: "1rem",
   },
+  thumbError:{
+    backgroundColor: "#fce4e4e0",
+    display: "block",
+    width: "100%",
+    marginBottom: "1rem",
+  },
   thumbInner: {
     display: "flex",
     justifyContent: "flex-start",
@@ -409,6 +415,16 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: "1rem",
     "&:hover": {
       backgroundColor: "#e3e3e363",
+    },
+  },
+  thumbInnerError:{
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    transition: "all 0.2s linear",
+    paddingRight: "1rem",
+    "&:hover": {
+      backgroundColor: "#f8b3b363",
     },
   },
   thumbImg: {
@@ -438,13 +454,36 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.8rem",
     },
   },
+  deleteBtnError:{
+    padding: "1rem",
+    borderRadius:"0.3rem",
+    transition: "all 0.2s linear",
+    marginLeft: "2rem",
+    cursor: "pointer",
+    "&:hover":{
+      backgroundColor:"#fcb5b5"
+    },
+    "& svg":{
+      color: "red",
+      fontSize: "1.8rem",
+    },
+  },
   imageTitle: {
     fontSize: "1.7rem",
     fontWeight: "500",
     marginLeft: "2rem",
-
     "& span": {
       color: "gray",
+      fontSize: "1.3rem",
+    },
+  },
+  imageTitleError:{
+    fontSize: "1.7rem",
+    fontWeight: "500",
+    marginLeft: "2rem",
+    color: "red",
+    "& span": {
+      color: "red",
       fontSize: "1.3rem",
     },
   },
