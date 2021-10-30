@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white,
   },
-  
+
   joinNowBtn: {
     padding: "0.5rem 2.5rem",
     fontSize: "14px",
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  // Contributor 
+  // Contributor
   contributorHero: {
     backgroundPosition: "center center",
     backgroundSize: "cover",
@@ -155,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
       textAlign: "center",
       marginBottom: "2rem",
-    }
+    },
   },
   contributorMenu: {
     display: "flex",

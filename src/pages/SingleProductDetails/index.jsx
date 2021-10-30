@@ -52,9 +52,9 @@ import TagButtons from "../../components/ui/TagButtons";
 import { getBaseURL } from "../../helpers";
 import Layout from "../../Layout";
 import SignUpModal from "../Authentication/SignUpModal";
-import useStyles from "./SingleCategory.styles";
+import useStyles from "./SingleProductDetails.styles";
 
-const SingleCategory = () => {
+const SingleProductDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
   const history = useHistory();
@@ -772,4 +772,4 @@ const SingleCategory = () => {
   );
 };
 
-export default SingleCategory;
+export default SingleProductDetails;
