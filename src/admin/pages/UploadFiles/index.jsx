@@ -110,7 +110,13 @@ const UploadFiles = () => {
     noKeyboard: true,
     onDrop: (acceptedFiles) => {
       setThumbImage(acceptedFiles[0]);
-
+      if (
+        acceptedFiles[0]?.name?.match(/\.(eps)$/) &&
+        acceptedFiles[0].size > 145000
+      ) {
+        toast.error("not accepted");
+        return;
+      }
       const fileData = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),
@@ -127,43 +133,151 @@ const UploadFiles = () => {
       }
     },
   });
+  // if (fileSize < 1572864 || fileSize > 262144000) {
+  //   toast.error(
+  //     "The file size should be getter than 1.5Mb and less than or equal to 250Mb"
+  //   );
+  //   return;
+  // }
+  //upload file
+  let tokenMatch = {};
+  const uploadFile = (file) => {
+    const chunkSize = 5000000;
+    const url = `http://192.168.1.162:8000/api/images/upload`;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let chankCounter;
-    const chunkSize = 5242880;
+    const element = file;
+    const fileName = element.name.split(".")[0];
 
-    for (let file = 0; file < files.length; file++) {
-      const element = files[file];
-      const reader = new FileReader();
-      reader.onload = async (ev) => {
-        console.log(`started ${ev}`);
+    return new Promise((resolve, reject) => {
+      var fr = new FileReader();
+      fr.onload = async (ev) => {
         const fileSize = ev.target.result.byteLength;
-        for (let i = 0; i < fileSize / chunkSize + 1; i++) {
-          const chunk = ev.target.result.slice(
-            i * chunkSize,
-            i * chunkSize + chunkSize
-          );
-          if (fileSize < chunkSize) {
-      //       await fetch("http://localhost:8080/upload",  {
-      //         "method": "POST",
-      //         "headers": {
-      //             "content-type": "application/octet-stream",
-      //             "content-length" : chunk.byteLength,
-      //             "upload-id": uploadId
-      //         },
-      //         "body": chunk
-      // });
 
-      // divP.textContent = Math.round(i*1000*100/ev.target.result.byteLength,0) + "%";
+        if (fileSize < chunkSize) {
+          console.log("fast conditions");
+          const headers = {
+            Authorization: user.token,
+            "content-type": "application/octet-stream",
+            "content-length": fileSize,
+            start: true,
+            end: true,
+            "file-name": element.name,
+          };
+          console.log("token match from 1st con", tokenMatch);
+
+          if (tokenMatch[fileName]) {
+            headers["token-id"] = tokenMatch[fileName];
           }
-          console.log(`sending ${chunk.byteLength}`);
-             
+
+          try {
+            let response = await fetch(url, {
+              method: "POST",
+              headers,
+              body: ev.target.result,
+            });
+
+            response = await response.json();
+            tokenMatch[fileName] = response.token_id;
+            resolve();
+            console.log("response token 1st", tokenMatch);
+          } catch (error) {
+            console.error(error);
+            reject();
+          }
+        } else {
+          let uploadId;
+          for (let i = 0; i < fileSize / chunkSize + 1; i++) {
+            const chunk = ev.target.result.slice(
+              i * chunkSize,
+              i * chunkSize + chunkSize
+            );
+
+            if (!i) {
+              console.log("start");
+              console.log("token match from 2nd con", tokenMatch);
+
+              const headers = {
+                Authorization: user.token,
+                "content-type": "application/octet-stream",
+                "content-length": chunk.byteLength,
+                start: true,
+                "file-name": element.name,
+              };
+
+              if (tokenMatch[fileName]) {
+                headers["token-id"] = tokenMatch[fileName];
+              }
+
+              try {
+                let response = await fetch(url, {
+                  method: "POST",
+                  headers,
+                  body: chunk,
+                });
+
+                response = await response.json();
+                tokenMatch[fileName] = response.token_id;
+                uploadId = response.upload_id;
+                console.log("response token 2nd", tokenMatch);
+              } catch (error) {
+                console.error(error);
+                reject();
+              }
+            } else if (i === Math.ceil(fileSize / chunkSize + 1) - 1) {
+              try {
+                let response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    Authorization: user.token,
+                    "content-type": "application/octet-stream",
+                    "content-length": chunk.byteLength,
+                    "upload-id": uploadId,
+                    "part-number": i + 1,
+                    "file-name": element.name,
+                    end: true,
+                  },
+                  body: chunk,
+                });
+                response = await response.json();
+                console.log("last response", response);
+              } catch (error) {
+                console.error(error);
+              }
+              console.log("last value", i);
+            } else {
+              console.log("middle");
+              try {
+                let response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    Authorization: user.token,
+                    "content-type": "application/octet-stream",
+                    "content-length": chunk.byteLength,
+                    "upload-id": uploadId,
+                    "part-number": i + 1,
+                    "file-name": element.name,
+                  },
+                  body: chunk,
+                });
+                response = await response.json();
+                console.log("middle response", response);
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          }
+          resolve();
         }
       };
+      fr.onerror = reject;
+      fr.readAsArrayBuffer(element);
+    });
+  };
 
-      reader.readAsArrayBuffer(element);
-      console.log("element", element);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    for (let i = 0; i < files.length; i++) {
+      await uploadFile(files[i]);
     }
   };
 

@@ -413,6 +413,7 @@ const useStyles = makeStyles((theme) => ({
   },
   thumbImg: {
     width: "10rem",
+    fontSize: "0rem",
     "& img": {
       height: "100%",
       width: "100%",
