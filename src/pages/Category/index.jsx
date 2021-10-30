@@ -45,9 +45,9 @@ export const Category = () => {
       let relatedImageURL;
 
       if (user && user?.id) {
-        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}&limit=50`;
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?user_id=${user?.id}&limit=52`;
       } else {
-        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}`;
+        relatedImageURL = `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?limit=52`;
       }
 
       axios
@@ -105,7 +105,7 @@ export const Category = () => {
     if (categoryItem?.id) {
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1`
+          `${process.env.REACT_APP_API_URL}/categories/${categoryItem?.id}?${product}=1&limit=50`
         )
         .then(({ data }) => {
           if (data?.status) {

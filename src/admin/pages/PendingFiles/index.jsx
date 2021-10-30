@@ -8,8 +8,10 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { useEffect, useState } from "react";
+// import { borderColor } from "@mui/system";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
 import Layout from "../../../Layout";
@@ -26,6 +28,8 @@ const PendingFiles = () => {
   const [selected, setSelected] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [editItem, setEditItem] = useState({});
+
+  const cardRef = useRef();
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -46,27 +50,64 @@ const PendingFiles = () => {
     return;
   };
 
-  const selectedProduct = (e, product) => {
-    // If the product is already selected stop here
-    if (selectedProducts.find((item) => item._id === product._id)) {
-      // return;
-    }
-    if (e.currentTarget) {
-      setSelected((prevState) => !prevState);
-    }
 
-    selectedProducts.push(product);
+
+  const selectedProduct = (e, product) => {
+    product.isSelected = true;
+    
+    // If the product is already selected stop here
+    if (product.isSelected) {
+      cardRef.current.style.border = "5px solid red";
+    } else {
+      cardRef.current.style.border = "";
+    }
+    // if (e.currentTarget) {
+    //   setSelected((prevState) => !prevState);
+    // }
+
+    // selectedProducts.push(product);
     setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
+    setTimeout(() => {
+      console.log("selectedProducts", selectedProducts);
+
+    }, 1000);
   };
+  console.log("selectedProducts", selectedProducts);
+
+  
+
 
   const editSingleItem = (product) => {
     setOpenModal(true);
     setEditItem(product);
   };
 
+  const [editProducts, setEditProducts] = useState([]);
+
+  const editProduct = (product) => {
+    setEditProducts((prevProducts) => setEditProducts([...prevProducts, product])
+    );
+  };
+
+  const handleWorkInfo = () => {
+    if (editProducts.length > 0) {
+      setOpenModal(true);
+    } else {
+      toast.error("No product");
+      setOpenModal(false);
+    }
+  };
+
+  // console.log("editProducts", editProducts);
+
+
+  const selectProduct = () => {
+    // console.log("cardRef", cardRef);
+    // cardRef.current.style.border = "5px solid red";
+  };
+
   return (
     <Layout title={`Pending || Piktask`}>
-
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
@@ -79,10 +120,17 @@ const PendingFiles = () => {
                 <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
                   Delete File
                 </Button>
-                <Button to={`/contributor/upload`} component={Link} className={`${classes.actionBtn} ${classes.addFileBtn}`}>
+                <Button
+                  to={`/contributor/upload`}
+                  component={Link}
+                  className={`${classes.actionBtn} ${classes.addFileBtn}`}
+                >
                   Add File
                 </Button>
-                <Button className={`${classes.actionBtn} ${classes.workInfoBtn}`}>
+                <Button
+                  className={`${classes.actionBtn} ${classes.workInfoBtn}`}
+                  onClick={() => handleWorkInfo()}
+                >
                   Add Work Information
                 </Button>
               </div>
@@ -91,19 +139,30 @@ const PendingFiles = () => {
             <Grid container spacing={2}>
               {products.length > 0 ? (
                 products.map((product) => (
-                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+                  <Grid
+                    key={product._id}
+                    item
+                    xs={4}
+                    sm={3}
+                    md={2}
+                    className={classes.productItem}
+                  >
                     <Card
                       className={classes.pendingFileCard}
                       onClick={(e) => {
-                        selectedProduct(e, product);
+                        // editProduct(product);
+                        // selectProduct();
+                        selectedProduct(e, product)
                       }}
+                      classes={{ root: classes.root }}
+                      ref={cardRef}
                     >
                       <DeleteIcon
                         onClick={() => handleDelete(product._id)}
                         className={classes.deleteIcon}
                       />
                       <img
-                        onClick={() => editSingleItem(product)}
+                        // onClick={() => editProduct(product)}
                         src={product.image}
                         alt={product.name}
                       />
@@ -139,12 +198,15 @@ const PendingFiles = () => {
               <hr />
             </div>
 
-            <EditItem item={editItem} />
+            <EditItem
+              setEditProducts={setEditProducts}
+              setOpenModal={setOpenModal}
+              products={editProducts}
+            />
           </Drawer>
           <Footer />
         </main>
       </div>
-
     </Layout>
   );
 };
