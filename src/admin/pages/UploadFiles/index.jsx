@@ -1,13 +1,5 @@
-import {
-  faCloudUploadAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
+import { Button, Card, CardContent, Grid, Typography } from "@material-ui/core";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
@@ -24,7 +16,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Layout from "../../../Layout";
 import axios from "axios";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, dividerClasses, LinearProgress } from "@mui/material";
 import fileThumbnail from "../../../assets/icons/fileThumpnail.png";
 
 function LinearProgressWithLabel(props) {
@@ -101,38 +93,35 @@ const UploadFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
-    accept: "image/*, .ai,.eps,.psd,.svg ",
-    noKeyboard: true,
-    onDrop: (acceptedFiles) => {
-      setThumbImage(acceptedFiles[0]);
-      const fileData = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
+  const { getRootProps, getInputProps, isDragActive, fileRejections } =
+    useDropzone({
+      accept: "image/*, .ai,.eps,.psd,.svg ",
+      noKeyboard: true,
+      onDrop: (acceptedFiles) => {
+        setThumbImage(acceptedFiles[0]);
+        const fileData = acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        );
 
-      // if(acceptedFiles[0].name.match(/\.(jpg|jpeg|png|gif|ai|eps|psd|svg)$/)){
-      //   toast.error("You can't upload this kind of files");
-      //   return;
-      // }
-      if (files.length === 0) {
-        setFiles(fileData);
-      } else {
-        setFiles((prevFiles) => [...fileData, ...prevFiles]);
-      }
-    },
-  });
+        if (files.length === 0) {
+          setFiles(fileData);
+        } else {
+          setFiles((prevFiles) => [...fileData, ...prevFiles]);
+        }
+      },
+    });
 
   //reject file
   const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    <li key={file.path}>
-      <ul>
-        {errors.map(e => (
-          <li style={{color:"red"}} key={e.code}>{e.message}</li>
-        ))}
-      </ul>
-    </li>
+    <div className={classes.rejectFile} key={file.path}>
+      {errors.map((e) => (
+        <div className={classes.rejectFileTitle} key={e.code}>
+          {e.message}
+        </div>
+      ))}
+    </div>
   ));
 
   // upload conditions
@@ -156,8 +145,8 @@ const UploadFiles = () => {
   //upload file
   let tokenMatch = {};
   const uploadFile = (file) => {
-    const chunkSize = 5000000;
-    const url = `http://192.168.1.162:8000/api/images/upload`;
+    const chunkSize = 5242880;
+    const url = `${process.env.REACT_APP_API_URL}/images/upload`;
 
     const element = file;
     const fileName = element.name.split(".")[0];
@@ -285,6 +274,7 @@ const UploadFiles = () => {
       };
       fr.onerror = reject;
       fr.readAsArrayBuffer(element);
+      console.log("element.name", element.name);
     });
   };
 
@@ -293,6 +283,7 @@ const UploadFiles = () => {
     for (let i = 0; i < files.length; i++) {
       await uploadFile(files[i]);
     }
+    console.log("image", thumbImage);
   };
 
   //ProgressBar
@@ -580,132 +571,131 @@ const UploadFiles = () => {
         <main className={classes.content}>
           <AdminHeader />
           <div className={classes.uploadContainer}>
-          <Heading className={classes.contentTypeTitle} tag="h2">
-            What type of content are you going to upload?
-          </Heading>
-          <Card className={classes.cardRoot}>
-            <CardContent className={classes.cardContent}>
-              <Grid container>
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div className={classes.checkboxCol}>
-                    {/* <Heading tag="h4"></Heading> */}
-                    <Typography variant="h2">Vectors</Typography>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        EPS and a JPG preview file (with the same name) up to
-                        80MB
-                      </Typography>
+            <Heading className={classes.contentTypeTitle} tag="h2">
+              What type of content are you going to upload?
+            </Heading>
+            <Card className={classes.cardRoot}>
+              <CardContent className={classes.cardContent}>
+                <Grid container>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className={classes.imageTypeGrid}
+                  >
+                    <div className={classes.checkboxCol}>
+                      {/* <Heading tag="h4"></Heading> */}
+                      <Typography variant="h2">Vectors</Typography>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          EPS and a JPG preview file (with the same name) up to
+                          80MB
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>RGB Color</Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Preview files must be between 2000px and 10000px on
+                          any of the sides.
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Titles and tags can be included in preview file. How
+                          can I do this?
+                        </Typography>
+                      </div>
                     </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>RGB Color</Typography>
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className={classes.imageTypeGrid}
+                  >
+                    <div className={classes.checkboxCol}>
+                      <Heading tag="h2">PSD</Heading>
+
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          PSD between 1.5MB and 250MB and a JPG preview file
+                          (with the same name)
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Color: sRGB, Adobe RGB, Prophoto RGB or P3
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Preview files must be between 2000px and 10000px on
+                          any of the sides.
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Titles and tags can be included in preview file. How
+                          can I do this?
+                        </Typography>
+                      </div>
                     </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Preview files must be between 2000px and 10000px on any
-                        of the sides.
-                      </Typography>
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className={classes.imageTypeGrid}
+                  >
+                    <div>
+                      <Heading tag="h2">Photos</Heading>
+
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>Only JPG files Over 0.5MB</Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Color: sRGB, Adobe RGB, Prophoto RGB or P3
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Photos must be between 2000px and 10000px on any of
+                          the sides.
+                        </Typography>
+                      </div>
+                      <div className={classes.labelItem}>
+                        <CheckCircleRoundedIcon />
+                        <Typography>
+                          Titles and tags can be included in preview file. How
+                          can I do this?
+                        </Typography>
+                      </div>
                     </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
+                  </Grid>
                 </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div className={classes.checkboxCol}>
-                    <Heading tag="h2">PSD</Heading>
-
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        PSD between 1.5MB and 250MB and a JPG preview file (with
-                        the same name)
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Color: sRGB, Adobe RGB, Prophoto RGB or P3
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Preview files must be between 2000px and 10000px on any
-                        of the sides.
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
-                </Grid>
-
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.imageTypeGrid}
-                >
-                  <div>
-                    <Heading tag="h2">Photos</Heading>
-
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>Only JPG files Over 0.5MB</Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Color: sRGB, Adobe RGB, Prophoto RGB or P3
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Photos must be between 2000px and 10000px on any of the
-                        sides.
-                      </Typography>
-                    </div>
-                    <div className={classes.labelItem}>
-                      <CheckCircleRoundedIcon />
-                      <Typography>
-                        Titles and tags can be included in preview file. How can
-                        I do this?
-                      </Typography>
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-          <Spacing space={{ height: "2.5rem" }} />
+              </CardContent>
+            </Card>
+            <Spacing space={{ height: "2.5rem" }} />
             <form autoComplete="off" onSubmit={handleSubmit}>
-
               <Heading tag="h2">Upload Your Content</Heading>
 
               <label
@@ -759,7 +749,8 @@ const UploadFiles = () => {
                   <div className="files-wrapper" key={file.name}>
                     {(file.name.match(/\.(jpg|jpeg|png|gif)$/) &&
                       file.size < 524288) ||
-                    (file.name.match(/\.(eps)$/) && file.size > 5242880) ||
+                    file.size > 83886080 ||
+                    (file.name.match(/\.(eps)$/) && file.size > 83886080) ||
                     (file.name.match(/\.(psd)$/) && file.size < 1572864) ||
                     file.size > 262144000 ? (
                       <div className={classes.thumbError}>
@@ -837,6 +828,9 @@ const UploadFiles = () => {
               </>
               <div className={classes.singleBorder}></div>
               <div className={classes.uploadBtnRoot}>
+                <div className={classes.rejectFileWrapper}>
+                  {fileRejectionItems}
+                </div>
                 <Button
                   variant="contained"
                   className={classes.uploadBtn}
@@ -851,7 +845,6 @@ const UploadFiles = () => {
                 </Button>
               </div>
             </form>
-            <ul>{fileRejectionItems}</ul>
           </div>
 
           <Spacing space={{ height: "2rem" }} />
