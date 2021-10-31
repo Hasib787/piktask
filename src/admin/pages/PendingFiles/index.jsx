@@ -1,3 +1,5 @@
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Card,
@@ -8,12 +10,15 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
+import axios from "axios";
 // import { borderColor } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import { getBaseURL } from "../../../helpers";
 import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
@@ -23,11 +28,12 @@ import useStyles from "./PendingFiles.styles";
 
 const PendingFiles = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [products, setProducts] = useState(productData.products);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [selected, setSelected] = useState(false);
+
+  const [notYetSubmitted, setNotYetSubmitted] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [editItem, setEditItem] = useState({});
 
   const cardRef = useRef();
 
@@ -45,56 +51,70 @@ const PendingFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
+  useEffect(() => {
+    if(user?.isLogged && user?.role === "contributor"){
+      try {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/contributor/images/not_submit`,
+            { headers: {Authorization: user?.token},}
+          )
+          .then(({data}) => {
+            // console.log("data", data);
+            if(data?.status){
+              setNotYetSubmitted(data.images);
+            }
+          })
+      } catch (error) {
+        console.log("Not submit", error);
+      }
+    }
+  }, [user?.isLogged, user?.token, user?.role])
+
+  console.log("notYetSubmitted", notYetSubmitted);
+  console.log("selectedProducts", selectedProducts);
+
   const handleDelete = (id) => {
-    setProducts(products.filter((product) => product._id !== id));
+    setProducts(products.filter((product) => product.id !== id));
     return;
   };
 
-  const selectedProduct = (e, product) => {
-    product.isSelected = true;
+  const deleteSelectionProduct = () => {
+    const filteredProducts = products.filter(product => !product.isSelected);
+    setProducts(filteredProducts);
+    setSelectedProducts([]);
+  }
+  // console.log("deleteSelectionProduct", selectedProducts);
 
-    // If the product is already selected stop here
-    if (product.isSelected) {
+  const selectedProduct = (e, product) => {
+    if (!product.isSelected) {
+      product.isSelected = true;
       e.currentTarget.style.border = "2px solid #0088f2";
     } else {
+      product.isSelected = false;
       e.currentTarget.style.border = "";
     }
 
-    // setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
     setSelectedProducts((prevItems) => {
-      const isSelected = prevItems.find((item) => item._id === product._id);
+      const isSelected = prevItems.find((item) => item.id === product.id);
 
       if (isSelected) {
+        const index = prevItems.findIndex((item) => item.id === product.id);
+        prevItems.splice(index, 1);
         return prevItems.map((item) =>
-          item._id === product._id ? { ...item, isSelected: false } : item
+          item.id === product.id ? { ...item, isSelected: false } : item
         );
       }
-
       return [...prevItems, { ...product }];
     });
   };
 
-  console.log("selectedProducts", selectedProducts);
-
-  const getSelectItem = () => {
-    console.log("selectedProducts", selectedProducts);
-  };
-
-  const editSingleItem = (product) => {
-    setOpenModal(true);
-    setEditItem(product);
-  };
-
-  const [editProducts, setEditProducts] = useState([]);
-
-  const editProduct = (product) => {
-    setEditProducts((prevProducts) =>
-      setEditProducts([...prevProducts, product])
-    );
-  };
-
   const handleWorkInfo = () => {
-    if (editProducts.length > 0) {
+
+    if (selectedProducts.length > 0) {
+      if(selectedProducts.length > 12) {
+        toast.error("You can not select more than 12");
+        return;
+      }
       setOpenModal(true);
     } else {
       toast.error("No product");
@@ -102,12 +122,6 @@ const PendingFiles = () => {
     }
   };
 
-  // console.log("editProducts", editProducts);
-
-  const selectProduct = () => {
-    // console.log("cardRef", cardRef);
-    // cardRef.current.style.border = "5px solid red";
-  };
 
   return (
     <Layout title={`Pending || Piktask`}>
@@ -120,7 +134,7 @@ const PendingFiles = () => {
             <div className={classes.headingWrapper}>
               <Heading tag="h2">Not Yet Submit</Heading>
               <div>
-                <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
+                <Button onClick={() => deleteSelectionProduct()} className={`${classes.actionBtn} ${classes.deleteBtn}`}>
                   Delete File
                 </Button>
                 <Button
@@ -140,10 +154,10 @@ const PendingFiles = () => {
             </div>
 
             <Grid container spacing={2}>
-              {products.length > 0 ? (
-                products.map((product) => (
+              {notYetSubmitted.length > 0 ? (
+                notYetSubmitted.map((product) => (
                   <Grid
-                    key={product._id}
+                    key={product?.id}
                     item
                     xs={4}
                     sm={3}
@@ -152,26 +166,25 @@ const PendingFiles = () => {
                   >
                     <Card
                       className={classes.pendingFileCard}
-                      onClick={(e) => {
-                        // editProduct(product);
-                        // selectProduct();
-                        selectedProduct(e, product);
-                      }}
+                      onClick={(e) => { selectedProduct(e, product);}}
                       classes={{ root: classes.root }}
                       ref={cardRef}
                     >
-                      <DeleteIcon
-                        onClick={() => handleDelete(product._id)}
-                        className={classes.deleteIcon}
-                      />
+                      <div className={classes.btnWrapper}>
+                        {/* <FontAwesomeIcon icon={faEdit} className={classes.editIcon} /> */}
+                        <DeleteIcon
+                          onClick={() => handleDelete(product.id)}
+                          className={classes.deleteIcon}
+                        />
+                      </div>
                       <img
-                        // onClick={() => editProduct(product)}
-                        src={product.image}
-                        alt={product.name}
+                        onClick={(e) => { selectedProduct(e, product);}}
+                        src={getBaseURL().bucket_base_url + getBaseURL().images + product.original_file}
+                        alt={product?.title}
                       />
                       <CardContent>
-                        <Typography variant="h3">{product.name}</Typography>
-                        <Typography variant="body2">File Size: 10MB</Typography>
+                        <Typography variant="h3">{product.title}</Typography>
+                        <Typography variant="body2">File Size: {(product.size / 1024 / 1024).toFixed(2)} MB</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -202,9 +215,9 @@ const PendingFiles = () => {
             </div>
 
             <EditItem
-              setEditProducts={setEditProducts}
+              setSelectedProducts={setSelectedProducts}
               setOpenModal={setOpenModal}
-              products={editProducts}
+              products={selectedProducts}
             />
           </Drawer>
           <Footer />

@@ -3,9 +3,10 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import axios from "axios";
 import React, { useState } from "react";
+import { getBaseURL } from "../../../../helpers";
 import useStyles from "./EditItem.styles";
 
-const EditItem = ({ products, setOpenModal, setEditProducts }) => {
+const EditItem = ({ products, setOpenModal, setSelectedProducts }) => {
   const classes = useStyles();
   const [category, setCategory] = useState([]);
   //   const [title, setTitle] = useState(item.name);
@@ -35,7 +36,7 @@ const EditItem = ({ products, setOpenModal, setEditProducts }) => {
   const handleProductSubmit = (e) => {
     e.preventDefault();
     // TODO: After succesful the form call this function
-    setEditProducts([]);
+    setSelectedProducts([]);
     setOpenModal(false);
   };
 
@@ -50,11 +51,11 @@ const EditItem = ({ products, setOpenModal, setEditProducts }) => {
         <div className={classes.imgWrapper}>
           {products.length > 0 &&
             products.map((product) => (
-              <div key={product._id} className={classes.productItem}>
+              <div key={product.id} className={classes.productItem}>
                 <img
                   className={classes.editItemImage}
-                  src={product.image}
-                  alt={product.name}
+                  src={getBaseURL().bucket_base_url + getBaseURL().images + product.original_file}
+                  alt={product.title}
                   width={"100px"}
                 />
               </div>
