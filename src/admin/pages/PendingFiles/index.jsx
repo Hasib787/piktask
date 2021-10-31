@@ -51,20 +51,20 @@ const PendingFiles = () => {
   };
 
   const selectedProduct = (e, product) => {
-    product.isSelected = true;
-
-    // If the product is already selected stop here
-    if (product.isSelected) {
+    if (!product.isSelected) {
+      product.isSelected = true;
       e.currentTarget.style.border = "2px solid #0088f2";
     } else {
+      product.isSelected = false;
       e.currentTarget.style.border = "";
     }
 
-    // setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
     setSelectedProducts((prevItems) => {
       const isSelected = prevItems.find((item) => item._id === product._id);
 
       if (isSelected) {
+        const index = prevItems.findIndex((item) => item._id === product._id);
+        prevItems.splice(index, 1);
         return prevItems.map((item) =>
           item._id === product._id ? { ...item, isSelected: false } : item
         );
@@ -72,12 +72,6 @@ const PendingFiles = () => {
 
       return [...prevItems, { ...product }];
     });
-  };
-
-  console.log("selectedProducts", selectedProducts);
-
-  const getSelectItem = () => {
-    console.log("selectedProducts", selectedProducts);
   };
 
   const editSingleItem = (product) => {
@@ -94,7 +88,7 @@ const PendingFiles = () => {
   };
 
   const handleWorkInfo = () => {
-    if (editProducts.length > 0) {
+    if (selectedProducts.length > 0) {
       setOpenModal(true);
     } else {
       toast.error("No product");
