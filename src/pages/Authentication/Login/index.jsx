@@ -8,7 +8,7 @@ import {
 import { Link, useHistory, useLocation } from "react-router-dom";
 import formIconBottom from "../../../assets/formIconBottom.png";
 import formIconTop from "../../../assets/formIconTop.png";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import lockIcon from "../../../assets/password.png";
 import React, { useEffect, useState } from "react";
 import Footer from "../../../components/ui/Footer";
@@ -20,20 +20,17 @@ import Layout from "../../../Layout";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 
-
 export const Login = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
   const pathHistory = useHistory();
-  const user = useSelector((state) => state.user);
-  // const contributor = useSelector((state) => state.contributor);
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const previousLocation = location.search;
   const params = new URLSearchParams(previousLocation);
-  const previousPage = params.get('url');
+  const previousPage = params.get("url");
 
-  const { from } = location.state || { from: { pathname: ("/") } };
 
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(false);
@@ -41,125 +38,55 @@ export const Login = ({ history }) => {
   const [password, setPassword] = useState("");
   const role = "user";
 
-
   useEffect(() => {
     return () => {
       document.body.style.backgroundColor = "";
     };
-  }, [user, history, from]);
+  }, [history, from]);
 
-  const handleShowHidePassword = () => { setValue((value) => !value); };
+  const handleShowHidePassword = () => {
+    setValue((value) => !value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
-      username,
-      password,
-      role,
-    })
-    .then((res) => {
-      console.log("res", res);
-      if (res.data.status) {
-        const token = res.data.token;
-        localStorage.setItem("token", token);
-        const decodedToken = jwt_decode(token.split(" ")[1]);
-        localStorage.setItem("profileImage", decodedToken.avatar);
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        username,
+        password,
+        role,
+      })
+      .then((res) => {
+        if (res.data.status) {
+          const token = res.data.token;
+          localStorage.setItem("token", token);
+          const decodedToken = jwt_decode(token.split(" ")[1]);
+          localStorage.setItem("profileImage", decodedToken.avatar);
 
-        if (decodedToken.email) {
-          dispatch({
-            type: "SET_USER",
-            payload: {
-              ...decodedToken,
-              token,
-            },
-          });
+          if (decodedToken.email) {
+            dispatch({
+              type: "SET_USER",
+              payload: {
+                ...decodedToken,
+                token,
+              },
+            });
+          }
+          if (previousPage) {
+            pathHistory.push(previousPage);
+          } else {
+            pathHistory.push(from);
+          }
         }
-        if(previousPage) {
-          pathHistory.push(previousPage);
-        } else {
-          pathHistory.push(from);
-        }
-      }
-    })
-    .catch((error) => {
-      toast.error(error.response.data.message);
-      setUsername("");
-      setPassword("");
-    });
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        setUsername("");
+        setPassword("");
+      });
   };
-  // //login with google
-  // const handleGoogleLogin = async (googleData) => {
-  //   const res = await fetch(
-  //     `${process.env.REACT_APP_API_URL}/auth/google_login`,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         token: googleData.tokenId,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   const data = await res.json();
-  //   // store returned user somehow
-  //   if (data.status) {
-  //     const token = data.token;
-  //     localStorage.setItem("token", token);
-  //     const decodedToken = jwt_decode(token.split(" ")[1]);
-
-  //     if (decodedToken.email) {
-  //       dispatch({
-  //         type: "SET_USER",
-  //         payload: {
-  //           ...decodedToken,
-  //           token,
-  //         },
-  //       });
-  //     }
-  //     toast.success(data.message);
-  //     // handleResponse(true);
-  //     pathHistory.replace(from);
-  //   }
-  // };
-
-  // //login with facebook
-  // const handleFacebookLogin = async (facebookData) => {
-  //   const res = await fetch(
-  //     `${process.env.REACT_APP_API_URL}/auth/facebook_login`,
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         token: facebookData.tokenId,
-  //       }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   const data = await res.json();
-  //   // store returned user somehow
-  //   if (data.status) {
-  //     const token = data.token;
-  //     localStorage.setItem("token", token);
-  //     const decodedToken = jwt_decode(token.split(" ")[1]);
-
-  //     if (decodedToken.email) {
-  //       dispatch({
-  //         type: "SET_USER",
-  //         payload: {
-  //           ...decodedToken,
-  //           token,
-  //         },
-  //       });
-  //     }
-  //     toast.success(data.message);
-  //     pathHistory.replace(from);
-  //   }
-  // };
 
   return (
     <Layout title={"Login || Piktask"}>
@@ -172,7 +99,6 @@ export const Login = ({ history }) => {
             alt="Background Icon"
             className={classes.backgroundIconTop}
           />
-          {/* <Spacing space={{ height: "2rem" }} /> */}
           <div className={classes.formWrapper}>
             <div className={classes.formWrapperInner}>
               <div className={classes.formHeading}>
@@ -183,31 +109,8 @@ export const Login = ({ history }) => {
                   Sign in with your email & password
                 </Typography>
               </div>
+
               <div>
-                {/* <div className={classes.socialsButtons}>
-                  <GoogleLogin
-                    clientId={clientId}
-                    className={classes.googleBtn}
-                    buttonText="Google"
-                    onSuccess={handleGoogleLogin}
-                    onFailure={handleGoogleLogin}
-                    cookiePolicy={"single_host_origin"}
-                  />
-
-                  <FacebookLogin
-                    className={classes.facebookBtn}
-                    appId="168140328625744"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={handleFacebookLogin}
-                    callback={handleFacebookLogin}
-                  />
-                </div> */}
-
-                {/* <Typography variant="subtitle1" className={classes.formDevider}>
-                  Or
-                </Typography> */}
-
                 <div>
                   <form
                     onSubmit={handleSubmit}

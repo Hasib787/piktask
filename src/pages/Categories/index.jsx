@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import CategoryItemLoader from "../../components/ui/Loader/CategoryItemLoader";
 import axios from "axios";
 import ProductNotFound from "../../components/ui/ProductNotFound";
+import { getBaseURL } from "../../helpers";
 const Categories = () => {
   const classes = useStyles();
   const [isLoading, setLoading] = useState(true);
@@ -62,7 +63,7 @@ const Categories = () => {
                         <Link to={`/category/${photo.slug}`}>
                           <img
                             className={classes.catImage}
-                            src={photo?.thumbnail}
+                            src={getBaseURL().bucket_base_url + getBaseURL().categories + photo?.thumbnail}
                             alt="thumbnail images"
                           />
                         </Link>

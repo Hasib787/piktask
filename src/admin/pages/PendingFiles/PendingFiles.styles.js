@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     backgroundColor: "#FB5252",
+    transition: "all 0.3s linear",
     "&:hover": {
       borderColor: "#FB5252",
       color: "#FB5252",
@@ -67,26 +68,37 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addFileBtn: {
+    backgroundColor: "#0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
+      borderColor: "#0088f2",
+      color: "#0088f2",
     },
   },
   workInfoBtn: {
     backgroundColor: "#EF9D38",
+    transition: "all 0.3s linear",
     "&:hover": {
       borderColor: "#EF9D38",
       color: "#EF9D38",
     },
   },
-
+  productItem: {
+    "@media (max-width: 576px)": {
+      maxWidth: "100%",
+      flexBasis: "100%",
+    },
+  },
   pendingFileCard: {
     position: "relative",
-    padding: "3.5rem 3rem 0",
+    padding: "3.5rem 1rem 0",
+    border: "2px solid transparent",
+
     "& img": {
       width: "100%",
+      height: "10rem",
       borderRadius: theme.shape.borderRadius,
-      // objectFit: "cover",
+      objectFit: "cover",
     },
     "& h3": {
       fontSize: "1.4rem",
@@ -96,17 +108,33 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.2rem",
     },
   },
+  btnWrapper: {
+    position: "absolute",
+    top: "0.8rem",
+    right: "0.8rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  editIcon: {
+    color: "#DDD",
+    fontSize: "2.2rem",
+    marginRight: "0.5rem",
+    cursor: "pointer",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      borderColor: "#0088f2",
+      color: "#0088f2",
+    },
+  },
   deleteIcon: {
     color: "#DDD",
-    position: "absolute",
-    top: ".8rem",
-    right: ".8rem",
-    border: ".1rem solid",
+    border: "0.1rem solid",
     borderColor: "#DDDDDD",
-    padding: ".1rem",
+    padding: "0.1rem",
     fontSize: "2.2rem",
     cursor: "pointer",
-    transition: `all .3s ${theme.transitions.easing.easeInOut}`,
+    transition: "all 0.3s linear",
 
     "&:hover": {
       borderColor: "#FB5252",
@@ -116,7 +144,9 @@ const useStyles = makeStyles((theme) => ({
   noItemsFound: {
     marginLeft: "1.5rem",
   },
-
+  root: {
+    // backgroundColor: "red",
+  },
   editItemContainer: {
     width: "55rem",
     padding: "3rem 4.5rem",
@@ -127,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   editItemHeader: {
-    padding: "2rem 4rem 0",
+    padding: "1rem 2rem 0",
     "& hr": {
       border: "0 solid transparent",
       backgroundColor: "#ddd",

@@ -10,20 +10,20 @@ import {
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import EuroIcon from '@material-ui/icons/Euro';
+import EuroIcon from "@material-ui/icons/Euro";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+// import DevicesIcon from "@material-ui/icons/Devices";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 // import crownGreenIcon from "../../../assets/icons/crownGreenIcon.svg";
 import useStyles from "./Popper.styles";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
-// import DevicesIcon from "@material-ui/icons/Devices";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const CustomPopper = ({
   open,
@@ -106,7 +106,9 @@ const CustomPopper = ({
                 <Grid container className={classes.gridUserInfo}>
                   <Grid item xs={6} className={classes.userInDropdown}>
                     <div className={classes.avatarCircle}>
-                      {user?.isLogged && user?.avatar && user?.avatar !== "null" ? (
+                      {user?.isLogged &&
+                      user?.avatar &&
+                      user?.avatar !== "null" ? (
                         <img
                           className={classes.dropdownUserAvatar}
                           src={user?.avatar}
@@ -164,7 +166,7 @@ const CustomPopper = ({
                 )}
 
                 {user?.role === "user" && (
-                  <>
+                  <div>
                     <MenuItem
                       className={classes.userMenuItem}
                       onClick={handleClose}
@@ -227,11 +229,11 @@ const CustomPopper = ({
                         <span>Logout</span>
                       </div>
                     </MenuItem>
-                  </>
+                  </div>
                 )}
 
                 {user?.role === "contributor" && (
-                  <>
+                  <div>
                     <MenuItem
                       className={classes.userMenuItem}
                       onClick={handleClose}
@@ -268,9 +270,8 @@ const CustomPopper = ({
                         <span>Logout</span>
                       </div>
                     </MenuItem>
-                  </>
+                  </div>
                 )}
-                
               </MenuList>
             </ClickAwayListener>
           </Paper>

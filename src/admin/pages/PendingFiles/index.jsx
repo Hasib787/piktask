@@ -1,3 +1,5 @@
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Card,
@@ -8,10 +10,15 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+// import { borderColor } from "@mui/system";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../../../components/ui/Footer";
 import productData from "../../../data/products.json";
+import { getBaseURL } from "../../../helpers";
 import Layout from "../../../Layout";
 import AdminHeader from "../../components/Header";
 import Heading from "../../components/Heading";
@@ -21,11 +28,14 @@ import useStyles from "./PendingFiles.styles";
 
 const PendingFiles = () => {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [products, setProducts] = useState(productData.products);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [selected, setSelected] = useState(false);
+
+  const [notYetSubmitted, setNotYetSubmitted] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [editItem, setEditItem] = useState({});
+
+  const cardRef = useRef();
 
   const [menuSate, setMenuSate] = useState({ mobileView: false });
   const { mobileView } = menuSate;
@@ -41,32 +51,80 @@ const PendingFiles = () => {
     window.addEventListener("resize", () => setResponsiveness());
   }, []);
 
+  useEffect(() => {
+    if(user?.isLogged && user?.role === "contributor"){
+      try {
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/contributor/images/not_submit`,
+            { headers: {Authorization: user?.token},}
+          )
+          .then(({data}) => {
+            // console.log("data", data);
+            if(data?.status){
+              setNotYetSubmitted(data.images);
+            }
+          })
+      } catch (error) {
+        console.log("Not submit", error);
+      }
+    }
+  }, [user?.isLogged, user?.token, user?.role])
+
+  console.log("notYetSubmitted", notYetSubmitted);
+  console.log("selectedProducts", selectedProducts);
+
   const handleDelete = (id) => {
-    setProducts(products.filter((product) => product._id !== id));
+    setProducts(products.filter((product) => product.id !== id));
     return;
   };
 
+  const deleteSelectionProduct = () => {
+    const filteredProducts = products.filter(product => !product.isSelected);
+    setProducts(filteredProducts);
+    setSelectedProducts([]);
+  }
+  // console.log("deleteSelectionProduct", selectedProducts);
+
   const selectedProduct = (e, product) => {
-    // If the product is already selected stop here
-    if (selectedProducts.find((item) => item._id === product._id)) {
-      // return;
-    }
-    if (e.currentTarget) {
-      setSelected((prevState) => !prevState);
+    if (!product.isSelected) {
+      product.isSelected = true;
+      e.currentTarget.style.border = "2px solid #0088f2";
+    } else {
+      product.isSelected = false;
+      e.currentTarget.style.border = "";
     }
 
-    selectedProducts.push(product);
-    setSelectedProducts([...selectedProducts, { ...product, selected: true }]);
+    setSelectedProducts((prevItems) => {
+      const isSelected = prevItems.find((item) => item.id === product.id);
+
+      if (isSelected) {
+        const index = prevItems.findIndex((item) => item.id === product.id);
+        prevItems.splice(index, 1);
+        return prevItems.map((item) =>
+          item.id === product.id ? { ...item, isSelected: false } : item
+        );
+      }
+      return [...prevItems, { ...product }];
+    });
   };
 
-  const editSingleItem = (product) => {
-    setOpenModal(true);
-    setEditItem(product);
+  const handleWorkInfo = () => {
+
+    if (selectedProducts.length > 0) {
+      if(selectedProducts.length > 12) {
+        toast.error("You can not select more than 12");
+        return;
+      }
+      setOpenModal(true);
+    } else {
+      toast.error("No product");
+      setOpenModal(false);
+    }
   };
+
 
   return (
     <Layout title={`Pending || Piktask`}>
-
       <div className={classes.adminRoot}>
         {mobileView ? null : <Sidebar className={classes.adminSidebar} />}
 
@@ -76,40 +134,57 @@ const PendingFiles = () => {
             <div className={classes.headingWrapper}>
               <Heading tag="h2">Not Yet Submit</Heading>
               <div>
-                <Button className={`${classes.actionBtn} ${classes.deleteBtn}`}>
+                <Button onClick={() => deleteSelectionProduct()} className={`${classes.actionBtn} ${classes.deleteBtn}`}>
                   Delete File
                 </Button>
-                <Button to={`/contributor/upload`} component={Link} className={`${classes.actionBtn} ${classes.addFileBtn}`}>
+                <Button
+                  to={`/contributor/upload`}
+                  component={Link}
+                  className={`${classes.actionBtn} ${classes.addFileBtn}`}
+                >
                   Add File
                 </Button>
-                <Button className={`${classes.actionBtn} ${classes.workInfoBtn}`}>
+                <Button
+                  className={`${classes.actionBtn} ${classes.workInfoBtn}`}
+                  onClick={() => handleWorkInfo()}
+                >
                   Add Work Information
                 </Button>
               </div>
             </div>
 
             <Grid container spacing={2}>
-              {products.length > 0 ? (
-                products.map((product) => (
-                  <Grid key={product._id} item xs={12} sm={6} md={4} lg={3}>
+              {notYetSubmitted.length > 0 ? (
+                notYetSubmitted.map((product) => (
+                  <Grid
+                    key={product?.id}
+                    item
+                    xs={4}
+                    sm={3}
+                    md={2}
+                    className={classes.productItem}
+                  >
                     <Card
                       className={classes.pendingFileCard}
-                      onClick={(e) => {
-                        selectedProduct(e, product);
-                      }}
+                      onClick={(e) => { selectedProduct(e, product);}}
+                      classes={{ root: classes.root }}
+                      ref={cardRef}
                     >
-                      <DeleteIcon
-                        onClick={() => handleDelete(product._id)}
-                        className={classes.deleteIcon}
-                      />
+                      <div className={classes.btnWrapper}>
+                        {/* <FontAwesomeIcon icon={faEdit} className={classes.editIcon} /> */}
+                        <DeleteIcon
+                          onClick={() => handleDelete(product.id)}
+                          className={classes.deleteIcon}
+                        />
+                      </div>
                       <img
-                        onClick={() => editSingleItem(product)}
-                        src={product.image}
-                        alt={product.name}
+                        onClick={(e) => { selectedProduct(e, product);}}
+                        src={getBaseURL().bucket_base_url + getBaseURL().images + product.original_file}
+                        alt={product?.title}
                       />
                       <CardContent>
-                        <Typography variant="h3">{product.name}</Typography>
-                        <Typography variant="body2">File Size: 10MB</Typography>
+                        <Typography variant="h3">{product.title}</Typography>
+                        <Typography variant="body2">File Size: {(product.size / 1024 / 1024).toFixed(2)} MB</Typography>
                       </CardContent>
                     </Card>
                   </Grid>
@@ -139,12 +214,15 @@ const PendingFiles = () => {
               <hr />
             </div>
 
-            <EditItem item={editItem} />
+            <EditItem
+              setSelectedProducts={setSelectedProducts}
+              setOpenModal={setOpenModal}
+              products={selectedProducts}
+            />
           </Drawer>
           <Footer />
         </main>
       </div>
-
     </Layout>
   );
 };
