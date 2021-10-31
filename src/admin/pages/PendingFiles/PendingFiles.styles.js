@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteBtn: {
     backgroundColor: "#FB5252",
+    transition: "all 0.3s linear",
     "&:hover": {
       borderColor: "#FB5252",
       color: "#FB5252",
@@ -67,13 +68,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addFileBtn: {
+    backgroundColor: "#0088f2",
+    transition: "all 0.3s linear",
     "&:hover": {
-      borderColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
+      borderColor: "#0088f2",
+      color: "#0088f2",
     },
   },
   workInfoBtn: {
     backgroundColor: "#EF9D38",
+    transition: "all 0.3s linear",
     "&:hover": {
       borderColor: "#EF9D38",
       color: "#EF9D38",
@@ -104,17 +108,33 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "1.2rem",
     },
   },
-  deleteIcon: {
-    color: "#DDD",
+  btnWrapper: {
     position: "absolute",
     top: "0.8rem",
     right: "0.8rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  editIcon: {
+    color: "#DDD",
+    fontSize: "2.2rem",
+    marginRight: "0.5rem",
+    cursor: "pointer",
+    transition: "all 0.3s linear",
+    "&:hover": {
+      borderColor: "#0088f2",
+      color: "#0088f2",
+    },
+  },
+  deleteIcon: {
+    color: "#DDD",
     border: "0.1rem solid",
     borderColor: "#DDDDDD",
     padding: "0.1rem",
     fontSize: "2.2rem",
     cursor: "pointer",
-    transition: `all 0.3s ${theme.transitions.easing.easeInOut}`,
+    transition: "all 0.3s linear",
 
     "&:hover": {
       borderColor: "#FB5252",
